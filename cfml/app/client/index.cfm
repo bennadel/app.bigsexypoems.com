@@ -12,9 +12,6 @@
 		statusText: "OK"
 	};
 
-	// The `template` object is for View-level configuration.
-	request.template = {};
-
 	try {
 
 		// Most forms in this application post back to themselves for processing. For
