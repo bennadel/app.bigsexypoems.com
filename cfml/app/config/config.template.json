@@ -1,0 +1,56 @@
+{
+	"initPassword": "1",
+	"isLive": false,
+	"site": {
+		"name": "Big Sexy Poems",
+		"url": "https://app.local.bigsexypoems.com",
+		"cookieDomain": "app.local.bigsexypoems.com"
+	},
+	"cfide": {
+		"url": "http://app.local.bigsexypoems.com:8080/CFIDE/administrator/index.cfm"
+	},
+	"systemEmail": {
+		"address": "ben@bennadel.com",
+		"addressWithUser": "\"Big Sexy Poems\" <ben@bennadel.com>"
+	},
+	"scheduledTasks": {
+		"url": "http://cfml:8080",
+		"password": "password"
+	},
+	"datasource": {
+		"server": "mysql",
+		"port": 3306,
+		"database": "bigsexypoems",
+		"username": "root",
+		"password": "password"
+	},
+	"smtp": {
+		"server": "mail:1025",
+		"username": "",
+		"password": ""
+	},
+	"bugsnag": {
+		"server": {
+			"apiKey": "",
+			"releaseStage": "Development"
+		},
+		"client": {
+			"apiKey": "",
+			"releaseStage": "Development"
+		}
+	},
+	"turnstile": {
+		"isEnabled": false,
+		"server": {
+			"apiKey": ""
+		},
+		"client": {
+			"apiKey": ""
+		}
+	},
+	"keys": {
+		"hmacSha512": {
+			"loginRequest": ""
+		}
+	}
+}

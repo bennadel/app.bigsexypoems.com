@@ -1,0 +1,69 @@
+<cfscript>
+
+	partial = request.ioc.get( "client.account.session.list.ListPartial" );
+	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
+	router = request.ioc.get( "core.lib.web.Router" );
+	sessionService = request.ioc.get( "core.lib.service.session.SessionService" );
+	ui = request.ioc.get( "core.lib.web.UI" );
+
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
+	param name="form.action" type="string" default="";
+	param name="form.sessionID" type="numeric" default=0;
+
+	payload = partial.getPrimary( request.authContext );
+	title = "Active Sessions";
+	sessions = payload.sessions;
+	errorResponse = "";
+
+	request.response.title = title;
+
+	if ( form.submitted ) {
+
+		try {
+
+			switch ( form.action ) {
+				case "endSession":
+
+					sessionService.endSession(
+						userID = request.authContext.user.id,
+						sessionID = val( form.sessionID )
+					);
+
+					nextEvent = ( request.authContext.session.id == form.sessionID )
+						// Logged-out of the current session.
+						? "auth.logout.success"
+						// Logged-out of a adjacent session.
+						: "account.session"
+					;
+
+					router.goto({
+						event: nextEvent,
+						flash: "account.session.deleted"
+					});
+
+				break;
+				case "endAllSessions":
+
+					sessionService.endAllSessions( request.authContext.user.id );
+
+					router.goto({
+						event: "auth.logout.success",
+						flash: "account.session.deletedAll"
+					});
+
+				break;
+			}
+
+		} catch ( any error ) {
+
+			errorResponse = requestHelper.processError( error );
+
+		}
+
+	}
+
+	include "./list.view.cfm";
+
+</cfscript>

@@ -1,0 +1,90 @@
+services:
+
+  # CFML server.
+  # http://app.local.bigsexypoems.com
+  #
+  # Administrator / CFIDE:
+  # - Url: http://app.local.bigsexypoems.com:8080/CFIDE/administrator/index.cfm
+  # - Password: commandbox
+  cfml:
+    image: "appbigsexypoems-cfml:dev"
+    build:
+      context: "./cfml/docker/"
+      dockerfile: "Dockerfile"
+    ports:
+      - "80:8080"
+      - "443:8443" # SSL certificate provided via server.json
+      - "8080:8080"
+    volumes:
+      - "./cfml/app:/app"
+    environment:
+      APP_DIR: "/app/wwwroot"
+    healthcheck:
+      test: "echo hello"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mail:
+        condition: service_healthy
+
+  # Provides a light-weight build for the front-end files.
+  client:
+    image: "appbigsexypoems-cfml/main-build:dev"
+    build:
+      context: "./cfml/app/build/main/"
+      dockerfile: "Dockerfile"
+    command: [ "npm", "run", "build" ]
+    volumes:
+      - "./cfml/app/build/main:/app"
+      # Mount the ColdFusion app so that the build can access the JS/LESS files that we've
+      # collocated with the CFML views.
+      - "./cfml/app/client:/app/client"
+      # Save dist files into public CFML volume where they can be consumed by the app.
+      - "./cfml/app/wwwroot/public/main:/app/dist"
+      # Makes sure we don't overwrite the node_modules in the build container when we
+      # mount the /app directory above.
+      - "bigsexypoems_client_node_modules:/app/node_modules"
+
+  # Provides a "watch" execution for the light-weight build above.
+  client-dev:
+    extends: "client"
+    profiles:
+      - "dev"
+    command: [ "npm", "run", "watch" ]
+
+  # MySQL server.
+  # http://app.local.bigsexypoems.com:3306/
+  mysql:
+    image: "appbigsexypoems-mysql:dev"
+    build:
+      context: "./mysql/docker/"
+      dockerfile: "Dockerfile"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "bigsexypoems"
+      MYSQL_ROOT_PASSWORD: "password"
+    volumes:
+      # Initialization scripts, to be executed in alphabetical order.
+      - "./cfml/app/db:/docker-entrypoint-initdb.d"
+      # Allow docker to manage the data persistence folder (MySQL doesn't work when you
+      # mount the data on the host machine).
+      - "bigsexypoems_mysql_data:/var/lib/mysql"
+    healthcheck:
+      test: "echo hello"
+
+  # SMTP server.
+  # http://app.local.bigsexypoems.com:8025/
+  mail:
+    image: "appbigsexypoems-mail:dev"
+    build:
+      context: "./mail/docker/"
+      dockerfile: "Dockerfile"
+    ports:
+      - "8025:8025"
+    healthcheck:
+      test: "echo hello"
+
+volumes:
+  bigsexypoems_client_node_modules:
+  bigsexypoems_mysql_data:

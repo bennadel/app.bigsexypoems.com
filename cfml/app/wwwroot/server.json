@@ -1,0 +1,26 @@
+{
+	"name": "bigsexypoems-dev",
+	"app": {
+		"cfengine": "adobe@2021.0.21"
+	},
+	"profile": "prod",
+	"web": {
+		"host": "127.0.0.1",
+		"bindings": {
+			"HTTP": {
+				"enable": true,
+				"listen": 8080
+			},
+			"SSL": {
+				"enable": true,
+				"listen": 8443
+			}
+		},
+		"blockCFAdmin": false,
+		"blockSensitivePaths": true,
+		"blockFlashRemoting": true
+	},
+	"scripts": {
+		"onServerInitialInstall":"cfpm install debugger,mail,scheduler"
+	}
+}

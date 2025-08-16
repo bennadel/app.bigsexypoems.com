@@ -1,0 +1,128 @@
+[mpjwb9] {
+	&.skip-to-main {
+		background-color: var( --theme-button-primary-surface ) ;
+		border-color: var( --theme-button-primary-border ) ;
+		border-radius: 3px ;
+		color: var( --theme-button-primary-text ) ;
+		left: 6px ;
+		padding: 1rem 2rem ;
+		position: fixed ;
+		top: -100px ;
+		z-index: 100 ;
+
+		&:focus {
+			top: 6px ;
+		}
+	}
+
+	&.shell {
+		align-items: flex-start ;
+		display: flex ;
+
+		&__header {
+			border-right: 1px solid var( --theme-panel-border ) ;
+			flex: 0 0 auto ;
+			min-height: 100vh ;
+			position: sticky ;
+			top: 0 ;
+			width: 300px ;
+		}
+
+		&__main {
+			flex: 1 1 auto ;
+			min-height: 100vh ;
+			padding: 1.5rem 2.3rem  ;
+
+			// Since the main element touches the edges of the browser, the normal outline
+			// will be clipped by the browser viewport. As such, we're going to inset the
+			// programmatic focus on the main content.
+			&:focus-visible {
+				outline-width: 3px ;
+				outline-offset: -6px ;
+			}
+		}
+	}
+
+	&.header {
+		display: flex ;
+		flex-direction: column ;
+		gap: 25px ;
+		padding: 10px 0 15px ;
+
+		&__logo {}
+
+		&__nav {}
+
+		&__account {
+			margin-top: auto ;
+		}
+	}
+
+	&.nav {}
+
+	&.nav-link {
+		border: 4px solid var( --theme-nav-surface ) ;
+		border-width: 4px 8px ;
+		display: block ;
+		text-decoration: none ;
+		white-space: nowrap ;
+
+		&__pill {
+			align-items: center ;
+			border-radius: 5px ;
+			color: var( --theme-nav-text ) ;
+			display: flex ;
+			gap: 13px ;
+			padding: 7px 8px ;
+		}
+
+		&__icon {
+			display: flex ;
+			height: 32px ;
+			width: 32px ;
+
+			svg {
+				height: 24px ;
+				margin: auto ;
+				width: 24px ;
+			}
+		}
+
+		&__label {}
+
+		&:hover &__label,
+		&.is-on &__label {
+			text-decoration: underline ;
+		}
+
+		&.is-on &__pill {
+			background-color: var( --theme-nav-surface-on ) ;
+			border-radius: 3px ;
+			color: var( --theme-nav-text-on ) ;
+		}
+
+		// Since these elements butt-up against each other, the focus ring might get
+		// clipped by the neighboring element. As such, we're going to inset the focus on
+		// the element.
+		&:focus-visible {
+			outline-width: 2px ;
+			outline-offset: -4px ;
+		}
+	}
+
+	&.account {
+		display: flex ;
+		flex-direction: column ;
+		padding: 16px 16px 0 ;
+
+		&__description {}
+
+		&__email {
+			margin-bottom: 8px ;
+		}
+
+		&__logout {
+			align-self: flex-start ;
+		}
+	}
+}

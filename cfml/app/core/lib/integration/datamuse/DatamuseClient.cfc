@@ -1,0 +1,218 @@
+/**
+* Datamuse API: https://www.datamuse.com/api/
+* 
+* Use of this API requires us to give credit on the website.
+*/
+component
+	output = false
+	hint = "I provide high-level HTTP access to the Datamuse API."
+	{
+
+	// Define properties for dependency-injection.
+	property name="gateway" ioc:type="core.lib.integration.datamuse.DatamuseGateway";
+	property name="httpUtilities" ioc:type="core.lib.util.HttpUtilities";
+
+	// ---
+	// PUBLIC METHODS.
+	// ---
+
+	/**
+	* I get words that generally mean the same thing as the given word.
+	*/
+	public array function getMeansLike(
+		required string word,
+		required numeric limit
+		) {
+
+		return gateway
+			.makeRequest(
+				resource = "words",
+				searchParams = {
+					ml: testWord( word ),
+					md: "fps", // Frequency, parts of speech, syllable count.
+					max: limit
+				}
+			)
+			.filter( ( result ) => normalizeResult( result ) )
+		;
+
+	}
+
+
+	/**
+	* I get words that rhyme with the given word.
+	*/
+	public array function getRhyme(
+		required string word,
+		required numeric limit
+		) {
+
+		return gateway
+			.makeRequest(
+				resource = "words",
+				searchParams = {
+					rel_rhy: testWord( word ),
+					md: "fps", // Frequency, parts of speech, syllable count.
+					max: limit
+				}
+			)
+			.filter( ( result ) => normalizeResult( result ) )
+		;
+
+	}
+
+
+	/**
+	* I get syllable count for the given word.
+	*/
+	public array function getSyllableCount(
+		required string word,
+		required numeric limit
+		) {
+
+		return gateway
+			.makeRequest(
+				resource = "words",
+				searchParams = {
+					sp: testWord( word ),
+					qe: "sp",
+					md: "fps", // Frequency, parts of speech, syllable count.
+					max: 1
+				}
+			)
+			.filter( ( result ) => normalizeResult( result ) )
+		;
+
+	}
+
+
+	/**
+	* I get words that are strictly defined as synonyms of the given word. This is a more
+	* strict query that the getMeansLike().
+	*/
+	public array function getSynonym(
+		required string word,
+		required numeric limit
+		) {
+
+		return gateway
+			.makeRequest(
+				resource = "words",
+				searchParams = {
+					rel_syn: testWord( word ),
+					md: "fps", // Frequency, parts of speech, syllable count.
+					max: limit
+				}
+			)
+			.filter( ( result ) => normalizeResult( result ) )
+		;
+
+	}
+
+	// ---
+	// PRIVATE METHODS.
+	// ---
+
+	/**
+	* I normalize the given result, making easier-to-consume data.
+	*/
+	private boolean function normalizeResult( required struct result ) {
+
+		// Sometimes the data coming back from datamuse is incomplete. Or, at least,
+		// that's what my old experimental code says - I'm not sure if this is still true.
+		if ( isNull( result.tags ) || isNull( result.score ) ) {
+
+			return false;
+
+		}
+
+		result.syllableCount = ( result.numSyllables ?: 0 );
+
+		// Note: starts off in the unknown state for type of speech.
+		result.typeOfSpeech = "Unknown";
+		result.isUnknown = true;
+		result.isAdjective = false;
+		result.isAdverb = false;
+		result.isNoun = false;
+		result.isVerb = false;
+
+		result.isProperNoun = false;
+		result.isAntonym = false;
+		result.isSynonym = false;
+
+		for ( var tag in result.tags ) {
+
+			switch ( tag ) {
+				case "adj":
+					result.typeOfSpeech = "Adjective";
+					result.isAdjective = true;
+					result.isUnknown = false;
+				break;
+				case "adv":
+					result.typeOfSpeech = "Adverb";
+					result.isAdverb = true;
+					result.isUnknown = false;
+				break;
+				case "ant":
+					result.isAntonym = true;
+				break;
+				case "n":
+					result.typeOfSpeech = "Noun";
+					result.isNoun = true;
+					result.isUnknown = false;
+				break;
+				case "prop":
+					result.isProperNoun = true;
+				break;
+				case "syn":
+					result.isSynonym = true;
+				break;
+				case "u":
+					result.typeOfSpeech = "Unknown";
+					result.isUnknown = true;
+				break;
+				case "v":
+					result.typeOfSpeech = "Verb";
+					result.isVerb = true;
+					result.isUnknown = false;
+				break;
+				// Some of the injected tags are prefixed-based and need to be parsed.
+				default:
+
+					var prefix = tag.listFirst( ":" );
+
+					switch ( prefix ) {
+						case "f":
+							result.partsPerMillion = val( tag.listRest( ":" ) )
+						break;
+					}
+
+				break;
+			}
+
+		}
+
+		return true;
+
+	}
+
+
+	/**
+	* I test and normalize the given word before sending it to Datamuse. Not sure if this
+	* makes any difference, but I like having a predictable API.
+	*/
+	private string function testWord( required string word ) {
+
+		word = word.trim().lcase();
+
+		if ( ! word.len() ) {
+
+			throw( type = "DatamuseClient.Word.Empty" );
+
+		}
+
+		return word;
+
+	}
+
+}

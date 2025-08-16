@@ -1,0 +1,45 @@
+component
+	output = false
+	hint = "I provide an abstraction for sending email."
+	{
+
+	// Define properties for dependency-injection.
+	property name="site" ioc:get="config.site";
+	property name="systemEmail" ioc:get="config.systemEmail";
+
+	// ---
+	// PUBLIC METHODS.
+	// ---
+
+	/**
+	* I send the given mail specification.
+	*/
+	public void function sendMail(
+		required string to,
+		required string subject,
+		required string body,
+		required string tag,
+		string from = systemEmail.addressWithUser,
+		string type = "html",
+		boolean async = false
+		) {
+
+		var message = new Mail(
+			to = to,
+			from = from,
+			subject = subject,
+			body = body,
+			type = type,
+			spoolEnable = async
+		);
+
+		message.addParam(
+			name = "X-PM-Tag",
+			value = tag
+		);
+
+		message.send();
+
+	}
+
+}

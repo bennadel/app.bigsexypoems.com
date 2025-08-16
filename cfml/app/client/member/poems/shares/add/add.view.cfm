@@ -1,0 +1,40 @@
+<cfsavecontent variable="request.response.body">
+<cfoutput>
+
+	<article class="uiFlow uiReadableWidth">
+
+		<h1>
+			#encodeForHtml( title )#
+		</h1>
+
+		<cfmodule
+			template="/client/_shared/tag/errorMessage.cfm"
+			response="#errorResponse#">
+		</cfmodule>
+
+		<form method="post" action="#request.postBackAction#">
+			<cfmodule template="/client/_shared/tag/xsrf.cfm">
+
+			<div class="uiField">
+				<label for="form--name" class="uiField__label">
+					TODO:
+				</label>
+				<div class="uiField__content">
+					Something.....
+				</div>
+			</div>
+
+			<div class="uiFormButtons">
+				<button type="submit" class="uiButton isSubmit">
+					Create Share
+				</button>
+				<a #ui.attrHref( "member.poems.shares", "poemID", poem.id )# class="uiButton isCancel">
+					Cancel
+				</a>
+			</div>
+		</form>
+
+	</article>
+
+</cfoutput>
+</cfsavecontent>
