@@ -35,7 +35,7 @@
 
 	request.response.title = "Request Login / Sign-Up";
 
-	if ( form.submitted && form.email.trim().len() ) {
+	if ( form.submitted && form.email.len() ) {
 
 		try {
 
@@ -47,9 +47,9 @@
 			}
 
 			authenticationService.requestMagicLink(
-				email = form.email.trim(),
+				email = form.email,
 				offsetInMinutes = val( form.timezoneOffsetInMinutes ),
-				redirectTo = url.redirectTo.trim()
+				redirectTo = url.redirectTo
 			);
 
 			router.goto([

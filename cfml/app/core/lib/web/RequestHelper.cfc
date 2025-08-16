@@ -76,4 +76,68 @@ component {
 
 	}
 
+
+	/**
+	* I perform generic pre-processing of the request.
+	*/
+	public void function setupRequest() {
+
+		trimScopeValues( url );
+		trimScopeValues( form );
+
+	}
+
+	// ---
+	// PRIVATE METHODS.
+	// ---
+
+	/**
+	* I trim the simple values in the given scope.
+	* 
+	* Note: this is assumed to run AFTER the field-group polyfill has been applied.
+	* 
+	* Note: in the long term, I can come up with a way to opt-out of this, probably with
+	* some sort of sibling "noTrim" field; but for now, I'm assuming that all simple
+	* values should be trimmed.
+	*/
+	private void function trimScopeValues( required struct scope ) {
+
+		scope.each(
+			( key, value ) => {
+
+				scope[ key ] = trimScopeValuesRecursively( value );
+
+			}
+		);
+
+	}
+
+
+	/**
+	* I recurse down the given data structure, trimming all simple fields.
+	*/
+	private any function trimScopeValuesRecursively( required any value ) {
+
+		if ( isSimpleValue( value ) ) {
+
+			return trim( value );
+
+		}
+
+		if ( isArray( value ) ) {
+
+			return value.map( ( subvalue ) => trimScopeValues( subvalue ) );
+
+		}
+
+		if ( isStruct( value ) ) {
+
+			return value.map( ( key, subvalue ) => trimScopeValues( subvalue ) );
+
+		}
+
+		return value;
+
+	}
+
 }

@@ -23,8 +23,8 @@
 			poemID = poemService.createPoem(
 				authContext = request.authContext,
 				userID = request.authContext.user.id,
-				poemName = form.name.trim(),
-				poemContent = form.content.trim()
+				poemName = form.name,
+				poemContent = form.content
 			);
 
 			router.goto([

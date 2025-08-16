@@ -25,7 +25,7 @@
 			userService.updateUser(
 				authContext = request.authContext,
 				userID = request.authContext.user.id,
-				userName = form.name.trim()
+				userName = form.name
 			);
 
 			router.goto([

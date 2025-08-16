@@ -12,9 +12,9 @@
 	param name="url.groupBy" type="string";
 
 	partial = getPrimary(
-		word = url.word.trim(),
+		word = url.word,
 		limit = utilities.clamp( url.limit, 50, 500 ),
-		groupBy = url.groupBy.trim()
+		groupBy = url.groupBy
 	);
 	groups = partial.groups;
 
