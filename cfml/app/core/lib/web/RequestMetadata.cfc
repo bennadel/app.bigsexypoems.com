@@ -239,6 +239,26 @@ component
 
 	}
 
+
+	/**
+	* I determine if the current HTTP request is a get.
+	*/
+	public boolean function isGet() {
+
+		return ( getMethod() == "get" );
+
+	}
+
+
+	/**
+	* I determine if the current HTTP request is a post.
+	*/
+	public boolean function isPost() {
+
+		return ( getMethod() == "post" );
+
+	}
+
 	// ---
 	// PRIVATE METHODS.
 	// ---

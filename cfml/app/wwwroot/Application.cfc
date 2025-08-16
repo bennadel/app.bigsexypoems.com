@@ -21,9 +21,6 @@ component
 	// Make sure that all arrays are passed by reference. Historically, arrays have been
 	// passed by value, which has no place in a modern language.
 	this.passArrayByReference = true;
-	// Make sure form fields with the same name are aggregated as an array. Historically,
-	// like-named field were aggregated as a comma-delimited list.
-	this.sameFormFieldsAsArray = true;
 	// Stop ColdFusion from replacing "<script>" tags with "InvalidTag". This doesn't
 	// really help us out.
 	this.scriptProtect = "none";
@@ -32,8 +29,8 @@ component
 	this.blockedExtForFileUpload = "*";
 
 	// Define the server mappings (for components and expandPath() calls).
-	this.wwwroot = getDirectoryFromPath( getCurrentTemplatePath() );
-	this.approot = "#this.wwwroot#..";
+	this.directory = getDirectoryFromPath( getCurrentTemplatePath() );
+	this.approot = "#this.directory#..";
 	this.mappings = [
 		"/": this.approot,
 		"/client": "#this.approot#/client",
@@ -52,10 +49,10 @@ component
 
 	// Define the data-sources. The data-source names are CASE-SENSITIVE and need to be
 	// quoted.
-	this.datasources = {
-		"bigsexypoems": buildMySqlDatasource( this.config.datasource )
-	};
 	this.datasource = "bigsexypoems";
+	this.datasources = {
+		"#this.datasource#": buildMySqlDatasource( this.config.datasource )
+	};
 
 	// Define to mail server settings.
 	this.smtpServerSettings = this.config.smtp;
@@ -89,7 +86,7 @@ component
 		cfschedule(
 			action = "update",
 			task = "Task Runner",
-			group = "Big Sexy Poems",
+			group = "BigSexyPoems",
 			mode = "application",
 			operation = "HTTPRequest",
 			url = "#config.scheduledTasks.url#/index.cfm?event=system.tasks.all",
@@ -125,10 +122,6 @@ component
 
 		}
 
-		// Polyfill the Lucee CFML behavior in which "field[]" notation causes multiple
-		// fields to be grouped together as an array. This is the way.
-		polyfillFormFieldGrouping( form );
-
 		// By default, we want the request timeout to be relatively low so that we lock
 		// page processing down. This means that we have to make a cognizant choice to
 		// create slow(er) pages later on by explicitly extending the timeout.
@@ -139,6 +132,11 @@ component
 
 		request.ioc = application.ioc;
 
+		// Polyfill the Lucee CFML behavior in which "field[]" notation causes multiple
+		// fields (form or url) to be grouped together as an array. This is the way.
+		request.ioc.get( "core.lib.web.ParameterGroupingPolyfill" )
+			.apply()
+		;
 		// Some aspects of the request cannot be accessed asynchronously (inside a thread)
 		// after the request has ended. As such, let's persist some of the data into the
 		// request-scope as needed.
@@ -375,53 +373,6 @@ component
 		;
 
 		return config;
-
-	}
-
-
-	/**
-	* I polyfill the "field[]" form parameter grouping behavior in Adobe ColdFusion.
-	*/
-	private void function polyfillFormFieldGrouping( required struct formScope ) {
-
-		// If the fieldNames entry isn't defined, the form scope isn't populated.
-		if ( ! formScope.keyExists( "fieldNames" ) ) {
-
-			return;
-
-		}
-
-		// The parameter map gives us every form field as an array.
-		var rawFormData = getPageContext()
-			.getRequest()
-			.getParameterMap()
-		;
-
-		for ( var key in rawFormData.keyArray() ) {
-
-			if ( key.right( 2 ) == "[]" ) {
-
-				// Remove the "[]" suffix.
-				var normalizedKey = key.left( -2 );
-				// The underlying Java value is of type, "string[]". We need to convert
-				// that value to a native ColdFusion array (ArrayList) so that it will
-				// behave like any other array, complete with member methods.
-				var normalizedValue = arrayNew( 1 )
-					.append( rawFormData[ key ], true )
-				;
-
-				// Swap the form scope key-value pairs with the normalized versions.
-				formScope[ normalizedKey ] = normalizedValue;
-				formScope.delete( key );
-
-			}
-
-		}
-
-		// Clean-up list of field names (removing [] notation).
-		formScope.fieldNames = formScope.fieldNames
-			.reReplace( "\[\](,|$)", "\1", "all" )
-		;
 
 	}
 
