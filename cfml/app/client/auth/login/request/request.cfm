@@ -1,5 +1,8 @@
 <cfscript>
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	authenticationService = request.ioc.get( "core.lib.service.authentication.AuthenticationService" );
 	config = request.ioc.get( "config" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );

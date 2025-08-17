@@ -1,5 +1,8 @@
 <cfscript>
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	shareAccess = request.ioc.get( "core.lib.service.poem.share.ShareAccess" );

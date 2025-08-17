@@ -1,5 +1,8 @@
 <cfscript>
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	ui = request.ioc.get( "core.lib.web.UI" );
 	utilities = request.ioc.get( "core.lib.util.Utilities" );
 	wordService = request.ioc.get( "core.lib.util.WordService" );
