@@ -5,7 +5,9 @@ component
 
 	// Define properties for dependency-injection.
 	property name="datamuseClient" ioc:type="core.lib.integration.datamuse.DatamuseClient";
-	property name="utilities" ioc:type="core.lib.util.Utilities";
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ---
 	// PUBLIC METHODS.
@@ -199,7 +201,7 @@ component
 			{ label: "Verb", results: [] },
 			{ label: "Adverb", results: [] }
 		];
-		var groupsIndex = utilities.indexBy( groups, "label" );
+		var groupsIndex = arrayIndexBy( groups, "label" );
 
 		for ( var result in results ) {
 

@@ -3,8 +3,8 @@ component
 	hint = "I provide utility methods for accessing metadata about the current request."
 	{
 
-	// Define properties for dependency-injection.
-	property name="utilities" ioc:type="core.lib.util.Utilities";
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ---
 	// LIFE-CYCLE METHODS.
@@ -65,7 +65,7 @@ component
 
 		}
 
-		var includeIndex = utilities.reflect( includeOnly );
+		var includeIndex = arrayReflect( includeOnly );
 
 		return headers.filter(
 			( key ) => {

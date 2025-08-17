@@ -9,6 +9,9 @@ component
 	property name="magicTokenName" ioc:skip;
 	property name="utilities" ioc:type="core.lib.util.Utilities";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the memory leak detector.
 	*/
@@ -33,7 +36,7 @@ component
 	public void function inspect() {
 
 		var version = createUuid();
-		var queue = utilities.structValueArray( ioc.getAll() );
+		var queue = structValueArray( ioc.getAll() );
 
 		// We're going to perform a breadth-first search of the components, starting with
 		// the Injector services and then collecting any additional components we find
@@ -42,7 +45,7 @@ component
 
 			var target = queue.shift();
 
-			if ( ! utilities.isComponent( target ) ) {
+			if ( ! isComponent( target ) ) {
 
 				continue;
 
@@ -118,7 +121,7 @@ component
 
 				// If the value is, itself, a component, add it to the queue for
 				// subsequent inspection.
-				if ( utilities.isComponent( targetScope[ key ] ) ) {
+				if ( isComponent( targetScope[ key ] ) ) {
 
 					queue.append( targetScope[ key ] );
 
@@ -166,10 +169,7 @@ component
 	*/
 	private void function logMessage( required string message ) {
 
-		cfdump(
-			var = message,
-			output = "console"
-		);
+		systemOutput( message, true );
 
 	}
 

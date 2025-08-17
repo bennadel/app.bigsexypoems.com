@@ -6,7 +6,9 @@ component
 	// Define properties for dependency-injection.
 	property name="apiClient" ioc:type="core.lib.integration.bugsnag.BugSnagApiClient";
 	property name="config" ioc:type="config";
-	property name="utilities" ioc:type="core.lib.util.Utilities";
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ---
 	// PUBLIC METHODS.
@@ -158,7 +160,7 @@ component
 
 		// In Adobe ColdFusion, you can't have nested threads. So, we have to see if we're
 		// in a current thread context before we try to spawn the remote API thread.
-		if ( utilities.isInThread() ) {
+		if ( isInThread() ) {
 
 			sendToBugSnagSafely( notifyEvent );
 			return;

@@ -9,6 +9,20 @@ component {
 	property name="sessionService" ioc:type="core.lib.service.session.SessionService";
 
 	// ---
+	// LIFE-CYCLE METHODS.
+	// ---
+
+	/**
+	* I perform generic pre-processing of the request.
+	*/
+	public void function setupRequest() {
+
+		trimScopeValues( url );
+		trimScopeValues( form );
+
+	}
+
+	// ---
 	// PUBLIC METHODS.
 	// ---
 
@@ -73,17 +87,6 @@ component {
 		request.error = error;
 
 		return errorResponse;
-
-	}
-
-
-	/**
-	* I perform generic pre-processing of the request.
-	*/
-	public void function setupRequest() {
-
-		trimScopeValues( url );
-		trimScopeValues( form );
 
 	}
 
