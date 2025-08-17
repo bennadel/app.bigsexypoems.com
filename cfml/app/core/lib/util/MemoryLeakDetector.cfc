@@ -82,6 +82,20 @@ component
 
 				}
 
+				// Hack: we're including CFMLX (CFML extensions) in a number of components
+				// and there's no simple way to allow-list them. As such, I'm going to see
+				// if they are of type Function and that they also exist in THIS component
+				// which is also including the CFMLX functions.
+				if (
+					isCustomFunction( targetScope[ key ] ) &&
+					variables.keyExists( key ) &&
+					isCustomFunction( variables[ key ] )
+					) {
+
+					continue;
+
+				}
+
 				// Skip hidden functions created by the CFThread tag.
 				if ( key.reFindNoCase( "^_cffunccfthread" ) ) {
 
