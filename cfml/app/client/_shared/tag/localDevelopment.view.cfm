@@ -3,11 +3,11 @@
 	<div g8c588>
 
 		<div class="corner">
-			<a href="#encodeForHtmlAttribute( urlWithInit )#">
+			<a href="#e4a( urlWithInit )#">
 				<mark>Re-init</mark>
 			</a>
 
-			#encodeForHtml( slug )#
+			#e( slug )#
 
 			<a href="/internal/scribble/scribble.cfm" target="_blank">
 				Scribble

@@ -4,7 +4,7 @@
 	<article class="uiFlow uiReadableWidth">
 
 		<h1>
-			#encodeForHtml( title )#
+			#e( title )#
 		</h1>
 
 		<p>
@@ -24,7 +24,7 @@
 					Poem:
 				</label>
 				<div class="uiField__content">
-					#encodeForHtml( poem.name )#
+					#e( poem.name )#
 				</div>
 			</div>
 
@@ -33,7 +33,7 @@
 					Share:
 				</label>
 				<div class="uiField__content">
-					#encodeForHtml( share.token )#
+					#e( share.token )#
 				</div>
 			</div>
 

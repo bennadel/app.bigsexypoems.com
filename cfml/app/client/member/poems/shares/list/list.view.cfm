@@ -35,13 +35,13 @@
 					#ui.userDate( share.createdAt )#
 				</td>
 				<td>
-					<a #ui.attrHref( "share.poem", "shareID", share.id, "shareToken", share.token )# target="_blank">Public share link (#encodeForHtml( share.id )#)</a>
+					<a #ui.attrHref( "share.poem", "shareID", share.id, "shareToken", share.token )# target="_blank">Public share link (#e( share.id )#)</a>
 				</td>
 				<td>
 					<form method="post" #ui.attrAction( "member.poems.shares.delete", "shareID", share.id )#>
 						<cfmodule template="/client/_shared/tag/xsrf.cfm">
 						<input type="hidden" name="isConfirmed" value="true" />
-						<!--- <input type="hidden" name="formToken" value="#encodeForHtmlAttribute( formToken )#" /> --->
+						<!--- <input type="hidden" name="formToken" value="#e4a( formToken )#" /> --->
 						<button type="submit" class="uiButton">
 							Revoke
 						</button>

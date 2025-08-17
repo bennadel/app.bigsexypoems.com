@@ -5,7 +5,7 @@
 </script>
 <script type="text/javascript">
 	try {
-		Bugsnag.start( JSON.parse( "<cfoutput>#encodeForJavaScript( serializeJson( startConfig ) )#</cfoutput>" ) );
+		Bugsnag.start( JSON.parse( "<cfoutput>#e4json( startConfig )#</cfoutput>" ) );
 	} catch ( error ) {
 		Bugsnag.start( "<cfoutput>#startConfig.apiKey#</cfoutput>" );
 	}

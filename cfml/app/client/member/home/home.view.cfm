@@ -8,7 +8,7 @@
 		</h1>
 
 		<p>
-			Welcome, #encodeForHtml( user.name )# &lt;#encodeForHtml( user.email )#&gt;
+			Welcome, #e( user.name )# &lt;#e( user.email )#&gt;
 		</p>
 
 		<p>

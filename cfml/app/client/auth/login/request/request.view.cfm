@@ -32,7 +32,7 @@
 						placeholder="ben@example.com"
 						inputmode="email"
 						autocapitalize="off"
-						value="#encodeForHtmlAttribute( form.email )#"
+						value="#e4a( form.email )#"
 						maxlength="75"
 						class="uiInput isFull"
 					/>
@@ -52,7 +52,7 @@
 				field as a child element (which must be submission to the server).
 			--->
 			<div
-				data-sitekey="#encodeForHtmlAttribute( config.turnstile.client.apiKey )#"
+				data-sitekey="#e4a( config.turnstile.client.apiKey )#"
 				r9fbqd
 				class="cf-turnstile">
 			</div>

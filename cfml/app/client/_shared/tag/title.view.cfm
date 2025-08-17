@@ -1,10 +1,10 @@
 <cfoutput>
 	<title>
-		#encodeForHtml( request.response.title )#
+		#e( request.response.title )#
 
 		<!--- Don't double-up on the main title. --->
 		<cfif ( request.response.title != config.site.name )>
-			&mdash; #encodeForHtml( config.site.name )#
+			&mdash; #e( config.site.name )#
 		</cfif>
 	</title>
 </cfoutput>

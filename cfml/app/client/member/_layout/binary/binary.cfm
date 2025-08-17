@@ -42,7 +42,7 @@
 	);
 	cfheader(
 		name = "Content-Disposition",
-		value = "#request.response.contentDisposition#; filename=""#encodeForUrl( request.response.filename )#""; filename*=UTF-8''#encodeForUrl( request.response.filename )#"
+		value = "#request.response.contentDisposition#; filename=""#e4u( request.response.filename )#""; filename*=UTF-8''#e4u( request.response.filename )#"
 	);
 	// Reset the output buffer.
 	cfcontent(

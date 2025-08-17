@@ -2,11 +2,11 @@
 <cfoutput>
 
 	<h1>
-		#encodeForHtml( title )#
+		#e( title )#
 	</h1>
 
 	<p>
-		Executed task: #encodeForHtml( taskID )#
+		Executed task: #e( taskID )#
 	</p>
 
 </cfoutput>

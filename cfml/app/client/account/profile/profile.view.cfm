@@ -20,7 +20,7 @@
 					Email:
 				</div>
 				<div class="uiField__content">
-					#encodeForHtml( user.email )#
+					#e( user.email )#
 				</div>
 			</div>
 
@@ -33,7 +33,7 @@
 						id="form--name"
 						type="text"
 						name="name"
-						value="#encodeForHtmlAttribute( form.name )#"
+						value="#e4a( form.name )#"
 						maxlength="50"
 						class="uiInput isFull"
 					/>

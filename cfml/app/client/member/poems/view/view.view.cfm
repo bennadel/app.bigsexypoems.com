@@ -4,7 +4,7 @@
 	<article class="uiFlow">
 
 		<h1>
-			#encodeForHtml( poem.name )#
+			#e( poem.name )#
 		</h1>
 
 		<p>
@@ -19,7 +19,7 @@
 
 		<hr />
 
-		<pre>#encodeForHtml( poem.content )#</pre>
+		<pre>#e( poem.content )#</pre>
 
 	</article>
 

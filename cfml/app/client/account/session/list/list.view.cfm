@@ -4,7 +4,7 @@
 	<article class="uiFlow uiReadableWidth">
 
 		<h1>
-			#encodeForHtml( title )#
+			#e( title )#
 		</h1>
 
 		<p>
@@ -51,7 +51,7 @@
 					#numberFormat( entry.requestCount )#
 				</td>
 				<td>
-					<a href="https://ipinfo.io/#encodeForUrl( entry.ipAddress )#" target="_blank">#encodeForHtml( entry.ipAddress )#</a>
+					<a href="https://ipinfo.io/#e4u( entry.ipAddress )#" target="_blank">#e( entry.ipAddress )#</a>
 				</td>
 				<td>
 					<cfif entry.isCurrent>
@@ -61,7 +61,7 @@
 				<td>
 					<form method="post" action="#request.postBackAction#">
 						<cfmodule template="/client/_shared/tag/xsrf.cfm">
-						<input type="hidden" name="sessionID" value="#encodeForHtmlAttribute( entry.id )#" />
+						<input type="hidden" name="sessionID" value="#e4a( entry.id )#" />
 
 						<button type="submit" name="action" value="endSession" class="uiButton">
 							End Session

@@ -4,11 +4,11 @@
 	<article class="uiFlow">
 
 		<h1>
-			#encodeForHtml( title )#
+			#e( title )#
 		</h1>
 
 		<p>
-			#encodeForHtml( message )#
+			#e( message )#
 		</p>
 
 		<hr class="uiRule" />

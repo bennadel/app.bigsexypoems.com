@@ -56,7 +56,7 @@
 	private string function getInitUrl() {
 
 		var currentUrl = requestMetadata.getUrl();
-		var flag = "init=#encodeForUrl( config.initPassword )#";
+		var flag = "init=#e4u( config.initPassword )#";
 		var flagPattern = "[?&]init=";
 
 		// If query-string already contains init flag, just return as-is.

@@ -4,13 +4,13 @@
 	<article class="uiFlow">
 
 		<h1>
-			#encodeForHtml( title )#
+			#e( title )#
 		</h1>
 
-		<pre>#encodeForHtml( poem.content )#</pre>
+		<pre>#e( poem.content )#</pre>
 
 		<p>
-			&mdash; <em>#encodeForHtml( user.name )#</em>
+			&mdash; <em>#e( user.name )#</em>
 		</p>
 
 	</article>

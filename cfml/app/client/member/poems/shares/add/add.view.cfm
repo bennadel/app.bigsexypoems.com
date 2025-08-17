@@ -4,7 +4,7 @@
 	<article class="uiFlow uiReadableWidth">
 
 		<h1>
-			#encodeForHtml( title )#
+			#e( title )#
 		</h1>
 
 		<cfmodule

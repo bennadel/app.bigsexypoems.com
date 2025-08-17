@@ -4,7 +4,7 @@
 	<article class="uiFlow uiReadableWidth">
 
 		<h1>
-			#encodeForHtml( title )#
+			#e( title )#
 		</h1>
 
 		<cfmodule
@@ -24,7 +24,7 @@
 						id="form--name"
 						type="text"
 						name="name"
-						value="#encodeForHtmlAttribute( form.name )#"
+						value="#e4a( form.name )#"
 						maxlength="255"
 						class="uiInput isFull"
 					/>
@@ -40,8 +40,7 @@
 						id="form--content"
 						name="content"
 						maxlength="3000"
-						class="uiTextarea"
-					>#encodeForHtml( form.content )#</textarea>
+						class="uiTextarea">#e( form.content )#</textarea>
 				</div>
 			</div>
 

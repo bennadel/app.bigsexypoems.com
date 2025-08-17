@@ -4,7 +4,7 @@
 	<article class="uiFlow">
 
 		<h1>
-			#encodeForHtml( title )#
+			#e( title )#
 		</h1>
 
 		<p>
@@ -26,7 +26,7 @@
 			<cfloop array="#poems#" item="poem">
 				<tr>
 					<td>
-						<a #ui.attrHref( "member.poems.view", "poemID", poem.id )#>#encodeForHtml( poem.name )#</a>
+						<a #ui.attrHref( "member.poems.view", "poemID", poem.id )#>#e( poem.name )#</a>
 						(
 							<a #ui.attrHref( "member.poems.edit", "poemID", poem.id )#>Edit</a>,
 							<a #ui.attrHref( "member.poems.delete", "poemID", poem.id )#>Delete</a>

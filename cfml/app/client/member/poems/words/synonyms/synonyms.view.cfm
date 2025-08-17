@@ -8,13 +8,13 @@
 			<cfloop array="#groups#" item="group">
 
 				<h3>
-					#encodeForHtml( group.label )#
+					#e( group.label )#
 				</h3>
 
 				<ul>
 					<cfloop array="#group.results#" item="result">
 						<li>
-							#encodeForHtml( result.word )#.
+							#e( result.word )#.
 						</li>
 					</cfloop>
 				</ul>

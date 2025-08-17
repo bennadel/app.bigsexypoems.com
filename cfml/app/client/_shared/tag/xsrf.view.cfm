@@ -3,8 +3,8 @@
 	<input type="hidden" name="submitted" value="true" />
 	<input
 		type="hidden"
-		name="#encodeForHtmlAttribute( challengeName )#"
-		value="#encodeForHtmlAttribute( challengeToken  )#"
+		name="#e4a( challengeName )#"
+		value="#e4a( challengeToken  )#"
 	/>
 
 </cfoutput>

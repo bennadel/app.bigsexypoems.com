@@ -8,10 +8,10 @@
 		izm317 #attributes.xClassToken#
 		class="flash-message #attributes.xClass#">
 
-		#encodeForHtml( flashResponse.message )#
+		#e( flashResponse.message )#
 
 		<cfif flashResponse.link.exists>
-			<a href="#encodeForHtmlAttribute( flashResponse.link.href )#">#encodeForHtml( flashResponse.link.text )#</a>
+			<a href="#e4a( flashResponse.link.href )#">#e( flashResponse.link.text )#</a>
 		</cfif>
 	</p>
 

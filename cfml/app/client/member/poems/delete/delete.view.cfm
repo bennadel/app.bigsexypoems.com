@@ -4,7 +4,7 @@
 	<article class="uiFlow uiReadableWidth">
 
 		<h1>
-			#encodeForHtml( title )#
+			#e( title )#
 		</h1>
 
 		<p>
@@ -24,7 +24,7 @@
 					Name:
 				</label>
 				<div class="uiField__content">
-					#encodeForHtml( poem.name )#
+					#e( poem.name )#
 				</div>
 			</div>
 

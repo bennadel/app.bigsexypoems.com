@@ -110,7 +110,7 @@
 						You're logged-in as:
 					</span>
 					<span mpjwb9 class="account__email">
-						#encodeForHtml( user.email )#
+						#e( user.email )#
 					</span>
 					<a #ui.attrHref( "auth.logout" )# mpjwb9 class="account__logout">
 						Logout

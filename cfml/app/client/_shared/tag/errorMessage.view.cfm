@@ -8,7 +8,7 @@
 		pm14ud #attributes.xClassToken#
 		class="error-message #attributes.xClass#">
 
-		#encodeForHtml( message )#
+		#e( message )#
 
 		<!--- So that the top of the message doesn't butt-up against the viewport. --->
 		<span
