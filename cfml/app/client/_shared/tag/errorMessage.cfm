@@ -1,5 +1,8 @@
 <cfscript>
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	param name="attributes.message" type="string" default="";
 	param name="attributes.response" type="any" default="";
 	param name="attributes.xClass" type="string" default="";

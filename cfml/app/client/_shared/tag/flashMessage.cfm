@@ -1,5 +1,8 @@
 <cfscript>
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	flashTranslator = request.ioc.get( "core.lib.web.FlashTranslator" );
 	logger = request.ioc.get( "core.lib.util.Logger" );
 	ui = request.ioc.get( "core.lib.web.UI" );
