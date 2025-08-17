@@ -14,20 +14,6 @@ component
 
 
 	/**
-	* I clamp the given value to the given bounds.
-	*/
-	public numeric function clamp(
-		required numeric value,
-		required numeric minValue,
-		required numeric maxValue
-		) {
-
-		return max( min( value, maxValue ), minValue );
-
-	}
-
-
-	/**
 	* I return an abbreviated, flattened version of the given component metadata.
 	*/
 	public struct function getFlatMetadataIndex( required any input ) {

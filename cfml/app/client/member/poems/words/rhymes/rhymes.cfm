@@ -4,7 +4,6 @@
 	include "/core/cfmlx.cfm";
 
 	ui = request.ioc.get( "core.lib.web.UI" );
-	utilities = request.ioc.get( "core.lib.util.Utilities" );
 	wordService = request.ioc.get( "core.lib.util.WordService" );
 
 	// ------------------------------------------------------------------------------- //
@@ -16,7 +15,7 @@
 
 	partial = getPrimary(
 		word = url.word,
-		limit = utilities.clamp( url.limit, 50, 500 ),
+		limit = clamp( url.limit, 50, 500 ),
 		groupBy = url.groupBy
 	);
 	groups = partial.groups;
