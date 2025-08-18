@@ -7,7 +7,7 @@
 
 	switch ( router.next() ) {
 		case "tasks":
-			cfmodule( template = "./tasks/tasks.cfm" );
+			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

@@ -44,19 +44,11 @@
 
 		switch ( router.next( "member" ) ) {
 			case "account":
-				cfmodule( template = "./account/account.cfm" );
-			break;
 			case "auth":
-				cfmodule( template = "./auth/auth.cfm" );
-			break;
 			case "member":
-				cfmodule( template = "./member/member.cfm" );
-			break;
 			case "share":
-				cfmodule( template = "./share/share.cfm" );
-			break;
 			case "system":
-				cfmodule( template = "./system/system.cfm" );
+				cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 			break;
 			default:
 				throw( type = "App.Routing.InvalidEvent" );

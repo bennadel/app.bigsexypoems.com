@@ -36,6 +36,7 @@ component {
 				scriptName: scriptName,
 				event: event,
 				queue: duplicate( event ),
+				currentSegment: "",
 				persistedSearchParams: []
 			};
 
@@ -48,20 +49,6 @@ component {
 	// ---
 	// PUBLIC METHODS.
 	// ---
-
-	/**
-	* I return the event segment at the given level, returning the given fallback if the
-	* segment isn't defined yet.
-	*/
-	public string function at(
-		required numeric level,
-		string fallback = ""
-		) {
-
-		return ( $variables().event[ level ] ?: fallback );
-
-	}
-
 
 	/**
 	* I return the post-back value for form action attributes. This URL is encoded and is
@@ -186,13 +173,12 @@ component {
 		// Note: this isn't thread-safe; however, since the code is for routing, we can
 		// implicitly guarantee that it will only ever be accessed by one point of control
 		// in a given request.
-		if ( $variables().queue.isDefined( 1 ) ) {
+		var segment = $variables().currentSegment = $variables().queue.isDefined( 1 )
+			? $variables().queue.shift()
+			: fallback
+		;
 
-			return $variables().queue.shift();
-
-		}
-
-		return fallback;
+		return segment;
 
 	}
 
@@ -235,6 +221,16 @@ component {
 			);
 
 		}
+
+	}
+
+
+	/**
+	* I return the current event segment as of the latest route traversal.
+	*/
+	public string function segment() {
+
+		return $variables().currentSegment;
 
 	}
 

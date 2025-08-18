@@ -16,10 +16,8 @@
 
 	switch ( router.next( "profile" ) ) {
 		case "profile":
-			cfmodule( template = "./profile/profile.cfm" );
-		break;
 		case "session":
-			cfmodule( template = "./session/session.cfm" );
+			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

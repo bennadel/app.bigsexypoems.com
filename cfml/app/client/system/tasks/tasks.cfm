@@ -7,10 +7,8 @@
 
 	switch ( router.next() ) {
 		case "all":
-			cfmodule( template = "./all/all.cfm" );
-		break;
 		case "one":
-			cfmodule( template = "./one/one.cfm" );
+			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

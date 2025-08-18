@@ -9,7 +9,7 @@
 
 	switch ( router.next( "list" ) ) {
 		case "list":
-			cfmodule( template = "./list/list.cfm" );
+			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

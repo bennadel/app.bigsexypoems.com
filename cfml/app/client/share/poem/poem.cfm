@@ -52,7 +52,7 @@
 
 	switch ( router.next( "view" ) ) {
 		case "view":
-			cfmodule( template = "./view/view.cfm" );
+			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

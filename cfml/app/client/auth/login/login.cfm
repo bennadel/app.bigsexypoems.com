@@ -7,13 +7,9 @@
 
 	switch ( router.next( "request" ) ) {
 		case "request":
-			cfmodule( template = "./request/request.cfm" );
-		break;
 		case "sent":
-			cfmodule( template = "./sent/sent.cfm" );
-		break;
 		case "verify":
-			cfmodule( template = "./verify/verify.cfm" );
+			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

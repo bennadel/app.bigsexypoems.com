@@ -7,7 +7,7 @@
 
 	switch ( router.next() ) {
 		case "poem":
-			cfmodule( template = "./poem/poem.cfm" );
+			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

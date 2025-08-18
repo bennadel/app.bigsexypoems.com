@@ -7,13 +7,9 @@
 
 	switch ( router.next( "editor" ) ) {
 		case "editor":
-			cfmodule( template = "./editor.cfm" );
-		break;
 		case "rhymes":
-			cfmodule( template = "./rhymes.cfm" );
-		break;
 		case "synonyms":
-			cfmodule( template = "./synonyms.cfm" );
+			cfmodule( template = "./#router.segment()#.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

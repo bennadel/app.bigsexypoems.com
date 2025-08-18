@@ -16,10 +16,8 @@
 
 	switch ( router.next( "home" ) ) {
 		case "home":
-			cfmodule( template = "./home/home.cfm" );
-		break;
 		case "poems":
-			cfmodule( template = "./poems/poems.cfm" );
+			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );
