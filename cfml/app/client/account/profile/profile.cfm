@@ -13,8 +13,8 @@
 
 	param name="form.name" type="string" default="";
 
-	payload = getPrimary( request.authContext );
-	user = payload.user;
+	partial = getPartial( request.authContext );
+	user = partial.user;
 	title = "Profile";
 	errorResponse = "";
 
@@ -54,9 +54,9 @@
 	// ------------------------------------------------------------------------------- //
 
 	/**
-	* I provide the primary partial for the view.
+	* I get the partial data for the view.
 	*/
-	private struct function getPrimary( required struct authContext ) {
+	private struct function getPartial( required struct authContext ) {
 
 		return {
 			user: authContext.user

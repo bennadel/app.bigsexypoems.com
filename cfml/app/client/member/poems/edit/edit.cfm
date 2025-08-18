@@ -16,11 +16,11 @@
 	param name="form.name" type="string" default="";
 	param name="form.content" type="string" default="";
 
-	payload = getPrimary(
+	partial = getPartial(
 		authContext = request.authContext,
 		poemID = val( url.poemID )
 	);
-	poem = payload.poem;
+	poem = partial.poem;
 
 	title = "Update Poem";
 	errorResponse = "";
@@ -63,9 +63,9 @@
 	// ------------------------------------------------------------------------------- //
 
 	/**
-	* I provide the primary partial for the view.
+	* I get the partial data for the view.
 	*/
-	private struct function getPrimary(
+	private struct function getPartial(
 		required struct authContext,
 		required numeric poemID
 		) {

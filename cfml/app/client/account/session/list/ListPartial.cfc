@@ -10,7 +10,7 @@ component output = false {
 	/**
 	* I get the primary data for the partial.
 	*/
-	public struct function getPrimary( required struct authContext ) {
+	public struct function getPartial( required struct authContext ) {
 
 		var sessions = getSessions(
 			userID = authContext.user.id,

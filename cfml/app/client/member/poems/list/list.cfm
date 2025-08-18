@@ -10,8 +10,8 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	payload = getPrimary( authContext = request.authContext );
-	poems = payload.poems;
+	partial = getPartial( authContext = request.authContext );
+	poems = partial.poems;
 	title = "Poems";
 
 	request.response.title = title;
@@ -23,9 +23,9 @@
 	// ------------------------------------------------------------------------------- //
 
 	/**
-	* I provide the primary partial for the view.
+	* I get the partial data for the view.
 	*/
-	private struct function getPrimary( required struct authContext ) {
+	private struct function getPartial( required struct authContext ) {
 
 		var poems = poemModel
 			.getByFilter( userID = authContext.user.id )

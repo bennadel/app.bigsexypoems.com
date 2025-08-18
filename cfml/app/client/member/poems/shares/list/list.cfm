@@ -12,12 +12,12 @@
 
 	param name="url.poemID" type="numeric";
 
-	payload = getPrimary(
+	partial = getPartial(
 		authContext = request.authContext,
 		poemID = val( url.poemID )
 	);
-	poem = payload.poem;
-	shares = payload.shares;
+	poem = partial.poem;
+	shares = partial.shares;
 	title = poem.name;
 
 	request.response.title = title;
@@ -28,9 +28,9 @@
 	// ------------------------------------------------------------------------------- //
 
 	/**
-	* I provide the primary partial for the view.
+	* I get the partial data for the view.
 	*/
-	private struct function getPrimary(
+	private struct function getPartial(
 		required struct authContext,
 		required numeric poemID
 		) {

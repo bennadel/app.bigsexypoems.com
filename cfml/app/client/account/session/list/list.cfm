@@ -15,9 +15,9 @@
 	param name="form.action" type="string" default="";
 	param name="form.sessionID" type="numeric" default=0;
 
-	payload = partial.getPrimary( request.authContext );
+	partial = partial.getPartial( request.authContext );
 	title = "Active Sessions";
-	sessions = payload.sessions;
+	sessions = partial.sessions;
 	errorResponse = "";
 
 	request.response.title = title;

@@ -15,12 +15,12 @@
 	param name="url.shareID" type="numeric";
 	param name="form.isConfirmed" type="boolean" default=false;
 
-	payload = getPrimary(
+	partial = getPartial(
 		authContext = request.authContext,
 		shareID = val( url.shareID )
 	);
-	poem = payload.poem;
-	share = payload.share;
+	poem = partial.poem;
+	share = partial.share;
 	title = "Delete Share";
 	errorResponse = "";
 
@@ -61,9 +61,9 @@
 	// ------------------------------------------------------------------------------- //
 
 	/**
-	* I provide the primary partial for the view.
+	* I get the partial data for the view.
 	*/
-	private struct function getPrimary(
+	private struct function getPartial(
 		required struct authContext,
 		required numeric shareID
 		) {
