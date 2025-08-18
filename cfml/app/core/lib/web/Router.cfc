@@ -4,6 +4,10 @@ component {
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="site" ioc:get="config.site";
 
+	// ---
+	// LIFE-CYCLE METHODS.
+	// ---
+
 	/**
 	* I set up the core request structure used internally by the router.
 	*/

@@ -7,6 +7,8 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
+	// Note: this is the one piece outside the core try/catch because it's the one piece
+	// of data that I want any other view to be able to depend on.
 	request.response = {
 		statusCode: 200,
 		statusText: "OK"
@@ -22,12 +24,12 @@
 		// itself. To do this, we're going to use the CGI.QUERY_STRING value to drive form
 		// actions, with any additional data being provided as form inputs.
 		request.postBackAction = router.buildPostBackAction();
-
-		// --------------------------------------------------------------------------- //
-		// --------------------------------------------------------------------------- //
-
 		request.isGet = requestMetadata.isGet();
 		request.isPost = requestMetadata.isPost();
+
+		// --------------------------------------------------------------------------- //
+		// --------------------------------------------------------------------------- //
+
 		request.xsrfToken = xsrfTokens.ensureCookie();
 
 		// All form submissions must include a valid XSRF token.
