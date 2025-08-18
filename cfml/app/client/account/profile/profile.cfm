@@ -21,6 +21,14 @@
 	request.response.title = title;
 	request.response.activeNav = "account.profile";
 
+	// Initialize form.
+	if ( ! form.submitted ) {
+
+		form.name = user.name;
+
+	}
+
+	// Process form.
 	if ( form.submitted ) {
 
 		try {
@@ -41,10 +49,6 @@
 			errorResponse = requestHelper.processError( error );
 
 		}
-
-	} else {
-
-		form.name = user.name;
 
 	}
 

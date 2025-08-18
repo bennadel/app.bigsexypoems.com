@@ -27,6 +27,15 @@
 
 	request.response.title = title;
 
+	// Initialize form.
+	if ( ! form.submitted ) {
+
+		form.name = poem.name;
+		form.content = poem.content;
+
+	}
+
+	// Process form.
 	if ( form.submitted ) {
 
 		try {
@@ -49,11 +58,6 @@
 			errorResponse = requestHelper.processError( error );
 
 		}
-
-	} else {
-
-		form.name = poem.name;
-		form.content = poem.content;
 
 	}
 
