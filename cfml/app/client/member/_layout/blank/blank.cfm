@@ -13,6 +13,6 @@
 		statusText = request.response.statusText
 	);
 
-	writeOutput( request.response.body );
+	echo( request.response.body );
 
 </cfscript>

@@ -12,6 +12,8 @@
 			|
 			<a #ui.attrHref( "member.poems.edit", "poemID", poem.id )#>Edit</a>
 			|
+			<a #ui.attrHref( "member.poems.compose", "poemID", poem.id )#>Compose</a>
+			|
 			<a #ui.attrHref( "member.poems.delete", "poemID", poem.id )#>Delete</a>
 			|
 			<a #ui.attrHref( "member.poems.shares", "poemID", poem.id )#>Share Links</a>

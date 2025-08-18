@@ -13,37 +13,14 @@
 	param name="url.limit" type="numeric";
 	param name="url.groupBy" type="string";
 
-	partial = getPrimary(
+	groups = wordService.getMeansLike(
 		word = url.word,
 		limit = clamp( url.limit, 50, 500 ),
 		groupBy = url.groupBy
 	);
-	groups = partial.groups;
 
-	include "./rhymes.view.cfm";
+	request.response.template = "blank";
 
-	// ------------------------------------------------------------------------------- //
-	// ------------------------------------------------------------------------------- //
-
-	/**
-	* I provide the primary partial for the view.
-	*/
-	private struct function getPrimary(
-		required string word,
-		required numeric limit,
-		required string groupBy
-		) {
-
-		var groups = wordService.getRhyme(
-			word = word,
-			limit = limit,
-			groupBy = groupBy
-		);
-
-		return {
-			groups
-		};
-
-	}
+	include "./synonyms.view.cfm";
 
 </cfscript>

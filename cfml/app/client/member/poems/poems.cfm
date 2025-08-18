@@ -9,6 +9,9 @@
 		case "add":
 			cfmodule( template = "./add/add.cfm" );
 		break;
+		case "compose":
+			cfmodule( template = "./compose/compose.cfm" );
+		break;
 		case "edit":
 			cfmodule( template = "./edit/edit.cfm" );
 		break;
@@ -23,9 +26,6 @@
 		break;
 		case "view":
 			cfmodule( template = "./view/view.cfm" );
-		break;
-		case "words":
-			cfmodule( template = "./words/words.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );
