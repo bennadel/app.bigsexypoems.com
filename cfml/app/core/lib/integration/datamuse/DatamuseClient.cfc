@@ -10,7 +10,6 @@ component
 
 	// Define properties for dependency-injection.
 	property name="gateway" ioc:type="core.lib.integration.datamuse.DatamuseGateway";
-	property name="httpUtilities" ioc:type="core.lib.util.HttpUtilities";
 
 	// ---
 	// PUBLIC METHODS.
@@ -24,17 +23,14 @@ component
 		required numeric limit
 		) {
 
-		return gateway
-			.makeRequest(
-				resource = "words",
-				searchParams = {
-					ml: testWord( word ),
-					md: "fps", // Frequency, parts of speech, syllable count.
-					max: limit
-				}
-			)
-			.filter( ( result ) => normalizeResult( result ) )
-		;
+		return makeRequestAndNormalizeResults(
+			resource = "words",
+			searchParams = {
+				ml: testWord( word ),
+				md: "fps", // Frequency, parts of speech, syllable count.
+				max: limit
+			}
+		);
 
 	}
 
@@ -47,17 +43,14 @@ component
 		required numeric limit
 		) {
 
-		return gateway
-			.makeRequest(
-				resource = "words",
-				searchParams = {
-					rel_rhy: testWord( word ),
-					md: "fps", // Frequency, parts of speech, syllable count.
-					max: limit
-				}
-			)
-			.filter( ( result ) => normalizeResult( result ) )
-		;
+		return makeRequestAndNormalizeResults(
+			resource = "words",
+			searchParams = {
+				rel_rhy: testWord( word ),
+				md: "fps", // Frequency, parts of speech, syllable count.
+				max: limit
+			}
+		);
 
 	}
 
@@ -70,18 +63,15 @@ component
 		required numeric limit
 		) {
 
-		return gateway
-			.makeRequest(
-				resource = "words",
-				searchParams = {
-					sp: testWord( word ),
-					qe: "sp",
-					md: "fps", // Frequency, parts of speech, syllable count.
-					max: 1
-				}
-			)
-			.filter( ( result ) => normalizeResult( result ) )
-		;
+		return makeRequestAndNormalizeResults(
+			resource = "words",
+			searchParams = {
+				sp: testWord( word ),
+				qe: "sp",
+				md: "fps", // Frequency, parts of speech, syllable count.
+				max: 1
+			}
+		);
 
 	}
 
@@ -95,23 +85,37 @@ component
 		required numeric limit
 		) {
 
-		return gateway
-			.makeRequest(
-				resource = "words",
-				searchParams = {
-					rel_syn: testWord( word ),
-					md: "fps", // Frequency, parts of speech, syllable count.
-					max: limit
-				}
-			)
-			.filter( ( result ) => normalizeResult( result ) )
-		;
+		return makeRequestAndNormalizeResults(
+			resource = "words",
+			searchParams = {
+				rel_syn: testWord( word ),
+				md: "fps", // Frequency, parts of speech, syllable count.
+				max: limit
+			}
+		);
 
 	}
 
 	// ---
 	// PRIVATE METHODS.
 	// ---
+
+	/**
+	* I make the request to the given resource and then filter and normalize the results
+	* into a common format.
+	*/
+	private array function makeRequestAndNormalizeResults(
+		required string resource,
+		required struct searchParams
+		) {
+
+		return gateway
+			.makeRequest( resource, searchParams )
+			.filter( ( result ) => normalizeResult( result ) )
+		;
+
+	}
+
 
 	/**
 	* I normalize the given result, making easier-to-consume data.
