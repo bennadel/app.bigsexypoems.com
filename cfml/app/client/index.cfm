@@ -1,12 +1,12 @@
 <cfscript>
 
+	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	xsrfTokens = request.ioc.get( "core.lib.web.XsrfTokens" );
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	// The `response` object is for HTTP-level configuration.
 	request.response = {
 		statusCode: 200,
 		statusText: "OK"
@@ -20,19 +20,18 @@
 		// an error message to the user (after the form has been submitted), the URL is
 		// never showing as "index.cfm"; but, rather, has the original URL of the page
 		// itself. To do this, we're going to use the CGI.QUERY_STRING value to drive form
-		// actions, with any additional form data (ex, "submitted") being provided as
-		// additional form inputs.
+		// actions, with any additional data being provided as form inputs.
 		request.postBackAction = router.buildPostBackAction();
 
 		// --------------------------------------------------------------------------- //
 		// --------------------------------------------------------------------------- //
 
-		param name="form.submitted" type="boolean" default=false;
-
+		request.isGet = requestMetadata.isGet();
+		request.isPost = requestMetadata.isPost();
 		request.xsrfToken = xsrfTokens.ensureCookie();
 
 		// All form submissions must include a valid XSRF token.
-		if ( form.submitted ) {
+		if ( request.isPost ) {
 
 			xsrfTokens.testRequest();
 

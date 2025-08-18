@@ -27,16 +27,14 @@
 
 	request.response.title = title;
 
-	// Initialize form.
-	if ( ! form.submitted ) {
+	if ( request.isGet ) {
 
 		form.name = poem.name;
 		form.content = poem.content;
 
 	}
 
-	// Process form.
-	if ( form.submitted ) {
+	if ( request.isPost ) {
 
 		try {
 

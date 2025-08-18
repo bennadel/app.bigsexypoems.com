@@ -22,7 +22,7 @@
 
 	request.response.title = title;
 
-	if ( form.submitted ) {
+	if ( request.isPost ) {
 
 		try {
 

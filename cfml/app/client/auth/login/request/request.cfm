@@ -38,7 +38,7 @@
 
 	request.response.title = "Request Login / Sign-Up";
 
-	if ( form.submitted && form.email.len() ) {
+	if ( request.isPost && form.email.len() ) {
 
 		try {
 

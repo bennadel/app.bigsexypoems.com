@@ -27,7 +27,7 @@
 
 	errorMessage = "";
 
-	if ( form.submitted ) {
+	if ( request.isPost ) {
 
 		try {
 

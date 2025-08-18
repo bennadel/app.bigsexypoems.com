@@ -21,15 +21,13 @@
 	request.response.title = title;
 	request.response.activeNav = "account.profile";
 
-	// Initialize form.
-	if ( ! form.submitted ) {
+	if ( request.isGet ) {
 
 		form.name = user.name;
 
 	}
 
-	// Process form.
-	if ( form.submitted ) {
+	if ( request.isPost ) {
 
 		try {
 

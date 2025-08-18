@@ -1,6 +1,5 @@
 <cfoutput>
 
-	<input type="hidden" name="submitted" value="true" />
 	<input
 		type="hidden"
 		name="#e4a( challengeName )#"
