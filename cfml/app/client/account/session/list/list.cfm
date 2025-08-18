@@ -3,11 +3,11 @@
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
 
-	partial = request.ioc.get( "client.account.session.list.ListPartial" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	sessionService = request.ioc.get( "core.lib.service.session.SessionService" );
 	ui = request.ioc.get( "core.lib.web.UI" );
+	viewPartial = request.ioc.get( "client.account.session.list.ListPartial" );
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
@@ -15,7 +15,7 @@
 	param name="form.action" type="string" default="";
 	param name="form.sessionID" type="numeric" default=0;
 
-	partial = partial.getPartial( request.authContext );
+	partial = viewPartial.getPartial( request.authContext );
 	title = "Active Sessions";
 	sessions = partial.sessions;
 	errorResponse = "";
