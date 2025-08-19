@@ -2,7 +2,6 @@
 
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
-	xsrfTokens = request.ioc.get( "core.lib.web.XsrfTokens" );
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
@@ -30,23 +29,14 @@
 		// --------------------------------------------------------------------------- //
 		// --------------------------------------------------------------------------- //
 
-		request.xsrfToken = xsrfTokens.ensureCookie();
-
-		// All form submissions must include a valid XSRF token.
-		if ( request.isPost ) {
-
-			xsrfTokens.testRequest();
-
-		}
-
-		// --------------------------------------------------------------------------- //
-		// --------------------------------------------------------------------------- //
-
 		switch ( router.next( "member" ) ) {
 			case "account":
 			case "auth":
 			case "member":
 			case "share":
+				cfmodule( template = "/client/_shared/logic/xsrfChallenge.cfm" );
+				cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
+			break;
 			case "system":
 				cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 			break;
