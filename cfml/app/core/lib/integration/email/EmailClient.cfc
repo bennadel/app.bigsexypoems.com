@@ -24,21 +24,21 @@ component
 		boolean async = false
 		) {
 
-		var message = new Mail(
+		cfmail(
 			to = to,
 			from = from,
 			subject = subject,
-			body = body,
 			type = type,
 			spoolEnable = async
-		);
+			) {
 
-		message.addParam(
-			name = "X-PM-Tag",
-			value = tag
-		);
+			cfmailparam(
+				name = "X-PM-Tag",
+				value = tag
+			);
 
-		message.send();
+			writeOutput( body );
+		}
 
 	}
 
