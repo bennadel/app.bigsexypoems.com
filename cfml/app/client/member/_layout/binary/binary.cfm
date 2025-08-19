@@ -4,7 +4,6 @@
 	include "/core/cfmlx.cfm";
 
 	param name="request.response.statusCode" type="numeric" default=200;
-	param name="request.response.statusText" type="string" default="OK";
 	param name="request.response.contentDisposition" type="string" default="attachment";
 	param name="request.response.etag" type="string" default="";
 	param name="request.response.maxAgeInDays" type="numeric" default=0;
@@ -13,10 +12,7 @@
 	param name="request.response.body" type="binary";
 
 	// Override the response status code.
-	cfheader(
-		statusCode = request.response.statusCode,
-		statusText = request.response.statusText
-	);
+	cfheader( statusCode = request.response.statusCode );
 
 	if ( request.response.etag.len() ) {
 

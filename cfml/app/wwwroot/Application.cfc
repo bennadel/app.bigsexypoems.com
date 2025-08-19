@@ -225,7 +225,7 @@ component
 		// request re-trigger the application start-up.
 		if ( isNull( application.isBootstrapped ) ) {
 
-			cfheader( statusCode = 503, statusText = "Service Unavailable" );
+			cfheader( statusCode = 503 );
 			writeOutput( "<h1> Service Unavailable </h1>" );
 			writeOutput( "<p> Please try back in a few minutes. </p>" );
 
@@ -254,7 +254,7 @@ component
 		if ( ! this.config.isLive ) {
 
 			// We are local, dump the error out for debugging.
-			cfheader( statusCode = 500, statusText = "Server Error" );
+			cfheader( statusCode = 500 );
 			writeDump( var = exception, top = 5 );
 			abort;
 

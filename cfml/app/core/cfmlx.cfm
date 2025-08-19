@@ -438,22 +438,6 @@
 
 
 	/**
-	* I polyfill the structValueArray() function in Adobe ColdFusion.
-	*/
-	private array function structValueArray( required struct input ) {
-
-		return input.keyArray().map(
-			( key ) => {
-
-				return input[ key ];
-
-			}
-		);
-
-	}
-
-
-	/**
 	* I polyfill the systemOutput() function in Adobe ColdFusion.
 	*/
 	private void function systemOutputPolyfill(

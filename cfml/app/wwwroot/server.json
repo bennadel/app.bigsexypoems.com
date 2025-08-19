@@ -1,7 +1,7 @@
 {
 	"name": "bigsexypoems-dev",
 	"app": {
-		"cfengine": "adobe@2021.0.21"
+		"cfengine": "adobe@2025.0.3"
 	},
 	"profile": "prod",
 	"web": {
@@ -21,6 +21,6 @@
 		"blockFlashRemoting": true
 	},
 	"scripts": {
-		"onServerInitialInstall":"cfpm install debugger,mail,scheduler"
+		"onServerInitialInstall":"cfpm install debugger,graphqlclient,mail,scheduler"
 	}
 }

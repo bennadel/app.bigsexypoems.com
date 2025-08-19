@@ -1,1 +1,1 @@
-FROM ortussolutions/commandbox:latest
+FROM ortussolutions/commandbox:jdk17

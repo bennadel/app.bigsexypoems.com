@@ -135,7 +135,12 @@ component
 			sendToDevLog([
 				error: structCopy( error ),
 				message: message,
-				data: data
+				data: data,
+				context: {
+					cgi,
+					url,
+					form
+				}
 			]);
 			return;
 

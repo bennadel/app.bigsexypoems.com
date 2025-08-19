@@ -11,7 +11,7 @@
 	// of data that I want any other view to be able to depend on.
 	request.response = {
 		statusCode: 200,
-		statusText: "OK"
+		statusText: "OK" // CFHeader support removed in Adobe ColdFusion 2025.
 	};
 
 	try {
