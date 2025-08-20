@@ -38,7 +38,6 @@ component
 		"/core": "#this.approot#/core",
 		"/db": "#this.approot#/db",
 		"/email": "#this.approot#/email",
-		"/javaloader": "#this.approot#/core/vendor/javaLoader",
 		"/log": "#this.approot#/log",
 		"/upload": "#this.approot#/upload",
 		"/wwwroot": "#this.approot#/wwwroot"

@@ -4,17 +4,16 @@ component
 	{
 
 	// Define properties for dependency-injection.
-	property name="classLoader" ioc:skip;
-	property name="classLoaderFactory" ioc:type="core.lib.classLoader.ClassLoaderFactory";
+	property name="jarPaths" ioc:skip;
 
 	/**
-	* I initialize the class loader factory.
+	* I initialize the class loader.
 	*/
-	public void function $init() {
+	public void function init() {
 
-		variables.classLoader = classLoaderFactory.createClassLoader([
+		variables.jarPaths = [
 			expandPath( "/core/vendor/jsoup/1.18.3/jsoup-1.18.3.jar" )
-		]);
+		];
 
 	}
 
@@ -27,7 +26,7 @@ component
 	*/
 	public any function create( required string classPath ) {
 
-		return classLoader.create( javaCast( "string", classPath ) );
+		return createObject( "java", classPath, jarPaths );
 
 	}
 

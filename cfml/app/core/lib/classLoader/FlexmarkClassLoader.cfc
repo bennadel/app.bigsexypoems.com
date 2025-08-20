@@ -4,16 +4,15 @@ component
 	{
 
 	// Define properties for dependency-injection.
-	property name="classLoader" ioc:skip;
-	property name="classLoaderFactory" ioc:type="core.lib.classLoader.ClassLoaderFactory";
+	property name="jarPaths" ioc:skip;
 
 	/**
-	* I initialize the class loader factory.
+	* I initialize the class loader.
 	*/
-	public void function $init() {
+	public void function init() {
 
 		// https://mvnrepository.com/artifact/com.vladsch.flexmark/flexmark/0.64.8
-		variables.classLoader = classLoaderFactory.createClassLoader([
+		variables.jarPaths = [
 			expandPath( "/core/vendor/flexmark/0.64.8/annotations-24.0.1.jar" ),
 			expandPath( "/core/vendor/flexmark/0.64.8/autolink-0.6.0.jar" ),
 			expandPath( "/core/vendor/flexmark/0.64.8/flexmark-0.64.8.jar" ),
@@ -31,8 +30,8 @@ component
 			expandPath( "/core/vendor/flexmark/0.64.8/flexmark-util-misc-0.64.8.jar" ),
 			expandPath( "/core/vendor/flexmark/0.64.8/flexmark-util-options-0.64.8.jar" ),
 			expandPath( "/core/vendor/flexmark/0.64.8/flexmark-util-sequence-0.64.8.jar" ),
-			expandPath( "/core/vendor/flexmark/0.64.8/flexmark-util-visitor-0.64.8.jar" )
-		]);
+			expandPath( "/core/vendor/flexmark/0.64.8/flexmark-util-visitor-0.64.8.jar" ),
+		];
 
 	}
 
@@ -45,7 +44,7 @@ component
 	*/
 	public any function create( required string classPath ) {
 
-		return classLoader.create( javaCast( "string", classPath ) );
+		return createObject( "java", classPath, jarPaths );
 
 	}
 
