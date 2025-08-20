@@ -34,9 +34,6 @@
 			case "auth":
 			case "member":
 			case "share":
-				cfmodule( template = "/client/_shared/logic/xsrfChallenge.cfm" );
-				cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
-			break;
 			case "system":
 				cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
 			break;

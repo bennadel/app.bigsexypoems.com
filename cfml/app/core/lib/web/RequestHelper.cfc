@@ -7,6 +7,7 @@ component {
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="router" ioc:type="core.lib.web.Router";
 	property name="sessionService" ioc:type="core.lib.service.session.SessionService";
+	property name="xsrfTokens" ioc:type="core.lib.web.XsrfTokens";
 
 	// ---
 	// LIFE-CYCLE METHODS.
@@ -32,9 +33,9 @@ component {
 	*/
 	public struct function ensureAuthenticatedContext() {
 
-		var authContext = sessionService.getAuthenticationContext();
+		request.authContext = sessionService.getAuthenticationContext();
 
-		if ( ! authContext.session.isAuthenticated ) {
+		if ( ! request.authContext.session.isAuthenticated ) {
 
 			router.goto([
 				event: "auth.login",
@@ -43,7 +44,7 @@ component {
 
 		}
 
-		return authContext;
+		return request.authContext;
 
 	}
 
@@ -54,9 +55,9 @@ component {
 	*/
 	public struct function ensureIdentifiedContext() {
 
-		var authContext = sessionService.getAuthenticationContext();
+		request.authContext = sessionService.getAuthenticationContext();
 
-		if ( ! authContext.session.isIdentified ) {
+		if ( ! request.authContext.session.isIdentified ) {
 
 			router.goto([
 				event: "auth.identify",
@@ -65,7 +66,26 @@ component {
 
 		}
 
-		return authContext;
+		return request.authContext;
+
+	}
+
+
+	/**
+	* I ensure that the current request has an XSRF token cookie; and, that any POST has
+	* the XSRF token challenge.
+	*/
+	public string function ensureXsrfToken() {
+
+		request.xsrfToken = xsrfTokens.ensureCookie();
+
+		if ( request.isPost ) {
+
+			xsrfTokens.testRequest();
+
+		}
+
+		return request.xsrfToken;
 
 	}
 

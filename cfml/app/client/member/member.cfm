@@ -6,8 +6,8 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	// SECURITY: This entire subsystem requires an authenticated user.
-	request.authContext = requestHelper.ensureAuthenticatedContext();
+	requestHelper.ensureXsrfToken();
+	requestHelper.ensureAuthenticatedContext();
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
