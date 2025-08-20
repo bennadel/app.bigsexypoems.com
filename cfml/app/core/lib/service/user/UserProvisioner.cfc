@@ -5,7 +5,6 @@ component {
 	property name="timezoneModel" ioc:type="core.lib.model.user.TimezoneModel";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 	property name="userValidation" ioc:type="core.lib.model.user.UserValidation";
-	property name="utilities" ioc:type="core.lib.util.Utilities";
 
 	// ---
 	// PUBLIC METHODS.
@@ -64,7 +63,7 @@ component {
 		required numeric offsetInMinutes
 		) {
 
-		var name = utilities.getNameFromEmail( email );
+		var name = getNameFromEmail( email );
 		var userID = ensureUser( name, email, offsetInMinutes );
 
 		var user = userModel.get( userID );
@@ -77,6 +76,35 @@ component {
 		}
 
 		return user.id;
+
+	}
+
+	// ---
+	// PRIVATE METHODS.
+	// ---
+
+	/**
+	* I extract a temporary name from the given email address.
+	*/
+	private string function getNameFromEmail(
+		required string email,
+		string fallbackName = "New User"
+		) {
+
+		var name = email
+			.listFirst( "@" )
+			.reReplace( "[._-]+", " ", "all" )
+			.trim()
+			.reReplace( "(?:^|\b)(\S)", "\U\1", "all" )
+		;
+
+		if ( name.len() ) {
+
+			return name.left( 50 );
+
+		}
+
+		return fallbackName;
 
 	}
 
