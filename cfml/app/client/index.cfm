@@ -1,7 +1,18 @@
 <cfscript>
 
+	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
+
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
+	// While these components are all cached in the application scope, they all need to
+	// operate, in part, on requests-scoped variables. As such, we have to initialize the
+	// request-scoped variables at the start of each request.
+	requestMetadata.setupRequest();
+	requestHelper.setupRequest();
+	router.setupRequest();
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //

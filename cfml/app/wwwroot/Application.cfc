@@ -136,22 +136,6 @@ component
 		request.ioc.get( "core.lib.web.ParameterGroupingPolyfill" )
 			.apply()
 		;
-		// Some aspects of the request cannot be accessed asynchronously (inside a thread)
-		// after the request has ended. As such, let's persist some of the data into the
-		// request-scope as needed.
-		request.ioc.get( "core.lib.web.RequestMetadata" )
-			.setupRequest()
-		;
-		// Apply any generic pre-processing to the request.
-		request.ioc.get( "core.lib.web.RequestHelper" )
-			.setupRequest()
-		;
-		// While the router instance is cached in the application scope, it needs to
-		// operate on request-scoped variables. As such, we have to initialize the
-		// request-scoped variables at the start of each request. 
-		request.ioc.get( "core.lib.web.Router" )
-			.setupRequest()
-		;
 
 	}
 
