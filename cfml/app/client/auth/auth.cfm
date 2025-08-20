@@ -14,7 +14,7 @@
 	switch ( router.next( "login" ) ) {
 		case "login":
 		case "logout":
-			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
+			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

@@ -9,7 +9,7 @@
 		case "request":
 		case "sent":
 		case "verify":
-			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
+			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

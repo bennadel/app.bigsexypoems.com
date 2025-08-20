@@ -8,7 +8,7 @@
 	switch ( router.next( "default" ) ) {
 		case "default":
 		case "success":
-			cfmodule( template = "./#router.segment()#/#router.segment()#.cfm" );
+			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

@@ -9,7 +9,7 @@
 		case "editor":
 		case "rhymes":
 		case "synonyms":
-			cfmodule( template = "./#router.segment()#.cfm" );
+			cfmodule( template = router.nextTemplate( false ) );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

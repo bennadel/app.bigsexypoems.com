@@ -184,6 +184,19 @@ component {
 
 
 	/**
+	* I return the next relative template path used by the view routing.
+	*/
+	public string function nextTemplate( boolean nested = true ) {
+
+		return nested
+			? "./#segment()#/#segment()#.cfm"
+			: "./#segment()#.cfm"
+		;
+
+	}
+
+
+	/**
 	* I add a persisted search parameter that will be automatically included when URLs are
 	* generated using the router methods.
 	*/
