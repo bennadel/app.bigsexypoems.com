@@ -20,10 +20,10 @@
 		<thead>
 			<tr>
 				<th>
-					Started
+					Last Activity
 				</th>
 				<th>
-					Last Activity
+					Started
 				</th>
 				<th>
 					Requests
@@ -42,10 +42,10 @@
 		<cfloop array="#sessions#" item="entry">
 			<tr>
 				<td>
-					#ui.userDate( entry.createdAt, "mmm d, yyyy" )#
+					#ui.userDate( entry.lastRequestAt, "mmm d, yyyy" )#
 				</td>
 				<td>
-					#ui.userDate( entry.lastRequestAt, "mmm d, yyyy" )#
+					#ui.userDate( entry.createdAt, "mmm d, yyyy" )#
 				</td>
 				<td>
 					#numberFormat( entry.requestCount )#
