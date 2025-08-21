@@ -5,6 +5,7 @@ component
 
 	// Define properties for dependency-injection.
 	property name="ioc" ioc:type="core.lib.util.Injector";
+	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="magicFunctionName" ioc:skip;
 	property name="magicTokenName" ioc:skip;
 
@@ -241,6 +242,7 @@ component
 	*/
 	private void function logMessage( required string message ) {
 
+		logger.warning( message );
 		systemOutput( message, true );
 
 	}
