@@ -440,7 +440,7 @@
 	/**
 	* I polyfill the systemOutput() function in Adobe ColdFusion.
 	*/
-	private void function systemOutputPolyfill(
+	private void function systemOutput(
 		required any value,
 		boolean addNewline = false, // Ignored.
 		boolean doErrorStream = false // Ignored.

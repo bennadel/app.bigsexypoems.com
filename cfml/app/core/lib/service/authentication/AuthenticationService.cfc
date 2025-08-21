@@ -7,10 +7,12 @@ component {
 	property name="isLive" ioc:get="config.isLive";
 	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="oneTimeTokens" ioc:type="core.lib.util.OneTimeTokens";
+	property name="rateLimitService" ioc:type="core.lib.util.RateLimitService";
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="router" ioc:type="core.lib.web.Router";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
 	property name="site" ioc:get="config.site";
+	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 	property name="userProvisioner" ioc:type="core.lib.service.user.UserProvisioner";
 	property name="userValidation" ioc:type="core.lib.model.user.UserValidation";
 
@@ -69,14 +71,13 @@ component {
 
 		}
 
-		// Todo: implement rate limiting.
-		/*
-		// Since this login workflow is the most likely area of the application be misused
-		// as a malicious attack vector, I want to try and lock it down in a variety of
-		// ways. But, I don't want to negatively impact a user that has already signed-up.
-		// As such, we're going to have different rate-limiting characteristics for a
-		// known user vs. a new user.
-		var maybeUser = userModel.maybeGetByEmail( email );
+		// Since this login workflow is the most likely area of the application to be
+		// misused as a malicious attack vector (it sends out an email to an arbitrary
+		// address), I want to try and lock it down in a variety of ways. But, I don't
+		// want to negatively impact a user that has already signed-up. As such, we're
+		// going to have different rate-limiting characteristics for a known user vs. a
+		// new user.
+		var maybeUser = userModel.maybeGetByFilter( email = email );
 
 		// KNOWN USER rate-limiting.
 		if ( maybeUser.exists ) {
@@ -91,7 +92,6 @@ component {
 			rateLimitService.testRequest( "login-request-by-unknown-email", email );
 
 		}
-		*/
 
 		// Note: the expiration of the one-time token will IMPLICITLY create an overall
 		// expiration for the login URL itself.
@@ -163,8 +163,7 @@ component {
 
 		// Since this login workflow is the most likely point of attack on the system, we
 		// want to limit a malicious actor from pounding the server with guesses.
-		// Todo: implement this.
-		// rateLimitService.testRequest( "login-verify-by-email", email );
+		rateLimitService.testRequest( "login-verify-by-email", email );
 
 		var maybeToken = oneTimeTokens.maybeGetToken( token, email );
 
