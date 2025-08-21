@@ -177,6 +177,10 @@ component
 
 		var error = ( exception.rootCause ?: exception.cause ?: exception );
 
+		// At this point, we have no idea where in the application life-cycle the error
+		// was thrown. We don't even know if the IoC container exists or if the logger
+		// could be created (and, if created, is it bug-free). As such, we're going to try
+		// using the logger and, if it fails, we'll fallback to using a file-based log.
 		try {
 
 			application.ioc
@@ -186,6 +190,8 @@ component
 
 		} catch ( any loggingError ) {
 
+			// The core logger failed, falling back to using a file-based logger so at
+			// least we don't lose critical error information.
 			var logDirectory = this.mappings[ '/log' ];
 			var logFileStub = now().dateTimeFormat( "yyyy-mm-dd-HH-nn-ss-l" );
 
@@ -228,9 +234,9 @@ component
 
 		}
 
-		// Check to see if we are live or not. If we are live then we want to display
-		// the user-friendly error page. However, if we're not live, then we want to
-		// render the error for debugging.
+		// Check to see if we are live or not. If we are live then we want to display the
+		// user-friendly error page. However, if we're not live, then we want to render
+		// the error for debugging.
 		// --
 		// Note: remember that this onError() event handler is only for errors that aren't
 		// caught by the application logic.
@@ -246,7 +252,7 @@ component
 		// Since we don't know where exactly the error occurred, it's possible that the
 		// request has been flushed already or is in an entirely unusable state. As such,
 		// the best we can do is just show a vanilla error message.
-		writeOutput( "An error occurred." );
+		writeOutput( "An unexpected error occurred." );
 		abort;
 
 	}
