@@ -1,7 +1,6 @@
 component {
 
 	// Define properties for dependency-injection.
-	// property name="errorUtilities" ioc:type="core.lib.util.ErrorUtilities";
 	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="router" ioc:type="core.lib.web.Router";
 

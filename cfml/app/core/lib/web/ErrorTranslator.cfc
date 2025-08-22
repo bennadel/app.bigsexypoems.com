@@ -48,75 +48,57 @@ component hint = "I help translate application errors into appropriate response 
 
 
 			case "App.Model.Poem.Content.TooLong":
-				return(
-					as422({
-						type: error.type,
-						message: "Your poem must be less than 3,000-characters."
-					})
-				);
+				return as422({
+					type: error.type,
+					message: "Your poem must be less than 3,000-characters."
+				});
 			break;
 			case "App.Model.Poem.Content.SuspiciousEncoding":
-				return(
-					as422({
-						type: error.type,
-						message: "Your poem contains a suspicious encoding of characters. Make sure that you're only using plain-text."
-					})
-				);
+				return as422({
+					type: error.type,
+					message: "Your poem contains a suspicious encoding of characters. Make sure that you're only using plain-text."
+				});
 			break;
 			case "App.Model.Poem.Name.Empty":
-				return(
-					as422({
-						type: error.type,
-						message: "Your poem name cannot be empty."
-					})
-				);
+				return as422({
+					type: error.type,
+					message: "Your poem name cannot be empty."
+				});
 			break;
 			case "App.Model.Poem.Name.TooLong":
-				return(
-					as422({
-						type: error.type,
-						message: "Your poem name must be less than 255-characters."
-					})
-				);
+				return as422({
+					type: error.type,
+					message: "Your poem name must be less than 255-characters."
+				});
 			break;
 			case "App.Model.Poem.Name.SuspiciousEncoding":
-				return(
-					as422({
-						type: error.type,
-						message: "Your poem name contains a suspicious encoding of characters. Make sure that you're only using plain-text."
-					})
-				);
+				return as422({
+					type: error.type,
+					message: "Your poem name contains a suspicious encoding of characters. Make sure that you're only using plain-text."
+				});
 			break;
 			case "App.Model.Poem.NotFound":
-				return(
-					as404({
-						type: error.type,
-						message: "The poem you requested cannot be found."
-					})
-				);
+				return as404({
+					type: error.type,
+					message: "The poem you requested cannot be found."
+				});
 			break;
 			case "App.Model.PoemShare.Share.NotFound":
-				return(
-					as404({
-						type: error.type,
-						message: "The poem share you requested cannot be found."
-					})
-				);
+				return as404({
+					type: error.type,
+					message: "The poem share you requested cannot be found."
+				});
 			break;
 			case "App.OneTimeToken.Invalid":
-				return(
-					as403({
-						type: error.type,
-						message: "Your request has expired."
-					})
-				);
+				return as403({
+					type: error.type,
+					message: "Your request has expired."
+				});
 			break;
 			case "App.RateLimit.TooManyRequests":
-				return(
-					as429({
-						type: error.type
-					})
-				);
+				return as429({
+					type: error.type
+				});
 			break;
 
 
