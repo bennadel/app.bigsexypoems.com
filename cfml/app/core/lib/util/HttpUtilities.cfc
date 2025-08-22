@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide utility methods to aide in making CFHttp requests."
-	{
+component hint = "I provide utility methods to aide in making CFHttp requests." {
 
 	/**
 	* I return the embedded fileContent property as a string. This is particularly helpful

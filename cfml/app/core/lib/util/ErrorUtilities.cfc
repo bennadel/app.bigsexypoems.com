@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide utility methods for generating and consuming errors data overloading."
-	{
+component hint = "I provide utility methods for generating and consuming errors data overloading." {
 
 	// Define properties for dependency-injection.
 	property name="causePrefix" ioc:skip;

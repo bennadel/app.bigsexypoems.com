@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide utility methods for model validation."
-	{
+component hint = "I provide utility methods for model validation." {
 
 	/**
 	* I return the canonicalized version of the given input. Double-encoding errors are

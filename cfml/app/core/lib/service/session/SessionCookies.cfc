@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide methods for managing the session cookies for the current request."
-	{
+component hint = "I provide methods for managing the session cookies for the current request." {
 
 	// Define properties for dependency-injection.
 	property name="cookieDomain" ioc:get="config.site.cookieDomain";

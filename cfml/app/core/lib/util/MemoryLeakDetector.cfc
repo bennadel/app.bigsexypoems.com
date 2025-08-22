@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I help detect memory leaks in ColdFusion components."
-	{
+component hint = "I help detect memory leaks in ColdFusion components." {
 
 	// Define properties for dependency-injection.
 	property name="ioc" ioc:type="core.lib.util.Injector";

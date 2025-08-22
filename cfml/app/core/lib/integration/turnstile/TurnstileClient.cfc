@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide high-level HTTP access to the Cloudflare Turnstile API."
-	{
+component hint = "I provide high-level HTTP access to the Cloudflare Turnstile API." {
 
 	// Define properties for dependency-injection.
 	property name="gateway" ioc:type="core.lib.integration.turnstile.TurnstileGateway";

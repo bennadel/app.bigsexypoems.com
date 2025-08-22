@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide methods for getting words related to other words."
-	{
+component hint = "I provide methods for getting words related to other words." {
 
 	// Define properties for dependency-injection.
 	property name="datamuseClient" ioc:type="core.lib.integration.datamuse.DatamuseClient";

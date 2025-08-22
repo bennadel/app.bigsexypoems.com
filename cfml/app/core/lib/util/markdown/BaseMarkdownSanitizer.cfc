@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide utility methods for all markdown sanitizers."
-	{
+component hint = "I provide utility methods for all markdown sanitizers." {
 
 	/**
 	* I return the report of unsafe markup that will be removed from the given DOM once

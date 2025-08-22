@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide an Inversion of Control (IoC) container."
-	{
+component hint = "I provide an Inversion of Control (IoC) container." {
 
 	// Define properties for dependency-injection.
 	property name="services" ioc:skip;

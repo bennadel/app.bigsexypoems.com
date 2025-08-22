@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide utility methods for accessing metadata about the current request."
-	{
+component hint = "I provide utility methods for accessing metadata about the current request." {
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";

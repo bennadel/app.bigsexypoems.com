@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide methods for parsing markdown into block HTML."
-	{
+component hint = "I provide methods for parsing markdown into block HTML." {
 
 	// Define properties for dependency-injection.
 	property name="classLoader" ioc:type="core.lib.classLoader.FlexmarkClassLoader";

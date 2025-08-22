@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I implement the logging interface and send data to the BugSnag API."
-	{
+component hint = "I implement the logging interface and send data to the BugSnag API." {
 
 	// Define properties for dependency-injection.
 	property name="apiClient" ioc:type="core.lib.integration.bugsnag.BugSnagApiClient";

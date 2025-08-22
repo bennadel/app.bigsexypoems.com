@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide utility methods around date/time access."
-	{
+component hint = "I provide utility methods around date/time access." {
 
 	/**
 	* I return the number of milliseconds since January 1, 1970, 00:00:00 GMT represented

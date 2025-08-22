@@ -3,10 +3,7 @@
 * 
 * Use of this API requires us to give credit on the website.
 */
-component
-	output = false
-	hint = "I provide high-level HTTP access to the Datamuse API."
-	{
+component hint = "I provide high-level HTTP access to the Datamuse API." {
 
 	// Define properties for dependency-injection.
 	property name="gateway" ioc:type="core.lib.integration.datamuse.DatamuseGateway";

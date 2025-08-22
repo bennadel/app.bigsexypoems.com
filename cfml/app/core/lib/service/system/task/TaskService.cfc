@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide workflow methods pertaining to scheduled tasks."
-	{
+component hint = "I provide workflow methods pertaining to scheduled tasks." {
 
 	// Define properties for dependency-injection.
 	property name="clock" ioc:type="core.lib.util.Clock";

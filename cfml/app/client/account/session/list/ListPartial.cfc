@@ -1,4 +1,4 @@
-component output = false {
+component {
 
 	// Define properties for dependency-injection.
 	property name="gateway" ioc:type="client.account.session.list.ListGateway";

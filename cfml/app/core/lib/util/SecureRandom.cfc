@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide utility methods for securely generating random values."
-	{
+component hint = "I provide utility methods for securely generating random values." {
 
 	/**
 	* I generate a secure random key of a length recommended for the given algorithm.

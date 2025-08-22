@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide functionality around the XSRF cookies and request validation."
-	{
+component hint = "I provide functionality around the XSRF cookies and request validation." {
 
 	// Define properties for dependency-injection.
 	property name="challengeName" ioc:skip;

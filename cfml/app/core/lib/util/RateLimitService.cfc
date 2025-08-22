@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide methods for rate-limiting around a given property."
-	{
+component hint = "I provide methods for rate-limiting around a given property." {
 
 	// Define properties for dependency-injection.
 	property name="features" ioc:skip;

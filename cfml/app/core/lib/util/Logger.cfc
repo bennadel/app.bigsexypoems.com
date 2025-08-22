@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide logging methods for errors and arbitrary data."
-	{
+component hint = "I provide logging methods for errors and arbitrary data." {
 
 	// Define properties for dependency-injection.
 	property name="bugSnagLogger" ioc:type="core.lib.integration.bugsnag.BugSnagLogger";

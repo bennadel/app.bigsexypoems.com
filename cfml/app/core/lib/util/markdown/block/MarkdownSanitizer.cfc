@@ -1,6 +1,5 @@
 component
 	extends = "core.lib.util.markdown.BaseMarkdownSanitizer"
-	output = false
 	hint = "I provide methods for sanitizing the block HTML content."
 	{
 

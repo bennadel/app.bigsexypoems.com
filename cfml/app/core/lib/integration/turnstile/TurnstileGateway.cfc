@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide low-level HTTP access to the Cloudflare Turnstile API."
-	{
+component hint = "I provide low-level HTTP access to the Cloudflare Turnstile API." {
 
 	// Define properties for dependency-injection.
 	property name="httpUtilities" ioc:type="core.lib.util.HttpUtilities";

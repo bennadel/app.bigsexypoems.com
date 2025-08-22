@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I help translate application errors into appropriate response codes and user-facing messages."
-	{
+component hint = "I help translate application errors into appropriate response codes and user-facing messages." {
 
 	// Define properties for dependency-injection.
 	property name="errorUtilities" ioc:type="core.lib.util.ErrorUtilities";

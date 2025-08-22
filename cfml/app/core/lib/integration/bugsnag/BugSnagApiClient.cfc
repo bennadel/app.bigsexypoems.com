@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I report server-side errors to the BugSnag API."
-	{
+component hint = "I report server-side errors to the BugSnag API." {
 
 	// Define properties for dependency-injection.
 	property name="apiKey" ioc:get="config.bugsnag.server.apiKey";

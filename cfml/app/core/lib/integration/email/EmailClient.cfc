@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide an abstraction for sending email."
-	{
+component hint = "I provide an abstraction for sending email." {
 
 	// Define properties for dependency-injection.
 	property name="site" ioc:get="config.site";

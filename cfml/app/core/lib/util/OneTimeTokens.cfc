@@ -1,7 +1,4 @@
-component
-	output = false
-	hint = "I provide methods for generating and verifying one-time tokens."
-	{
+component hint = "I provide methods for generating and verifying one-time tokens." {
 
 	// Define properties for dependency-injection.
 	property name="clock" ioc:type="core.lib.util.Clock";
