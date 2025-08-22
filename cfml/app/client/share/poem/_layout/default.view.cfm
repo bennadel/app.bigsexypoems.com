@@ -16,14 +16,14 @@
 		<meta property="og:url" content="https://app.bigsexypoems.com/" />
 		<meta property="og:title" content="Big Sexy Poems" />
 		<meta property="og:description" content="An online poetry authoring application that helps you unlock your inner BigSexy with syllable counts, rhymes schemes, and synonyms!" />
-		<meta property="og:image" content="https://app.bigsexypoems.com/public/big-sexy-poems.png" />
-		 
+		<meta property="og:image" content="https://app.bigsexypoems.com/public/opengraph/big-sexy-poems.png" />
+
 		<!-- Twitter Card tags. -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:url" content="https://app.bigsexypoems.com/" />
 		<meta name="twitter:title" content="Big Sexy Poems" />
 		<meta name="twitter:description" content="An online poetry authoring application that helps you unlock your inner BigSexy with syllable counts, rhymes schemes, and synonyms!" />
-		<meta name="twitter:image" content="https://app.bigsexypoems.com/public/big-sexy-poems.png" />
+		<meta name="twitter:image" content="https://app.bigsexypoems.com/public/opengraph/big-sexy-poems.png" />
 		<meta name="twitter:site" content="@BenNadel" />
 		<meta name="twitter:creator" content="@BenNadel" />
 	</head>
