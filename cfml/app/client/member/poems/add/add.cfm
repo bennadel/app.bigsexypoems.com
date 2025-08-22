@@ -33,7 +33,7 @@
 			router.goto([
 				event: "member.poems.view",
 				poemID: poemID,
-				flash: "member.poem.created"
+				flash: "your.poem.created"
 			]);
 
 		} catch ( any error ) {

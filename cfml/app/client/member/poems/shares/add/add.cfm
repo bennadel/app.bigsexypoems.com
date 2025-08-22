@@ -36,7 +36,7 @@
 			router.goto([
 				event: "member.poems.shares",
 				poemID: poem.id,
-				flash: "member.poem.shareLink.created"
+				flash: "your.poem.share.created"
 			]);
 
 		} catch ( any error ) {

@@ -45,7 +45,7 @@
 			router.goto([
 				event: "member.poems.view",
 				poemID: poem.id,
-				flash: "member.poem.updated"
+				flash: "your.poem.updated"
 			]);
 
 		} catch ( any error ) {

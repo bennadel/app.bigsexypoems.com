@@ -10,7 +10,7 @@ component {
 
 	/**
 	* I translate the given flash token and data into a user-friendly flash response which
-	* contains a message and optional link.
+	* contains a message and an optional link.
 	* 
 	* SECURITY: while the "flashToken" value is used only for control-flow, the
 	* "flashData" value is used in the HTML rendering (of the optional link). Which means
@@ -27,101 +27,38 @@ component {
 		var flashID = val( flashData );
 
 		switch ( flashToken ) {
-			case "account.profile.updated":
-				return asResponse( "Your profile has been updated." );
+			// return asResponse(
+			// 	message = "Your client has been created.",
+			// 	linkIf = flashID,
+			// 	linkText = "View client",
+			// 	linkHref = router.urlForParts( "member.client.view", "clientID", flashID )
+			// );
+			case "your.poem.created":
+				return asResponse( "Your poem has been created." );
 			break;
-			case "account.session.deleted":
-				return asResponse( "Your session has been ended." );
+			case "your.poem.deleted":
+				return asResponse( "Your poem has been deleted." );
 			break;
-			case "account.session.deletedAll":
-				return asResponse( "All of your sessions have been ended. You've been logged-out across all of your devices." );
-			break;
-			case "feedback.conceptBoard.comment.created":
-				return asResponse( "Your comment has been created." );
-			break;
-			case "feedback.conceptBoard.comment.deleted":
-				return asResponse( "Your comment has been deleted." );
-			break;
-			case "feedback.conceptBoard.comment.updated":
-				return asResponse( "Your comment has been updated." );
-			break;
-			case "member.client.created":
-				return asResponse( "Your client has been created." );
-				// return asResponse(
-				// 	message = "Your client has been created.",
-				// 	linkIf = flashID,
-				// 	linkText = "View client",
-				// 	linkHref = router.urlForParts( "member.client.view", "clientID", flashID )
-				// );
-			break;
-			case "member.client.deleted":
-				return asResponse( "Your client has been deleted." );
-			break;
-			case "member.client.updated":
-				return asResponse( "Your client has been updated." );
-			break;
-			case "member.conceptBoard.view.comment.created":
-				return asResponse( "Your comment has been created." );
-			break;
-			case "member.conceptBoard.view.comment.deleted":
-				return asResponse( "Your comment has been deleted." );
-			break;
-			case "member.conceptBoard.view.comment.updated":
-				return asResponse( "Your comment has been created." );
-			break;
-			case "member.conceptBoard.created":
-				return asResponse( "Your board has been created." );
-			break;
-			case "member.conceptBoard.view.deleted":
-				return asResponse( "Your board has been deleted." );
-			break;
-			case "member.conceptBoard.view.item.created":
-				return asResponse( "Your item has been created." );
-			break;
-			case "member.conceptBoard.view.item.deleted":
-				return asResponse( "Your item has been deleted." );
-			break;
-			case "member.conceptBoard.view.item.updated":
-				return asResponse( "Your item has been updated." );
-			break;
-			case "member.conceptBoard.joined":
-				return asResponse( "You joined the board." );
-			break;
-			case "member.conceptBoard.view.left":
-				return asResponse( "You left the board." );
-			break;
-			case "member.conceptBoard.view.section.created":
-				return asResponse( "Your section has been created." );
-			break;
-			case "member.conceptBoard.view.section.deleted":
-				return asResponse( "Your section has been deleted." );
-			break;
-			case "member.conceptBoard.view.section.updated":
-				return asResponse( "Your section has been updated." );
-			break;
-			case "member.conceptBoard.view.share.created":
+			case "your.poem.share.created":
 				return asResponse( "Your share link has been created." );
 			break;
-			case "member.conceptBoard.view.share.deleted":
+			case "your.poem.share.allDeleted":
+				return asResponse( "Your share links have been deleted." );
+			break;
+			case "your.poem.share.deleted":
 				return asResponse( "Your share link has been deleted." );
 			break;
-			case "member.conceptBoard.view.share.updated":
-				return asResponse( "Your share link has been updated." );
+			case "your.poem.updated":
+				return asResponse( "Your poem has been updated." );
 			break;
-			case "member.conceptBoard.view.updated":
-				return asResponse( "Your board has been updated." );
+			case "your.session.deleted":
+				return asResponse( "Your session has been ended." );
 			break;
-			case "member.team.invitation.created":
-				return asResponse( "Your invitation has been created." );
+			case "your.session.allDeleted":
+				return asResponse( "All of your sessions have been ended. You've been logged-out across all of your devices." );
 			break;
-			case "member.team.invitation.deleted":
-				return asResponse( "Your invitation has been deleted." );
-			break;
-			case "member.team.membership.deleted":
-				return asResponse( "Your membership has been deleted." );
-			break;
-			case "member.team.updated":
-				return asResponse( "Your team has been updated." );
+			case "your.user.account.updated":
+				return asResponse( "Your account has been updated." );
 			break;
 			default:
 				// If anything got this far, we have a controller that's including a flash
@@ -135,7 +72,7 @@ component {
 					}
 				);
 
-				return asResponse( "Huzzah!" );
+				return asResponse( "Huzzah! The request was a success!" );
 			break;
 		}
 

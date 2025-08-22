@@ -39,7 +39,7 @@
 
 			router.goto([
 				event: "account.profile",
-				flash: "account.profile.updated"
+				flash: "your.user.account.updated"
 			]);
 
 		} catch ( any error ) {

@@ -44,7 +44,7 @@
 
 			router.goto([
 				event: "member.poems",
-				flash: "member.poem.deleted"
+				flash: "your.poem.deleted"
 			]);
 
 		} catch ( any error ) {

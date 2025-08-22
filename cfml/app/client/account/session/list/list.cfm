@@ -43,7 +43,7 @@
 
 					router.goto({
 						event: nextEvent,
-						flash: "account.session.deleted"
+						flash: "your.session.deleted"
 					});
 
 				break;
@@ -53,7 +53,7 @@
 
 					router.goto({
 						event: "auth.logout.success",
-						flash: "account.session.deletedAll"
+						flash: "your.session.allDeleted"
 					});
 
 				break;
