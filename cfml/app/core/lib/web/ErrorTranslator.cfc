@@ -40,170 +40,31 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.MethodNotAllowed":
 				return as405();
 			break;
-
-
-
-
-
-
-
 			case "App.Model.Poem.Content.TooLong":
-				return as422({
-					type: error.type,
-					message: "Your poem must be less than 3,000-characters."
-				});
+				return asModelStringTooLong( error, "poem", metadata );
 			break;
 			case "App.Model.Poem.Content.SuspiciousEncoding":
-				return as422({
-					type: error.type,
-					message: "Your poem contains a suspicious encoding of characters. Make sure that you're only using plain-text."
-				});
+				return asModelStringSuspiciousEncoding( error, "poem" );
 			break;
 			case "App.Model.Poem.Name.Empty":
-				return as422({
-					type: error.type,
-					message: "Your poem name cannot be empty."
-				});
-			break;
-			case "App.Model.Poem.Name.TooLong":
-				return as422({
-					type: error.type,
-					message: "Your poem name must be less than 255-characters."
-				});
+				return asModelStringEmpty( error, "poem name" );
 			break;
 			case "App.Model.Poem.Name.SuspiciousEncoding":
-				return as422({
-					type: error.type,
-					message: "Your poem name contains a suspicious encoding of characters. Make sure that you're only using plain-text."
-				});
+				return asModelStringSuspiciousEncoding( error, "poem name" );
+			break;
+			case "App.Model.Poem.Name.TooLong":
+				return asModelStringTooLong( error, "poem name", metadata );
 			break;
 			case "App.Model.Poem.NotFound":
-				return as404({
-					type: error.type,
-					message: "The poem you requested cannot be found."
-				});
+				return asModelNotFound( error, "poem" );
 			break;
-			case "App.Model.PoemShare.Share.NotFound":
-				return as404({
-					type: error.type,
-					message: "The poem share you requested cannot be found."
-				});
-			break;
-			case "App.OneTimeToken.Invalid":
-				return as403({
-					type: error.type,
-					message: "Your request has expired."
-				});
+			case "App.Model.Poem.Share.NotFound":
+				return asModelNotFound( error, "share link" );
 			break;
 			case "App.RateLimit.TooManyRequests":
 				return as429({
 					type: error.type
 				});
-			break;
-
-
-
-
-
-
-
-
-
-			case "App.Model.Client.DescriptionMarkdown.Unsafe":
-				return asModelMarkdownUnsafe( error, "client description", metadata );
-			break;
-			case "App.Model.Client.Name.Empty":
-				return asModelStringEmpty( error, "client name" );
-			break;
-			case "App.Model.Client.Name.SuspiciousEncoding":
-				return asModelStringSuspiciousEncoding( error, "client name" );
-			break;
-			case "App.Model.Client.Name.TooLong":
-				return asModelStringTooLong( error, "client name", metadata );
-			break;
-			case "App.Model.Client.NotFound":
-				return asModelNotFound( error, "client" );
-			break;
-			case "App.Model.Client.WebsiteUrl.Invalid":
-				return as422({
-					type: error.type,
-					message: "Your website url must start with either ""http://"" or ""https://""."
-				});
-			break;
-			case "App.Model.Client.WebsiteUrl.TooLong":
-				return asModelStringTooLong( error, "website url", metadata );
-			break;
-			case "App.Model.ConceptBoard.DescriptionMarkdown.Unsafe":
-				return asModelMarkdownUnsafe( error, "board description", metadata );
-			break;
-			case "App.Model.ConceptBoard.Name.Empty":
-				return asModelStringEmpty( error, "board name" );
-			break;
-			case "App.Model.ConceptBoard.Name.SuspiciousEncoding":
-				return asModelStringSuspiciousEncoding( error, "board name" );
-			break;
-			case "App.Model.ConceptBoard.Name.TooLong":
-				return asModelStringTooLong( error, "board name", metadata );
-			break;
-			case "App.Model.ConceptBoard.NotFound":
-				return asModelNotFound( error, "board" );
-			break;
-			case "App.Model.ConceptBoard.Comment.ContentMarkdown.Empty":
-				return asModelStringEmpty( error, "comment" );
-			break;
-			case "App.Model.ConceptBoard.Comment.ContentMarkdown.Unsafe":
-				return asModelMarkdownUnsafe( error, "comment", metadata );
-			break;
-			case "App.Model.ConceptBoard.Comment.NotFound":
-				return asModelNotFound( error, "comment" );
-			break;
-			case "App.Model.ConceptBoard.Item.ClientFilename.Empty":
-				return asModelStringEmpty( error, "item filename" );
-			break;
-			case "App.Model.ConceptBoard.Item.ClientFilename.TooLong":
-				return asModelStringTooLong( error, "item filename", metadata );
-			break;
-			case "App.Model.ConceptBoard.Item.DescriptionMarkdown.Unsafe":
-				return asModelMarkdownUnsafe( error, "item description", metadata );
-			break;
-			case "App.Model.ConceptBoard.Item.Name.Empty":
-				return asModelStringEmpty( error, "item name" );
-			break;
-			case "App.Model.ConceptBoard.Item.Name.SuspiciousEncoding":
-				return asModelStringSuspiciousEncoding( error, "item name" );
-			break;
-			case "App.Model.ConceptBoard.Item.Name.TooLong":
-				return asModelStringTooLong( error, "item name" );
-			break;
-			case "App.Model.ConceptBoard.Item.NotFound":
-				return asModelNotFound( error, "item" );
-			break;
-			case "App.Model.ConceptBoard.Section.DescriptionMarkdown.Unsafe":
-				return asModelMarkdownUnsafe( error, "section description", metadata );
-			break;
-			case "App.Model.ConceptBoard.Section.Name.Empty":
-				return asModelStringEmpty( error, "section name" );
-			break;
-			case "App.Model.ConceptBoard.Section.Name.SuspiciousEncoding":
-				return asModelStringSuspiciousEncoding( error, "section name" );
-			break;
-			case "App.Model.ConceptBoard.Section.Name.TooLong":
-				return asModelStringTooLong( error, "section name", metadata );
-			break;
-			case "App.Model.ConceptBoard.Section.NotFound":
-				return asModelNotFound( error, "section" );
-			break;
-			case "App.Model.ConceptBoard.Share.Name.Empty":
-				return asModelStringEmpty( error, "share name" );
-			break;
-			case "App.Model.ConceptBoard.Share.Name.TooLong":
-				return asModelStringTooLong( error, "share name", metadata );
-			break;
-			case "App.Model.ConceptBoard.Share.Name.SuspiciousEncoding":
-				return asModelStringSuspiciousEncoding( error, "share name" );
-			break;
-			case "App.Model.ConceptBoard.Share.NotFound":
-				return asModelNotFound( error, "share" );
 			break;
 			case "App.Model.OneTimeToken.NotFound":
 				return as400({
@@ -451,7 +312,7 @@ component hint = "I help translate application errors into appropriate response 
 
 		return as422({
 			type: error.type,
-			message: "Your #fieldName# contains a suspicious encoding of characters. Make sure that you are only using plain-text."
+			message: "Your #fieldName# contains a suspicious encoding of characters. Make sure that you're only using plain-text."
 		});
 
 	}
