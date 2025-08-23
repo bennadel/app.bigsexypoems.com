@@ -19,6 +19,12 @@ component hint = "I help translate application errors into appropriate response 
 		var metadata = errorUtilities.extractMetadataSafely( error.extendedInfo );
 
 		switch ( error.type ) {
+			case "App.Authentication.VerifyLogin.Expired":
+				return as403({
+					type: error.type,
+					message: "Your login link has expired. Please try logging-in again."
+				});
+			break;
 			case "App.BadRequest":
 				return as400();
 			break;
@@ -60,11 +66,6 @@ component hint = "I help translate application errors into appropriate response 
 			break;
 			case "App.Model.Poem.Share.NotFound":
 				return asModelNotFound( error, "share link" );
-			break;
-			case "App.RateLimit.TooManyRequests":
-				return as429({
-					type: error.type
-				});
 			break;
 			case "App.Model.OneTimeToken.NotFound":
 				return as400({
@@ -117,16 +118,14 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.NotFound":
 				return as404();
 			break;
-			case "App.Routing.InvalidEvent":
-				return as404({
+			case "App.RateLimit.TooManyRequests":
+				return as429({
 					type: error.type
 				});
 			break;
-			case "App.SessionService.VerifyLogin.Expired":
-			case "App.SessionService.VerifyLogin.SignatureMismatch":
-				return as403({
-					type: error.type,
-					message: "Your login link has expired. Please try logging-in again."
+			case "App.Routing.InvalidEvent":
+				return as404({
+					type: error.type
 				});
 			break;
 			case "App.ServerError":
@@ -140,6 +139,12 @@ component hint = "I help translate application errors into appropriate response 
 			break;
 			case "App.UnprocessableEntity":
 				return as422();
+			break;
+			case "App.Url.SignatureMismatch":
+				return as400({
+					type: error.type,
+					message: "Your request is no longer valid. Retrying your request will not help."
+				});
 			break;
 			case "App.Xsrf.Mismatch":
 			case "App.Xsrf.MissingChallenge":

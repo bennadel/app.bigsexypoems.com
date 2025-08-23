@@ -169,9 +169,8 @@ component {
 
 		if ( ! maybeToken.exists ) {
 
-			// Todo: change the type (referenced elsewhere).
 			throw(
-				type = "App.SessionService.VerifyLogin.Expired",
+				type = "App.Authentication.VerifyLogin.Expired",
 				message = "Login verification token has expired."
 			);
 
