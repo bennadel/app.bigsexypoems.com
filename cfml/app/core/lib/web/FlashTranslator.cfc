@@ -4,6 +4,9 @@ component {
 	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="router" ioc:type="core.lib.web.Router";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

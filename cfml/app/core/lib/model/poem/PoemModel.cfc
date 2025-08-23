@@ -5,6 +5,9 @@ component {
 	property name="gateway" ioc:type="core.lib.model.poem.PoemGateway";
 	property name="validation" ioc:type="core.lib.model.poem.PoemValidation";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

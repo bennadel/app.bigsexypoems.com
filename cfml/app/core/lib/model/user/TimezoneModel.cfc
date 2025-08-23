@@ -4,6 +4,9 @@ component {
 	property name="gateway" ioc:type="core.lib.model.user.TimezoneGateway";
 	property name="validation" ioc:type="core.lib.model.user.TimezoneValidation";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

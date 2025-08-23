@@ -4,6 +4,9 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 	property name="services" ioc:skip;
 	property name="typeMappings" ioc:skip;
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the IoC container with no services.
 	*/

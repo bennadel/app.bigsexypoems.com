@@ -8,6 +8,9 @@ component
 	property name="cleaner" ioc:skip memoryLeakDetection:skip;
 	property name="safelist" ioc:skip memoryLeakDetection:skip;
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the HTML sanitizer.
 	*/

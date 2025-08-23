@@ -3,6 +3,9 @@ component hint = "I provide low-level HTTP access to the Datamuse API." {
 	// Define properties for dependency-injection.
 	property name="httpUtilities" ioc:type="core.lib.util.HttpUtilities";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

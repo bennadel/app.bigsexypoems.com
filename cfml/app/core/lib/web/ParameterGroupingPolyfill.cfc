@@ -5,6 +5,9 @@ component
 	// Define properties for dependency-injection.
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

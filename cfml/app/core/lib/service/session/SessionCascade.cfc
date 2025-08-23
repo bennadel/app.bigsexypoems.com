@@ -4,6 +4,9 @@ component {
 	property name="presenceModel" ioc:type="core.lib.model.session.PresenceModel";
 	property name="sessionModel" ioc:type="core.lib.model.session.SessionModel";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

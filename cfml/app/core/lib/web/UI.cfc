@@ -3,6 +3,9 @@ component {
 	// Define properties for dependency-injection.
 	property name="router" ioc:type="core.lib.web.Router";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

@@ -4,6 +4,9 @@ component {
 	property name="gateway" ioc:type="core.lib.model.poem.share.ShareGateway";
 	property name="validation" ioc:type="core.lib.model.poem.share.ShareValidation";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

@@ -13,6 +13,9 @@ component hint = "I provide methods for accessing the session associated with th
 	property name="timezoneModel" ioc:type="core.lib.model.user.TimezoneModel";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the session helper.
 	*/

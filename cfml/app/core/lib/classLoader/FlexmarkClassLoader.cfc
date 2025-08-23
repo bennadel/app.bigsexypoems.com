@@ -3,6 +3,9 @@ component hint = "I provide a way to instantiate Flexmark Java classes." {
 	// Define properties for dependency-injection.
 	property name="jarPaths" ioc:skip;
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the class loader.
 	*/

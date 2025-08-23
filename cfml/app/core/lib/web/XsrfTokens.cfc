@@ -9,6 +9,9 @@ component hint = "I provide functionality around the XSRF cookies and request va
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the XSRF cookies service.
 	*/

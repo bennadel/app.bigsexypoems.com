@@ -3,6 +3,9 @@ component {
 	// Define properties for dependency-injection.
 	property name="shareModel" ioc:type="core.lib.model.poem.share.ShareModel";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

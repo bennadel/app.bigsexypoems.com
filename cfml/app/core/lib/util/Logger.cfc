@@ -6,6 +6,9 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 	property name="patternsToRedact" ioc:skip;
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the logger.
 	*/

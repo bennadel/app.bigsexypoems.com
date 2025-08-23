@@ -5,6 +5,9 @@ component {
 	property name="gateway" ioc:type="core.lib.model.user.UserGateway";
 	property name="validation" ioc:type="core.lib.model.user.UserValidation";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

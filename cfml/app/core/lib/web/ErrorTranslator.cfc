@@ -4,6 +4,9 @@ component hint = "I help translate application errors into appropriate response 
 	property name="errorUtilities" ioc:type="core.lib.util.ErrorUtilities";
 	property name="logger" ioc:type="core.lib.util.Logger";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

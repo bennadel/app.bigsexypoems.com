@@ -7,6 +7,9 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 	property name="scheduledTasks" ioc:get="config.scheduledTasks";
 	property name="taskModel" ioc:type="core.lib.model.system.task.TaskModel";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

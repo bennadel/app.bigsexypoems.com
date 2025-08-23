@@ -5,6 +5,9 @@ component {
 	property name="gateway" ioc:type="core.lib.model.system.task.TaskGateway";
 	property name="validation" ioc:type="core.lib.model.system.task.TaskValidation";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

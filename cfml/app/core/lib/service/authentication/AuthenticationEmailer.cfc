@@ -4,6 +4,9 @@ component {
 	property name="emailClient" ioc:type="core.lib.integration.email.EmailClient";
 	property name="site" ioc:get="config.site";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PRIVATE METHODS.
 	// ---

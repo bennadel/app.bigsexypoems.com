@@ -9,6 +9,9 @@ component {
 	property name="sessionService" ioc:type="core.lib.service.session.SessionService";
 	property name="xsrfTokens" ioc:type="core.lib.web.XsrfTokens";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// LIFE-CYCLE METHODS.
 	// ---

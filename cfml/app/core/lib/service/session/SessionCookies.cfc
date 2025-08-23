@@ -5,6 +5,9 @@ component hint = "I provide methods for managing the session cookies for the cur
 	property name="cookieName" ioc:skip;
 	property name="isLive" ioc:get="config.isLive";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the session cookies service.
 	*/

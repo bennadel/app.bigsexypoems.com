@@ -4,6 +4,9 @@ component {
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 	property name="userValidation" ioc:type="core.lib.model.user.UserValidation";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// CONTEXT METHODS.
 	// ---

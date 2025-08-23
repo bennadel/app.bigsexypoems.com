@@ -5,6 +5,9 @@ component {
 	property name="loginRequestKeyBinary" ioc:skip;
 	property name="pepper" ioc:skip;
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the url signer.
 	*/

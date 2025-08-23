@@ -6,6 +6,9 @@ component hint = "I provide methods for generating and verifying one-time tokens
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
 	property name="validation" ioc:type="core.lib.model.oneTimeToken.OneTimeTokenValidation";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

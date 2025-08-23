@@ -1,5 +1,12 @@
 component hint = "I provide utility methods for model validation." {
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
+	// ---
+	// PUBLIC METHODS.
+	// ---
+
 	/**
 	* I return the canonicalized version of the given input. Double-encoding errors are
 	* suppressed and result in an empty string.

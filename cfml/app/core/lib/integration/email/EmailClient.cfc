@@ -4,6 +4,9 @@ component hint = "I provide an abstraction for sending email." {
 	property name="site" ioc:get="config.site";
 	property name="systemEmail" ioc:get="config.systemEmail";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

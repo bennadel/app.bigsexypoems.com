@@ -16,6 +16,9 @@ component {
 	property name="userProvisioner" ioc:type="core.lib.service.user.UserProvisioner";
 	property name="userValidation" ioc:type="core.lib.model.user.UserValidation";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

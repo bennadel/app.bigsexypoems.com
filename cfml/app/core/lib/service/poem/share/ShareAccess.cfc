@@ -6,6 +6,9 @@ component {
 	property name="shareValidation" ioc:type="core.lib.model.poem.share.ShareValidation";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// CONTEXT METHODS.
 	// ---

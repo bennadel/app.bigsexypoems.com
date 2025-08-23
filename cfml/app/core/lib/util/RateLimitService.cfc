@@ -4,6 +4,9 @@ component hint = "I provide methods for rate-limiting around a given property." 
 	property name="features" ioc:skip;
 	property name="windows" ioc:skip;
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the rate limiting with the given configurations.
 	*/

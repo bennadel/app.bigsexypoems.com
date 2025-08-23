@@ -1,5 +1,12 @@
 component hint = "I provide utility methods for securely generating random values." {
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
+	// ---
+	// PUBLIC METHODS.
+	// ---
+
 	/**
 	* I generate a secure random key of a length recommended for the given algorithm.
 	*/

@@ -8,6 +8,9 @@ component hint = "I report server-side errors to the BugSnag API." {
 	property name="payloadVersion" ioc:skip;
 	property name="releaseStage" ioc:get="config.bugsnag.server.releaseStage";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the BugSnag API client.
 	*/

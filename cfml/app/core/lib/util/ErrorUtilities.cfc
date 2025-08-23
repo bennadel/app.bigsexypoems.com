@@ -4,6 +4,9 @@ component hint = "I provide utility methods for generating and consuming errors 
 	property name="causePrefix" ioc:skip;
 	property name="metadataPrefix" ioc:skip;
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the error utilities.
 	*/

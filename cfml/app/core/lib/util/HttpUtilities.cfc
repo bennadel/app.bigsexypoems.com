@@ -1,5 +1,12 @@
 component hint = "I provide utility methods to aide in making CFHttp requests." {
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
+	// ---
+	// PUBLIC METHODS.
+	// ---
+
 	/**
 	* I return the embedded fileContent property as a string. This is particularly helpful
 	* when a CFHttp is configured to return binary but there is an underlying network

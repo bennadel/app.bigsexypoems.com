@@ -4,6 +4,9 @@ component hint = "I provide high-level HTTP access to the Cloudflare Turnstile A
 	property name="gateway" ioc:type="core.lib.integration.turnstile.TurnstileGateway";
 	property name="httpUtilities" ioc:type="core.lib.util.HttpUtilities";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

@@ -4,6 +4,9 @@ component {
 	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="oneTimeTokenModel" ioc:type="core.lib.model.oneTimeToken.OneTimeTokenModel";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

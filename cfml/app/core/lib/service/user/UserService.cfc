@@ -4,6 +4,9 @@ component {
 	property name="userAccess" ioc:type="core.lib.service.user.UserAccess";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// PUBLIC METHODS.
 	// ---

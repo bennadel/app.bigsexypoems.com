@@ -5,6 +5,9 @@ component hint = "I provide methods for parsing markdown into block HTML." {
 	property name="parser" ioc:skip;
 	property name="renderer" ioc:skip;
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	/**
 	* I initialize the parser.
 	*/
