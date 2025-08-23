@@ -6,6 +6,7 @@ component hint = "I provide methods for accessing the session associated with th
 	property name="presenceModel" ioc:type="core.lib.model.session.PresenceModel";
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
+	property name="sessionCascade" ioc:type="core.lib.service.session.SessionCascade";
 	property name="sessionCookies" ioc:type="core.lib.service.session.SessionCookies";
 	property name="sessionModel" ioc:type="core.lib.model.session.SessionModel";
 	property name="sessionValidation" ioc:type="core.lib.model.session.SessionValidation";
@@ -78,10 +79,7 @@ component hint = "I provide methods for accessing the session associated with th
 
 		for ( var entry in sessions ) {
 
-			transaction {
-				sessionModel.deleteByFilter( id = entry.id );
-				presenceModel.deleteByFilter( sessionID = entry.id );
-			}
+			sessionCascade.deleteSession( user, entry );
 
 		}
 
@@ -107,10 +105,7 @@ component hint = "I provide methods for accessing the session associated with th
 
 		}
 
-		transaction {
-			sessionModel.deleteByFilter( id = userSession.id );
-			presenceModel.deleteByFilter( sessionID = userSession.id );
-		}
+		sessionCascade.deleteSession( user, userSession );
 
 		// If this was the current session, let's also delete the cookies.
 		if ( sessionCookies.getCookie().sessionID == sessionID ) {
@@ -198,8 +193,9 @@ component hint = "I provide methods for accessing the session associated with th
 		// another user.
 		if ( maybeSession.value.token == payload.sessionToken ) {
 
-			sessionModel.deleteByFilter( id = maybeSession.value.id );
-			presenceModel.deleteByFilter( sessionID = maybeSession.value.id );
+			var user = userModel.get( maybeSession.value.userID );
+
+			sessionCascade.deleteSession( user, maybeSession.value );
 
 		}
 

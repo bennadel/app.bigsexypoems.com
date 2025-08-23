@@ -4,6 +4,7 @@ component {
 	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
 	property name="shareAccess" ioc:type="core.lib.service.poem.share.ShareAccess";
+	property name="shareCascade" ioc:type="core.lib.service.poem.share.ShareCascade";
 	property name="shareModel" ioc:type="core.lib.model.poem.share.ShareModel";
 
 	// ---
@@ -43,9 +44,11 @@ component {
 		) {
 
 		var context = shareAccess.getContext( authContext, shareID, "canDelete" );
+		var user = context.user;
+		var poem = context.poem;
 		var share = context.share;
 
-		shareModel.deleteByFilter( id = share.id );
+		shareCascade.deleteShare( user, poem, share );
 
 	}
 
@@ -59,9 +62,15 @@ component {
 		) {
 
 		var context = shareAccess.getContextForParent( authContext, poemID, "canDelete" );
+		var user = context.user;
 		var poem = context.poem;
+		var shares = shareModel.getByFilter( poemID = poem.id );
 
-		shareModel.deleteByFilter( poemID = poem.id );
+		for ( var share in shares ) {
+
+			shareCascade.deleteShare( user, poem, share );
+
+		}
 
 	}
 

@@ -2,6 +2,7 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="poemAccess" ioc:type="core.lib.service.poem.PoemAccess";
+	property name="poemCascade" ioc:type="core.lib.service.poem.PoemCascade";
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
 	property name="poemValidation" ioc:type="core.lib.model.poem.PoemValidation";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
@@ -43,10 +44,10 @@ component {
 		) {
 
 		var context = poemAccess.getContext( authContext, poemID, "canDelete" );
+		var user = context.user;
 		var poem = context.poem;
 
-		// Todo: move to a "cascade" service.
-		poemModel.deleteByFilter( id = poem.id );
+		poemCascade.deletePoem( user, poem );
 
 	}
 
