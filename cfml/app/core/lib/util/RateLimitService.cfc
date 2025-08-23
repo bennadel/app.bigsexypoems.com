@@ -22,6 +22,7 @@ component hint = "I provide methods for rate-limiting around a given property." 
 			"login-request-by-unknown-email": createSettings( 1, ONE_MINUTE ),
 			"login-request-by-ip": createSettings( 1, ONE_MINUTE ),
 			"login-verify-by-email": createSettings( 10, ONE_MINUTE ),
+			"poem-share-by-ip": createSettings( 20, ONE_MINUTE ),
 		};
 		// Windows hold specific instances of a feature being rate-limited for a specific
 		// window ID (ie, the user/client/thing uniquely identifying the request).

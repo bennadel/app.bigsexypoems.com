@@ -2,6 +2,8 @@
 
 	poemModel = request.ioc.get( "core.lib.model.poem.PoemModel" );
 	// requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
+	rateLimitService = request.ioc.get( "core.lib.util.RateLimitService" );
+	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	shareModel = request.ioc.get( "core.lib.model.poem.share.ShareModel" );
 	shareValidation = request.ioc.get( "core.lib.model.poem.share.ShareValidation" );
@@ -12,7 +14,9 @@
 	// SECURITY: This entire subsystem requires an identified user.
 	// request.authContext = requestHelper.ensureIdentifiedContext();
 
-	// TODO: add rate limiting. Should we add for failure checks?
+	// This rate limiting is here just to prevent brute-force guessing of share links. As
+	// such, the limit can be relatively high.
+	rateLimitService.testRequest( "poem-share-by-ip", requestMetadata.getIpAddress() );
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
