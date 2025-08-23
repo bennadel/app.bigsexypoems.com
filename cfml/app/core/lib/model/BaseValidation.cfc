@@ -148,6 +148,18 @@ component {
 
 
 	/**
+	* I return a normalized string value.
+	*/
+	public string function normalizeString( required string input ) {
+
+		return trim( input )
+			.reReplace( "\r\n?", chr( 10 ), "all" )
+		;
+
+	}
+
+
+	/**
 	* I run the given input through the validation pipeline and return the input.
 	*/
 	public any function pipeline(

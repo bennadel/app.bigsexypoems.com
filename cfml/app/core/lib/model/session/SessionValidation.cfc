@@ -8,7 +8,7 @@ component
 	public string function testIpAddress( required string input ) {
 
 		return pipeline(
-			trim( input ).lcase(),
+			normalizeString( input ).lcase(),
 			[
 				assertNotEmpty: [ "App.Model.Session.IpAddress.Empty" ],
 				assertMaxLength: [ 45, "App.Model.Session.IpAddress.TooLong" ],

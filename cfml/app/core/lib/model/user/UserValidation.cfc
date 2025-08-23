@@ -8,7 +8,7 @@ component
 	public string function testEmail( required string input ) {
 
 		return pipeline(
-			trim( input ).lcase(),
+			normalizeString( input ).lcase(),
 			[
 				assertNotEmpty: [ "App.Model.User.Email.Empty" ],
 				assertMaxLength: [ 75, "App.Model.User.Email.TooLong" ],
@@ -27,7 +27,7 @@ component
 	public string function testName( required string input ) {
 
 		return pipeline(
-			trim( input ),
+			normalizeString( input ),
 			[
 				assertNotEmpty: [ "App.Model.User.Name.Empty" ],
 				assertMaxLength: [ 50, "App.Model.User.Name.TooLong" ],
