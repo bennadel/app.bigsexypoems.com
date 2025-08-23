@@ -4,6 +4,9 @@ component {
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="site" ioc:get="config.site";
 
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
 	// ---
 	// LIFE-CYCLE METHODS.
 	// ---
@@ -59,17 +62,19 @@ component {
 		// Some URL parameters are intended to be transient. As such, we don't want them
 		// to be persisted in the post-back.
 		// --
-		// Todo: right now, this will return URL parameters in a random order. This
-		// doesn't affect the functionality; but, it does mean that a form that posts back
-		// to itself may post back to a different "looking" URL. In the future, maybe we
-		// come up with a way to make the sorting consistent (such as extracting the keys
-		// directly from the [cgi.query_string] or something).
-		var queryString = url
-			.keyArray()
+		// Note: we're parsing the query-string instead of iterating over the URL scope in
+		// order to make sure that the order parameters doesn't change. This is strictly
+		// for vanity reasons.
+		var queryString = requestMetadata.getQueryString()
+			.listToArray( "&" )
 			.filter(
-				( key ) => {
+				( pair ) => {
 
-					switch ( key ) {
+					// Note: the query-string will contain URL-encoded values. However,
+					// since we know that the keys we want to omit contain no special
+					// characters, we don't have to bother URL-decoding the key before
+					// inspecting it.
+					switch ( pair.listFirst( "=" ) ) {
 						case "flash":
 						case "flashData":
 						case "init":
@@ -79,13 +84,6 @@ component {
 							return true;
 						break;
 					}
-
-				}
-			)
-			.map(
-				( key ) => {
-
-					return "#encodeForUrl( key )#=#encodeForUrl( url[ key ] )#";
 
 				}
 			)

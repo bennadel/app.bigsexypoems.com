@@ -36,7 +36,6 @@
 
 			}
 
-			// Todo: requestHelper.testFormToken( form.formToken );
 			poemService.deletePoem(
 				authContext = request.authContext,
 				poemID = poem.id

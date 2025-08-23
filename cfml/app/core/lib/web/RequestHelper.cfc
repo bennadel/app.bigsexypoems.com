@@ -148,13 +148,13 @@ component {
 
 		if ( isArray( value ) ) {
 
-			return value.map( ( subvalue ) => trimScopeValues( subvalue ) );
+			return value.map( ( subvalue ) => trimScopeValuesRecursively( subvalue ) );
 
 		}
 
 		if ( isStruct( value ) ) {
 
-			return value.map( ( key, subvalue ) => trimScopeValues( subvalue ) );
+			return value.map( ( key, subvalue ) => trimScopeValuesRecursively( subvalue ) );
 
 		}
 
