@@ -3,7 +3,20 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 	// Define properties for dependency-injection.
 	property name="bugSnagLogger" ioc:type="core.lib.integration.bugsnag.BugSnagLogger";
 	property name="config" ioc:type="config";
+	property name="patternsToRedact" ioc:skip;
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
+
+	/**
+	* I initialize the logger.
+	*/
+	public void function init() {
+
+		variables.patternsToRedact = [
+			"password",
+			"xsrf.?token",
+		];
+
+	}
 
 	// ---
 	// PUBLIC METHODS.
@@ -189,18 +202,15 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 		formScope.delete( "fieldnames" );
 
 		// Redact any fields that pose a security issue.
-		// --
-		// Todo: make this a configuration option.
-		var fieldsToRedact = [
-			"password",
-			"x-xsrf-token"
-		];
+		for ( var key in formScope ) {
 
-		for ( var key in fieldsToRedact ) {
+			for ( var pattern in patternsToRedact ) {
 
-			if ( formScope.keyExists( key ) ) {
+				if ( key.reFindNoCase( pattern ) ) {
 
-				formScope[ key ] = "[redacted]";
+					formScope[ key ] = "[redacted]";
+
+				}
 
 			}
 
