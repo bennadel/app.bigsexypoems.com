@@ -1,7 +1,6 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="gateway" ioc:type="core.lib.model.user.UserGateway";
 	property name="validation" ioc:type="core.lib.model.user.UserValidation";
 
@@ -18,7 +17,7 @@ component {
 	public numeric function create(
 		required string name,
 		required string email,
-		date createdAt = clock.utcNow()
+		date createdAt = utcNow()
 		) {
 
 		name = validation.testName( name );

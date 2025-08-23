@@ -1,7 +1,6 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="gateway" ioc:type="core.lib.model.poem.PoemGateway";
 	property name="validation" ioc:type="core.lib.model.poem.PoemValidation";
 
@@ -24,7 +23,7 @@ component {
 		name = validation.testName( name );
 		content = validation.testContent( content );
 
-		var createdAt = clock.utcNow();
+		var createdAt = utcNow();
 
 		return gateway.create(
 			userID = userID,
@@ -141,7 +140,7 @@ component {
 			id = existing.id,
 			name = name,
 			content = content,
-			updatedAt = clock.utcNow()
+			updatedAt = utcNow()
 		);
 
 	}

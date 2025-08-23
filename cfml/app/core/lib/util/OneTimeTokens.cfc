@@ -1,7 +1,6 @@
 component hint = "I provide methods for generating and verifying one-time tokens." {
 
 	// Define properties for dependency-injection.
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="model" ioc:type="core.lib.model.oneTimeToken.OneTimeTokenModel";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
 	property name="validation" ioc:type="core.lib.model.oneTimeToken.OneTimeTokenValidation";
@@ -24,7 +23,7 @@ component hint = "I provide methods for generating and verifying one-time tokens
 		) {
 
 		var slug = secureRandom.getToken( 32 );
-		var expiresAt = clock.utcNow()
+		var expiresAt = utcNow()
 			.add( "n", ttlInMinutes )
 		;
 
@@ -69,7 +68,7 @@ component hint = "I provide methods for generating and verifying one-time tokens
 
 		}
 
-		if ( maybeResult.value.expiresAt <= clock.utcNow() ) {
+		if ( maybeResult.value.expiresAt <= utcNow() ) {
 
 			return {
 				exists: false

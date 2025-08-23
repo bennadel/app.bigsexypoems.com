@@ -1,7 +1,6 @@
 component hint = "I provide workflow methods pertaining to scheduled tasks." {
 
 	// Define properties for dependency-injection.
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="ioc" ioc:type="core.lib.util.Injector";
 	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="scheduledTasks" ioc:get="config.scheduledTasks";
@@ -32,7 +31,7 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 		}
 
 		var task = taskModel.get( taskID );
-		var timestamp = clock.utcNow();
+		var timestamp = utcNow();
 
 		if ( task.nextExecutedAt > timestamp ) {
 
@@ -55,7 +54,7 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 
 			if ( task.isDailyTask ) {
 
-				var lastExecutedAt = clock.utcNow();
+				var lastExecutedAt = utcNow();
 				var tomorrow = timestamp.add( "d", 1 );
 				var nextExecutedAt = createDateTime(
 					year( tomorrow ),
@@ -68,7 +67,7 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 
 			} else {
 
-				var lastExecutedAt = clock.utcNow();
+				var lastExecutedAt = utcNow();
 				var nextExecutedAt = lastExecutedAt.add( "n", task.intervalInMinutes );
 
 			}
@@ -90,7 +89,7 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 	*/
 	public numeric function executeOverdueTasks() {
 
-		var tasks = taskModel.getByFilter( overdueAt = clock.utcNow() );
+		var tasks = taskModel.getByFilter( overdueAt = utcNow() );
 
 		tasks.each(
 			( task ) => {

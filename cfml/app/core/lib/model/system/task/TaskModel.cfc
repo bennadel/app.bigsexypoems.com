@@ -1,7 +1,6 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="gateway" ioc:type="core.lib.model.system.task.TaskGateway";
 	property name="validation" ioc:type="core.lib.model.system.task.TaskValidation";
 

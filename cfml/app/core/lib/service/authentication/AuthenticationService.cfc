@@ -3,7 +3,6 @@ component {
 	// Define properties for dependency-injection.
 	property name="authenticationEmailer" ioc:type="core.lib.service.authentication.AuthenticationEmailer";
 	property name="authenticationUrlSigner" ioc:type="core.lib.service.authentication.AuthenticationUrlSigner";
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="isLive" ioc:get="config.isLive";
 	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="oneTimeTokens" ioc:type="core.lib.util.OneTimeTokens";
@@ -136,7 +135,7 @@ component {
 		// in email clients such as Gmail), let's include the expiration date in the
 		// subject. This isn't a fool-proof plan; but, will likely create a unique subject
 		// between two subsequent login requests for the same user.
-		var expiresAt = clock.utcNow()
+		var expiresAt = utcNow()
 			.add( "n", offsetInMinutes )
 			.add( "n", expiresInMinutes )
 		;

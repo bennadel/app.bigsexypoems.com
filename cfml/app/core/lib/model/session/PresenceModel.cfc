@@ -1,7 +1,6 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="gateway" ioc:type="core.lib.model.session.PresenceGateway";
 	property name="validation" ioc:type="core.lib.model.session.PresenceValidation";
 
@@ -18,7 +17,7 @@ component {
 	public void function create(
 		required numeric sessionID,
 		numeric requestCount = 1,
-		date lastRequestAt = clock.utcNow()
+		date lastRequestAt = utcNow()
 		) {
 
 		var existing = getByFilter( sessionID = sessionID );

@@ -1,7 +1,6 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="gateway" ioc:type="core.lib.model.session.SessionGateway";
 	property name="validation" ioc:type="core.lib.model.session.SessionValidation";
 
@@ -20,7 +19,7 @@ component {
 		required numeric userID,
 		required boolean isAuthenticated,
 		required string ipAddress,
-		date createdAt = clock.utcNow()
+		date createdAt = utcNow()
 		) {
 
 		ipAddress = validation.testIpAddress( ipAddress );

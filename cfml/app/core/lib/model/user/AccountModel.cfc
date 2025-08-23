@@ -1,7 +1,6 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="gateway" ioc:type="core.lib.model.user.AccountGateway";
 	property name="validation" ioc:type="core.lib.model.user.AccountValidation";
 
@@ -17,7 +16,7 @@ component {
 	*/
 	public void function create(
 		required numeric userID,
-		date createdAt = clock.utcNow()
+		date createdAt = utcNow()
 		) {
 
 		var existing = gateway.getByFilter( userID = userID );

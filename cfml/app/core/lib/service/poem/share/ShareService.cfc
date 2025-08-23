@@ -1,7 +1,6 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
 	property name="shareAccess" ioc:type="core.lib.service.poem.share.ShareAccess";
 	property name="shareCascade" ioc:type="core.lib.service.poem.share.ShareCascade";
@@ -25,7 +24,7 @@ component {
 		var context = shareAccess.getContextForParent( authContext, poemID, "canCreateAny" );
 		var poem = context.poem;
 		var token = secureRandom.getToken( 32 );
-		var createdAt = clock.utcNow();
+		var createdAt = utcNow();
 
 		var shareID = shareModel.create(
 			poemID = poem.id,
