@@ -227,7 +227,7 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 	private struct function buildRequestContext() {
 
 		return {
-			event: ( url?.event ?: "" ), // Todo: is there somewhere else I can do this that is more decoupled?
+			event: ( url?.event ?: "" ),
 			http: {
 				method: requestMetadata.getMethod(),
 				url: requestMetadata.getUrl(),

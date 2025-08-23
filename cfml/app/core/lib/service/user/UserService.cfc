@@ -20,7 +20,7 @@ component {
 		var context = userAccess.getContext( authContext, userID, "canUpdate" );
 		var user = context.user;
 
-		// Todo: for updating email address, we'll want to go through an email validation
+		// Idea: for updating email address, we'll want to go through an email validation
 		// workflow.
 
 		userModel.update(
