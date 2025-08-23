@@ -1,9 +1,9 @@
 <cfscript>
 
+	config = request.ioc.get( "config" );
+
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
-
-	config = request.ioc.get( "config" );
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //

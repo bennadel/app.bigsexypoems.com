@@ -1,8 +1,5 @@
 <cfscript>
 
-	// ColdFusion language extensions (global functions).
-	include "/core/cfmlx.cfm";
-
 	authenticationService = request.ioc.get( "core.lib.service.authentication.AuthenticationService" );
 	config = request.ioc.get( "config" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
@@ -10,6 +7,9 @@
 	router = request.ioc.get( "core.lib.web.Router" );
 	sessionService = request.ioc.get( "core.lib.service.session.SessionService" );
 	turnstileClient = request.ioc.get( "core.lib.integration.turnstile.TurnstileClient" );
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //

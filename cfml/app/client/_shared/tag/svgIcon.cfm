@@ -3,6 +3,9 @@
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
 
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
 	param name="attributes.type" type="string";
 	param name="attributes.xClass" type="string" default="";
 	param name="attributes.xClassToken" type="string" default="";

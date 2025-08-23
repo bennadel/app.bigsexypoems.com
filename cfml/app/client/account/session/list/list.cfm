@@ -1,13 +1,13 @@
 <cfscript>
 
-	// ColdFusion language extensions (global functions).
-	include "/core/cfmlx.cfm";
-
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	sessionService = request.ioc.get( "core.lib.service.session.SessionService" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 	viewPartial = request.ioc.get( "client.account.session.list.ListPartial" );
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //

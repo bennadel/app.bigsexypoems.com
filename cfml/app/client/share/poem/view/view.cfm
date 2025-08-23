@@ -1,10 +1,10 @@
 <cfscript>
 
-	// ColdFusion language extensions (global functions).
-	include "/core/cfmlx.cfm";
-
 	ui = request.ioc.get( "core.lib.web.UI" );
 	userModel = request.ioc.get( "core.lib.model.user.UserModel" );
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
@@ -16,10 +16,5 @@
 	request.response.title = title;
 
 	include "./view.view.cfm";
-
-	// ------------------------------------------------------------------------------- //
-	// ------------------------------------------------------------------------------- //
-
-	
 
 </cfscript>

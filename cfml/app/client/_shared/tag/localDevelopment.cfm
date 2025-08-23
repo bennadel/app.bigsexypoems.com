@@ -1,10 +1,10 @@
 <cfscript>
 
-	// ColdFusion language extensions (global functions).
-	include "/core/cfmlx.cfm";
-
 	config = request.ioc.get( "config" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //

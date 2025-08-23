@@ -3,6 +3,9 @@
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
 
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
 	param name="request.response.statusCode" type="numeric" default=200;
 	param name="request.response.contentDisposition" type="string" default="attachment";
 	param name="request.response.etag" type="string" default="";
