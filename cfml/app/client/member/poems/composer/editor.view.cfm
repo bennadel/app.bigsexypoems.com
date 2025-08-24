@@ -35,13 +35,23 @@
 				<label for="form--content" class="uiField__label">
 					Content:
 				</label>
-				<div class="uiField__content">
+				<div class="uiField__content uiHstack isStretched">
 					<textarea
 						id="form--content"
 						name="content"
+
+						hx-post="#router.urlForParts( 'member.poems.composer.syllables' )#"
+						hx-trigger="load, input delay:1s"
+						hx-target="next"
+						hx-sync="this:replace"
+
 						maxlength="3000"
 						class="uiTextarea"
 					>#e( form.content )#</textarea>
+
+					<div>
+						<!--- Syllable counts, populated by HTMX. --->
+					</div>
 				</div>
 			</div>
 

@@ -2,9 +2,19 @@ component hint = "I provide methods for getting words related to other words." {
 
 	// Define properties for dependency-injection.
 	property name="datamuseClient" ioc:type="core.lib.integration.datamuse.DatamuseClient";
+	property name="syllableCache" ioc:skip;
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
+
+	/**
+	* I initialize the word service.
+	*/
+	public void function init() {
+
+		variables.syllableCache = {};
+
+	}
 
 	// ---
 	// PUBLIC METHODS.
@@ -56,6 +66,9 @@ component hint = "I provide methods for getting words related to other words." {
 	}
 
 
+	/**
+	* I get the words that rhyme with the given word.
+	*/
 	public array function getRhyme(
 		required string word,
 		required numeric limit,
@@ -94,6 +107,61 @@ component hint = "I provide methods for getting words related to other words." {
 			? groupBySyllableCount( results )
 			: groupByTypeOfSpeech( results )
 		;
+
+	}
+
+
+	/**
+	* I get the syllable counts for the lines of text within the given input.
+	*/
+	public array function getSyllableCountForLines( required string input ) {
+
+		var tokens = tokenize( input );
+
+		// Ensure the tokens are cached.
+		// --
+		// Todo: probably we don't want to cache them in memory in the long term; but this
+		// is ok for the time being while I figure something out.
+		arrayReflect( tokens )
+			.keyArray()
+			.filter( ( token ) => ! syllableCache.keyExists( token ) )
+			.each(
+				( token ) => {
+
+					var results = datamuseClient.getSyllableCount( token );
+
+					for ( var result in results ) {
+
+						syllableCache[ result.word ] = result.syllableCount;
+
+					}
+
+				},
+				true // Parallel iteration.
+			)
+		;
+
+		var lines = input
+			.reMatch( "[^\r\n]+" )
+			.map(
+				( line ) => {
+
+					return tokenize( line ).reduce(
+						( reduction, token ) => {
+
+							// Note: if Datamuse couldn't find the word, we won't have a
+							// cached match. In that case, default to 1 syllable.
+							return ( reduction + ( syllableCache[ token ] ?: 1 ) );
+
+						},
+						0
+					);
+
+				}
+			)
+		;
+
+		return lines;
 
 	}
 
@@ -208,6 +276,22 @@ component hint = "I provide methods for getting words related to other words." {
 
 		// Only return groups with results.
 		return groups.filter( ( group ) => group.results.len() );
+
+	}
+
+
+	/**
+	* I break the given input up into normalized tokens.
+	*/
+	private array function tokenize( required string input ) {
+
+		return input
+			.trim()
+			.lcase()
+			.reReplace( "['""]+", "", "all" )
+			.reReplace( "[[:punct:]]+", " ", "all" )
+			.reMatch( "\S+" )
+		;
 
 	}
 

@@ -58,10 +58,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	/**
 	* I get syllable count for the given word.
 	*/
-	public array function getSyllableCount(
-		required string word,
-		required numeric limit
-		) {
+	public array function getSyllableCount( required string word ) {
 
 		return makeRequestAndNormalizeResults(
 			resource = "words",
@@ -121,6 +118,9 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	* I normalize the given result, making easier-to-consume data.
 	*/
 	private boolean function normalizeResult( required struct result ) {
+
+		// Implicit properties:
+		// - result.word
 
 		// Sometimes the data coming back from datamuse is incomplete. Or, at least,
 		// that's what my old experimental code says - I'm not sure if this is still true.
