@@ -68,7 +68,7 @@
 				Find words that rhyme well with each other.
 			</p>
 			<form
-				hx-get="#router.urlForParts( 'member.poems.compose.rhymes' )#"
+				hx-get="#router.urlForParts( 'member.poems.composer.rhymes' )#"
 				hx-target="next"
 				hx-sync="this:replace"
 				class="uiVstack">
@@ -132,7 +132,7 @@
 				Find words that mean roughly the same thing.
 			</p>
 			<form
-				hx-get="#router.urlForParts( 'member.poems.compose.synonyms' )#"
+				hx-get="#router.urlForParts( 'member.poems.composer.synonyms' )#"
 				hx-target="next"
 				hx-sync="this:replace"
 				class="uiVstack">

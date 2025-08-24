@@ -7,7 +7,7 @@
 
 	switch ( router.next( "list" ) ) {
 		case "add":
-		case "compose":
+		case "composer":
 		case "edit":
 		case "delete":
 		case "list":
