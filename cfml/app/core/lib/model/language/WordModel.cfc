@@ -1,8 +1,8 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="gateway" ioc:type="core.lib.model.poem.share.ShareGateway";
-	property name="validation" ioc:type="core.lib.model.poem.share.ShareValidation";
+	property name="gateway" ioc:type="core.lib.model.language.WordGateway";
+	property name="validation" ioc:type="core.lib.model.language.WordValidation";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -14,16 +14,26 @@ component {
 	/**
 	* I create a new model.
 	*/
-	public numeric function create(
-		required numeric poemID,
+	public void function create(
 		required string token,
-		required date createdAt
+		required numeric syllableCount,
+		required numeric partsPerMillion,
+		required boolean isAdjective,
+		required boolean isAdverb,
+		required boolean isNoun,
+		required boolean isVerb
 		) {
 
-		return gateway.create(
-			poemID = poemID,
+		token = validation.testToken( token );
+
+		gateway.create(
 			token = token,
-			createdAt = createdAt
+			syllableCount = syllableCount,
+			partsPerMillion = partsPerMillion,
+			isAdjective = isAdjective,
+			isAdverb = isAdverb,
+			isNoun = isNoun,
+			isVerb = isVerb
 		);
 
 	}
@@ -32,10 +42,7 @@ component {
 	/**
 	* I delete the model that match the given filters.
 	*/
-	public void function deleteByFilter(
-		numeric id,
-		numeric poemID
-		) {
+	public void function deleteByFilter( string token ) {
 
 		gateway.deleteByFilter( argumentCollection = arguments );
 
@@ -45,7 +52,7 @@ component {
 	/**
 	* I get a model.
 	*/
-	public struct function get( required numeric id ) {
+	public struct function get( required string token ) {
 
 		var results = getByFilter( argumentCollection = arguments );
 
@@ -63,11 +70,7 @@ component {
 	/**
 	* I get the model that match the given filters.
 	*/
-	public array function getByFilter(
-		numeric id,
-		numeric poemID,
-		string token
-		) {
+	public array function getByFilter( string token ) {
 
 		return gateway.getByFilter( argumentCollection = arguments );
 
@@ -77,7 +80,7 @@ component {
 	/**
 	* I maybe get a model.
 	*/
-	public struct function maybeGet( required numeric id ) {
+	public struct function maybeGet( required string token ) {
 
 		return maybeGetByFilter( argumentCollection = arguments );
 
@@ -87,11 +90,7 @@ component {
 	/**
 	* I maybe get the first model that match the given filters.
 	*/
-	public struct function maybeGetByFilter(
-		numeric id,
-		numeric poemID,
-		string token
-		) {
+	public struct function maybeGetByFilter( string token ) {
 
 		var results = getByFilter( argumentCollection = arguments );
 

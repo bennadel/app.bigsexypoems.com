@@ -3,6 +3,7 @@ component hint = "I provide methods for getting words related to other words." {
 	// Define properties for dependency-injection.
 	property name="datamuseClient" ioc:type="core.lib.integration.datamuse.DatamuseClient";
 	property name="syllableCache" ioc:skip;
+	property name="wordModel" ioc:type="core.lib.model.language.WordModel";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -118,29 +119,16 @@ component hint = "I provide methods for getting words related to other words." {
 
 		var tokens = tokenize( input );
 
-		// Ensure the tokens are cached.
-		// --
-		// Todo: probably we don't want to cache them in memory in the long term; but this
-		// is ok for the time being while I figure something out.
-		arrayReflect( tokens )
-			.keyArray()
-			.filter( ( token ) => ! syllableCache.keyExists( token ) )
-			.each(
-				( token ) => {
+		if ( ! tokens.len() ) {
 
-					var results = datamuseClient.getSyllableCount( token );
+			return [];
 
-					for ( var result in results ) {
+		}
 
-						syllableCache[ result.word ] = result.syllableCount;
+		ensureSyllableCountCache( tokens );
 
-					}
-
-				},
-				true // Parallel iteration.
-			)
-		;
-
+		// Now that we've ensured that the tokens are cached in memory, all we have to do
+		// is count the number of syllables per line.
 		var lines = input
 			.reMatch( "[^\r\n]+" )
 			.map(
@@ -214,6 +202,65 @@ component hint = "I provide methods for getting words related to other words." {
 	// ---
 	// PRIVAT METHODS.
 	// ---
+
+	/**
+	* I ensure that the cache contains all the given tokens, fetching data from Datamuse
+	* as needed in order to incrementally populate the cache.
+	*/
+	private void function ensureSyllableCountCache( required array tokens ) {
+
+		tokens
+			.filter( ( token ) => ! syllableCache.keyExists( token ) )
+			.each(
+				( token ) => {
+
+					var maybeWord = wordModel.maybeGet( token );
+
+					if ( maybeWord.exists ) {
+
+						syllableCache[ token ] = maybeWord.value.syllableCount;
+						return;
+
+					}
+
+					// We didn't have the token cached in the database, go to Datamuse.
+					// --
+					// Todo: we should add some sort of try/catch or back-off around this
+					// call probably.
+					var results = datamuseClient.getSyllableCount( token );
+
+					for ( var result in results ) {
+
+						syllableCache[ result.word ] = result.syllableCount;
+
+						if (
+							result.partsPerMillion &&
+							result.syllableCount &&
+							( token.len() <= 20 )
+							) {
+
+							wordModel.create(
+								token = token,
+								syllableCount = result.syllableCount,
+								partsPerMillion = result.partsPerMillion,
+								isAdjective = result.isAdjective,
+								isAdverb = result.isAdverb,
+								isNoun = result.isNoun,
+								isVerb = result.isVerb
+							);
+
+						}
+
+					}
+
+				},
+				true, // Parallel iteration.
+				20    // Max parallel threads.
+			)
+		;
+
+	}
+
 
 	/**
 	* I group the results by syllable count.

@@ -24,6 +24,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		) {
 
 		return makeRequestAndNormalizeResults(
+			word = word,
 			resource = "words",
 			searchParams = {
 				ml: testWord( word ),
@@ -44,6 +45,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		) {
 
 		return makeRequestAndNormalizeResults(
+			word = word,
 			resource = "words",
 			searchParams = {
 				rel_rhy: testWord( word ),
@@ -61,6 +63,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	public array function getSyllableCount( required string word ) {
 
 		return makeRequestAndNormalizeResults(
+			word = word,
 			resource = "words",
 			searchParams = {
 				sp: testWord( word ),
@@ -83,6 +86,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		) {
 
 		return makeRequestAndNormalizeResults(
+			word = word,
 			resource = "words",
 			searchParams = {
 				rel_syn: testWord( word ),
@@ -102,13 +106,14 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	* into a common format.
 	*/
 	private array function makeRequestAndNormalizeResults(
+		required string word,
 		required string resource,
 		required struct searchParams
 		) {
 
 		return gateway
 			.makeRequest( resource, searchParams )
-			.filter( ( result ) => normalizeResult( result ) )
+			.filter( ( result ) => normalizeResult( word, result ) )
 		;
 
 	}
@@ -117,12 +122,24 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	/**
 	* I normalize the given result, making easier-to-consume data.
 	*/
-	private boolean function normalizeResult( required struct result ) {
+	private boolean function normalizeResult(
+		required string word,
+		required struct result
+		) {
 
-		// Implicit properties:
-		// - result.word
+		// If the word returned from Datamuse is NOT THE SAME WORD that we originally
+		// requested, it means that the Datamuse resource we used didn't understand the
+		// word we were looking for. In that case, consider the result invalid.
+		// --
+		// Note: this isn't relevant for all Datamuse APIs; but, the (SP) "spelling"
+		// resource may return a suggested spelling instead of echoing our spelling.
+		if ( result.word != word ) {
 
-		// Sometimes the data coming back from datamuse is incomplete. Or, at least,
+			return false;
+
+		}
+
+		// Sometimes the data coming back from Datamuse is incomplete. Or, at least,
 		// that's what my old experimental code says - I'm not sure if this is still true.
 		if ( isNull( result.tags ) || isNull( result.score ) ) {
 

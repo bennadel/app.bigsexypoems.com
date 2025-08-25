@@ -38,7 +38,7 @@ component {
 
 
 	/**
-	* I delete the model that match the given filters. 
+	* I delete the model that match the given filters.
 	*/
 	public void function deleteByFilter(
 		numeric id,
