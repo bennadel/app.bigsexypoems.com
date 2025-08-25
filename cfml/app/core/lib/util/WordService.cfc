@@ -131,6 +131,7 @@ component hint = "I provide methods for getting words related to other words." {
 		// is count the number of syllables per line.
 		var lines = input
 			.reMatch( "[^\r\n]+" )
+			.filter( ( line ) => line.trim().len() )
 			.map(
 				( line ) => {
 
@@ -195,6 +196,22 @@ component hint = "I provide methods for getting words related to other words." {
 		return ( groupBy == "syllableCount" )
 			? groupBySyllableCount( results )
 			: groupByTypeOfSpeech( results )
+		;
+
+	}
+
+
+	/**
+	* I break the given input up into normalized tokens.
+	*/
+	public array function tokenize( required string input ) {
+
+		return input
+			.trim()
+			.lcase()
+			.reReplace( "['""]+", "", "all" )
+			.reReplace( "[[:punct:]]+", " ", "all" )
+			.reMatch( "\S+" )
 		;
 
 	}
@@ -323,22 +340,6 @@ component hint = "I provide methods for getting words related to other words." {
 
 		// Only return groups with results.
 		return groups.filter( ( group ) => group.results.len() );
-
-	}
-
-
-	/**
-	* I break the given input up into normalized tokens.
-	*/
-	private array function tokenize( required string input ) {
-
-		return input
-			.trim()
-			.lcase()
-			.reReplace( "['""]+", "", "all" )
-			.reReplace( "[[:punct:]]+", " ", "all" )
-			.reMatch( "\S+" )
-		;
 
 	}
 

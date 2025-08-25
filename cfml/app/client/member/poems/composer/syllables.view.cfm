@@ -2,9 +2,11 @@
 <cfoutput>
 
 	<ul>
-		<cfloop array="#counts#" item="count">
+		<cfloop array="#lineCounts#" item="lineCount">
 			<li>
-				#e( count )#
+				<cfif lineCount>
+					#e( lineCount )#
+				</cfif>
 			</li>
 		</cfloop>
 	</ul>
