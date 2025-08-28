@@ -35,23 +35,45 @@
 				<label for="form--content" class="uiField__label">
 					Content:
 				</label>
-				<div class="uiField__content uiHstack isStretched">
-					<textarea
-						id="form--content"
-						name="content"
+				<div class="uiField__content uiVstack">
 
-						hx-post="#router.urlForParts( 'member.poems.composer.syllables' )#"
-						hx-trigger="load, input delay:1s"
-						hx-target="next"
-						hx-sync="this:replace"
+					<div class="uiHstack isStretched">
+						<textarea
+							id="form--content"
+							name="content"
 
-						maxlength="3000"
-						class="uiTextarea"
-					>#e( form.content )#</textarea>
+							hx-post="#router.urlForParts( 'member.poems.composer.syllables' )#"
+							hx-trigger="load, input delay:1s"
+							hx-target="next"
+							hx-sync="this:replace"
+
+							maxlength="3000"
+							class="uiTextarea"
+						>#e( form.content )#</textarea>
+
+						<div>
+							<!--- Syllable counts, populated by HTMX. --->
+						</div>
+					</div>
 
 					<div>
-						<!--- Syllable counts, populated by HTMX. --->
+						<button
+							type="button"
+
+							hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground' )#"
+							hx-trigger="click, input delay:3s from:##form--content"
+							hx-swap="none"
+							hx-sync="this:replace"
+							hx-indicator="next .htmx-indicator"
+
+							class="uiButton isText">
+							Save in Background
+						</button>
+						<span class="htmx-indicator">
+							Saving....
+						</span>
 					</div>
+
 				</div>
 			</div>
 

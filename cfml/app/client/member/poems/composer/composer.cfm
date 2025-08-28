@@ -8,6 +8,7 @@
 	switch ( router.next( "editor" ) ) {
 		case "editor":
 		case "rhymes":
+		case "saveInBackground":
 		case "syllables":
 		case "synonyms":
 			cfmodule( template = router.nextTemplate( false ) );
