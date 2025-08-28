@@ -2,6 +2,7 @@ component hint = "I provide methods for getting words related to other words." {
 
 	// Define properties for dependency-injection.
 	property name="datamuseClient" ioc:type="core.lib.integration.datamuse.DatamuseClient";
+	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="syllableCache" ioc:skip;
 	property name="wordModel" ioc:type="core.lib.model.language.WordModel";
 
@@ -59,6 +60,8 @@ component hint = "I provide methods for getting words related to other words." {
 			)
 		;
 
+		cacheSyllableCountResultsAsync( results );
+
 		return ( groupBy == "syllableCount" )
 			? groupBySyllableCount( results )
 			: groupByTypeOfSpeech( results )
@@ -103,6 +106,8 @@ component hint = "I provide methods for getting words related to other words." {
 				}
 			)
 		;
+
+		cacheSyllableCountResultsAsync( results );
 
 		return ( groupBy == "syllableCount" )
 			? groupBySyllableCount( results )
@@ -193,6 +198,8 @@ component hint = "I provide methods for getting words related to other words." {
 			)
 		;
 
+		cacheSyllableCountResultsAsync( results );
+
 		return ( groupBy == "syllableCount" )
 			? groupBySyllableCount( results )
 			: groupByTypeOfSpeech( results )
@@ -221,60 +228,156 @@ component hint = "I provide methods for getting words related to other words." {
 	// ---
 
 	/**
+	* I cache the syllable counts for the given results in an asynchronous thread.
+	*/
+	private void function cacheSyllableCountResultsAsync( required array results ) {
+
+		thread
+			name = "WordService.cacheSyllableCountResultsAsync"
+			results = results
+			{
+
+			try {
+
+				cacheSyllableCountResultsSync( results );
+
+			} catch ( any error ) {
+
+				logger.logException( error );
+
+			}
+
+		}
+
+	}
+
+
+	/**
+	* I cache the syllable counts for the given results.
+	*/
+	private void function cacheSyllableCountResultsSync( required array results ) {
+
+		for ( var result in results ) {
+
+			var tokens = tokenize( result.word );
+
+			// We only want to cache words that result in a single token. This is how the
+			// line-based parser works, so this will only be relevant for caching results
+			// coming from other methods (ex, rhymes and synonyms).
+			if ( tokens.len() != 1 ) {
+
+				continue;
+
+			}
+
+			var word = tokens[ 1 ];
+
+			// If we already have it cached in memory, then it means we already have it
+			// cached in the database (or we've chosen to skip the database cache).
+			if ( syllableCache.keyExists( word ) ) {
+
+				continue;
+
+			}
+
+			// Always cache in memory since memory is cheap and will be reset whenever the
+			// application is restarted.
+			syllableCache[ word ] = result.syllableCount;
+
+			// If the frequency is zero, it means that the word is either made-up,
+			// misspelled, or isn't in any of the dictionaries that Datamuse uses.
+			if ( ! result.partsPerMillion ) {
+
+				continue;
+
+			}
+
+			// If the syllable count is zero, it means that the word is probably
+			// misspelled or made-up.
+			if ( ! result.syllableCount ) {
+
+				continue;
+
+			}
+
+			// If the syllable count is greater than 4, it's going to be an extremely rare
+			// word - most people use very simple words.
+			if ( result.syllableCount > 4 ) {
+
+				continue;
+
+			}
+
+			// If the part of speech couldn't be determined, it's probably a word that
+			// won't be used very often - like a name or something esoteric.
+			if ( result.isUnknown ) {
+
+				continue;
+
+			}
+
+			// At this time, the primary-key of the cache table is only 20-characters.
+			if ( word.len() > 20 ) {
+
+				continue;
+
+			}
+
+			wordModel.create(
+				token = word,
+				syllableCount = result.syllableCount,
+				partsPerMillion = result.partsPerMillion,
+				isAdjective = result.isAdjective,
+				isAdverb = result.isAdverb,
+				isNoun = result.isNoun,
+				isVerb = result.isVerb
+			);
+
+		}
+
+	}
+
+
+	/**
 	* I ensure that the cache contains all the given tokens, fetching data from Datamuse
 	* as needed in order to incrementally populate the cache.
 	*/
 	private void function ensureSyllableCountCache( required array tokens ) {
 
-		tokens
-			.filter( ( token ) => ! syllableCache.keyExists( token ) )
-			.each(
-				( token ) => {
+		tokens.each(
+			( token ) => {
 
-					var maybeWord = wordModel.maybeGet( token );
+				if ( syllableCache.keyExists( token ) ) {
 
-					if ( maybeWord.exists ) {
+					return;
 
-						syllableCache[ token ] = maybeWord.value.syllableCount;
-						return;
+				}
 
-					}
+				var maybeWord = wordModel.maybeGet( token );
 
-					// We didn't have the token cached in the database, go to Datamuse.
-					// --
-					// Todo: we should add some sort of try/catch or back-off around this
-					// call probably.
-					var results = datamuseClient.getSyllableCount( token );
+				if ( maybeWord.exists ) {
 
-					for ( var result in results ) {
+					syllableCache[ token ] = maybeWord.value.syllableCount;
+					return;
 
-						syllableCache[ result.word ] = result.syllableCount;
+				}
 
-						if (
-							result.partsPerMillion &&
-							result.syllableCount &&
-							( token.len() <= 20 )
-							) {
+				// We didn't have the token cached in the database, go to Datamuse and
+				// cache results locally.
+				try {
 
-							wordModel.create(
-								token = token,
-								syllableCount = result.syllableCount,
-								partsPerMillion = result.partsPerMillion,
-								isAdjective = result.isAdjective,
-								isAdverb = result.isAdverb,
-								isNoun = result.isNoun,
-								isVerb = result.isVerb
-							);
+					cacheSyllableCountResultsSync( datamuseClient.getSyllableCount( token ) );
 
-						}
+				} catch ( any error ) {
 
-					}
+					logger.logException( error );
 
-				},
-				true, // Parallel iteration.
-				20    // Max parallel threads.
-			)
-		;
+				}
+
+			},
+			true, // Parallel iteration.
+			20    // Max parallel threads.
+		);
 
 	}
 
