@@ -41,17 +41,14 @@
 						<textarea
 							id="form--content"
 							name="content"
-
-							hx-post="#router.urlForParts( 'member.poems.composer.syllables' )#"
-							hx-trigger="load, input delay:1s"
-							hx-target="next"
-							hx-sync="this:replace"
-
 							maxlength="3000"
 							class="uiTextarea"
 						>#e( form.content )#</textarea>
 
-						<div>
+						<div
+							hx-post="#router.urlForParts( 'member.poems.composer.syllables' )#"
+							hx-trigger="load, input delay:1s from:previous textarea"
+							hx-sync="this:replace">
 							<!--- Syllable counts, populated by HTMX. --->
 						</div>
 					</div>
@@ -59,19 +56,18 @@
 					<div>
 						<button
 							type="button"
-
-							hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground' )#"
-							hx-trigger="click, input delay:3s from:##form--content"
-							hx-swap="none"
+							hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground', 'poemID', poem.id )#"
+							hx-trigger="click, input delay:1s from:previous textarea"
+							hx-target="next .background-reponse"
 							hx-sync="this:replace"
-							hx-indicator="next .htmx-indicator"
-
+							hx-indicator="next"
 							class="uiButton isText">
 							Save in Background
 						</button>
 						<span class="htmx-indicator">
 							Saving....
 						</span>
+						<div class="background-reponse"></div>
 					</div>
 
 				</div>
@@ -82,14 +78,12 @@
 					Save Poem
 				</button>
 				<a #ui.attrHref( "member.poems.view", "poemID", poem.id )# class="uiButton isCancel">
-					Cancel
+					Back to Detail
 				</a>
 			</div>
 		</form>
 
 	</article>
-
-
 
 	<div z6s31p class="wordTools">
 		<section>
@@ -220,7 +214,6 @@
 			</div>
 		</section>		
 	</div>
-
 
 	<p>
 		Rhymes and synonyms are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.

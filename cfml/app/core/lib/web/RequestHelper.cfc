@@ -112,6 +112,20 @@ component {
 
 	}
 
+
+	/**
+	* I process the given error and return the error response. Unlike the main process
+	* error call, this one does not apply any changes to the status code so that HTMX will
+	* still render the content.
+	*/
+	public struct function processErrorForHtmx( required any error ) {
+
+		logger.logException( error );
+
+		return errorTranslator.translate( error );
+
+	}
+
 	// ---
 	// PRIVATE METHODS.
 	// ---

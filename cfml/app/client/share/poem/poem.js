@@ -11,19 +11,6 @@ import "./*/**/*.{js,less}";
 // ----------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------- //
 
-htmx.config.responseHandling = [
-	{ code: "204",    swap: false },
-	{ code: "[23]..", swap: true },
-
-	// Adding this one to allow 404 responses to be merged into the page.
-	{ code: "404",    swap: true, error: true },
-	// Adding this one to allow 422 responses to be merged into the page.
-	{ code: "422",    swap: true },
-
-	{ code: "[45]..", swap: false, error: true },
-	{ code: "...",    swap: true }
-];
-
 // Note: by starting Alpine after the DOM is ready, it should give any other deferred
 // scripts time to load and register components before Alpine is bootstrapped.
 document.addEventListener(
