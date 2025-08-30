@@ -42,7 +42,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		required string word,
 		required numeric limit
 		) {
-
+if(word=="oops")throw(type="HttpError");
 		return makeRequestAndNormalizeResults(
 			resource = "words",
 			searchParams = {

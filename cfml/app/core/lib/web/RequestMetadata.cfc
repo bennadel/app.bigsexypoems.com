@@ -50,6 +50,21 @@ component hint = "I provide utility methods for accessing metadata about the cur
 
 
 	/**
+	* I safely get the given HTTP header.
+	*/
+	private string function getHeader(
+		required string name,
+		string fallbackValue = ""
+		) {
+
+		var headers = ( request.$$requestMetadataVariables.headers ?: {} );
+
+		return ( headers[ name ] ?: fallbackValue );
+
+	}
+
+
+	/**
 	* I return the HTTP headers.
 	*/
 	public struct function getHeaders( array includeOnly = [] ) {
@@ -81,6 +96,25 @@ component hint = "I provide utility methods for accessing metadata about the cur
 	public string function getHost() {
 
 		return cgi.server_name;
+
+	}
+
+
+	/**
+	* I get the HTTP headers sent by the HTMX JavaScript framework.
+	*/
+	public struct function getHtmxHeaders() {
+
+		return {
+			boosted: ( getHeader( "HX-Boosted" ) == "true" ),
+			currentUrl: getHeader( "HX-Current-URL" ),
+			historyRestoreRequest: getHeader( "HX-History-Restore-Request" ),
+			prompt: getHeader( "HX-Prompt" ),
+			request: ( getHeader( "HX-Request" ) == "true" ),
+			target: getHeader( "HX-Target" ),
+			triggerName: getHeader( "HX-Trigger-Name" ),
+			trigger: getHeader( "HX-Trigger" ),
+		};
 
 	}
 

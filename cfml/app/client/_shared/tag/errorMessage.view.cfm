@@ -5,6 +5,7 @@
 		tabindex="-1"
 		role="alert"
 		aria-live="assertive"
+		aria-atomic="true"
 		pm14ud #attributes.xClassToken#
 		class="error-message #attributes.xClass#">
 

@@ -1,0 +1,5 @@
+<cfoutput>
+
+	#e( message )#
+
+</cfoutput>

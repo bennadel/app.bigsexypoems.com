@@ -8,11 +8,6 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	title = request.errorResponse.title;
-	message = request.errorResponse.message;
-
-	request.response.title = title;
-
-	include "./message.view.cfm";
+	include "./htmxError.view.cfm";
 
 </cfscript>

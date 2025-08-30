@@ -34,6 +34,8 @@
 	request.postBackAction = router.buildPostBackAction();
 	request.isGet = requestMetadata.isGet();
 	request.isPost = requestMetadata.isPost();
+	request.htmx = requestMetadata.getHtmxHeaders();
+	request.isHtmx = request.htmx.request;
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
