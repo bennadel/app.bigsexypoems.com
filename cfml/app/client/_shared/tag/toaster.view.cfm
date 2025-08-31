@@ -2,7 +2,6 @@
 <div
 	x-data="jy2g1b.Toaster"
 	@app:toast.document="handleToast( $event )"
-	@htmx:before-swap.document="handleHtmxBeforeSwap( $event )"
 	jy2g1b :class="{
 		jy2g1b: true,
 		isActive: items.length
@@ -24,7 +23,7 @@
 				item: true,
 				isError: item.isError
 			}">
-			<div class="content" x-html="item.content">
+			<div class="message" x-text="item.message">
 				<!--- Populated by Alpine. --->
 			</div>
 			<button @click="removeItem( i )" class="uiButton isText dismiss">

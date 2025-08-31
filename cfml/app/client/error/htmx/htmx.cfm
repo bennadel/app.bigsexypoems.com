@@ -6,15 +6,21 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	param name="request.response.statusCode" type="numeric" default=200;
+	param name="request.errorResponse" type="struct";
 
-	title = request.errorResponse.title;
-	message = request.errorResponse.message;
+	// Use the correct HTTP status code (for the error) in order to make sure HTMX doesn't
+	// swap the origin target with the error content.
+	cfheader( statusCode = request.errorResponse.statusCode );
 
-	request.response.title = title;
-
-	// Use the correct HTTP status code to make sure HTMX doesn't swap the origin target.
-	cfheader( statusCode = request.response.statusCode );
+	cfheader(
+		name = "HX-Trigger",
+		value = serializeJson({
+			"app:toast": {
+				message: request.errorResponse.message,
+				isError: true
+			}
+		})
+	);
 
 	// Reset the output buffer.
 	cfcontent( type = "text/html; charset=utf-8" );

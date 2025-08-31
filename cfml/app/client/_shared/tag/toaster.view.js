@@ -15,7 +15,6 @@ function Toaster() {
 
 		// Public Methods.
 		addItem,
-		handleHtmxBeforeSwap,
 		handleToast,
 		removeItem,
 		shiftFocus,
@@ -40,44 +39,14 @@ function Toaster() {
 	/**
 	* I add a new item to the toast queue.
 	*/
-	function addItem( item ) {
+	function addItem( message, isError = false ) {
 
-		// Used for the ":key" rendering in x-for directive.
-		item.uid = Date.now();
-
-		this.items.unshift( item );
+		this.items.unshift({
+			uid: Date.now(),
+			message,
+			isError
+		});
 		this.shiftFocus();
-
-	}
-
-
-	/**
-	* I inspect HTMX responses. If they are non-boosted errors, they will be rendered as
-	* toast messages since the application doesn't currently render error responses on
-	* non-boosted operations.
-	*/
-	function handleHtmxBeforeSwap( event ) {
-
-		if ( event.detail.isError && ! event.detail.boosted ) {
-
-			// When a response comes back as an error, it's not inherently obvious that
-			// the error was caused by something in the application logic or if the error
-			// was something else in between the client and the server. In order to
-			// prevent server error pages (and the like) from being rendered into a toast,
-			// we're going to look for the presence of a "htmx landmark" in the response
-			// content. If it's there, we know that the response should be safe to render.
-			var content = event.detail.serverResponse.includes( "[htmx-error-message]" )
-				? event.detail.serverResponse
-				: "An unexpected error occurred. Trying your action again may work; but, it may not."
-			;
-
-			// CAUTION: the content is assumed to be SAFE HTML.
-			this.addItem({
-				content: content,
-				isError: true
-			});
-
-		}
 
 	}
 
@@ -87,8 +56,10 @@ function Toaster() {
 	*/
 	function handleToast( event ) {
 
-		// Todo: implement toast event.
-		console.log( event );
+		this.addItem(
+			event.detail.message,
+			event.detail.isError
+		);
 
 	}
 
