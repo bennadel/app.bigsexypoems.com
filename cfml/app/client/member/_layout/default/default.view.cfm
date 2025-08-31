@@ -132,7 +132,7 @@
 			</main>
 		</div>
 
-		<cfmodule template="/client/_shared/tag/htmxError.cfm">
+		<cfmodule template="/client/_shared/tag/toaster.cfm">
 		<cfmodule template="/client/_shared/tag/localDevelopment.cfm">
 
 	</body>

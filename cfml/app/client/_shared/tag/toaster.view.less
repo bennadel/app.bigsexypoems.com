@@ -1,0 +1,56 @@
+[jy2g1b] {
+	&.jy2g1b {
+		bottom: 20px ;
+		display: none ;
+		position: fixed ;
+		right: 20px ;
+		z-indx: 100 ;
+
+		&.isActive {
+			display: block ;
+		}
+
+		&:focus {
+			outline-color: hotpink ;
+		}
+	}
+
+	.item {
+		animation-duration: 200ms ;
+		animation-iteration-count: 1 ;
+		animation-name: jy2g1b-item-enter ;
+		animation-timing-function: ease-out ;
+		background-color: var( --theme-success-surface ) ;
+		border-radius: 4px ;
+		border: 1px solid var( --theme-success-border ) ;
+		box-shadow: -1px 2px 4px #cccccccc ;
+		color: var( --theme-success-text ) ;
+		display: flex ;
+		flex-direction: column ;
+		gap: 13px ;
+		margin-top: 1rem ;
+		max-width: 400px ;
+		padding: 20px 24px  ;
+
+		&.isError {
+			background-color: var( --theme-error-surface ) ;
+			border: 1px solid var( --theme-error-border ) ;
+			color: var( --theme-error-text ) ;
+		}
+	}
+
+	.content {}
+
+	.dismiss {
+		align-self: flex-end ;
+	}
+}
+
+@keyframes jy2g1b-item-enter {
+	from {
+		transform: translate3d( 120%, 0, 0 ) ;
+	}
+	to {
+		transform: translate3d( 0, 0, 0 ) ;
+	}
+}
