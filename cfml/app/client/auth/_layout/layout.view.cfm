@@ -20,6 +20,7 @@
 			#request.response.body#
 		</main>
 
+		<cfmodule template="/client/_shared/tag/toaster.cfm">
 		<cfmodule template="/client/_shared/tag/localDevelopment.cfm">
 
 	</body>

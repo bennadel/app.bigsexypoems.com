@@ -7,6 +7,7 @@ import "../_shared/tag/errorMessage.view.{js,less}";
 import "../_shared/tag/flashMessage.view.{js,less}";
 import "../_shared/tag/localDevelopment.view.{js,less}";
 import "../_shared/tag/svgSprite.view.{js,less}";
+import "../_shared/tag/toaster.view.{js,less}";
 import "./*/**/*.{js,less}";
 
 // ----------------------------------------------------------------------------------- //
