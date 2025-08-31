@@ -25,7 +25,11 @@
 			<div class="message" x-text="item.message">
 				<!--- Populated by Alpine. --->
 			</div>
-			<button @click="removeItem( i )" tabindex="0" class="uiButton isText dismiss">
+			<button
+				@click="removeItem( i )"
+				@keydown="handleKeydown( $event, i )"
+				tabindex="0"
+				class="uiButton isText dismiss">
 				Dismiss
 			</button>
 		</div>

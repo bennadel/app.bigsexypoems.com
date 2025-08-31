@@ -17,6 +17,7 @@ function Toaster() {
 
 		// Public Methods.
 		addItem,
+		handleKeydown,
 		handleToast,
 		removeItem,
 		shiftFocus,
@@ -49,6 +50,21 @@ function Toaster() {
 			isError
 		});
 		this.shiftFocus();
+
+	}
+
+
+	/**
+	* I handle the keydown event when the dismiss button is focused.
+	*/
+	function handleKeydown( event, index ) {
+
+		if ( event.key === "Escape" ) {
+
+			event.preventDefault();
+			this.removeItem( index );
+
+		}
 
 	}
 
