@@ -15,7 +15,6 @@
 	<template x-for="( item, i ) in items" :key="item.uid">
 
 		<div
-			tabindex="-1"
 			role="alert"
 			aria-live="assertive"
 			aria-atomic="true"
@@ -26,7 +25,7 @@
 			<div class="message" x-text="item.message">
 				<!--- Populated by Alpine. --->
 			</div>
-			<button @click="removeItem( i )" class="uiButton isText dismiss">
+			<button @click="removeItem( i )" tabindex="0" class="uiButton isText dismiss">
 				Dismiss
 			</button>
 		</div>

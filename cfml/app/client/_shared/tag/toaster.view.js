@@ -5,6 +5,8 @@ window.jy2g1b = {
 
 function Toaster() {
 
+	var host = this.$el;
+
 	return {
 		// Public properties.
 		items: [],
@@ -100,10 +102,7 @@ function Toaster() {
 		// I'm using the next tick to give the browser a chance to chill out.
 		this.$nextTick(() => {
 
-			this.$el
-				.querySelector( ".item .dismiss" )
-				?.focus()
-			;
+			host.querySelector( ".item .dismiss" )?.focus();
 
 		});
 
