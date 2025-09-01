@@ -19,42 +19,42 @@
 			href="##main-content-anchor"
 			@click="focusMain()"
 			zm1em0
-			class="skip-to-main">
+			class="skipToMain">
 			Skip to main content
 		</a>
 
 		<div zm1em0 class="shell">
-			<header zm1em0 class="shell__header header">
+			<header zm1em0 class="shell_header header">
 
-				<a #ui.attrHref( "member" )# zm1em0 class="header__logo nav-link">
-					<span zm1em0 class="nav-link__pill">
-						<span zm1em0 class="nav-link__icon">
+				<a #ui.attrHref( "member" )# zm1em0 class="header_logo navLink">
+					<span zm1em0 class="navLink_pill">
+						<span zm1em0 class="navLink_icon">
 							<cfmodule
 								template="/client/_shared/tag/svgIcon.cfm"
 								type="logo">
 							</cfmodule>
 						</span>
-						<span zm1em0 class="nav-link__label">
+						<span zm1em0 class="navLink_label">
 							<strong>BigSexyPoems</strong>
 						</span>
 					</span>
 				</a>
 
-				<nav zm1em0 class="header__nav nav">
+				<nav zm1em0 class="header_nav nav">
 					<ul>
 						<li>
 							<a
 								#ui.attrHref( "member" )#
 								zm1em0
-								class="nav-link">
-								<span zm1em0 class="nav-link__pill">
-									<span zm1em0 class="nav-link__icon">
+								class="navLink">
+								<span zm1em0 class="navLink_pill">
+									<span zm1em0 class="navLink_icon">
 										<cfmodule
 											template="/client/_shared/tag/svgIcon.cfm"
 											type="back">
 										</cfmodule>
 									</span>
-									<span zm1em0 class="nav-link__label">
+									<span zm1em0 class="navLink_label">
 										Back to Home
 									</span>
 								</span>
@@ -65,17 +65,17 @@
 								#ui.attrHref( "account.profile" )#
 								zm1em0
 								#ui.attrClass([
-									"nav-link": true,
-									"is-on": ( request.response.activeNav == "account.profile" )
+									navLink: true,
+									isOn: ( request.response.activeNav == "account.profile" )
 								])#>
-								<span zm1em0 class="nav-link__pill">
-									<span zm1em0 class="nav-link__icon">
+								<span zm1em0 class="navLink_pill">
+									<span zm1em0 class="navLink_icon">
 										<cfmodule
 											template="/client/_shared/tag/svgIcon.cfm"
 											type="profile">
 										</cfmodule>
 									</span>
-									<span zm1em0 class="nav-link__label">
+									<span zm1em0 class="navLink_label">
 										Profile
 									</span>
 								</span>
@@ -86,17 +86,17 @@
 								#ui.attrHref( "account.session" )#
 								zm1em0
 								#ui.attrClass([
-									"nav-link": true,
-									"is-on": ( request.response.activeNav == "account.session" )
+									navLink: true,
+									isOn: ( request.response.activeNav == "account.session" )
 								])#>
-								<span zm1em0 class="nav-link__pill">
-									<span zm1em0 class="nav-link__icon">
+								<span zm1em0 class="navLink_pill">
+									<span zm1em0 class="navLink_icon">
 										<cfmodule
 											template="/client/_shared/tag/svgIcon.cfm"
 											type="sessions">
 										</cfmodule>
 									</span>
-									<span zm1em0 class="nav-link__label">
+									<span zm1em0 class="navLink_label">
 										Sessions
 									</span>
 								</span>
@@ -105,14 +105,14 @@
 					</ul>
 				</nav>
 
-				<div zm1em0 class="header__account account">
-					<span zm1em0 class="account__description">
+				<div zm1em0 class="header_account account">
+					<span zm1em0 class="account_description">
 						You're logged-in as:
 					</span>
-					<span zm1em0 class="account__email">
+					<span zm1em0 class="account_email">
 						#e( user.email )#
 					</span>
-					<a #ui.attrHref( "auth.logout" )# zm1em0 class="account__logout">
+					<a #ui.attrHref( "auth.logout" )# zm1em0 class="account_logout">
 						Logout
 					</a>
 				</div>
@@ -123,7 +123,7 @@
 				x-ref="main"
 				tabindex="-1"
 				zm1em0
-				class="shell__main">
+				class="shell_main">
 
 				<cfmodule template="/client/_shared/tag/flashMessage.cfm">
 

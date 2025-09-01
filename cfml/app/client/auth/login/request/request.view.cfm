@@ -21,7 +21,7 @@
 			<input type="hidden" name="timezoneOffsetInMinutes" x-data="TzOffsetController" />
 
 			<div class="uiField">
-				<label for="form--email" class="uiField__label">
+				<label for="form--email" class="uiField_label">
 					Email:
 				</label>
 				<div class="uiField__content">

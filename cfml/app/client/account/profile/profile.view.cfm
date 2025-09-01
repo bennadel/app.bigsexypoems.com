@@ -16,19 +16,19 @@
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
 			<div class="uiField">
-				<div class="uiField__label">
+				<div class="uiField_label">
 					Email:
 				</div>
-				<div class="uiField__content">
+				<div class="uiField_content">
 					#e( user.email )#
 				</div>
 			</div>
 
 			<div class="uiField">
-				<label for="form--name" class="uiField__label">
+				<label for="form--name" class="uiField_label">
 					Name:
 				</label>
-				<div class="uiField__content">
+				<div class="uiField_content">
 					<input
 						id="form--name"
 						type="text"

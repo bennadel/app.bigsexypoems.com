@@ -35,7 +35,7 @@
 			href="##main-content-anchor"
 			@click="focusMain()"
 			cj4s1o
-			class="skip-to-main">
+			class="skipToMain">
 			Skip to main content
 		</a>
 
@@ -45,7 +45,7 @@
 				x-ref="main"
 				tabindex="-1"
 				cj4s1o
-				class="shell__main">
+				class="shell_main">
 
 				<cfmodule template="/client/_shared/tag/flashMessage.cfm">
 

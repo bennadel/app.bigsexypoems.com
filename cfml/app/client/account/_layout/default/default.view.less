@@ -1,5 +1,5 @@
 [zm1em0] {
-	&.skip-to-main {
+	&.skipToMain {
 		background-color: var( --theme-button-primary-surface ) ;
 		border-color: var( --theme-button-primary-border ) ;
 		border-radius: 3px ;
@@ -19,7 +19,7 @@
 		align-items: flex-start ;
 		display: flex ;
 
-		&__header {
+		&_header {
 			border-right: 1px solid var( --theme-panel-border ) ;
 			flex: 0 0 auto ;
 			min-height: 100vh ;
@@ -28,7 +28,7 @@
 			width: 300px ;
 		}
 
-		&__main {
+		&_main {
 			flex: 1 1 auto ;
 			min-height: 100vh ;
 			padding: 1.5rem 2.3rem  ;
@@ -49,25 +49,25 @@
 		gap: 25px ;
 		padding: 10px 0 15px ;
 
-		&__logo {}
+		&_logo {}
 
-		&__nav {}
+		&_nav {}
 
-		&__account {
+		&_account {
 			margin-top: auto ;
 		}
 	}
 
 	&.nav {}
 
-	&.nav-link {
+	&.navLink {
 		border: 4px solid var( --theme-nav-surface ) ;
 		border-width: 4px 8px ;
 		display: block ;
 		text-decoration: none ;
 		white-space: nowrap ;
 
-		&__pill {
+		&_pill {
 			align-items: center ;
 			border-radius: 5px ;
 			color: var( --theme-nav-text ) ;
@@ -76,7 +76,7 @@
 			padding: 7px 8px ;
 		}
 
-		&__icon {
+		&_icon {
 			display: flex ;
 			height: 32px ;
 			width: 32px ;
@@ -88,14 +88,14 @@
 			}
 		}
 
-		&__label {}
+		&_label {}
 
-		&:hover &__label,
-		&.is-on &__label {
+		&:hover &_label,
+		&.isOn &_label {
 			text-decoration: underline ;
 		}
 
-		&.is-on &__pill {
+		&.isOn &_pill {
 			background-color: var( --theme-nav-surface-on ) ;
 			border-radius: 3px ;
 			color: var( --theme-nav-text-on ) ;
@@ -115,13 +115,13 @@
 		flex-direction: column ;
 		padding: 16px 16px 0 ;
 
-		&__description {}
+		&_description {}
 
-		&__email {
+		&_email {
 			margin-bottom: 8px ;
 		}
 
-		&__logout {
+		&_logout {
 			align-self: flex-start ;
 		}
 	}

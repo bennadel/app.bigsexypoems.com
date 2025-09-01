@@ -20,19 +20,19 @@
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
 			<div class="uiField">
-				<label for="form--name" class="uiField__label">
+				<label for="form--name" class="uiField_label">
 					Name:
 				</label>
-				<div class="uiField__content">
+				<div class="uiField_content">
 					#e( poem.name )#
 				</div>
 			</div>
 
 			<div class="uiField">
-				<label for="form--isConfirmed" class="uiField__label">
+				<label for="form--isConfirmed" class="uiField_label">
 					Confirm:
 				</label>
-				<div class="uiField__content">
+				<div class="uiField_content">
 
 					<label for="form--isConfirmed" class="uiHstack">
 						<input

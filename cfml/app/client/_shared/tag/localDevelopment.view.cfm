@@ -1,6 +1,6 @@
 <cfoutput>
 
-	<div g8c588>
+	<div g8c588 class="g8c588">
 
 		<div class="corner">
 			<a href="#e4a( urlWithInit )#">

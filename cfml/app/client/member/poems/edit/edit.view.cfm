@@ -16,10 +16,10 @@
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
 			<div class="uiField">
-				<label for="form--name" class="uiField__label">
+				<label for="form--name" class="uiField_label">
 					Name:
 				</label>
-				<div class="uiField__content">
+				<div class="uiField_content">
 					<input
 						id="form--name"
 						type="text"
@@ -32,10 +32,10 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--content" class="uiField__label">
+				<label for="form--content" class="uiField_label">
 					Content:
 				</label>
-				<div class="uiField__content">
+				<div class="uiField_content">
 					<textarea
 						id="form--content"
 						name="content"

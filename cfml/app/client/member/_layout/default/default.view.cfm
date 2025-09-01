@@ -19,45 +19,45 @@
 			href="##main-content-anchor"
 			@click="focusMain()"
 			mpjwb9
-			class="skip-to-main">
+			class="skipToMain">
 			Skip to main content
 		</a>
 
 		<div mpjwb9 class="shell">
-			<header mpjwb9 class="shell__header header">
+			<header mpjwb9 class="shell_header header">
 
-				<a #ui.attrHref( "member" )# mpjwb9 class="header__logo nav-link">
-					<span mpjwb9 class="nav-link__pill">
-						<span mpjwb9 class="nav-link__icon">
+				<a #ui.attrHref( "member" )# mpjwb9 class="header_logo navLink">
+					<span mpjwb9 class="navLink_pill">
+						<span mpjwb9 class="navLink_icon">
 							<cfmodule
 								template="/client/_shared/tag/svgIcon.cfm"
 								type="logo">
 							</cfmodule>
 						</span>
-						<span mpjwb9 class="nav-link__label">
+						<span mpjwb9 class="navLink_label">
 							<strong>BigSexyPoems</strong>
 						</span>
 					</span>
 				</a>
 
-				<nav mpjwb9 class="header__nav nav">
+				<nav mpjwb9 class="header_nav nav">
 					<ul>
 						<li>
 							<a
 								#ui.attrHref( "member" )#
 								mpjwb9
 								#ui.attrClass([
-									"nav-link": true,
-									"is-on": ( request.response.activeNav == "member" )
+									navLink: true,
+									isOn: ( request.response.activeNav == "member" )
 								])#>
-								<span mpjwb9 class="nav-link__pill">
-									<span mpjwb9 class="nav-link__icon">
+								<span mpjwb9 class="navLink_pill">
+									<span mpjwb9 class="navLink_icon">
 										<cfmodule
 											template="/client/_shared/tag/svgIcon.cfm"
 											type="home">
 										</cfmodule>
 									</span>
-									<span mpjwb9 class="nav-link__label">
+									<span mpjwb9 class="navLink_label">
 										Home
 									</span>
 								</span>
@@ -68,17 +68,17 @@
 								#ui.attrHref( "member.poems" )#
 								mpjwb9
 								#ui.attrClass([
-									"nav-link": true,
-									"is-on": ( request.response.activeNav == "poems" )
+									navLink: true,
+									isOn: ( request.response.activeNav == "poems" )
 								])#>
-								<span mpjwb9 class="nav-link__pill">
-									<span mpjwb9 class="nav-link__icon">
+								<span mpjwb9 class="navLink_pill">
+									<span mpjwb9 class="navLink_icon">
 										<cfmodule
 											template="/client/_shared/tag/svgIcon.cfm"
 											type="poems">
 										</cfmodule>
 									</span>
-									<span mpjwb9 class="nav-link__label">
+									<span mpjwb9 class="navLink_label">
 										Poems
 									</span>
 								</span>
@@ -88,15 +88,15 @@
 							<a
 								#ui.attrHref( "account" )#
 								mpjwb9
-								class="nav-link">
-								<span mpjwb9 class="nav-link__pill">
-									<span mpjwb9 class="nav-link__icon">
+								class="navLink">
+								<span mpjwb9 class="navLink_pill">
+									<span mpjwb9 class="navLink_icon">
 										<cfmodule
 											template="/client/_shared/tag/svgIcon.cfm"
 											type="profile">
 										</cfmodule>
 									</span>
-									<span mpjwb9 class="nav-link__label">
+									<span mpjwb9 class="navLink_label">
 										Account
 									</span>
 								</span>
@@ -105,14 +105,14 @@
 					</ul>
 				</nav>
 
-				<div mpjwb9 class="header__account account">
-					<span mpjwb9 class="account__description">
+				<div mpjwb9 class="header_account account">
+					<span mpjwb9 class="account_description">
 						You're logged-in as:
 					</span>
-					<span mpjwb9 class="account__email">
+					<span mpjwb9 class="account_email">
 						#e( user.email )#
 					</span>
-					<a #ui.attrHref( "auth.logout" )# mpjwb9 class="account__logout">
+					<a #ui.attrHref( "auth.logout" )# mpjwb9 class="account_logout">
 						Logout
 					</a>
 				</div>
@@ -123,7 +123,7 @@
 				x-ref="main"
 				tabindex="-1"
 				mpjwb9
-				class="shell__main">
+				class="shell_main">
 
 				<cfmodule template="/client/_shared/tag/flashMessage.cfm">
 

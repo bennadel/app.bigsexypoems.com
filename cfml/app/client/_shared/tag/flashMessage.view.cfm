@@ -6,7 +6,7 @@
 		role="alert"
 		aria-live="polite"
 		izm317 #attributes.xClassToken#
-		class="flash-message #attributes.xClass#">
+		class="izm317 #attributes.xClass#">
 
 		#e( flashResponse.message )#
 
