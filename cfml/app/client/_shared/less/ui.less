@@ -9,17 +9,19 @@
 }
 
 html {
-	background-color: var( --theme-surface ) ;
-	box-sizing: border-box ;
-	color: var( --theme-text ) ;
-	font-family: var( --theme-font ) ;
-	font-size: 18px ;
-	font-weight: 400 ;
-	line-height: 1.5 ;
+	:where( & ) {
+		background-color: var( --theme-surface ) ;
+		box-sizing: border-box ;
+		color: var( --theme-text ) ;
+		font-family: var( --theme-font ) ;
+		font-size: 18px ;
+		font-weight: 400 ;
+		line-height: 1.5 ;
+	}
 
 	*,
 	*:before,
-	&:after {
+	*:after {
 		box-sizing: inherit ;
 	}
 }
@@ -33,111 +35,153 @@ header,
 main,
 nav,
 section {
-	display: block ;
+	:where( & ) {
+		display: block ;
+	}
 }
 
 h1, .h1 {
-	font-size: 2rem ;
+	:where( & ) {
+		font-size: 2rem ;
+	}
 }
 
 h2, .h2 {
-	font-size: 1.6rem ;
+	:where( & ) {
+		font-size: 1.6rem ;
+	}
 }
 
 h3, .h3 {
-	font-size: 1.3rem ;
+	:where( & ) {
+		font-size: 1.3rem ;
+	}
 }
 
 h4, .h4 {
-	font-size: 1.1rem ;
+	:where( & ) {
+		font-size: 1.1rem ;
+	}
 }
 
 h5, .h5,
 h6, .h6 {
-	font-size: 1rem ;
+	:where( & ) {
+		font-size: 1rem ;
+	}
 }
 
 table {
-	border-collapse: collapse ;
-	border-spacing: 0 ;
+	:where( & ) {
+		border-collapse: collapse ;
+		border-spacing: 0 ;
+	}
 }
 
 th,
 td {
-	color: inherit ;
-	font-family: inherit ;
-	font-size: inherit ;
-	padding: 0.5rem 1rem ;
-	text-align: left ;
+	:where( & ) {
+		color: inherit ;
+		font-family: inherit ;
+		font-size: inherit ;
+		padding: 0.5rem 1rem ;
+		text-align: left ;
+	}
 }
 
 th {
-	font-weight: bold ;
+	:where( & ) {
+		font-weight: bold ;
+	}
 }
 
 dt {
-	font-weight: bold ;
+	:where( & ) {
+		font-weight: bold ;
+	}
 }
 
 ul,
 ol {
-	list-style-type: none ;
+	:where( & ) {
+		list-style-type: none ;
+	}
 }
 
 a {
-	color: inherit ;
-	cursor: pointer ;
-	text-decoration: underline ;
+	:where( & ) {
+		color: inherit ;
+		cursor: pointer ;
+		text-decoration: underline ;
+	}
 }
 
 mark {
-	background-color: var( --theme-mark-surface ) ;
-	color: var( --theme-mark-text ) ;
+	:where( & ) {
+		background-color: var( --theme-mark-surface ) ;
+		color: var( --theme-mark-text ) ;
+	}
 }
 
 img {
-	border: none ;
-	display: block ;
-	max-width: 100% ;
+	:where( & ) {
+		border: none ;
+		display: block ;
+		max-width: 100% ;
+	}
 }
 
 svg {
-	display: block ;
-	max-width: 100% ;
+	:where( & ) {
+		display: block ;
+		max-width: 100% ;
+	}
 }
 
 button,
 input,
 select,
 textarea {
-	color: inherit ;
-	font-family: inherit ;
-	font-size: inherit ;
-	line-height: inherit ;
+	:where( & ) {
+		color: inherit ;
+		font-family: inherit ;
+		font-size: inherit ;
+		line-height: inherit ;
+	}
 }
 
 button {
-	cursor: pointer ;
+	:where( & ) {
+		cursor: pointer ;
+	}
 }
 
 label[for] {
-	cursor: pointer ;
+	:where( & ) {
+		cursor: pointer ;
+	}
 }
 
 code {
-	background-color: var( --theme-code-surface ) ;
-	color: var( --theme-code-text ) ;
+	:where( & ) {
+		background-color: var( --theme-code-surface ) ;
+		color: var( --theme-code-text ) ;
+	}
 }
 
 pre code {
-	background-color: transparent ;
+	:where( & ) {
+		background-color: transparent ;
+	}
 }
 
 // Note: the [tabindex] selector is being used to conditionally add "hard" focus.
 *[tabindex="0"]:focus,
 *:focus-visible {
-	outline: 2px solid var( --theme-accent ) ;
-	outline-offset: 2px ;
+	:where( & ) {
+		outline: 2px solid var( --theme-accent ) ;
+		outline-offset: 2px ;
+	}
 }
 
 // ---
@@ -220,73 +264,85 @@ pre code {
 // ---
 
 .uiHstack {
-	align-items: center ;
-	display: flex ;
-	gap: 0.8rem ;
+	:where( & ) {
+		align-items: center ;
+		display: flex ;
+		gap: 0.8rem ;
+	}
 
-	> * {
+	:where( & > * ) {
 		flex: 0 1 auto ;
 	}
 
-	&.isTopAligned {
+	:where( &.isTopAligned ) {
 		align-items: flex-start ;
 	}
 
-	&.isDense {
+	:where( &.isDense ) {
 		gap: 0.6rem ;
 	}
 
-	&.isSparse {
+	:where( &.isSparse ) {
 		gap: 1.2rem ;
 	}
 
-	&.isStretched {
+	:where( &.isStretched ) {
 		align-items: stretch ;
 	}
 }
 
 .uiVstack {
-	display: flex ;
-	flex-direction: column ;
-	gap: 0.8rem ;
+	:where( & ) {
+		display: flex ;
+		flex-direction: column ;
+		gap: 0.8rem ;
+	}
 
-	> * {
+	:where( & > * ) {
 		flex: 0 1 auto ;
 	}
 
-	&.isDense {
+	:where( &.isDense ) {
 		gap: 0.6rem ;
 	}
 
-	&.isSparse {
+	:where( &.isSparse ) {
 		gap: 1.2rem ;
 	}
 }
 
 .uiEmoji {
-	font-family: var( --theme-emoji-font ) ;
+	:where( & ) {
+		font-family: var( --theme-emoji-font ) ;
+	}
 }
 
 .uiUnlist {
-	list-style-type: none ;
-	margin-left: 0 ;
-	padding: 0 ;
+	:where( & ) {
+		list-style-type: none ;
+		margin-left: 0 ;
+		padding: 0 ;
+	}
 
-	> li {
+	:where( & > li ) {
 		padding: 0 ;
 	}
 }
 
 .uiReadableWidth {
-	max-width: 1000px ;
+	:where( & ) {
+		max-width: 1000px ;
+	}
 }
 
 .uiRule {
-	border: none ;
-	border-top: 1px solid var( --theme-rule-hard ) ;
-	margin: 1.9rem 0 1.8rem ;
+	:where( & ) {
+		border: none ;
+		border-top: 1px solid var( --theme-rule-hard ) ;
+		margin: 1.9rem 0 1.8rem ;
+	}
 
-	&.is-soft {
+	:where( &.is-soft ) {
 		border-top: 1px dashed var( --theme-rule-soft ) ;
 	}
 }
@@ -311,42 +367,44 @@ pre code {
 // ---
 
 .uiButton {
-	background-color: var( --theme-button-default-surface ) ;
-	border: 1px solid var( --theme-button-default-border ) ;
-	border-radius: 2px ;
-	color: var( --theme-button-default-text ) ;
-	display: block ;
-	padding: 0.6rem 1.7rem 0.6rem ;
+	:where( & ) {
+		background-color: var( --theme-button-default-surface ) ;
+		border: 1px solid var( --theme-button-default-border ) ;
+		border-radius: 2px ;
+		color: var( --theme-button-default-text ) ;
+		display: block ;
+		padding: 0.6rem 1.7rem 0.6rem ;
+	}
 
-	&.isPlain {
+	:where( &.isPlain ) {
 		background-color: transparent ;
 		border-color: transparent ;
 		color: inherit ;
 	}
 
-	&.isSubmit {
+	:where( &.isSubmit ) {
 		background-color: var( --theme-button-primary-surface ) ;
 		border-color: var( --theme-button-primary-border ) ;
 		color: var( --theme-button-primary-text ) ;
 	}
 
-	&.isDestructive {
+	:where( &.isDestructive ) {
 		background-color: var( --theme-button-destructive-surface ) ;
 		border-color: var( --theme-button-destructive-border ) ;
 		color: var( --theme-button-destructive-text ) ;
 	}
 
-	&.isCancel {
+	:where( &.isCancel ) {
 		background-color: var( --theme-button-cancel-surface ) ;
 		border-color: var( --theme-button-cancel-border ) ;
 		color: var( --theme-button-cancel-text ) ;
-
-		&:hover {
-			border-color: var( --theme-button-cancel-border-hover ) ;
-		}
 	}
 
-	&.isText {
+	:where( &.isCancel:hover ) {
+		border-color: var( --theme-button-cancel-border-hover ) ;
+	}
+
+	:where( &.isText ) {
 		background-color: transparent ;
 		border: none ;
 		border-radius: 0 ;
@@ -358,43 +416,47 @@ pre code {
 }
 
 .uiInput {
-	background-color: var( --theme-control-background ) ;
-	border: 1px solid var( --theme-control-border ) ;
-	border-radius: 2px ;
-	box-shadow: var( --theme-control-inset-shadow ) ;
-	color: var( --theme-control-text ) ;
-	display: block ;
-	max-width: 100% ;
-	padding: 0.6rem 0.7rem 0.6rem ;
+	:where( & ) {
+		background-color: var( --theme-control-background ) ;
+		border: 1px solid var( --theme-control-border ) ;
+		border-radius: 2px ;
+		box-shadow: var( --theme-control-inset-shadow ) ;
+		color: var( --theme-control-text ) ;
+		display: block ;
+		max-width: 100% ;
+		padding: 0.6rem 0.7rem 0.6rem ;
+	}
 
-	&.isSmall {
+	:where( &.isSmall ) {
 		max-width: 200px ;
 	}
 
-	&.isMedium {
+	:where( &.isMedium ) {
 		max-width: 400px ;
 	}
 
-	&.isLarge {
+	:where( &.isLarge ) {
 		max-width: 600px ;
 	}
 
-	&.isFull {
+	:where( &.isFull ) {
 		width: 100% ;
 	}
 }
 
 .uiFile {
-	cursor: pointer ;
-	display: block ;
-	max-width: 100% ;
+	:where( & ) {
+		cursor: pointer ;
+		display: block ;
+		max-width: 100% ;
+	}
 
-	&.isFull {
+	:where( &.isFull ) {
 		width: 100% ;
 	}
 
-	&::-webkit-file-upload-button,
-	&::file-selector-button {
+	:where( & )::-webkit-file-upload-button,
+	:where( & )::file-selector-button {
 		background-color: var( --theme-button-default-surface ) ;
 		border: 1px solid var( --theme-button-default-border ) ;
 		border-radius: 2px ;
@@ -406,19 +468,21 @@ pre code {
 }
 
 .uiCheckbox {
+	:where( & ) {
 		-webkit-appearance: none ;
-	appearance: none ;
-	background-color: var( --theme-control-background ) ;
-	border: 1px solid var( --theme-control-border ) ;
-	border-radius: 2px ;
-	box-shadow: var( --theme-control-inset-shadow ) ;
-	display: flex ;
-	height: 18px ;
-	margin: 0 ;
-	padding: 0 ;
-	width: 18px ;
+		appearance: none ;
+		background-color: var( --theme-control-background ) ;
+		border: 1px solid var( --theme-control-border ) ;
+		border-radius: 2px ;
+		box-shadow: var( --theme-control-inset-shadow ) ;
+		display: flex ;
+		height: 18px ;
+		margin: 0 ;
+		padding: 0 ;
+		width: 18px ;
+	}
 
-	&:checked::after {
+	:where( & ):checked::after {
 		background-color: var( --theme-accent ) ;
 		border-radius: 1px ;
 		content: "" ;
@@ -429,19 +493,21 @@ pre code {
 }
 
 .uiRadio {
-		-webkit-appearance: none ;
-	appearance: none ;
-	background-color: var( --theme-control-background ) ;
-	border: 1px solid var( --theme-control-border ) ;
-	border-radius: 18px ;
-	box-shadow: var( --theme-control-inset-shadow ) ;
-	display: flex ;
-	height: 18px ;
-	margin: 0 ;
-	padding: 0 ;
-	width: 18px ;
+	:where( & ) {
+			-webkit-appearance: none ;
+		appearance: none ;
+		background-color: var( --theme-control-background ) ;
+		border: 1px solid var( --theme-control-border ) ;
+		border-radius: 18px ;
+		box-shadow: var( --theme-control-inset-shadow ) ;
+		display: flex ;
+		height: 18px ;
+		margin: 0 ;
+		padding: 0 ;
+		width: 18px ;
+	}
 
-	&:checked::after {
+	:where( & ):checked::after {
 		background-color: var( --theme-accent ) ;
 		border-radius: 8px ;
 		content: "" ;
@@ -452,65 +518,71 @@ pre code {
 }
 
 .uiSelect {
-		-webkit-appearance: none ;
-	appearance: none ;
-	background-color: var( --theme-control-background ) ;
-	background-image: var( --select-carrot-image ) ;
-	background-position-x: right 10px ;
-	background-position-y: top 52% ;
-	background-repeat: no-repeat ;
-	border: 1px solid var( --theme-control-border ) ;
-	border-radius: 2px ;
-	color: var( --theme-control-text ) ;
-	display: block ;
-	max-width: 100% ;
-	padding: 0.6rem 2rem 0.6rem 0.7rem ;
+	:where( & ) {
+			-webkit-appearance: none ;
+		appearance: none ;
+		background-color: var( --theme-control-background ) ;
+		background-image: var( --select-carrot-image ) ;
+		background-position-x: right 10px ;
+		background-position-y: top 52% ;
+		background-repeat: no-repeat ;
+		border: 1px solid var( --theme-control-border ) ;
+		border-radius: 2px ;
+		color: var( --theme-control-text ) ;
+		display: block ;
+		max-width: 100% ;
+		padding: 0.6rem 2rem 0.6rem 0.7rem ;
+	}
 
-	&.isFull {
+	:where( &.isFull ) {
 		width: 100% ;
 	}
 }
 
 .uiTextarea {
-	background-color: var( --theme-control-background ) ;
-	border: 1px solid var( --theme-control-border ) ;
-	border-radius: 2px ;
-	box-shadow: var( --theme-control-inset-shadow ) ;
-	color: var( --theme-control-text ) ;
-	display: block ;
-	height: 10rem ;
-	padding: 0.6rem 0.7rem 0.6rem ;
-	width: 100% ;
+	:where( & ) {
+		background-color: var( --theme-control-background ) ;
+		border: 1px solid var( --theme-control-border ) ;
+		border-radius: 2px ;
+		box-shadow: var( --theme-control-inset-shadow ) ;
+		color: var( --theme-control-text ) ;
+		display: block ;
+		height: 10rem ;
+		padding: 0.6rem 0.7rem 0.6rem ;
+		width: 100% ;
+	}
 }
 
 .uiInput,
 .uiTextarea,
 .uiSelect {
-	&[aria-invalid="true"] {
+	:where( &[aria-invalid="true"] ) {
 		border-color: var( --theme-control-border-error ) ;
 		box-shadow: inset 0 0 0 3px var( --theme-control-border-error ) ;
 	}
 }
 
 .uiField {
-	margin-bottom: 1.4rem ;
+	:where( & ) {
+		margin-bottom: 1.4rem ;
+	}
 
-	&_label {
+	:where( &_label ) {
 		display: block ;
 		font-weight: bold ;
 		margin-bottom: 0.6rem ;
 	}
 
-	&_star {
+	:where( &_star ) {
 		color: var( --theme-star-text ) ;
 		font-weight: 400 ;
 	}
 
-	&_content {
+	:where( &_content ) {
 		margin-left: 2.2rem ;
 	}
 
-	&_needsAttention {
+	:where( &_needsAttention ) {
 		align-items: center ;
 		background-color: var( --theme-error-surface ) ;
 		border: 1px solid var( --theme-error-border ) ;
@@ -528,62 +600,72 @@ pre code {
 	}
 
 	@media ( max-width: 600px ) {
-		&_content {
+		:where( &_content ) {
 			margin-left: 16px ;
 		}
 	}
 }
 
 .uiFieldset {
-	border: 1px solid var( --theme-rule-soft ) ;
-	padding: 1rem 1.5rem ;
+	:where( & ) {
+		border: 1px solid var( --theme-rule-soft ) ;
+		padding: 1rem 1.5rem ;
+	}
 }
 
 .uiHint {
-	font-size: 90% ;
+	:where( & ) {
+		font-size: 90% ;
+	}
 }
 
 .uiLegend {
-	padding: 0px 0.8rem ;
+	:where( & ) {
+		padding: 0px 0.8rem ;
+	}
 }
 
 .uiOptionCard {
-	display: grid ;
-	gap: 0.5rem 0.9rem ;
-	grid-template-areas:
-		"control label"
-		". description"
-	;
-	grid-template-columns: auto 1fr ;
-	margin: 1.2rem 0 ;
+	:where( & ) {
+		display: grid ;
+		gap: 0.5rem 0.9rem ;
+		grid-template-areas:
+			"control label"
+			". description"
+		;
+		grid-template-columns: auto 1fr ;
+		margin: 1.2rem 0 ;
+	}
 
-	&_control {
+	:where( &_control ) {
 		align-self: center ;
 		grid-area: control ;
 	}
 
-	&_label {
+	:where( &_label ) {
 		align-self: center ;
 		font-weight: bold ;
 		grid-area: label ;
 		margin: 0 ;
 	}
 
-	&_description {
+	:where( &_description ) {
 		grid-area: description ;
 		margin: 0 ;
 	}
 }
 
 .uiFormButtons {
-	align-items: center ;
-	border-top: 1px solid var( --theme-rule-soft ) ;
-	display: flex ;
-	gap: 13px ;
-	margin: 1.7rem 0 1rem 0 ;
-	padding-top: 1.7rem ;
+	:where( & ) {
+		align-items: center ;
+		border-top: 1px solid var( --theme-rule-soft ) ;
+		display: flex ;
+		gap: 13px ;
+		margin: 1.7rem 0 1rem 0 ;
+		padding-top: 1.7rem ;
+	}
 
-	> * {
+	:where( & > * ) {
 		flex: 0 1 auto ;
 	}
 }

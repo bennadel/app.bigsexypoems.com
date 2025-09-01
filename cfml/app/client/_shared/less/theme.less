@@ -139,24 +139,27 @@
 	// There appears to be a race condition with Parcel > Less > Url().
 	--select-carrot-image: ~"url( 'data:image/svg+xml;utf8,%3Csvg%20width=%2213%22%20height=%227%22%20viewBox=%220%200%2013%207%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpolygon%20stroke=%22none%22%20fill=%22%2523979562%22%20fill-rule=%22evenodd%22%20points=%220%200%206.5%207%2013%200%22%3E%3C/polygon%3E%3C/svg%3E' )" ;
 
-	img {
+	:where( img ) {
 		opacity: 0.5 ;
 		transition: opacity 500ms ease-in ;
-
-		&:hover {
-			opacity: 1.0 ;
-		}
+	}
+	:where( img:hover ) {
+		opacity: 1.0 ;
 	}
 }
 
 html {
-	.less-theme-light() ;
+	:where( & ) {
+		.less-theme-light() ;
+	}
 
-	&[data-theme="dark"] {
+	:where( &[data-theme="dark"] ) {
 		.less-theme-dark() ;	
 	}
 
 	@media ( prefers-color-scheme: dark ) {
-		.less-theme-dark() ;
+		:where( & ) {
+			.less-theme-dark() ;
+		}
 	}
 }
