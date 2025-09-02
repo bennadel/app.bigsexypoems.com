@@ -1,4 +1,169 @@
 
+@import (inline) "./open-props/props.borders.css" ;
+@import (inline) "./open-props/props.colors.css" ;
+@import (inline) "./open-props/props.easing.css" ;
+@import (inline) "./open-props/props.fonts.css" ;
+@import (inline) "./open-props/props.shadows.css" ;
+@import (inline) "./open-props/props.sizes.css" ;
+@import (inline) "./open-props/props.zindex.css" ;
+
+// ---
+// THEME VARIABLES.
+// ---
+
+.less-theme-light() {
+
+	--text: #121210 ;
+	--surface: #ffffff ;
+
+	--font: verdana, arial, helvetica ;
+	--control-font: verdana, arial, helvetica ;
+	--emoji-font: verdana, arial, sans-serif ;
+
+	--accent: #e64980 ;
+
+	--mark-text: #121210 ;
+	--mark-surface: #ffe066 ;
+
+	--error-surface: var( --red-1 ) ;
+	--error-border: var( --red-9 ) ;
+	--error-text: var( --red-10 ) ;
+
+	--success-surface: var( --lime-0 ) ;
+	--success-border: var( --lime-9 ) ;
+	--success-text: var( --lime-10 ) ;
+
+	--code-surface: #f1f3f5 ;
+	--code-text: #0d0f12 ;
+
+	--control-background: #ffffff ;
+	--control-border: #16191d ;
+	--control-border-error: #c92a2a ;
+	--control-text: #0d0f12 ;
+	--control-inset-shadow: inset 1px 1px 2px #dadada ;
+
+	--button-default-text: #0d0f12 ;
+	--button-default-surface: #f1f3f5 ;
+	--button-default-border: #7e8282 ;
+
+	--button-primary-text: #f2f4f6 ;
+	--button-primary-surface: #252521 ;
+	--button-primary-border: #121210 ;
+
+	--button-destructive-text: #fff5f5 ;
+	--button-destructive-surface: #f03e3e ;
+	--button-destructive-border: #e03131 ;
+
+	--button-cancel-text: #121210 ;
+	--button-cancel-surface: transparent ;
+	--button-cancel-border: #d1d6d8 ;
+	--button-cancel-border-hover: #121210 ;
+
+	--img-shadow: #e0e4e5 ;
+
+	--panel-border: #b1b6b9 ;
+
+	--rule-hard: #999999 ;
+	--rule-soft: #cccccc ;
+
+	--nav-text: var( --text ) ;
+	--nav-surface: var( --surface ) ;
+	--nav-text-on: var( --text ) ;
+	--nav-surface-on: #e0e0e0 ;
+
+	--star-text: #9c0099 ;
+
+	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
+	// There appears to be a race condition with Parcel > Less > Url().
+	--select-carrot-image: ~"url( 'data:image/svg+xml;utf8,%3Csvg%20width=%2213%22%20height=%227%22%20viewBox=%220%200%2013%207%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpolygon%20stroke=%22none%22%20fill=%22%25230d0f12%22%20fill-rule=%22evenodd%22%20points=%220%200%206.5%207%2013%200%22%3E%3C/polygon%3E%3C/svg%3E' )" ;
+
+}
+
+.less-theme-dark() {
+
+	--text: #93b8dc ;
+	--surface: #0d1117 ;
+
+	--accent: #e64980 ;
+
+	--mark-text: #121210 ;
+	--mark-surface: #ffe066 ;
+
+	--error-surface: #441010 ;
+	--error-border: #8b2424 ;
+	--error-text: #f98484 ;
+
+	--success-surface: #2f4407 ;
+	--success-border: #749a42 ;
+	--success-text: #d7fe92 ;
+
+	--code-surface: #011e3b ;
+	--code-text: #3780EF ;
+
+	--control-background: #0d1117 ;
+	--control-border: #253b56 ;
+	--control-border-error: #8b2424 ;
+	--control-text: #979562 ;
+	--control-inset-shadow: inset 1px 1px 2px #dadada22 ;
+
+	--button-default-text: #0d0f12 ;
+	--button-default-surface: #f1f3f5 ;
+	--button-default-border: #7e8282 ;
+
+	--button-primary-text: #f2f4f6 ;
+	--button-primary-surface: #004396 ;
+	--button-primary-border: #0052b8 ;
+
+	--button-destructive-text: #fff5f5 ;
+	--button-destructive-surface: #b21a1a ;
+	--button-destructive-border: #e03131 ;
+
+	--button-cancel-text: #93b8dc ;
+	--button-cancel-surface: transparent ;
+	--button-cancel-border: #383838 ;
+	--button-cancel-border-hover: #93b8dc ;
+
+	--img-shadow: #e0e4e5 ;
+
+	--panel-border: #37414d ;
+
+	--rule-hard: #999999 ;
+	--rule-soft: #37414d ;
+
+	--nav-text: var( --text ) ;
+	--nav-surface: var( --surface ) ;
+	--nav-text-on: var( --text ) ;
+	--nav-surface-on: #472240 ;
+
+	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
+	// There appears to be a race condition with Parcel > Less > Url().
+	--select-carrot-image: ~"url( 'data:image/svg+xml;utf8,%3Csvg%20width=%2213%22%20height=%227%22%20viewBox=%220%200%2013%207%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpolygon%20stroke=%22none%22%20fill=%22%2523979562%22%20fill-rule=%22evenodd%22%20points=%220%200%206.5%207%2013%200%22%3E%3C/polygon%3E%3C/svg%3E' )" ;
+
+	:where( img ) {
+		opacity: 0.5 ;
+		transition: opacity 500ms ease-in ;
+	}
+	:where( img:hover ) {
+		opacity: 1.0 ;
+	}
+}
+
+html {
+	:where( & ) {
+		.less-theme-light() ;
+	}
+
+	:where( &[data-theme="dark"] ) {
+		.less-theme-dark() ;
+	}
+
+	@media ( prefers-color-scheme: dark ) {
+		:where( & ) {
+			.less-theme-dark() ;
+		}
+	}
+}
+
 // ---
 // CSS RESET.
 // ---
@@ -10,10 +175,10 @@
 
 html {
 	:where( & ) {
-		background-color: var( --theme-surface ) ;
+		background-color: var( --surface ) ;
 		box-sizing: border-box ;
-		color: var( --theme-text ) ;
-		font-family: var( --theme-font ) ;
+		color: var( --text ) ;
+		font-family: var( --font ) ;
 		font-size: 18px ;
 		font-weight: 400 ;
 		line-height: 1.5 ;
@@ -118,8 +283,8 @@ a {
 
 mark {
 	:where( & ) {
-		background-color: var( --theme-mark-surface ) ;
-		color: var( --theme-mark-text ) ;
+		background-color: var( --mark-surface ) ;
+		color: var( --mark-text ) ;
 	}
 }
 
@@ -164,8 +329,8 @@ label[for] {
 
 code {
 	:where( & ) {
-		background-color: var( --theme-code-surface ) ;
-		color: var( --theme-code-text ) ;
+		background-color: var( --code-surface ) ;
+		color: var( --code-text ) ;
 	}
 }
 
@@ -179,7 +344,7 @@ pre code {
 *[tabindex="0"]:focus,
 *:focus-visible {
 	:where( & ) {
-		outline: 2px solid var( --theme-accent ) ;
+		outline: 2px solid var( --accent ) ;
 		outline-offset: 2px ;
 	}
 }
@@ -313,7 +478,7 @@ pre code {
 
 .uiEmoji {
 	:where( & ) {
-		font-family: var( --theme-emoji-font ) ;
+		font-family: var( --emoji-font ) ;
 	}
 }
 
@@ -338,12 +503,12 @@ pre code {
 .uiRule {
 	:where( & ) {
 		border: none ;
-		border-top: 1px solid var( --theme-rule-hard ) ;
+		border-top: 1px solid var( --rule-hard ) ;
 		margin: 1.9rem 0 1.8rem ;
 	}
 
 	:where( &.is-soft ) {
-		border-top: 1px dashed var( --theme-rule-soft ) ;
+		border-top: 1px dashed var( --rule-soft ) ;
 	}
 }
 
@@ -368,10 +533,10 @@ pre code {
 
 .uiButton {
 	:where( & ) {
-		background-color: var( --theme-button-default-surface ) ;
-		border: 1px solid var( --theme-button-default-border ) ;
+		background-color: var( --button-default-surface ) ;
+		border: 1px solid var( --button-default-border ) ;
 		border-radius: 2px ;
-		color: var( --theme-button-default-text ) ;
+		color: var( --button-default-text ) ;
 		display: block ;
 		padding: 0.6rem 1.7rem 0.6rem ;
 	}
@@ -383,25 +548,25 @@ pre code {
 	}
 
 	:where( &.isSubmit ) {
-		background-color: var( --theme-button-primary-surface ) ;
-		border-color: var( --theme-button-primary-border ) ;
-		color: var( --theme-button-primary-text ) ;
+		background-color: var( --button-primary-surface ) ;
+		border-color: var( --button-primary-border ) ;
+		color: var( --button-primary-text ) ;
 	}
 
 	:where( &.isDestructive ) {
-		background-color: var( --theme-button-destructive-surface ) ;
-		border-color: var( --theme-button-destructive-border ) ;
-		color: var( --theme-button-destructive-text ) ;
+		background-color: var( --button-destructive-surface ) ;
+		border-color: var( --button-destructive-border ) ;
+		color: var( --button-destructive-text ) ;
 	}
 
 	:where( &.isCancel ) {
-		background-color: var( --theme-button-cancel-surface ) ;
-		border-color: var( --theme-button-cancel-border ) ;
-		color: var( --theme-button-cancel-text ) ;
+		background-color: var( --button-cancel-surface ) ;
+		border-color: var( --button-cancel-border ) ;
+		color: var( --button-cancel-text ) ;
 	}
 
 	:where( &.isCancel:hover ) {
-		border-color: var( --theme-button-cancel-border-hover ) ;
+		border-color: var( --button-cancel-border-hover ) ;
 	}
 
 	:where( &.isText ) {
@@ -417,11 +582,11 @@ pre code {
 
 .uiInput {
 	:where( & ) {
-		background-color: var( --theme-control-background ) ;
-		border: 1px solid var( --theme-control-border ) ;
+		background-color: var( --control-background ) ;
+		border: 1px solid var( --control-border ) ;
 		border-radius: 2px ;
-		box-shadow: var( --theme-control-inset-shadow ) ;
-		color: var( --theme-control-text ) ;
+		box-shadow: var( --control-inset-shadow ) ;
+		color: var( --control-text ) ;
 		display: block ;
 		max-width: 100% ;
 		padding: 0.6rem 0.7rem 0.6rem ;
@@ -457,10 +622,10 @@ pre code {
 
 	:where( & )::-webkit-file-upload-button,
 	:where( & )::file-selector-button {
-		background-color: var( --theme-button-default-surface ) ;
-		border: 1px solid var( --theme-button-default-border ) ;
+		background-color: var( --button-default-surface ) ;
+		border: 1px solid var( --button-default-border ) ;
 		border-radius: 2px ;
-		color: var( --theme-button-default-text ) ;
+		color: var( --button-default-text ) ;
 		cursor: pointer ;
 		margin-right: 2ch ;
 		padding: 0.4rem 0.9rem ;
@@ -471,10 +636,10 @@ pre code {
 	:where( & ) {
 		-webkit-appearance: none ;
 		appearance: none ;
-		background-color: var( --theme-control-background ) ;
-		border: 1px solid var( --theme-control-border ) ;
+		background-color: var( --control-background ) ;
+		border: 1px solid var( --control-border ) ;
 		border-radius: 2px ;
-		box-shadow: var( --theme-control-inset-shadow ) ;
+		box-shadow: var( --control-inset-shadow ) ;
 		display: flex ;
 		height: 18px ;
 		margin: 0 ;
@@ -483,7 +648,7 @@ pre code {
 	}
 
 	:where( & ):checked::after {
-		background-color: var( --theme-accent ) ;
+		background-color: var( --accent ) ;
 		border-radius: 1px ;
 		content: "" ;
 		height: 12px ;
@@ -496,10 +661,10 @@ pre code {
 	:where( & ) {
 			-webkit-appearance: none ;
 		appearance: none ;
-		background-color: var( --theme-control-background ) ;
-		border: 1px solid var( --theme-control-border ) ;
+		background-color: var( --control-background ) ;
+		border: 1px solid var( --control-border ) ;
 		border-radius: 18px ;
-		box-shadow: var( --theme-control-inset-shadow ) ;
+		box-shadow: var( --control-inset-shadow ) ;
 		display: flex ;
 		height: 18px ;
 		margin: 0 ;
@@ -508,7 +673,7 @@ pre code {
 	}
 
 	:where( & ):checked::after {
-		background-color: var( --theme-accent ) ;
+		background-color: var( --accent ) ;
 		border-radius: 8px ;
 		content: "" ;
 		height: 8px ;
@@ -521,14 +686,14 @@ pre code {
 	:where( & ) {
 			-webkit-appearance: none ;
 		appearance: none ;
-		background-color: var( --theme-control-background ) ;
+		background-color: var( --control-background ) ;
 		background-image: var( --select-carrot-image ) ;
 		background-position-x: right 10px ;
 		background-position-y: top 52% ;
 		background-repeat: no-repeat ;
-		border: 1px solid var( --theme-control-border ) ;
+		border: 1px solid var( --control-border ) ;
 		border-radius: 2px ;
-		color: var( --theme-control-text ) ;
+		color: var( --control-text ) ;
 		display: block ;
 		max-width: 100% ;
 		padding: 0.6rem 2rem 0.6rem 0.7rem ;
@@ -541,11 +706,11 @@ pre code {
 
 .uiTextarea {
 	:where( & ) {
-		background-color: var( --theme-control-background ) ;
-		border: 1px solid var( --theme-control-border ) ;
+		background-color: var( --control-background ) ;
+		border: 1px solid var( --control-border ) ;
 		border-radius: 2px ;
-		box-shadow: var( --theme-control-inset-shadow ) ;
-		color: var( --theme-control-text ) ;
+		box-shadow: var( --control-inset-shadow ) ;
+		color: var( --control-text ) ;
 		display: block ;
 		height: 10rem ;
 		padding: 0.6rem 0.7rem 0.6rem ;
@@ -557,8 +722,8 @@ pre code {
 .uiTextarea,
 .uiSelect {
 	:where( &[aria-invalid="true"] ) {
-		border-color: var( --theme-control-border-error ) ;
-		box-shadow: inset 0 0 0 3px var( --theme-control-border-error ) ;
+		border-color: var( --control-border-error ) ;
+		box-shadow: inset 0 0 0 3px var( --control-border-error ) ;
 	}
 }
 
@@ -574,7 +739,7 @@ pre code {
 	}
 
 	:where( &_star ) {
-		color: var( --theme-star-text ) ;
+		color: var( --star-text ) ;
 		font-weight: 400 ;
 	}
 
@@ -584,16 +749,16 @@ pre code {
 
 	:where( &_needsAttention ) {
 		align-items: center ;
-		background-color: var( --theme-error-surface ) ;
-		border: 1px solid var( --theme-error-border ) ;
+		background-color: var( --error-surface ) ;
+		border: 1px solid var( --error-border ) ;
 		border-radius: 2px ;
-		color: var( --theme-error-text ) ;
+		color: var( --error-text ) ;
 		display: flex ;
 		gap: 15px ;
 		padding: 0.4rem 0.7rem ;
 
 		svg {
-			color: var( --theme-error-border ) ;
+			color: var( --error-border ) ;
 			height: 24px ;
 			width: 24px ;
 		}
@@ -608,7 +773,7 @@ pre code {
 
 .uiFieldset {
 	:where( & ) {
-		border: 1px solid var( --theme-rule-soft ) ;
+		border: 1px solid var( --rule-soft ) ;
 		padding: 1rem 1.5rem ;
 	}
 }
@@ -658,7 +823,7 @@ pre code {
 .uiFormButtons {
 	:where( & ) {
 		align-items: center ;
-		border-top: 1px solid var( --theme-rule-soft ) ;
+		border-top: 1px solid var( --rule-soft ) ;
 		display: flex ;
 		gap: 13px ;
 		margin: 1.7rem 0 1rem 0 ;

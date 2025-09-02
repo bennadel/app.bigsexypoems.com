@@ -1,6 +1,5 @@
 
 // Import app modules.
-import "../_shared/less/theme.less";
 import "../_shared/less/ui.less";
 import "../_shared/tag/localDevelopment.view.{js,less}";
 import "./*/**/*.{js,less}";
