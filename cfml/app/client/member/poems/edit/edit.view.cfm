@@ -18,6 +18,7 @@
 			<div class="uiField">
 				<label for="form--name" class="uiField_label">
 					Name:
+					<span class="uiField_star">*</span>
 				</label>
 				<div class="uiField_content">
 					<input
@@ -26,7 +27,7 @@
 						name="name"
 						value="#e4a( form.name )#"
 						maxlength="255"
-						class="uiInput isFull"
+						class="uiInput"
 					/>
 				</div>
 			</div>
@@ -46,10 +47,10 @@
 			</div>
 
 			<div class="uiFormButtons">
-				<button type="submit" class="uiButton isSubmit">
+				<button type="submit" class="uiButton isPrimary">
 					Update Poem
 				</button>
-				<a #ui.attrHref( "member.poems.view", "poemID", poem.id )# class="uiButton isCancel">
+				<a #ui.attrHref( "member.poems.view", "poemID", poem.id )# class="uiButton isSecondary">
 					Cancel
 				</a>
 			</div>

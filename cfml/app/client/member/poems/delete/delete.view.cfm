@@ -51,10 +51,10 @@
 			</div>
 
 			<div class="uiFormButtons">
-				<button type="submit" class="uiButton isSubmit">
+				<button type="submit" class="uiButton isPrimary">
 					Delete Poem
 				</button>
-				<a #ui.attrHref( "member.poems.view", "poemID", poem.id )# class="uiButton isCancel">
+				<a #ui.attrHref( "member.poems.view", "poemID", poem.id )# class="uiButton isSecondary">
 					Cancel
 				</a>
 			</div>

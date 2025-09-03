@@ -20,7 +20,7 @@
 		display: flex ;
 
 		&_header {
-			border-right: 1px solid var( --panel-border ) ;
+			border-right: 1px solid var( --panel-stroke ) ;
 			flex: 0 0 auto ;
 			min-height: 100vh ;
 			position: sticky ;
@@ -61,7 +61,7 @@
 	&.nav {}
 
 	&.navLink {
-		border: 4px solid var( --nav-surface ) ;
+		border: 4px solid var( --nav-fill ) ;
 		border-width: 4px 8px ;
 		display: block ;
 		text-decoration: none ;
@@ -96,7 +96,7 @@
 		}
 
 		&.isOn &_pill {
-			background-color: var( --nav-surface-on ) ;
+			background-color: var( --nav-fill-on ) ;
 			border-radius: 3px ;
 			color: var( --nav-text-on ) ;
 		}

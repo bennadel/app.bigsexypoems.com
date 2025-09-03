@@ -75,7 +75,7 @@
 		<form method="post" action="#request.postBackAction#">
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
-			<button type="submit" name="action" value="endAllSessions" class="uiButton isSubmit isDestructive">
+			<button type="submit" name="action" value="endAllSessions" class="uiButton isDanger">
 				End All Sessions
 			</button>
 		</form>

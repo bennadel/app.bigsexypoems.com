@@ -14,62 +14,66 @@
 .less-theme-light() {
 
 	--text: #121210 ;
-	--surface: #ffffff ;
+	--fill: #ffffff ;
 
-	--font: verdana, arial, helvetica ;
-	--control-font: verdana, arial, helvetica ;
+	--font: var( --font-geometric-humanist ) ;
+	--control-font: var( --font-geometric-humanist ) ;
 	--emoji-font: verdana, arial, sans-serif ;
 
 	--accent: #e64980 ;
 
 	--mark-text: #121210 ;
-	--mark-surface: #ffe066 ;
+	--mark-fill: #ffe066 ;
 
-	--error-surface: var( --red-1 ) ;
-	--error-border: var( --red-9 ) ;
+	--error-fill: var( --red-1 ) ;
+	--error-stoke: var( --red-9 ) ;
 	--error-text: var( --red-10 ) ;
 
-	--success-surface: var( --lime-0 ) ;
-	--success-border: var( --lime-9 ) ;
+	--success-fill: var( --lime-0 ) ;
+	--success-stroke: var( --lime-9 ) ;
 	--success-text: var( --lime-10 ) ;
 
-	--code-surface: #f1f3f5 ;
+	--code-fill: #f1f3f5 ;
 	--code-text: #0d0f12 ;
 
-	--control-background: #ffffff ;
-	--control-border: #16191d ;
-	--control-border-error: #c92a2a ;
+	--control-fill: #ffffff ;
+	--control-stroke: #16191d ;
+	--control-stroke-error: #c92a2a ;
 	--control-text: #0d0f12 ;
 	--control-inset-shadow: inset 1px 1px 2px #dadada ;
 
-	--button-default-text: #0d0f12 ;
-	--button-default-surface: #f1f3f5 ;
-	--button-default-border: #7e8282 ;
-
+	// Submit buttons.
 	--button-primary-text: #f2f4f6 ;
-	--button-primary-surface: #252521 ;
-	--button-primary-border: #121210 ;
+	--button-primary-fill: #252521 ;
+	--button-primary-stroke: #121210 ;
 
-	--button-destructive-text: #fff5f5 ;
-	--button-destructive-surface: #f03e3e ;
-	--button-destructive-border: #e03131 ;
+	// Cancel buttons.
+	--button-secondary-text: #121210 ;
+	--button-secondary-fill: transparent ;
+	--button-secondary-stroke: #d1d6d8 ;
+	--button-secondary-stroke-hover: #121210 ;
 
-	--button-cancel-text: #121210 ;
-	--button-cancel-surface: transparent ;
-	--button-cancel-border: #d1d6d8 ;
-	--button-cancel-border-hover: #121210 ;
+	// Other buttons.
+	--button-tertiary-text: #0d0f12 ;
+	--button-tertiary-fill: #f1f3f5 ;
+	--button-tertiary-stroke: #7e8282 ;
+
+	// Destructive buttons.
+	--button-danger-text: #fff5f5 ;
+	--button-danger-fill: #f03e3e ;
+	--button-danger-stroke: #e03131 ;
 
 	--img-shadow: #e0e4e5 ;
 
-	--panel-border: #b1b6b9 ;
+	--panel-stroke: #b1b6b9 ;
 
 	--rule-hard: #999999 ;
 	--rule-soft: #cccccc ;
 
 	--nav-text: var( --text ) ;
-	--nav-surface: var( --surface ) ;
+	--nav-fill: var( --fill ) ;
 	--nav-text-on: var( --text ) ;
-	--nav-surface-on: #e0e0e0 ;
+	--nav-fill-on: #e0e0e0 ;
 
 	--star-text: #9c0099 ;
 
@@ -82,58 +86,58 @@
 .less-theme-dark() {
 
 	--text: #93b8dc ;
-	--surface: #0d1117 ;
+	--fill: #0d1117 ;
 
 	--accent: #e64980 ;
 
 	--mark-text: #121210 ;
-	--mark-surface: #ffe066 ;
+	--mark-fill: #ffe066 ;
 
-	--error-surface: #441010 ;
-	--error-border: #8b2424 ;
+	--error-fill: #441010 ;
+	--error-stoke: #8b2424 ;
 	--error-text: #f98484 ;
 
-	--success-surface: #2f4407 ;
-	--success-border: #749a42 ;
+	--success-fill: #2f4407 ;
+	--success-stroke: #749a42 ;
 	--success-text: #d7fe92 ;
 
-	--code-surface: #011e3b ;
+	--code-fill: #011e3b ;
 	--code-text: #3780EF ;
 
-	--control-background: #0d1117 ;
-	--control-border: #253b56 ;
-	--control-border-error: #8b2424 ;
+	--control-fill: #0d1117 ;
+	--control-stroke: #253b56 ;
+	--control-stroke-error: #8b2424 ;
 	--control-text: #979562 ;
 	--control-inset-shadow: inset 1px 1px 2px #dadada22 ;
 
-	--button-default-text: #0d0f12 ;
-	--button-default-surface: #f1f3f5 ;
-	--button-default-border: #7e8282 ;
+	--button-tertiary-text: #0d0f12 ;
+	--button-tertiary-fill: #f1f3f5 ;
+	--button-tertiary-stroke: #7e8282 ;
 
 	--button-primary-text: #f2f4f6 ;
-	--button-primary-surface: #004396 ;
-	--button-primary-border: #0052b8 ;
+	--button-primary-fill: #004396 ;
+	--button-primary-stroke: #0052b8 ;
 
-	--button-destructive-text: #fff5f5 ;
-	--button-destructive-surface: #b21a1a ;
-	--button-destructive-border: #e03131 ;
+	--button-danger-text: #fff5f5 ;
+	--button-danger-fill: #b21a1a ;
+	--button-danger-stroke: #e03131 ;
 
-	--button-cancel-text: #93b8dc ;
-	--button-cancel-surface: transparent ;
-	--button-cancel-border: #383838 ;
-	--button-cancel-border-hover: #93b8dc ;
+	--button-secondary-text: #93b8dc ;
+	--button-secondary-fill: transparent ;
+	--button-secondary-stroke: #383838 ;
+	--button-secondary-stroke-hover: #93b8dc ;
 
 	--img-shadow: #e0e4e5 ;
 
-	--panel-border: #37414d ;
+	--panel-stroke: #37414d ;
 
 	--rule-hard: #999999 ;
 	--rule-soft: #37414d ;
 
 	--nav-text: var( --text ) ;
-	--nav-surface: var( --surface ) ;
+	--nav-fill: var( --fill ) ;
 	--nav-text-on: var( --text ) ;
-	--nav-surface-on: #472240 ;
+	--nav-fill-on: #472240 ;
 
 	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
 	// There appears to be a race condition with Parcel > Less > Url().
@@ -175,7 +179,7 @@ html {
 
 html {
 	:where( & ) {
-		background-color: var( --surface ) ;
+		background-color: var( --fill ) ;
 		box-sizing: border-box ;
 		color: var( --text ) ;
 		font-family: var( --font ) ;
@@ -283,7 +287,7 @@ a {
 
 mark {
 	:where( & ) {
-		background-color: var( --mark-surface ) ;
+		background-color: var( --mark-fill ) ;
 		color: var( --mark-text ) ;
 	}
 }
@@ -329,7 +333,7 @@ label[for] {
 
 code {
 	:where( & ) {
-		background-color: var( --code-surface ) ;
+		background-color: var( --code-fill ) ;
 		color: var( --code-text ) ;
 	}
 }
@@ -533,40 +537,34 @@ pre code {
 
 .uiButton {
 	:where( & ) {
-		background-color: var( --button-default-surface ) ;
-		border: 1px solid var( --button-default-border ) ;
+		background-color: var( --button-tertiary-fill ) ;
+		border: 1px solid var( --button-tertiary-stroke ) ;
 		border-radius: 2px ;
-		color: var( --button-default-text ) ;
+		color: var( --button-tertiary-text ) ;
 		display: block ;
 		padding: 0.6rem 1.7rem 0.6rem ;
 	}
 
-	:where( &.isPlain ) {
-		background-color: transparent ;
-		border-color: transparent ;
-		color: inherit ;
-	}
-
-	:where( &.isSubmit ) {
-		background-color: var( --button-primary-surface ) ;
-		border-color: var( --button-primary-border ) ;
+	:where( &.isPrimary ) {
+		background-color: var( --button-primary-fill ) ;
+		border-color: var( --button-primary-stroke ) ;
 		color: var( --button-primary-text ) ;
 	}
 
-	:where( &.isDestructive ) {
-		background-color: var( --button-destructive-surface ) ;
-		border-color: var( --button-destructive-border ) ;
-		color: var( --button-destructive-text ) ;
+	:where( &.isSecondary ) {
+		background-color: var( --button-secondary-fill ) ;
+		border-color: var( --button-secondary-stroke ) ;
+		color: var( --button-secondary-text ) ;
+
+		&:hover {
+			border-color: var( --button-secondary-stroke-hover ) ;
+		}
 	}
 
-	:where( &.isCancel ) {
-		background-color: var( --button-cancel-surface ) ;
-		border-color: var( --button-cancel-border ) ;
-		color: var( --button-cancel-text ) ;
-	}
-
-	:where( &.isCancel:hover ) {
-		border-color: var( --button-cancel-border-hover ) ;
+	:where( &.isDanger ) {
+		background-color: var( --button-danger-fill ) ;
+		border-color: var( --button-danger-stroke ) ;
+		color: var( --button-danger-text ) ;
 	}
 
 	:where( &.isText ) {
@@ -582,14 +580,15 @@ pre code {
 
 .uiInput {
 	:where( & ) {
-		background-color: var( --control-background ) ;
-		border: 1px solid var( --control-border ) ;
+		background-color: var( --control-fill ) ;
+		border: 1px solid var( --control-stroke ) ;
 		border-radius: 2px ;
 		box-shadow: var( --control-inset-shadow ) ;
 		color: var( --control-text ) ;
 		display: block ;
 		max-width: 100% ;
 		padding: 0.6rem 0.7rem 0.6rem ;
+		width: 100% ;
 	}
 
 	:where( &.isSmall ) {
@@ -602,10 +601,6 @@ pre code {
 
 	:where( &.isLarge ) {
 		max-width: 600px ;
-	}
-
-	:where( &.isFull ) {
-		width: 100% ;
 	}
 }
 
@@ -622,10 +617,10 @@ pre code {
 
 	:where( & )::-webkit-file-upload-button,
 	:where( & )::file-selector-button {
-		background-color: var( --button-default-surface ) ;
-		border: 1px solid var( --button-default-border ) ;
+		background-color: var( --button-tertiary-fill ) ;
+		border: 1px solid var( --button-tertiary-stroke ) ;
 		border-radius: 2px ;
-		color: var( --button-default-text ) ;
+		color: var( --button-tertiary-text ) ;
 		cursor: pointer ;
 		margin-right: 2ch ;
 		padding: 0.4rem 0.9rem ;
@@ -636,8 +631,8 @@ pre code {
 	:where( & ) {
 		-webkit-appearance: none ;
 		appearance: none ;
-		background-color: var( --control-background ) ;
-		border: 1px solid var( --control-border ) ;
+		background-color: var( --control-fill ) ;
+		border: 1px solid var( --control-stroke ) ;
 		border-radius: 2px ;
 		box-shadow: var( --control-inset-shadow ) ;
 		display: flex ;
@@ -661,8 +656,8 @@ pre code {
 	:where( & ) {
 			-webkit-appearance: none ;
 		appearance: none ;
-		background-color: var( --control-background ) ;
-		border: 1px solid var( --control-border ) ;
+		background-color: var( --control-fill ) ;
+		border: 1px solid var( --control-stroke ) ;
 		border-radius: 18px ;
 		box-shadow: var( --control-inset-shadow ) ;
 		display: flex ;
@@ -686,28 +681,29 @@ pre code {
 	:where( & ) {
 			-webkit-appearance: none ;
 		appearance: none ;
-		background-color: var( --control-background ) ;
+		background-color: var( --control-fill ) ;
 		background-image: var( --select-carrot-image ) ;
 		background-position-x: right 10px ;
 		background-position-y: top 52% ;
 		background-repeat: no-repeat ;
-		border: 1px solid var( --control-border ) ;
+		border: 1px solid var( --control-stroke ) ;
 		border-radius: 2px ;
 		color: var( --control-text ) ;
 		display: block ;
 		max-width: 100% ;
 		padding: 0.6rem 2rem 0.6rem 0.7rem ;
+		width: 100% ;
 	}
 
-	:where( &.isFull ) {
-		width: 100% ;
+	:where( &.isCompact ) {
+		width: auto ;
 	}
 }
 
 .uiTextarea {
 	:where( & ) {
-		background-color: var( --control-background ) ;
-		border: 1px solid var( --control-border ) ;
+		background-color: var( --control-fill ) ;
+		border: 1px solid var( --control-stroke ) ;
 		border-radius: 2px ;
 		box-shadow: var( --control-inset-shadow ) ;
 		color: var( --control-text ) ;
@@ -722,8 +718,8 @@ pre code {
 .uiTextarea,
 .uiSelect {
 	:where( &[aria-invalid="true"] ) {
-		border-color: var( --control-border-error ) ;
-		box-shadow: inset 0 0 0 3px var( --control-border-error ) ;
+		border-color: var( --control-stroke-error ) ;
+		box-shadow: inset 0 0 0 3px var( --control-stroke-error ) ;
 	}
 }
 
@@ -749,8 +745,8 @@ pre code {
 
 	:where( &_needsAttention ) {
 		align-items: center ;
-		background-color: var( --error-surface ) ;
-		border: 1px solid var( --error-border ) ;
+		background-color: var( --error-fill ) ;
+		border: 1px solid var( --error-stoke ) ;
 		border-radius: 2px ;
 		color: var( --error-text ) ;
 		display: flex ;
@@ -758,7 +754,7 @@ pre code {
 		padding: 0.4rem 0.7rem ;
 
 		svg {
-			color: var( --error-border ) ;
+			color: var( --error-stoke ) ;
 			height: 24px ;
 			width: 24px ;
 		}

@@ -34,13 +34,13 @@
 						autocapitalize="off"
 						value="#e4a( form.email )#"
 						maxlength="75"
-						class="uiInput isFull"
+						class="uiInput"
 					/>
 				</div>
 			</div>
 
 			<div class="uiFormButtons">
-				<button type="submit" class="uiButton isSubmit">
+				<button type="submit" class="uiButton isPrimary">
 					Login or Sign-Up
 				</button>
 			</div>

@@ -7,7 +7,7 @@ function FormController() {
 
 	return {
 		// Public properties.
-		isSubmitting: false,
+		isPrimaryting: false,
 
 		// Public methods.
 		init: $init,
@@ -32,14 +32,14 @@ function FormController() {
 	*/
 	function handleSubmit( event ) {
 
-		if ( this.isSubmitting ) {
+		if ( this.isPrimaryting ) {
 
 			event.preventDefault();
 			return;
 
 		}
 
-		this.isSubmitting = true;
+		this.isPrimaryting = true;
 
 	}
 

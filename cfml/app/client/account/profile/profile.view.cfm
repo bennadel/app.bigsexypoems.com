@@ -27,6 +27,7 @@
 			<div class="uiField">
 				<label for="form--name" class="uiField_label">
 					Name:
+					<span class="uiField_star">*</span>
 				</label>
 				<div class="uiField_content">
 					<input
@@ -35,13 +36,13 @@
 						name="name"
 						value="#e4a( form.name )#"
 						maxlength="50"
-						class="uiInput isFull"
+						class="uiInput"
 					/>
 				</div>
 			</div>
 
 			<div class="uiFormButtons">
-				<button type="submit" class="uiButton isSubmit">
+				<button type="submit" class="uiButton isPrimary">
 					Save
 				</button>
 			</div>

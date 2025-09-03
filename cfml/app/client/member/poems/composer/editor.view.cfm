@@ -26,7 +26,7 @@
 						name="name"
 						value="#e4a( form.name )#"
 						maxlength="255"
-						class="uiInput isFull"
+						class="uiInput"
 					/>
 				</div>
 			</div>
@@ -74,10 +74,10 @@
 			</div>
 
 			<div class="uiFormButtons">
-				<button type="submit" class="uiButton isSubmit">
+				<button type="submit" class="uiButton isPrimary">
 					Save Poem
 				</button>
-				<a #ui.attrHref( "member.poems.view", "poemID", poem.id )# class="uiButton isCancel">
+				<a #ui.attrHref( "member.poems.view", "poemID", poem.id )# class="uiButton isSecondary">
 					Back to Detail
 				</a>
 			</div>
@@ -103,9 +103,9 @@
 					<input
 						type="text"
 						name="word"
-						class="uiInput isFull"
+						class="uiInput"
 					/>
-					<select name="limit" class="uiSelect">
+					<select name="limit" class="uiSelect isCompact">
 						<option value="50">50 results</option>
 						<option value="100" selected>100 results</option>
 						<option value="150">150 results</option>
@@ -167,9 +167,9 @@
 					<input
 						type="text"
 						name="word"
-						class="uiInput isFull"
+						class="uiInput"
 					/>
-					<select name="limit" class="uiSelect">
+					<select name="limit" class="uiSelect isCompact">
 						<option value="50">50 results</option>
 						<option value="100" selected>100 results</option>
 						<option value="150">150 results</option>
