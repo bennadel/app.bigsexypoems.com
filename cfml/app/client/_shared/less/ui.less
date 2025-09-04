@@ -13,6 +13,51 @@
 
 .less-theme-light() {
 
+	// Block / vertical rhythm.
+	--space-block-xs: 0.7rem ;
+	--space-block-s: 1.0rem ;
+	--space-block: 1.4rem ;
+	--space-block-l: 2.1rem ;
+	--space-block-xl: 2.8rem ;
+
+	// Inline / horizontal rhythm.
+	--space-inline-xs: 0.4rem ;
+	--space-inline-s: 0.6rem ;
+	--space-inline: 0.8rem ;
+	--space-inline-l: 1.2rem ;
+	--space-inline-xl: 1.6rem ;
+
+	// Block internal comfort.
+	--pad-block-xs: 0.35rem ;
+	--pad-block-s: 0.525rem ;
+	--pad-block: 0.7rem ;
+	--pad-block-l: 1.05rem ;
+	--pad-block-xl: 1.4rem ;
+
+	// Inline internal comfort.
+	--pad-inline-xs: 0.45rem ;
+	--pad-inline-s: 0.675rem ;
+	--pad-inline: 0.9rem ;
+	--pad-inline-l: 1.35rem ;
+	--pad-inline-xl: 1.8rem ;
+
+	// Fons sizes.
+	--font-size-xs: 0.64rem ;
+	--font-size-s: 0.8rem ;
+	--font-size: 18px ;
+	--font-size-l: 1.25rem ;
+	--font-size-xl: 1.56rem ;
+	--font-size-xxl: 1.95rem ;
+	--font-size-xxxl: 2.4357rem ;
+	--font-size-smaller: 90% ;
+
+
+
+
+
+
+
+
 	--text: #121210 ;
 	--fill: #ffffff ;
 
@@ -183,7 +228,7 @@ html {
 		box-sizing: border-box ;
 		color: var( --text ) ;
 		font-family: var( --font ) ;
-		font-size: 18px ;
+		font-size: var( --font-size ) ;
 		font-weight: 400 ;
 		line-height: 1.5 ;
 	}
@@ -211,32 +256,37 @@ section {
 
 h1, .h1 {
 	:where( & ) {
-		font-size: 2rem ;
+		font-size: var( --font-size-xxxl ) ;
+		line-height: 1.2 ;
 	}
 }
 
 h2, .h2 {
 	:where( & ) {
-		font-size: 1.6rem ;
+		font-size: var( --font-size-xxl ) ;
+		line-height: 1.25 ;
 	}
 }
 
 h3, .h3 {
 	:where( & ) {
-		font-size: 1.3rem ;
+		font-size: var( --font-size-xl ) ;
+		line-height: 1.3 ;
 	}
 }
 
 h4, .h4 {
 	:where( & ) {
-		font-size: 1.1rem ;
+		font-size: var( --font-size-l ) ;
+		line-height: 1.35 ;
 	}
 }
 
 h5, .h5,
 h6, .h6 {
 	:where( & ) {
-		font-size: 1rem ;
+		font-size: var( --font-size ) ;
+		line-height: 1.4 ;
 	}
 }
 
@@ -253,7 +303,7 @@ td {
 		color: inherit ;
 		font-family: inherit ;
 		font-size: inherit ;
-		padding: 0.5rem 1rem ;
+		padding: var( --pad-block ) var( --pad-inline ) ;
 		text-align: left ;
 	}
 }
@@ -292,6 +342,12 @@ mark {
 	}
 }
 
+small {
+	:where( & ) {
+		font-size: var( --font-size-smaller ) ;
+	}
+}
+
 img {
 	:where( & ) {
 		border: none ;
@@ -316,6 +372,7 @@ textarea {
 		font-family: inherit ;
 		font-size: inherit ;
 		line-height: inherit ;
+		padding: var( --pad-block ) var( --pad-inline ) ;
 	}
 }
 
@@ -393,7 +450,7 @@ pre code {
 	ul,
 	video
 	{
-		margin-bottom: 1.4rem ;
+		margin-bottom: var( --space-block ) ;
 	}
 
 	blockquote,
@@ -406,7 +463,7 @@ pre code {
 	}
 
 	li {
-		margin-bottom: 0.2rem ;
+		margin-bottom: var( --space-block-xs ) ;
 	}
 
 	ul,
@@ -423,8 +480,8 @@ pre code {
 	}
 
 	blockquote {
-		margin-left: 2.5rem ;
-		margin-right: 2.5rem ;
+		margin-left: var( --space-block-xl ) ;
+		margin-right: var( --space-block-xl ) ;
 	}
 }
 
@@ -436,7 +493,7 @@ pre code {
 	:where( & ) {
 		align-items: center ;
 		display: flex ;
-		gap: 0.8rem ;
+		gap: var( --space-inline ) ;
 	}
 
 	:where( & > * ) {
@@ -448,11 +505,11 @@ pre code {
 	}
 
 	:where( &.isDense ) {
-		gap: 0.6rem ;
+		gap: var( --space-inline-xs ) ;
 	}
 
 	:where( &.isSparse ) {
-		gap: 1.2rem ;
+		gap: var( --space-inline-xl ) ;
 	}
 
 	:where( &.isStretched ) {
@@ -464,7 +521,7 @@ pre code {
 	:where( & ) {
 		display: flex ;
 		flex-direction: column ;
-		gap: 0.8rem ;
+		gap: var( --space-block ) ;
 	}
 
 	:where( & > * ) {
@@ -472,11 +529,11 @@ pre code {
 	}
 
 	:where( &.isDense ) {
-		gap: 0.6rem ;
+		gap: var( --space-block-xs ) ;
 	}
 
 	:where( &.isSparse ) {
-		gap: 1.2rem ;
+		gap: var( --space-block-xl ) ;
 	}
 }
 
@@ -508,7 +565,7 @@ pre code {
 	:where( & ) {
 		border: none ;
 		border-top: 1px solid var( --rule-hard ) ;
-		margin: 1.9rem 0 1.8rem ;
+		margin: var( --space-l ) 0 ;
 	}
 
 	:where( &.is-soft ) {
@@ -542,7 +599,7 @@ pre code {
 		border-radius: 2px ;
 		color: var( --button-tertiary-text ) ;
 		display: block ;
-		padding: 0.6rem 1.7rem 0.6rem ;
+		padding: var( --pad-block ) var( --pad-inline-xl ) ;
 	}
 
 	:where( &.isPrimary ) {
@@ -587,7 +644,7 @@ pre code {
 		color: var( --control-text ) ;
 		display: block ;
 		max-width: 100% ;
-		padding: 0.6rem 0.7rem 0.6rem ;
+		padding: var( --pad-block ) var( --pad-inline ) ;
 		width: 100% ;
 	}
 
@@ -623,7 +680,7 @@ pre code {
 		color: var( --button-tertiary-text ) ;
 		cursor: pointer ;
 		margin-right: 2ch ;
-		padding: 0.4rem 0.9rem ;
+		padding: 0.4rem 0.9rem ; // TODO: padding vars.
 	}
 }
 
@@ -637,8 +694,6 @@ pre code {
 		box-shadow: var( --control-inset-shadow ) ;
 		display: flex ;
 		height: 18px ;
-		margin: 0 ;
-		padding: 0 ;
 		width: 18px ;
 	}
 
@@ -662,8 +717,6 @@ pre code {
 		box-shadow: var( --control-inset-shadow ) ;
 		display: flex ;
 		height: 18px ;
-		margin: 0 ;
-		padding: 0 ;
 		width: 18px ;
 	}
 
@@ -691,7 +744,8 @@ pre code {
 		color: var( --control-text ) ;
 		display: block ;
 		max-width: 100% ;
-		padding: 0.6rem 2rem 0.6rem 0.7rem ;
+		padding: var( --pad-block ) var( --pad-inline ) ;
+		padding-right: 2rem ; // To make room for caret.
 		width: 100% ;
 	}
 
@@ -709,7 +763,7 @@ pre code {
 		color: var( --control-text ) ;
 		display: block ;
 		height: 10rem ;
-		padding: 0.6rem 0.7rem 0.6rem ;
+		padding: var( --pad-block ) var( --pad-inline ) ;
 		width: 100% ;
 	}
 }
@@ -725,13 +779,13 @@ pre code {
 
 .uiField {
 	:where( & ) {
-		margin-bottom: 1.4rem ;
+		margin-bottom: var( --space-block ) ;
 	}
 
 	:where( &_label ) {
 		display: block ;
 		font-weight: bold ;
-		margin-bottom: 0.6rem ;
+		margin-bottom: var( --space-block-xs ) ;
 	}
 
 	:where( &_star ) {
@@ -740,7 +794,11 @@ pre code {
 	}
 
 	:where( &_content ) {
-		margin-left: 2.2rem ;
+		margin-left: var( --space-block-l ) ;
+
+		@media ( max-width: 600px ) {
+			margin-left: 16px ;
+		}
 	}
 
 	:where( &_needsAttention ) {
@@ -751,7 +809,7 @@ pre code {
 		color: var( --error-text ) ;
 		display: flex ;
 		gap: 15px ;
-		padding: 0.4rem 0.7rem ;
+		padding: var( --pad-block-s ) var( --pad-inline ) ;
 
 		svg {
 			color: var( --error-stoke ) ;
@@ -759,43 +817,37 @@ pre code {
 			width: 24px ;
 		}
 	}
-
-	@media ( max-width: 600px ) {
-		:where( &_content ) {
-			margin-left: 16px ;
-		}
-	}
 }
 
 .uiFieldset {
 	:where( & ) {
 		border: 1px solid var( --rule-soft ) ;
-		padding: 1rem 1.5rem ;
+		padding: var( --pad-block ) var( --pad-inline-l ) ;
 	}
 }
 
 .uiHint {
 	:where( & ) {
-		font-size: 90% ;
+		font-size: var( --font-size-smaller ) ;
 	}
 }
 
 .uiLegend {
 	:where( & ) {
-		padding: 0px 0.8rem ;
+		padding: 0 var( --pad-inline ) ;
 	}
 }
 
 .uiOptionCard {
 	:where( & ) {
 		display: grid ;
-		gap: 0.5rem 0.9rem ;
+		gap: var( --space-inline ) var( --space-block ) ;
 		grid-template-areas:
 			"control label"
 			". description"
 		;
 		grid-template-columns: auto 1fr ;
-		margin: 1.2rem 0 ;
+		margin-bottom: var( --space-block ) ;
 	}
 
 	:where( &_control ) {
@@ -807,12 +859,10 @@ pre code {
 		align-self: center ;
 		font-weight: bold ;
 		grid-area: label ;
-		margin: 0 ;
 	}
 
 	:where( &_description ) {
 		grid-area: description ;
-		margin: 0 ;
 	}
 }
 
@@ -821,9 +871,9 @@ pre code {
 		align-items: center ;
 		border-top: 1px solid var( --rule-soft ) ;
 		display: flex ;
-		gap: 13px ;
-		margin: 1.7rem 0 1rem 0 ;
-		padding-top: 1.7rem ;
+		gap: var( --space-inline ) ;
+		margin-top: var( --space-block-l ) ;
+		padding-top: var( --space-block-l ) ;
 	}
 
 	:where( & > * ) {
