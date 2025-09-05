@@ -121,6 +121,14 @@
 	// Accent / focus.
 	--accent: var( --pink-6 ) ;
 
+	// Borer radius.
+	--radius-xs: 0 ;
+	--radius-s: 2px ;
+	--radius: 4px ;
+	--radius-l: 6px ;
+	--radius-xl: 8px ;
+	--radius-round: 999999px ;
+
 
 
 
@@ -646,7 +654,7 @@ pre code {
 	:where( & ) {
 		background-color: var( --button-fill ) ;
 		border: 1px solid var( --button-stroke ) ;
-		border-radius: 4px ;
+		border-radius: var( --radius ) ;
 		color: var( --button-text ) ;
 		display: block ;
 		font-family: var( --font-family-control ) ;
@@ -724,7 +732,7 @@ pre code {
 	:where( & ) {
 		background-color: var( --input-fill ) ;
 		border: 1px solid var( --input-stroke ) ;
-		border-radius: 4px ;
+		border-radius: var( --radius ) ;
 		box-shadow: var( --input-inset-shadow ) ;
 		color: var( --input-text ) ;
 		display: block ;
@@ -764,7 +772,7 @@ pre code {
 	:where( & )::file-selector-button {
 		background-color: var( --button-fill ) ;
 		border: 1px solid var( --button-stroke ) ;
-		border-radius: 4px ;
+		border-radius: var( --radius ) ;
 		color: var( --button-text ) ;
 		cursor: pointer ;
 		font-family: var( --font-family-control ) ;
@@ -779,7 +787,7 @@ pre code {
 		appearance: none ;
 		background-color: var( --input-fill ) ;
 		border: 1px solid var( --input-stroke ) ;
-		border-radius: 4px ;
+		border-radius: var( --radius ) ;
 		box-shadow: var( --input-inset-shadow ) ;
 		display: flex ;
 		height: 18px ;
@@ -829,7 +837,7 @@ pre code {
 		background-position-y: top 52% ;
 		background-repeat: no-repeat ;
 		border: 1px solid var( --input-stroke ) ;
-		border-radius: 4px ;
+		border-radius: var( --radius ) ;
 		color: var( --input-text ) ;
 		display: block ;
 		font-family: var( --font-family-control ) ;
@@ -849,7 +857,7 @@ pre code {
 	:where( & ) {
 		background-color: var( --input-fill ) ;
 		border: 1px solid var( --input-stroke ) ;
-		border-radius: 4px ;
+		border-radius: var( --radius ) ;
 		box-shadow: var( --input-inset-shadow ) ;
 		color: var( --input-text ) ;
 		display: block ;
