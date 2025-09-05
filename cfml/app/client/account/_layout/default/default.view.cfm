@@ -19,7 +19,7 @@
 			href="##main-content-anchor"
 			@click="focusMain()"
 			zm1em0
-			class="skipToMain">
+			class="uiButton skipToMain">
 			Skip to main content
 		</a>
 

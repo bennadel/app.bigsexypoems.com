@@ -60,10 +60,10 @@
 			</div>
 
 			<div class="uiFormButtons">
-				<button type="submit" class="uiButton isPrimary">
+				<button type="submit" class="uiButton isSubmit">
 					Delete Share
 				</button>
-				<a #ui.attrHref( "member.poems.shares", "poemID", poem.id )# class="uiButton isSecondary">
+				<a #ui.attrHref( "member.poems.shares", "poemID", poem.id )# class="uiButton isCancel">
 					Cancel
 				</a>
 			</div>

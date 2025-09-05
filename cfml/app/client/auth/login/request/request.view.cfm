@@ -40,7 +40,7 @@
 			</div>
 
 			<div class="uiFormButtons">
-				<button type="submit" class="uiButton isPrimary">
+				<button type="submit" class="uiButton isSubmit">
 					Login or Sign-Up
 				</button>
 			</div>

@@ -21,8 +21,8 @@
 			<button
 				type="submit"
 				x-ref="button"
-				:disabled="isPrimaryting"
-				class="uiButton isPrimary">
+				:disabled="isSubmitting"
+				class="uiButton isSubmit">
 				Continue to App &rarr;
 			</button>
 		</form>

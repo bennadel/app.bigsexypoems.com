@@ -70,13 +70,48 @@
 	--line-height-heading: 1.3 ;
 	--line-height-ui: 1.4 ;
 
-
-
-
-
-
-	--text: #121210 ;
+	// Base body.
+	--text: var( --stone-11 ) ;
 	--fill: #ffffff ;
+
+	// Base / auxiliary buttons.
+	--button-text: var( --gray-9 ) ;
+	--button-fill: var( --gray-1 ) ;
+	--button-stroke: var( --gray-7 ) ;
+	--button-hover-text: var( --gray-11 ) ;
+	--button-hover-fill: var( --gray-3 ) ;
+	--button-hover-stroke: var( --gray-9 ) ;
+
+	// Submit buttons.
+	--button-submit-text: #ffffff ;
+	--button-submit-fill: var( --indigo-7 ) ;
+	--button-submit-stroke: var( --indigo-9 ) ;
+	--button-submit-hover-text: #ffffff ;
+	--button-submit-hover-fill: var( --indigo-9 ) ;
+	--button-submit-hover-stroke: var( --indigo-11 ) ;
+
+	// Cancel buttons.
+	--button-cancel-text: var( --stone-9 ) ;
+	--button-cancel-fill: transparent ;
+	--button-cancel-stroke: var( --stone-4 ) ;
+	--button-cancel-hover-text: var( --stone-9 ) ;
+	--button-cancel-hover-fill: transparent ;
+	--button-cancel-hover-stroke: var( --stone-9 ) ;
+
+	// Destructive buttons.
+	--button-danger-text: #ffffff ;
+	--button-danger-fill: var( --red-7 ) ;
+	--button-danger-stroke: var( --red-9 ) ;
+	--button-danger-hover-text: #ffffff ;
+	--button-danger-hover-fill: var( --red-9 ) ;
+	--button-danger-hover-stroke: var( --red-11 ) ;
+
+
+
+
+
+
+
 
 	--accent: #e64980 ;
 
@@ -99,27 +134,6 @@
 	--control-stroke-error: #c92a2a ;
 	--control-text: #0d0f12 ;
 	--control-inset-shadow: inset 1px 1px 2px #dadada ;
-
-	// Submit buttons.
-	--button-primary-text: #f2f4f6 ;
-	--button-primary-fill: #252521 ;
-	--button-primary-stroke: #121210 ;
-
-	// Cancel buttons.
-	--button-secondary-text: #121210 ;
-	--button-secondary-fill: transparent ;
-	--button-secondary-stroke: #d1d6d8 ;
-	--button-secondary-stroke-hover: #121210 ;
-
-	// Other buttons.
-	--button-tertiary-text: #0d0f12 ;
-	--button-tertiary-fill: #f1f3f5 ;
-	--button-tertiary-stroke: #7e8282 ;
-
-	// Destructive buttons.
-	--button-danger-text: #fff5f5 ;
-	--button-danger-fill: #f03e3e ;
-	--button-danger-stroke: #e03131 ;
 
 	--img-shadow: #e0e4e5 ;
 
@@ -620,29 +634,45 @@ pre code {
 
 .uiButton {
 	:where( & ) {
-		background-color: var( --button-tertiary-fill ) ;
-		border: 1px solid var( --button-tertiary-stroke ) ;
-		border-radius: 2px ;
-		color: var( --button-tertiary-text ) ;
+		background-color: var( --button-fill ) ;
+		border: 1px solid var( --button-stroke ) ;
+		border-radius: 4px ;
+		color: var( --button-text ) ;
 		display: block ;
 		font-family: var( --font-family-control ) ;
+		font-weight: var( --font-weight-bold ) ;
 		line-height: var( --line-height-ui ) ;
 		padding: var( --pad-block ) var( --pad-inline-xl ) ;
-	}
-
-	:where( &.isPrimary ) {
-		background-color: var( --button-primary-fill ) ;
-		border-color: var( --button-primary-stroke ) ;
-		color: var( --button-primary-text ) ;
-	}
-
-	:where( &.isSecondary ) {
-		background-color: var( --button-secondary-fill ) ;
-		border-color: var( --button-secondary-stroke ) ;
-		color: var( --button-secondary-text ) ;
 
 		&:hover {
-			border-color: var( --button-secondary-stroke-hover ) ;
+			background-color: var( --button-hover-fill ) ;
+			border-color: var( --button-hover-stroke ) ;
+			color: var( --button-hover-text ) ;
+		}
+	}
+
+	:where( &.isSubmit ) {
+		background-color: var( --button-submit-fill ) ;
+		border-color: var( --button-submit-stroke ) ;
+		color: var( --button-submit-text ) ;
+
+		&:hover {
+			background-color: var( --button-submit-hover-fill ) ;
+			border-color: var( --button-submit-hover-stroke ) ;
+			color: var( --button-submit-hover-text ) ;
+		}
+	}
+
+	:where( &.isCancel ) {
+		background-color: var( --button-cancel-fill ) ;
+		border-color: var( --button-cancel-stroke ) ;
+		color: var( --button-cancel-text ) ;
+		text-decoration: none ; // Usually an anchor link.
+
+		&:hover {
+			background-color: var( --button-cancel-hover-fill ) ;
+			border-color: var( --button-cancel-hover-stroke ) ;
+			color: var( --button-cancel-hover-text ) ;
 		}
 	}
 
@@ -650,6 +680,12 @@ pre code {
 		background-color: var( --button-danger-fill ) ;
 		border-color: var( --button-danger-stroke ) ;
 		color: var( --button-danger-text ) ;
+
+		&:hover {
+			background-color: var( --button-danger-hover-fill ) ;
+			border-color: var( --button-danger-hover-stroke ) ;
+			color: var( --button-danger-hover-text ) ;
+		}
 	}
 
 	:where( &.isText ) {
@@ -667,7 +703,7 @@ pre code {
 	:where( & ) {
 		background-color: var( --control-fill ) ;
 		border: 1px solid var( --control-stroke ) ;
-		border-radius: 2px ;
+		border-radius: 4px ;
 		box-shadow: var( --control-inset-shadow ) ;
 		color: var( --control-text ) ;
 		display: block ;
@@ -705,10 +741,10 @@ pre code {
 
 	:where( & )::-webkit-file-upload-button,
 	:where( & )::file-selector-button {
-		background-color: var( --button-tertiary-fill ) ;
-		border: 1px solid var( --button-tertiary-stroke ) ;
-		border-radius: 2px ;
-		color: var( --button-tertiary-text ) ;
+		background-color: var( --button-fill ) ;
+		border: 1px solid var( --button-stroke ) ;
+		border-radius: 4px ;
+		color: var( --button-text ) ;
 		cursor: pointer ;
 		font-family: var( --font-family-control ) ;
 		margin-right: 2ch ;
@@ -722,16 +758,16 @@ pre code {
 		appearance: none ;
 		background-color: var( --control-fill ) ;
 		border: 1px solid var( --control-stroke ) ;
-		border-radius: 2px ;
+		border-radius: 4px ;
 		box-shadow: var( --control-inset-shadow ) ;
 		display: flex ;
 		height: 18px ;
 		width: 18px ;
 	}
 
-	:where( & ):checked::after {
+	:where( &:checked )::after {
 		background-color: var( --accent ) ;
-		border-radius: 1px ;
+		border-radius: 3px ;
 		content: "" ;
 		height: 12px ;
 		margin: auto ;
@@ -752,7 +788,7 @@ pre code {
 		width: 18px ;
 	}
 
-	:where( & ):checked::after {
+	:where( &:checked )::after {
 		background-color: var( --accent ) ;
 		border-radius: 8px ;
 		content: "" ;
@@ -772,7 +808,7 @@ pre code {
 		background-position-y: top 52% ;
 		background-repeat: no-repeat ;
 		border: 1px solid var( --control-stroke ) ;
-		border-radius: 2px ;
+		border-radius: 4px ;
 		color: var( --control-text ) ;
 		display: block ;
 		font-family: var( --font-family-control ) ;
@@ -792,7 +828,7 @@ pre code {
 	:where( & ) {
 		background-color: var( --control-fill ) ;
 		border: 1px solid var( --control-stroke ) ;
-		border-radius: 2px ;
+		border-radius: 4px ;
 		box-shadow: var( --control-inset-shadow ) ;
 		color: var( --control-text ) ;
 		display: block ;
@@ -823,6 +859,12 @@ pre code {
 		font-weight: var( --font-weight-bold ) ;
 		line-height: var( --line-height-ui ) ;
 		margin-bottom: var( --space-block-xs ) ;
+	}
+
+	:where( &_label[for]) {
+		&:hover {
+			text-decoration: underline ;
+		}
 	}
 
 	:where( &_star ) {

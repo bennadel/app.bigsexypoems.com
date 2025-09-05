@@ -19,7 +19,7 @@
 			href="##main-content-anchor"
 			@click="focusMain()"
 			mpjwb9
-			class="skipToMain">
+			class="uiButton skipToMain">
 			Skip to main content
 		</a>
 

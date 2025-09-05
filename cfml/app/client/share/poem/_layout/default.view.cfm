@@ -35,7 +35,7 @@
 			href="##main-content-anchor"
 			@click="focusMain()"
 			cj4s1o
-			class="skipToMain">
+			class="uiButton skipToMain">
 			Skip to main content
 		</a>
 
