@@ -72,6 +72,7 @@
 
 	// Base body.
 	--text: var( --stone-11 ) ;
+	--text-muted: var( --stone-7 ) ;
 	--fill: #ffffff ;
 
 	// Base / auxiliary buttons.
@@ -106,7 +107,9 @@
 	--button-danger-hover-fill: var( --red-9 ) ;
 	--button-danger-hover-stroke: var( --red-11 ) ;
 
-
+	// Links.
+	--link-text: var( --indigo-7 ) ;
+	--link-hover-text: var( --indigo-9 ) ;
 
 
 
@@ -366,9 +369,13 @@ ol {
 
 a {
 	:where( & ) {
-		color: inherit ;
+		color: var( --link-text ) ;
 		cursor: pointer ;
 		text-decoration: underline ;
+
+		&:hover {
+			color: var( --link-hover-text ) ;
+		}
 	}
 }
 
