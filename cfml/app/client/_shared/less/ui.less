@@ -107,16 +107,24 @@
 	--button-danger-hover-fill: var( --red-9 ) ;
 	--button-danger-hover-stroke: var( --red-11 ) ;
 
+	// Form inputs.
+	--input-text: #0d0f12 ;
+	--input-fill: #ffffff ;
+	--input-stroke: #16191d ;
+	--input-error-stroke: #c92a2a ;
+	--input-inset-shadow: inset 1px 1px 2px #dadada ;
+
 	// Links.
 	--link-text: var( --indigo-7 ) ;
 	--link-hover-text: var( --indigo-9 ) ;
 
+	// Accent / focus.
+	--accent: var( --pink-6 ) ;
 
 
 
 
 
-	--accent: #e64980 ;
 
 	--mark-text: #121210 ;
 	--mark-fill: #ffe066 ;
@@ -131,12 +139,6 @@
 
 	--code-fill: #f1f3f5 ;
 	--code-text: #0d0f12 ;
-
-	--control-fill: #ffffff ;
-	--control-stroke: #16191d ;
-	--control-stroke-error: #c92a2a ;
-	--control-text: #0d0f12 ;
-	--control-inset-shadow: inset 1px 1px 2px #dadada ;
 
 	--img-shadow: #e0e4e5 ;
 
@@ -159,7 +161,7 @@
 }
 
 .less-theme-dark() {
-
+	/*
 	--text: #93b8dc ;
 	--fill: #0d1117 ;
 
@@ -225,6 +227,7 @@
 	:where( img:hover ) {
 		opacity: 1.0 ;
 	}
+	*/
 }
 
 html {
@@ -650,11 +653,17 @@ pre code {
 		font-weight: var( --font-weight-bold ) ;
 		line-height: var( --line-height-ui ) ;
 		padding: var( --pad-block ) var( --pad-inline-xl ) ;
+		user-select: none ;
 
 		&:hover {
 			background-color: var( --button-hover-fill ) ;
 			border-color: var( --button-hover-stroke ) ;
 			color: var( --button-hover-text ) ;
+		}
+
+		&:disabled {
+			opacity: 0.5 ;
+			pointer-events: none ;
 		}
 	}
 
@@ -703,16 +712,21 @@ pre code {
 		display: inline ;
 		padding: 0 ;
 		text-decoration: underline ;
+
+		&:hover {
+			background-color: transparent ;
+			color: inherit ;
+		}
 	}
 }
 
 .uiInput {
 	:where( & ) {
-		background-color: var( --control-fill ) ;
-		border: 1px solid var( --control-stroke ) ;
+		background-color: var( --input-fill ) ;
+		border: 1px solid var( --input-stroke ) ;
 		border-radius: 4px ;
-		box-shadow: var( --control-inset-shadow ) ;
-		color: var( --control-text ) ;
+		box-shadow: var( --input-inset-shadow ) ;
+		color: var( --input-text ) ;
 		display: block ;
 		font-family: var( --font-family-control ) ;
 		line-height: var( --line-height-ui ) ;
@@ -763,10 +777,10 @@ pre code {
 	:where( & ) {
 		-webkit-appearance: none ;
 		appearance: none ;
-		background-color: var( --control-fill ) ;
-		border: 1px solid var( --control-stroke ) ;
+		background-color: var( --input-fill ) ;
+		border: 1px solid var( --input-stroke ) ;
 		border-radius: 4px ;
-		box-shadow: var( --control-inset-shadow ) ;
+		box-shadow: var( --input-inset-shadow ) ;
 		display: flex ;
 		height: 18px ;
 		width: 18px ;
@@ -786,10 +800,10 @@ pre code {
 	:where( & ) {
 			-webkit-appearance: none ;
 		appearance: none ;
-		background-color: var( --control-fill ) ;
-		border: 1px solid var( --control-stroke ) ;
+		background-color: var( --input-fill ) ;
+		border: 1px solid var( --input-stroke ) ;
 		border-radius: 18px ;
-		box-shadow: var( --control-inset-shadow ) ;
+		box-shadow: var( --input-inset-shadow ) ;
 		display: flex ;
 		height: 18px ;
 		width: 18px ;
@@ -809,14 +823,14 @@ pre code {
 	:where( & ) {
 			-webkit-appearance: none ;
 		appearance: none ;
-		background-color: var( --control-fill ) ;
+		background-color: var( --input-fill ) ;
 		background-image: var( --select-carrot-image ) ;
 		background-position-x: right 10px ;
 		background-position-y: top 52% ;
 		background-repeat: no-repeat ;
-		border: 1px solid var( --control-stroke ) ;
+		border: 1px solid var( --input-stroke ) ;
 		border-radius: 4px ;
-		color: var( --control-text ) ;
+		color: var( --input-text ) ;
 		display: block ;
 		font-family: var( --font-family-control ) ;
 		line-height: var( --line-height-ui ) ;
@@ -833,11 +847,11 @@ pre code {
 
 .uiTextarea {
 	:where( & ) {
-		background-color: var( --control-fill ) ;
-		border: 1px solid var( --control-stroke ) ;
+		background-color: var( --input-fill ) ;
+		border: 1px solid var( --input-stroke ) ;
 		border-radius: 4px ;
-		box-shadow: var( --control-inset-shadow ) ;
-		color: var( --control-text ) ;
+		box-shadow: var( --input-inset-shadow ) ;
+		color: var( --input-text ) ;
 		display: block ;
 		font-family: var( --font-family-control ) ;
 		height: 10rem ;
@@ -851,8 +865,8 @@ pre code {
 .uiTextarea,
 .uiSelect {
 	:where( &[aria-invalid="true"] ) {
-		border-color: var( --control-stroke-error ) ;
-		box-shadow: inset 0 0 0 3px var( --control-stroke-error ) ;
+		border-color: var( --input-error-stroke ) ;
+		box-shadow: inset 0 0 0 3px var( --input-error-stroke ) ;
 	}
 }
 
