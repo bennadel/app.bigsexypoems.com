@@ -488,7 +488,22 @@ pre code {
 *[tabindex="0"]:focus,
 *:focus-visible {
 	:where( & ) {
+		&:not([tabindex="-1"]) {
+			animation-duration: var( --duration-s ) ;
+			animation-name: focus-visible-ring-enter ;
+			animation-iteration-count: 1 ;
+			animation-timing-function: ease-in ;
+		}
 		outline: 2px solid var( --accent ) ;
+		outline-offset: 2px ;
+	}
+}
+
+@keyframes focus-visible-ring-enter {
+	from {
+		outline-offset: 7px ;
+	}
+	to {
 		outline-offset: 2px ;
 	}
 }
