@@ -4,7 +4,11 @@
 
 		<cfargument name="poemID" type="numeric" required="true" />
 		<cfargument name="token" type="string" required="true" />
+		<cfargument name="name" type="string" required="true" />
+		<cfargument name="noteMarkdown" type="string" required="true" />
+		<cfargument name="noteHtml" type="string" required="true" />
 		<cfargument name="createdAt" type="date" required="true" />
+		<cfargument name="updatedAt" type="date" required="true" />
 
 		<cfquery name="local.results" result="local.metaResults">
 			INSERT INTO
@@ -12,7 +16,11 @@
 			SET
 				poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />,
 				token = <cfqueryparam value="#token#" cfsqltype="cf_sql_varchar" />,
-				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />
+				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
+				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
+				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
+				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
 			;
 		</cfquery>
 
@@ -76,7 +84,11 @@
 				id,
 				poemID,
 				token,
-				createdAt
+				name,
+				noteMarkdown,
+				noteHtml,
+				createdAt,
+				updatedAt
 			FROM
 				poem_share
 			WHERE
@@ -103,6 +115,30 @@
 		</cfquery>
 
 		<cfreturn results />
+
+	</cffunction>
+
+
+	<cffunction name="update" returnType="void">
+
+		<cfargument name="id" type="numeric" required="true" />
+		<cfargument name="name" type="string" required="true" />
+		<cfargument name="noteMarkdown" type="string" required="true" />
+		<cfargument name="noteHtml" type="string" required="true" />
+		<cfargument name="updatedAt" type="date" required="true" />
+
+		<cfquery name="local.results" result="local.metaResults">
+			UPDATE
+				poem_share
+			SET
+				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
+				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
+				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+			WHERE
+				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+			;
+		</cfquery>
 
 	</cffunction>
 

@@ -18,10 +18,16 @@
 		<thead>
 			<tr>
 				<th>
-					Created
+					Modified
 				</th>
 				<th>
 					Link
+				</th>
+				<th>
+					Name
+				</th>
+				<th>
+					Note
 				</th>
 				<th>
 					Actions
@@ -32,10 +38,16 @@
 		<cfloop array="#shares#" item="share">
 			<tr>
 				<td>
-					#ui.userDate( share.createdAt )#
+					#ui.userDate( share.updatedAt )#
 				</td>
 				<td>
 					<a #ui.attrHref( "share.poem", "shareID", share.id, "shareToken", share.token )# target="_blank">Public share link (#e( share.id )#)</a>
+				</td>
+				<td>
+					#e( share.name )#
+				</td>
+				<td>
+					#e( share.noteMarkdown )#
 				</td>
 				<td>
 					<form method="post" #ui.attrAction( "member.poems.shares.delete", "shareID", share.id )#>

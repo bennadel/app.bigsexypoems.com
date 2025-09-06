@@ -10,6 +10,51 @@ component
 	// ---
 
 	/**
+	* I validate and return the normalized value.
+	*/
+	public string function testName( required string input ) {
+
+		return pipeline(
+			normalizeString( input ),
+			[
+				assertMaxLength: [ 50, "App.Model.Poem.Share.Name.TooLong" ],
+				assertUniformEncoding: [ "App.Model.Poem.Share.Name.SuspiciousEncoding" ]
+			]
+		);
+
+	}
+
+
+	/**
+	* I validate and return the normalized value.
+	*/
+	public string function testNoteHtml( required string input ) {
+
+		return pipeline(
+			normalizeString( input ),
+			[:]
+		);
+
+	}
+
+
+	/**
+	* I validate and return the normalized value.
+	*/
+	public string function testNoteMarkdown( required string input ) {
+
+		return pipeline(
+			normalizeString( input ),
+			[
+				assertMaxLength: [ 500, "App.Model.Poem.Share.NoteMarkdown.TooLong" ],
+				assertUniformEncoding: [ "App.Model.Poem.Share.NoteMarkdown.SuspiciousEncoding" ]
+			]
+		);
+
+	}
+
+
+	/**
 	* I throw a not-found error.
 	*/
 	public void function throwNotFoundError() {

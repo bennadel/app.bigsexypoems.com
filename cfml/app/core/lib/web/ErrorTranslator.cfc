@@ -67,6 +67,18 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.Poem.NotFound":
 				return asModelNotFound( error, "poem" );
 			break;
+			case "App.Model.Poem.Share.Name.SuspiciousEncoding":
+				return asModelStringSuspiciousEncoding( error, "share name" );
+			break;
+			case "App.Model.Poem.Share.Name.TooLong":
+				return asModelStringTooLong( error, "share name", metadata );
+			break;
+			case "App.Model.Poem.Share.NoteMarkdown.SuspiciousEncoding":
+				return asModelStringSuspiciousEncoding( error, "share note" );
+			break;
+			case "App.Model.Poem.Share.NoteMarkdown.TooLong":
+				return asModelStringTooLong( error, "share note", metadata );
+			break;
 			case "App.Model.Poem.Share.NotFound":
 				return asModelNotFound( error, "share link" );
 			break;

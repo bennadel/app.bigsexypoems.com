@@ -17,13 +17,25 @@ component {
 	public numeric function create(
 		required numeric poemID,
 		required string token,
-		required date createdAt
+		required string name,
+		required string noteMarkdown,
+		required string noteHtml,
+		required date createdAt,
+		required date updatedAt
 		) {
+
+		name = validation.testName( name );
+		noteMarkdown = validation.testNoteMarkdown( noteMarkdown );
+		noteHtml = validation.testNoteHtml( noteHtml );
 
 		return gateway.create(
 			poemID = poemID,
 			token = token,
-			createdAt = createdAt
+			name = name,
+			noteMarkdown = noteMarkdown,
+			noteHtml = noteHtml,
+			createdAt = createdAt,
+			updatedAt = updatedAt
 		);
 
 	}

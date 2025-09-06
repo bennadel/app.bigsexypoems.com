@@ -116,7 +116,7 @@
 
 		<cfquery name="local.results" result="local.metaResults">
 			UPDATE
-				poem p
+				poem
 			SET
 				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
 				content = <cfqueryparam value="#content#" cfsqltype="cf_sql_varchar" />,

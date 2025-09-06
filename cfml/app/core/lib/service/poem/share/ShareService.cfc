@@ -29,7 +29,11 @@ component {
 		var shareID = shareModel.create(
 			poemID = poem.id,
 			token = token,
-			createdAt = createdAt
+			name = "",
+			noteMarkdown = "",
+			noteHtml = "",
+			createdAt = createdAt,
+			updatedAt = createdAt
 		);
 
 		return shareID;
