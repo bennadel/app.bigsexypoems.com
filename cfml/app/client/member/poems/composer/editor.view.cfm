@@ -105,7 +105,7 @@
 						name="word"
 						class="uiInput"
 					/>
-					<select name="limit" class="uiSelect isCompact">
+					<select name="limit" class="uiSelect isAuto">
 						<option value="50">50 results</option>
 						<option value="100" selected>100 results</option>
 						<option value="150">150 results</option>
@@ -169,7 +169,7 @@
 						name="word"
 						class="uiInput"
 					/>
-					<select name="limit" class="uiSelect isCompact">
+					<select name="limit" class="uiSelect isAuto">
 						<option value="50">50 results</option>
 						<option value="100" selected>100 results</option>
 						<option value="150">150 results</option>

@@ -1,11 +1,11 @@
 
-@import (inline) "./open-props/props.borders.css" ;
+// @import (inline) "./open-props/props.borders.css" ;
 @import (inline) "./open-props/props.colors.css" ;
 @import (inline) "./open-props/props.easing.css" ;
 @import (inline) "./open-props/props.fonts.css" ;
 @import (inline) "./open-props/props.shadows.css" ;
 @import (inline) "./open-props/props.sizes.css" ;
-@import (inline) "./open-props/props.zindex.css" ;
+// @import (inline) "./open-props/props.zindex.css" ;
 
 // ---
 // THEME VARIABLES.
@@ -129,6 +129,39 @@
 	--radius-xl: 8px ;
 	--radius-round: 999999px ;
 
+	// Animations / transitions.
+	--duration-xs: 100ms ;
+	--duration-s: 150ms ;
+	--duration: 200ms ;
+	--duration-l: 250ms ;
+	--duration-xl: 300ms ;
+
+	// Feedback.
+	--success-fill: var( --lime-0 ) ;
+	--success-stroke: var( --lime-9 ) ;
+	--success-text: var( --lime-10 ) ;
+
+	--warning-fill: var( --yellow-2 ) ;
+	--warning-stroke: var( --yellow-9 ) ;
+	--warning-text: var( --yellow-10 ) ;
+
+	--error-fill: var( --red-1 ) ;
+	--error-stoke: var( --red-9 ) ;
+	--error-text: var( --red-10 ) ;
+
+	--info-fill: var( --stone-1 ) ;
+	--info-stoke: var( --stone-9 ) ;
+	--info-text: var( --stone-9 ) ;
+
+	// Stacking context / layers.
+	--layer-base: 0 ;
+	--layer-sticky: 100 ;
+	--layer-overlay: 200 ;
+	--layer-modal: 300 ;
+	--layer-popover: 400 ;
+	--layer-tooltip: 500 ;
+	--layer-important: 2147483647 ;
+
 
 
 
@@ -136,14 +169,6 @@
 
 	--mark-text: #121210 ;
 	--mark-fill: #ffe066 ;
-
-	--error-fill: var( --red-1 ) ;
-	--error-stoke: var( --red-9 ) ;
-	--error-text: var( --red-10 ) ;
-
-	--success-fill: var( --lime-0 ) ;
-	--success-stroke: var( --lime-9 ) ;
-	--success-text: var( --lime-10 ) ;
 
 	--code-fill: #f1f3f5 ;
 	--code-text: #0d0f12 ;
@@ -848,7 +873,7 @@ pre code {
 		width: 100% ;
 	}
 
-	:where( &.isCompact ) {
+	:where( &.isAuto ) {
 		width: auto ;
 	}
 }
