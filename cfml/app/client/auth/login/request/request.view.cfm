@@ -28,12 +28,13 @@
 					<input
 						id="form--email"
 						type="text"
-						name="email"
-						placeholder="ben@example.com"
 						inputmode="email"
-						autocapitalize="off"
+						name="email"
 						value="#e4a( form.email )#"
+						placeholder="ben@example.com"
 						maxlength="75"
+						autocapitalize="off"
+						autocomplete="email"
 						class="uiInput"
 					/>
 				</div>

@@ -36,6 +36,7 @@
 						name="name"
 						value="#e4a( form.name )#"
 						maxlength="50"
+						autocomplete="name"
 						class="uiInput"
 					/>
 				</div>

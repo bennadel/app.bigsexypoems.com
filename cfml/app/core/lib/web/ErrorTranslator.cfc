@@ -79,6 +79,9 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.Poem.Share.NoteMarkdown.TooLong":
 				return asModelStringTooLong( error, "share note", metadata );
 			break;
+			case "App.Model.Poem.Share.NoteMarkdown.Unsafe":
+				return asModelMarkdownUnsafe( error, "share note", metadata );
+			break;
 			case "App.Model.Poem.Share.NotFound":
 				return asModelNotFound( error, "share link" );
 			break;

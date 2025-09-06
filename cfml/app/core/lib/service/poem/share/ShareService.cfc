@@ -5,6 +5,8 @@ component {
 	property name="shareAccess" ioc:type="core.lib.service.poem.share.ShareAccess";
 	property name="shareCascade" ioc:type="core.lib.service.poem.share.ShareCascade";
 	property name="shareModel" ioc:type="core.lib.model.poem.share.ShareModel";
+	property name="shareNoteParser" ioc:type="core.lib.model.poem.share.ShareNoteParser";
+	property name="shareNoteSanitizer" ioc:type="core.lib.model.poem.share.ShareNoteSanitizer";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -19,20 +21,22 @@ component {
 	public numeric function createShare(
 		required struct authContext,
 		required numeric poemID,
-		required string shareName
+		required string shareName,
+		required string shareNoteMarkdown
 		) {
 
 		var context = shareAccess.getContextForParent( authContext, poemID, "canCreateAny" );
 		var poem = context.poem;
 		var token = secureRandom.getToken( 32 );
+		var shareNoteHtml = parseShareNote( shareNoteMarkdown );
 		var createdAt = utcNow();
 
 		var shareID = shareModel.create(
 			poemID = poem.id,
 			token = token,
 			name = shareName,
-			noteMarkdown = "",
-			noteHtml = "",
+			noteMarkdown = shareNoteMarkdown,
+			noteHtml = shareNoteHtml,
 			createdAt = createdAt,
 			updatedAt = createdAt
 		);
@@ -78,6 +82,29 @@ component {
 			shareCascade.deleteShare( user, poem, share );
 
 		}
+
+	}
+
+
+	/**
+	* I parse the share note markdown into sanitized HTML.
+	*/
+	public string function parseShareNote( required string noteMarkdown ) {
+
+		var unsafeHtml = shareNoteParser.parse( noteMarkdown );
+		var sanitizedResults = shareNoteSanitizer.sanitize( unsafeHtml );
+
+		// When the HTML is sanitized, untrusted tags and attributes are quietly removed.
+		// We can safely ignore the attributes; but, if tags are going to be removed, we
+		// need to turn that into an error so that the user understands what is and is not
+		// allowed in the markdown.
+		if ( sanitizedResults.unsafeMarkup.tags.len() ) {
+
+			shareValidation.throwUnsafeNoteError( sanitizedResults.unsafeMarkup );
+
+		}
+
+		return sanitizedResults.safeHtml;
 
 	}
 

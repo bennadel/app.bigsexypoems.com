@@ -14,6 +14,7 @@
 
 	param name="url.poemID" type="numeric";
 	param name="form.name" type="string" default="";
+	param name="form.noteMarkdown" type="string" default="";
 
 	partial = getPartial(
 		authContext = request.authContext,
@@ -32,7 +33,8 @@
 			shareID = shareService.createShare(
 				authContext = request.authContext,
 				poemID = poem.id,
-				shareName = form.name
+				shareName = form.name,
+				shareNoteMarkdown = form.noteMarkdown
 			);
 
 			router.goto([

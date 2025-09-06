@@ -63,4 +63,25 @@ component
 
 	}
 
+
+	/**
+	* I throw an unsafe note error.
+	*/
+	public void function throwUnsafeNoteError( required struct unsafeMarkup ) {
+
+		var tagNames = unsafeMarkup
+			.tags
+			.map( ( entry ) => entry.tagName )
+			.toList( ", " )
+		;
+
+		throw(
+			type = "App.Model.Poem.Share.NoteMarkdown.Unsafe",
+			extendedInfo = embedMetadata({
+				tagNames: tagNames
+			})
+		);
+
+	}
+
 }

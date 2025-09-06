@@ -26,8 +26,28 @@
 						name="name"
 						value="#e4a( form.name )#"
 						maxlength="50"
+						autocomplete="off"
 						class="uiInput"
 					/>
+				</div>
+			</div>
+
+			<div class="uiField">
+				<label for="form--noteMarkdown" class="uiField_label">
+					Note:
+				</label>
+				<div class="uiField_content">
+					<textarea
+						id="form--noteMarkdown"
+						aria-describedby="form--noteMarkdown--description"
+						name="noteMarkdown"
+						maxlength="1000"
+						class="uiTextarea"
+					>#e( form.noteMarkdown )#</textarea>
+
+					<p id="form--noteMarkdown--description" class="uiHint">
+						The note uses Markdown and supports basic formatting.
+					</p>
 				</div>
 			</div>
 
