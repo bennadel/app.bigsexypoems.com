@@ -107,6 +107,14 @@
 	--button-danger-hover-fill: var( --red-9 ) ;
 	--button-danger-hover-stroke: var( --red-11 ) ;
 
+	// Visually contrasted buttons (no special semantics).
+	--button-inverted-text: #ffffff ;
+	--button-inverted-fill: var( --stone-10 ) ;
+	--button-inverted-stroke: var( --stone-10 ) ;
+	--button-inverted-hover-text: #ffffff ;
+	--button-inverted-hover-fill: var( --stone-9 ) ;
+	--button-inverted-hover-stroke: var( --stone-10 ) ;
+
 	// Form inputs.
 	--input-text: #0d0f12 ;
 	--input-fill: #ffffff ;
@@ -701,6 +709,7 @@ pre code {
 		font-weight: var( --font-weight-bold ) ;
 		line-height: var( --line-height-ui ) ;
 		padding: var( --pad-block ) var( --pad-inline-xl ) ;
+		text-decoration: none ; // For use on links.
 		user-select: none ;
 
 		&:hover {
@@ -749,6 +758,18 @@ pre code {
 			background-color: var( --button-danger-hover-fill ) ;
 			border-color: var( --button-danger-hover-stroke ) ;
 			color: var( --button-danger-hover-text ) ;
+		}
+	}
+
+	:where( &.isInverted ) {
+		background-color: var( --button-inverted-fill ) ;
+		border-color: var( --button-inverted-stroke ) ;
+		color: var( --button-inverted-text ) ;
+
+		&:hover {
+			background-color: var( --button-inverted-hover-fill ) ;
+			border-color: var( --button-inverted-hover-stroke ) ;
+			color: var( --button-inverted-hover-text ) ;
 		}
 	}
 
