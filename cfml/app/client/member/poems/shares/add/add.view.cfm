@@ -17,10 +17,17 @@
 
 			<div class="uiField">
 				<label for="form--name" class="uiField_label">
-					TODO:
+					Name:
 				</label>
 				<div class="uiField_content">
-					Something.....
+					<input
+						id="form--name"
+						type="text"
+						name="name"
+						value="#e4a( form.name )#"
+						maxlength="50"
+						class="uiInput"
+					/>
 				</div>
 			</div>
 

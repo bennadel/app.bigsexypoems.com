@@ -13,6 +13,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	param name="url.poemID" type="numeric";
+	param name="form.name" type="string" default="";
 
 	partial = getPartial(
 		authContext = request.authContext,
@@ -30,7 +31,8 @@
 
 			shareID = shareService.createShare(
 				authContext = request.authContext,
-				poemID = poem.id
+				poemID = poem.id,
+				shareName = form.name
 			);
 
 			router.goto([

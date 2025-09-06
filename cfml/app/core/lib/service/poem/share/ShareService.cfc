@@ -18,7 +18,8 @@ component {
 	*/
 	public numeric function createShare(
 		required struct authContext,
-		required numeric poemID
+		required numeric poemID,
+		required string shareName
 		) {
 
 		var context = shareAccess.getContextForParent( authContext, poemID, "canCreateAny" );
@@ -29,7 +30,7 @@ component {
 		var shareID = shareModel.create(
 			poemID = poem.id,
 			token = token,
-			name = "",
+			name = shareName,
 			noteMarkdown = "",
 			noteHtml = "",
 			createdAt = createdAt,
