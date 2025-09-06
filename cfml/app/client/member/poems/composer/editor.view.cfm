@@ -118,11 +118,11 @@
 						Search
 					</button>
 				</div>
-				<fieldset class="uiFieldset uiHstack isSparse">
+				<fieldset class="uiFieldset uiHstack isLoose">
 					<legend class="uiLegend">
 						Sort By:
 					</legend>
-					<label for="form--rhymes--groupBy--a" class="uiHstack isDense">
+					<label for="form--rhymes--groupBy--a" class="uiHstack isTight">
 						<input
 							id="form--rhymes--groupBy--a"
 							type="radio"
@@ -133,7 +133,7 @@
 						/>
 						Syllable Count
 					</label>
-					<label for="form--rhymes--groupBy--b" class="uiHstack isDense">
+					<label for="form--rhymes--groupBy--b" class="uiHstack isTight">
 						<input
 							id="form--rhymes--groupBy--b"
 							type="radio"
@@ -182,11 +182,11 @@
 						Search
 					</button>
 				</div>
-				<fieldset class="uiFieldset uiHstack isSparse">
+				<fieldset class="uiFieldset uiHstack isLoose">
 					<legend class="uiLegend">
 						Sort By:
 					</legend>
-					<label for="form--syllable--groupBy--a" class="uiHstack isDense">
+					<label for="form--syllable--groupBy--a" class="uiHstack isTight">
 						<input
 							id="form--syllable--groupBy--a"
 							type="radio"
@@ -196,7 +196,7 @@
 						/>
 						Syllable Count
 					</label>
-					<label for="form--syllable--groupBy--b" class="uiHstack isDense">
+					<label for="form--syllable--groupBy--b" class="uiHstack isTight">
 						<input
 							id="form--syllable--groupBy--b"
 							type="radio"

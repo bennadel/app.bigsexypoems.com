@@ -602,11 +602,11 @@ pre code {
 		align-items: flex-start ;
 	}
 
-	:where( &.isDense ) {
+	:where( &.isTight ) {
 		gap: var( --space-inline-xs ) ;
 	}
 
-	:where( &.isSparse ) {
+	:where( &.isLoose ) {
 		gap: var( --space-inline-xl ) ;
 	}
 
@@ -626,11 +626,11 @@ pre code {
 		flex: 0 1 auto ;
 	}
 
-	:where( &.isDense ) {
+	:where( &.isTight ) {
 		gap: var( --space-block-xs ) ;
 	}
 
-	:where( &.isSparse ) {
+	:where( &.isLoose ) {
 		gap: var( --space-block-xl ) ;
 	}
 }
