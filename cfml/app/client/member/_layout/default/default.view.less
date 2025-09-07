@@ -87,15 +87,19 @@
 
 		&_label {}
 
-		&:hover &_label,
-		&.isOn &_label {
+		&:not(.isOn):hover &_label {
 			text-decoration: underline ;
 		}
 
+		&:hover &_pill {
+			background-color: var( --nav-fill-hover ) ;
+			color: var( --nav-text-hover ) ;
+		}
+
 		&.isOn &_pill {
-			background-color: var( --nav-fill-on ) ;
+			background-color: var( --nav-fill-active ) ;
 			border-radius: 3px ;
-			color: var( --nav-text-on ) ;
+			color: var( --nav-text-active ) ;
 		}
 
 		// Since these elements butt-up against each other, the focus ring might get

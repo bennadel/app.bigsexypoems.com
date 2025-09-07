@@ -1,10 +1,10 @@
 
 // @import (inline) "./open-props/props.borders.css" ;
 @import (inline) "./open-props/props.colors.css" ;
-@import (inline) "./open-props/props.easing.css" ;
+// @import (inline) "./open-props/props.easing.css" ;
 @import (inline) "./open-props/props.fonts.css" ;
-@import (inline) "./open-props/props.shadows.css" ;
-@import (inline) "./open-props/props.sizes.css" ;
+// @import (inline) "./open-props/props.shadows.css" ;
+// @import (inline) "./open-props/props.sizes.css" ;
 // @import (inline) "./open-props/props.zindex.css" ;
 
 // ---
@@ -12,6 +12,15 @@
 // ---
 
 .less-theme-light() {
+
+	// Stacking context / layers.
+	--layer-base: 0 ;
+	--layer-sticky: 100 ;
+	--layer-overlay: 200 ;
+	--layer-modal: 300 ;
+	--layer-popover: 400 ;
+	--layer-tooltip: 500 ;
+	--layer-important: 2147483647 ;
 
 	// Block / vertical rhythm.
 	--space-block-xxs: 0.3rem ;
@@ -71,10 +80,29 @@
 	--line-height-heading: 1.3 ;
 	--line-height-ui: 1.4 ;
 
+	// Borer radius.
+	--radius-xs: 0 ;
+	--radius-s: 2px ;
+	--radius: 4px ;
+	--radius-l: 6px ;
+	--radius-xl: 8px ;
+	--radius-round: 999999px ;
+
+	// Animations / transitions.
+	--duration-xs: 100ms ;
+	--duration-s: 150ms ;
+	--duration: 200ms ;
+	--duration-l: 250ms ;
+	--duration-xl: 300ms ;
+
 	// Base body.
 	--text: var( --stone-11 ) ;
 	--text-muted: var( --stone-7 ) ;
 	--fill: #ffffff ;
+
+	// Links.
+	--link-text: var( --indigo-7 ) ;
+	--link-hover-text: var( --indigo-9 ) ;
 
 	// Base / auxiliary buttons.
 	--button-text: var( --gray-9 ) ;
@@ -123,27 +151,19 @@
 	--input-error-stroke: #c92a2a ;
 	--input-inset-shadow: inset 1px 1px 2px #dadada ;
 
-	// Links.
-	--link-text: var( --indigo-7 ) ;
-	--link-hover-text: var( --indigo-9 ) ;
-
 	// Accent / focus.
 	--accent: var( --pink-6 ) ;
 
-	// Borer radius.
-	--radius-xs: 0 ;
-	--radius-s: 2px ;
-	--radius: 4px ;
-	--radius-l: 6px ;
-	--radius-xl: 8px ;
-	--radius-round: 999999px ;
+	// Required indicator.
+	--star-text: #9c0099 ;
 
-	// Animations / transitions.
-	--duration-xs: 100ms ;
-	--duration-s: 150ms ;
-	--duration: 200ms ;
-	--duration-l: 250ms ;
-	--duration-xl: 300ms ;
+	// Nav links.
+	--nav-text: var( --text ) ;
+	--nav-fill: var( --fill ) ;
+	--nav-text-hover: var( --text ) ;
+	--nav-fill-hover: var( --stone-1 ) ;
+	--nav-text-active: var( --text ) ;
+	--nav-fill-active: var( --stone-3 ) ;
 
 	// Feedback.
 	--success-fill: var( --lime-0 ) ;
@@ -162,25 +182,9 @@
 	--info-stoke: var( --stone-9 ) ;
 	--info-text: var( --stone-9 ) ;
 
-	// Stacking context / layers.
-	--layer-base: 0 ;
-	--layer-sticky: 100 ;
-	--layer-overlay: 200 ;
-	--layer-modal: 300 ;
-	--layer-popover: 400 ;
-	--layer-tooltip: 500 ;
-	--layer-important: 2147483647 ;
-
-
-
-
-
-
+	// Highlighted text.
 	--mark-text: #121210 ;
 	--mark-fill: #ffe066 ;
-
-	--code-fill: #f1f3f5 ;
-	--code-text: #0d0f12 ;
 
 	--img-shadow: #e0e4e5 ;
 
@@ -188,13 +192,6 @@
 
 	--rule-hard: #999999 ;
 	--rule-soft: #cccccc ;
-
-	--nav-text: var( --text ) ;
-	--nav-fill: var( --fill ) ;
-	--nav-text-on: var( --text ) ;
-	--nav-fill-on: #e0e0e0 ;
-
-	--star-text: #9c0099 ;
 
 	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
 	// There appears to be a race condition with Parcel > Less > Url().
@@ -1028,13 +1025,51 @@ pre code {
 }
 
 // ---
-// UTILITY CLASSES - only as a last resort.
+// UTILITY CLASSES.
+// 
+// Note: these are here as a last resort. I think I might use these during the exploratory
+// phase. And then, when I discover a pattern, I can go back and replace them with "ui"
+// components.
 // ---
 
 :where( .m0 ) {
 	margin: 0 ;
 }
 
-:where( .mb0 ) {
-	margin-bottom: 0 ;
+:where( .mtxxs ) {
+	margin-top: var( --space-block-xxs );
+}
+:where( .mtxs ) {
+	margin-top: var( --space-block-xs );
+}
+:where( .mts ) {
+	margin-top: var( --space-block-s );
+}
+:where( .mt ) {
+	margin-top: var( --space-block  );
+}
+:where( .mtl ) {
+	margin-top: var( --space-block-l );
+}
+:where( .mtxl ) {
+	margin-top: var( --space-block-xl );
+}
+
+:where( .mbxxs ) {
+	margin-bottom: var( --space-block-xxs );
+}
+:where( .mbxs ) {
+	margin-bottom: var( --space-block-xs );
+}
+:where( .mbs ) {
+	margin-bottom: var( --space-block-s );
+}
+:where( .mb ) {
+	margin-bottom: var( --space-block  );
+}
+:where( .mbl ) {
+	margin-bottom: var( --space-block-l );
+}
+:where( .mbxl ) {
+	margin-bottom: var( --space-block-xl );
 }
