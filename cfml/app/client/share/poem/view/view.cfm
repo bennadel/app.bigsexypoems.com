@@ -10,6 +10,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	poem = request.poem;
+	share = request.share;
 	title = poem.name;
 	user = userModel.get( poem.userID );
 

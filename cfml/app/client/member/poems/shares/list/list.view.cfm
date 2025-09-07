@@ -24,7 +24,7 @@
 					Link
 				</th>
 				<th>
-					Name
+					Internal Name
 				</th>
 				<th>
 					Note

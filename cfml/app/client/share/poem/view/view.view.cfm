@@ -1,6 +1,16 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
+	<cfif share.noteHtml.len()>
+
+		<div class="uiFlow">
+			#share.noteHtml#
+
+			<hr class="uiRule" />
+		</div>
+
+	</cfif>
+
 	<article class="uiFlow">
 
 		<h1>

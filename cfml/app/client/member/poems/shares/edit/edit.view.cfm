@@ -26,9 +26,13 @@
 
 			<div class="uiField">
 				<label for="form--name" class="uiField_label">
-					Name:
+					Internal Name:
 				</label>
 				<div class="uiField_content">
+					<p class="uiField_description">
+						This name is for <strong>your eyes only</strong>; and is only helpful if you want to send your poem to different people with different notes. This name will help differentiate one share link from another.
+					</p>
+
 					<input
 						id="form--name"
 						type="text"
@@ -54,7 +58,7 @@
 						class="uiTextarea"
 					>#e( form.noteMarkdown )#</textarea>
 
-					<p id="form--noteMarkdown--description" class="uiHint">
+					<p id="form--noteMarkdown--description" class="uiField_hint">
 						The note uses Markdown and supports basic formatting.
 					</p>
 				</div>

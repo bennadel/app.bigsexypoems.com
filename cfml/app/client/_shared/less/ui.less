@@ -523,7 +523,7 @@ pre code {
 // This block is here to reintroduce margins for text-oriented flows. This might be swaths
 // of the page that are simply more text-oriented; or, it might be for user-generated
 // content to which we can't add CSS classes.
-:where( .uiFlow ) {
+.uiFlow {
 	// Block elements.
 	article,
 	aside,
@@ -555,38 +555,50 @@ pre code {
 	ul,
 	video
 	{
-		margin-bottom: var( --space-block ) ;
+		:where( & ) {
+			margin-bottom: var( --space-block ) ;
+		}
 	}
 
 	blockquote,
 	pre,
 	td,
 	th {
-		> *:last-child {
+		:where( & > *:last-child ) {
 			margin-bottom: 0 ;
 		}
 	}
 
 	li {
-		margin-bottom: var( --space-block-xs ) ;
+		:where( & ) {
+			margin-bottom: var( --space-block-xs ) ;
+		}
 	}
 
 	ul,
 	ol {
-		padding-left: 2.5rem ;
+		:where( & ) {
+			padding-left: 2.5rem ;
+		}
 	}
 
 	ol {
-		list-style-type: decimal ;
+		:where( & ) {
+			list-style-type: decimal ;
+		}
 	}
 
 	ul {
-		list-style-type: disc ;
+		:where( & ) {
+			list-style-type: disc ;
+		}
 	}
 
 	blockquote {
-		margin-left: var( --space-block-xl ) ;
-		margin-right: var( --space-block-xl ) ;
+		:where( & ) {
+			margin-left: var( --space-block-xl ) ;
+			margin-right: var( --space-block-xl ) ;
+		}
 	}
 }
 
@@ -969,21 +981,16 @@ pre code {
 		}
 	}
 
-	:where( &_needsAttention ) {
-		align-items: center ;
-		background-color: var( --error-fill ) ;
-		border: 1px solid var( --error-stoke ) ;
-		border-radius: 2px ;
-		color: var( --error-text ) ;
-		display: flex ;
-		gap: 15px ;
-		padding: var( --pad-block-s ) var( --pad-inline ) ;
+	// Pre-input text.
+	:where( &_description ) {
+		margin-bottom: var( --space-block-s ) ;
+	}
 
-		svg {
-			color: var( --error-stoke ) ;
-			height: 24px ;
-			width: 24px ;
-		}
+	// Post-input text.
+	:where( &_hint ) {
+		font-size: var( --font-size-smaller ) ;
+		line-height: var( --line-height-ui ) ;
+		margin-top: var( --space-block-xs ) ;
 	}
 }
 
@@ -991,14 +998,6 @@ pre code {
 	:where( & ) {
 		border: 1px solid var( --rule-soft ) ;
 		padding: var( --pad-block ) var( --pad-inline-l ) ;
-	}
-}
-
-.uiHint {
-	:where( & ) {
-		font-size: var( --font-size-smaller ) ;
-		line-height: var( --line-height-ui ) ;
-		margin-top: var( --space-block-xs ) ;
 	}
 }
 
