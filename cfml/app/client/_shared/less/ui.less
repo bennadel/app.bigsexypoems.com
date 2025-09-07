@@ -153,6 +153,7 @@
 
 	// Accent / focus.
 	--accent: var( --pink-6 ) ;
+	--focus-ring-stroke: var( --pink-7 ) ;
 
 	// Required indicator.
 	--star-text: #9c0099 ;
@@ -175,11 +176,11 @@
 	--warning-text: var( --yellow-10 ) ;
 
 	--error-fill: var( --red-1 ) ;
-	--error-stoke: var( --red-9 ) ;
+	--error-stroke: var( --red-9 ) ;
 	--error-text: var( --red-10 ) ;
 
 	--info-fill: var( --stone-1 ) ;
-	--info-stoke: var( --stone-9 ) ;
+	--info-stroke: var( --stone-9 ) ;
 	--info-text: var( --stone-9 ) ;
 
 	// Highlighted text.
@@ -188,10 +189,13 @@
 
 	--img-shadow: #e0e4e5 ;
 
-	--panel-stroke: #b1b6b9 ;
+	--rule-nav: var( --stone-5 ) ;
+	--rule-content: var( --stone-7 );
+
 
 	--rule-hard: #999999 ;
 	--rule-soft: #cccccc ;
+	--rule-accent: #cccccc ;
 
 	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
 	// There appears to be a race condition with Parcel > Less > Url().
@@ -210,7 +214,7 @@
 	--mark-fill: #ffe066 ;
 
 	--error-fill: #441010 ;
-	--error-stoke: #8b2424 ;
+	--error-stroke: #8b2424 ;
 	--error-text: #f98484 ;
 
 	--success-fill: #2f4407 ;
@@ -244,11 +248,6 @@
 	--button-secondary-stroke-hover: #93b8dc ;
 
 	--img-shadow: #e0e4e5 ;
-
-	--panel-stroke: #37414d ;
-
-	--rule-hard: #999999 ;
-	--rule-soft: #37414d ;
 
 	--nav-text: var( --text ) ;
 	--nav-fill: var( --fill ) ;
@@ -560,7 +559,7 @@ pre code {
 			animation-iteration-count: 1 ;
 			animation-timing-function: ease-in ;
 		}
-		outline: 2px solid var( --accent ) ;
+		outline: 2px solid var( --focus-ring-stroke ) ;
 		outline-offset: 2px ;
 	}
 }
@@ -654,12 +653,8 @@ pre code {
 .uiRule {
 	:where( & ) {
 		border: none ;
-		border-top: 1px solid var( --rule-hard ) ;
+		border-top: 1px solid var( --rule-content ) ;
 		margin: var( --space-l ) 0 ;
-	}
-
-	:where( &.is-soft ) {
-		border-top: 1px dashed var( --rule-soft ) ;
 	}
 }
 
@@ -969,7 +964,7 @@ pre code {
 
 .uiFieldset {
 	:where( & ) {
-		border: 1px solid var( --rule-soft ) ;
+		border: 1px solid var( --rule-accent ) ;
 		padding: var( --pad-block ) var( --pad-inline-l ) ;
 	}
 }
@@ -1012,7 +1007,7 @@ pre code {
 .uiFormButtons {
 	:where( & ) {
 		align-items: center ;
-		border-top: 1px solid var( --rule-soft ) ;
+		border-top: 1px solid var( --rule-content ) ;
 		display: flex ;
 		gap: var( --space-inline ) ;
 		margin-top: var( --space-block-l ) ;
