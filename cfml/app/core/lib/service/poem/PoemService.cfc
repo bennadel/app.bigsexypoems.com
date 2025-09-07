@@ -29,7 +29,8 @@ component {
 		var poemID = poemModel.create(
 			userID = user.id,
 			name = poemName,
-			content = poemContent
+			content = poemContent,
+			createdAt = utcNow()
 		);
 
 		return poemID;
@@ -70,7 +71,8 @@ component {
 		poemModel.update(
 			id = poem.id,
 			name = poemName,
-			content = poemContent
+			content = poemContent,
+			updatedAt = utcNow()
 		);
 
 	}

@@ -17,7 +17,7 @@ component {
 	public numeric function create(
 		required string name,
 		required string email,
-		date createdAt = utcNow()
+		required date createdAt
 		) {
 
 		name = validation.testName( name );

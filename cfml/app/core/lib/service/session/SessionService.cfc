@@ -62,9 +62,14 @@ component hint = "I provide methods for accessing the session associated with th
 				token = sessionToken,
 				userID = userID,
 				isAuthenticated = isAuthenticated,
-				ipAddress = ipAddress
+				ipAddress = ipAddress,
+				createdAt = utcNow()
 			);
-			presenceModel.create( sessionID );
+			presenceModel.create(
+				sessionID = sessionID,
+				requestCount = 1,
+				lastRequestAt = utcNow()
+			);
 		}
 
 		sessionCookies.setCookie( sessionID, sessionToken );

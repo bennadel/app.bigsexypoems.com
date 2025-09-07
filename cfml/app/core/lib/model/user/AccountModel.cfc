@@ -16,7 +16,7 @@ component {
 	*/
 	public void function create(
 		required numeric userID,
-		date createdAt = utcNow()
+		required date createdAt
 		) {
 
 		var existing = gateway.getByFilter( userID = userID );

@@ -16,8 +16,8 @@ component {
 	*/
 	public void function create(
 		required numeric sessionID,
-		numeric requestCount = 1,
-		date lastRequestAt = utcNow()
+		required numeric requestCount,
+		required date lastRequestAt
 		) {
 
 		var existing = getByFilter( sessionID = sessionID );

@@ -35,7 +35,8 @@ component {
 
 			var userID = userModel.create(
 				name = name,
-				email = email
+				email = email,
+				createdAt = utcNow()
 			);
 
 		}
@@ -74,7 +75,7 @@ component {
 
 		if ( ! maybeAccount.exists ) {
 
-			accountModel.create( user.id );
+			accountModel.create( user.id, utcNow() );
 
 		}
 

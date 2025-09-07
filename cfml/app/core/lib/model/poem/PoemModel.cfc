@@ -17,13 +17,12 @@ component {
 	public numeric function create(
 		required numeric userID,
 		required string name,
-		required string content
+		required string content,
+		required date createdAt
 		) {
 
 		name = validation.testName( name );
 		content = validation.testContent( content );
-
-		var createdAt = utcNow();
 
 		return gateway.create(
 			userID = userID,
@@ -121,8 +120,9 @@ component {
 	*/
 	public void function update(
 		required numeric id,
-		required string name,
-		required string content
+		string name,
+		string content,
+		date updatedAt
 		) {
 
 		var existing = get( id );
@@ -135,12 +135,16 @@ component {
 			? existing.content
 			: validation.testContent( content )
 		;
+		updatedAt = isNull( updatedAt )
+			? existing.updatedAt
+			: updatedAt
+		;
 
 		gateway.update(
 			id = existing.id,
 			name = name,
 			content = content,
-			updatedAt = utcNow()
+			updatedAt = updatedAt
 		);
 
 	}

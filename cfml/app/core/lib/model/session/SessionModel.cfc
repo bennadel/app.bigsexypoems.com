@@ -19,7 +19,7 @@ component {
 		required numeric userID,
 		required boolean isAuthenticated,
 		required string ipAddress,
-		date createdAt = utcNow()
+		required date createdAt
 		) {
 
 		ipAddress = validation.testIpAddress( ipAddress );
