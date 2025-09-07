@@ -59,7 +59,7 @@
 					>#e( form.noteMarkdown )#</textarea>
 
 					<p id="form--noteMarkdown--description" class="uiField_hint">
-						The note uses Markdown and supports basic formatting.
+						The note uses <a href="##markdownDisclosure">Markdown</a> and supports basic formatting.
 					</p>
 				</div>
 			</div>
@@ -75,6 +75,11 @@
 		</form>
 
 	</article>
+
+
+	<cfmodule
+		template="/client/_shared/tag/markdownDisclosure.cfm">
+	</cfmodule>
 
 </cfoutput>
 </cfsavecontent>
