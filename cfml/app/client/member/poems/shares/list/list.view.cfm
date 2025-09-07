@@ -50,14 +50,19 @@
 					#e( share.noteMarkdown )#
 				</td>
 				<td>
-					<form method="post" #ui.attrAction( "member.poems.shares.delete", "shareID", share.id )#>
-						<cfmodule template="/client/_shared/tag/xsrf.cfm">
-						<input type="hidden" name="isConfirmed" value="true" />
-						<!--- <input type="hidden" name="formToken" value="#e4a( formToken )#" /> --->
-						<button type="submit" class="uiButton">
-							Revoke
-						</button>
-					</form>
+					<div class="uiHstack">
+						<a #ui.attrHref( "member.poems.shares.edit", "shareID", share.id )#>
+							Edit
+						</a>
+						<form method="post" #ui.attrAction( "member.poems.shares.delete", "shareID", share.id )#>
+							<cfmodule template="/client/_shared/tag/xsrf.cfm">
+							<input type="hidden" name="isConfirmed" value="true" />
+							<!--- <input type="hidden" name="formToken" value="#e4a( formToken )#" /> --->
+							<button type="submit" class="uiButton">
+								Revoke
+							</button>
+						</form>
+					</div>
 				</td>
 			</tr>
 		</cfloop>

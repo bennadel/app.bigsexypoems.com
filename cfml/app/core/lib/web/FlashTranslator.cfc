@@ -51,6 +51,9 @@ component {
 			case "your.poem.share.deleted":
 				return asResponse( "Your share link has been deleted." );
 			break;
+			case "your.poem.share.updated":
+				return asResponse( "Your share link has been updated." );
+			break;
 			case "your.poem.updated":
 				return asResponse( "Your poem has been updated." );
 			break;

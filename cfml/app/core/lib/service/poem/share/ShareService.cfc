@@ -108,4 +108,30 @@ component {
 
 	}
 
+
+	/**
+	* I update a share.
+	*/
+	public void function updateShare(
+		required struct authContext,
+		required numeric shareID,
+		required string shareName,
+		required string shareNoteMarkdown
+		) {
+
+		var context = shareAccess.getContext( authContext, shareID, "canUpdate" );
+		var share = context.share;
+		var shareNoteHtml = parseShareNote( shareNoteMarkdown );
+		var updatedAt = utcNow();
+
+		shareModel.update(
+			id = share.id,
+			name = shareName,
+			noteMarkdown = shareNoteMarkdown,
+			noteHtml = shareNoteHtml,
+			updatedAt = updatedAt
+		);
+
+	}
+
 }

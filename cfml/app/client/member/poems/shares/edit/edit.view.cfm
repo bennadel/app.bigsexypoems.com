@@ -62,7 +62,7 @@
 
 			<div class="uiFormButtons">
 				<button type="submit" class="uiButton isSubmit">
-					Create Share
+					Update Share
 				</button>
 				<a #ui.attrHref( "member.poems.shares", "poemID", poem.id )# class="uiButton isCancel">
 					Cancel

@@ -122,4 +122,45 @@ component {
 
 	}
 
+
+	/**
+	* I update a model.
+	*/
+	public void function update(
+		required numeric id,
+		string name,
+		string noteMarkdown,
+		string noteHtml,
+		date updatedAt
+		) {
+
+		var existing = get( id );
+
+		name = isNull( name )
+			? existing.name
+			: validation.testName( name )
+		;
+		noteMarkdown = isNull( noteMarkdown )
+			? existing.noteMarkdown
+			: validation.testNoteMarkdown( noteMarkdown )
+		;
+		noteHtml = isNull( noteHtml )
+			? existing.noteHtml
+			: noteHtml
+		;
+		updatedAt = isNull( updatedAt )
+			? existing.updatedAt
+			: updatedAt
+		;
+
+		gateway.update(
+			id = existing.id,
+			name = name,
+			noteMarkdown = noteMarkdown,
+			noteHtml = noteHtml,
+			updatedAt = updatedAt
+		);
+
+	}
+
 }

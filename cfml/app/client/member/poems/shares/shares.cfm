@@ -9,6 +9,7 @@
 		case "add":
 		case "delete":
 		case "deleteAll":
+		case "edit":
 		case "list":
 			cfmodule( template = router.nextTemplate() );
 		break;
