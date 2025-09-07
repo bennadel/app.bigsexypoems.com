@@ -3,15 +3,15 @@
 
 	<cfif share.noteHtml.len()>
 
-		<div class="uiFlow">
+		<section>
 			#share.noteHtml#
+		</section>
 
-			<hr class="uiRule" />
-		</div>
+		<hr class="uiRule" />
 
 	</cfif>
 
-	<article class="uiFlow">
+	<article>
 
 		<h1>
 			#e( title )#

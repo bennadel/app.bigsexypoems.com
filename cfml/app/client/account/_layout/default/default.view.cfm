@@ -41,7 +41,7 @@
 				</a>
 
 				<nav zm1em0 class="header_nav nav">
-					<ul>
+					<ul class="uiUnlist">
 						<li>
 							<a
 								#ui.attrHref( "member" )#

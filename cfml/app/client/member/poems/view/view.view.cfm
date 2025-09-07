@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article class="uiFlow">
+	<article>
 
 		<h1>
 			#e( poem.name )#

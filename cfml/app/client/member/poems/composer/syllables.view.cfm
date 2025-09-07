@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<ul>
+	<ul class="uiUnlist">
 		<cfloop array="#lineCounts#" item="lineCount">
 			<li>
 				<cfif lineCount>

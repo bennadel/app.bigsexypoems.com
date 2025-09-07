@@ -334,6 +334,7 @@ h1, .h1 {
 		font-size: var( --font-size-xxxl ) ;
 		font-weight: var( --font-weight-bold ) ;
 		line-height: var( --line-height-heading ) ;
+		margin-bottom: var( --space-block ) ;
 	}
 }
 
@@ -343,6 +344,7 @@ h2, .h2 {
 		font-size: var( --font-size-xxl ) ;
 		font-weight: var( --font-weight-bold ) ;
 		line-height: var( --line-height-heading ) ;
+		margin-bottom: var( --space-block ) ;
 	}
 }
 
@@ -352,6 +354,7 @@ h3, .h3 {
 		font-size: var( --font-size-xl ) ;
 		font-weight: var( --font-weight-bold ) ;
 		line-height: var( --line-height-heading ) ;
+		margin-bottom: var( --space-block-s ) ;
 	}
 }
 
@@ -361,6 +364,7 @@ h4, .h4 {
 		font-size: var( --font-size-l ) ;
 		font-weight: var( --font-weight-bold ) ;
 		line-height: var( --line-height-heading ) ;
+		margin-bottom: var( --space-block-xs ) ;
 	}
 }
 
@@ -371,6 +375,13 @@ h6, .h6 {
 		font-size: var( --font-size ) ;
 		font-weight: var( --font-weight-bold ) ;
 		line-height: var( --line-height-heading ) ;
+		margin-bottom: var( --space-block-xs ) ;
+	}
+}
+
+p {
+	:where( & ) {
+		margin-bottom: var( --space-block ) ;
 	}
 }
 
@@ -378,6 +389,7 @@ table {
 	:where( & ) {
 		border-collapse: collapse ;
 		border-spacing: 0 ;
+		margin-bottom: var( --space-block ) ;
 	}
 }
 
@@ -398,6 +410,12 @@ th {
 	}
 }
 
+dl {
+	:where( & ) {
+		margin-bottom: var( --space-block ) ;
+	}
+}
+
 dt {
 	:where( & ) {
 		font-weight: var( --font-weight-bold ) ;
@@ -407,7 +425,47 @@ dt {
 ul,
 ol {
 	:where( & ) {
-		list-style-type: none ;
+		margin-bottom: var( --space-block ) ;
+		padding-left: 2.5rem ;
+	}
+}
+
+ol {
+	:where( & ) {
+		list-style-type: decimal ;
+	}
+}
+
+ul {
+	:where( & ) {
+		list-style-type: disc ;
+	}
+}
+
+li {
+	:where( & ) {
+		margin-bottom: var( --space-block-xs ) ;
+	}
+}
+
+blockquote {
+	:where( & ) {
+		margin-left: var( --space-block-xl ) ;
+		margin-right: var( --space-block-xl ) ;
+	}
+}
+
+th,
+td,
+blockquote {
+	:where( & > *:last-child ) {
+		margin-bottom: 0 ;
+	}
+}
+
+hr {
+	:where( & ) {
+		margin-bottom: var( --space-block ) ;
 	}
 }
 
@@ -444,6 +502,7 @@ img {
 	:where( & ) {
 		border: none ;
 		display: block ;
+		margin-bottom: var( --space-block ) ;
 		max-width: 100% ;
 	}
 }
@@ -489,6 +548,7 @@ code {
 pre code {
 	:where( & ) {
 		background-color: transparent ;
+		margin-bottom: var( --space-block ) ;
 	}
 }
 
@@ -513,92 +573,6 @@ pre code {
 	}
 	to {
 		outline-offset: 2px ;
-	}
-}
-
-// ---
-// CONTENT RE-RESET.
-// ---
-
-// This block is here to reintroduce margins for text-oriented flows. This might be swaths
-// of the page that are simply more text-oriented; or, it might be for user-generated
-// content to which we can't add CSS classes.
-.uiFlow {
-	// Block elements.
-	article,
-	aside,
-	blockquote,
-	dd,
-	dl,
-	dt,
-	fieldset,
-	figcaption,
-	figure,
-	footer,
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6,
-	header,
-	hr,
-	legend,
-	main,
-	nav,
-	ol,
-	p,
-	pre,
-	section,
-	svg,
-	table,
-	ul,
-	video
-	{
-		:where( & ) {
-			margin-bottom: var( --space-block ) ;
-		}
-	}
-
-	blockquote,
-	pre,
-	td,
-	th {
-		:where( & > *:last-child ) {
-			margin-bottom: 0 ;
-		}
-	}
-
-	li {
-		:where( & ) {
-			margin-bottom: var( --space-block-xs ) ;
-		}
-	}
-
-	ul,
-	ol {
-		:where( & ) {
-			padding-left: 2.5rem ;
-		}
-	}
-
-	ol {
-		:where( & ) {
-			list-style-type: decimal ;
-		}
-	}
-
-	ul {
-		:where( & ) {
-			list-style-type: disc ;
-		}
-	}
-
-	blockquote {
-		:where( & ) {
-			margin-left: var( --space-block-xl ) ;
-			margin-right: var( --space-block-xl ) ;
-		}
 	}
 }
 
@@ -663,11 +637,12 @@ pre code {
 .uiUnlist {
 	:where( & ) {
 		list-style-type: none ;
-		margin-left: 0 ;
+		margin: 0 ;
 		padding: 0 ;
 	}
 
 	:where( & > li ) {
+		margin: 0 ;
 		padding: 0 ;
 	}
 }
@@ -990,7 +965,7 @@ pre code {
 	:where( &_hint ) {
 		font-size: var( --font-size-smaller ) ;
 		line-height: var( --line-height-ui ) ;
-		margin-top: var( --space-block-xs ) ;
+		margin: var( --space-block-xs ) 0 0 0 ;
 	}
 }
 
@@ -1049,4 +1024,16 @@ pre code {
 	:where( & > * ) {
 		flex: 0 1 auto ;
 	}
+}
+
+// ---
+// UTILITY CLASSES - only as a last resort.
+// ---
+
+:where( .m0 ) {
+	margin: 0 ;
+}
+
+:where( .mb0 ) {
+	margin-bottom: 0 ;
 }

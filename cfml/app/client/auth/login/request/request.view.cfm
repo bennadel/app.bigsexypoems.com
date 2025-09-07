@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article class="uiFlow">
+	<article>
 
 		<h1>
 			Login
@@ -24,7 +24,7 @@
 				<label for="form--email" class="uiField_label">
 					Email:
 				</label>
-				<div class="uiField__content">
+				<div class="uiField_content">
 					<input
 						id="form--email"
 						type="text"
