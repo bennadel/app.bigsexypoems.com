@@ -62,7 +62,7 @@
 							hx-target="next .background-reponse"
 							hx-sync="this:replace"
 							hx-indicator="next"
-							class="uiButton isText">
+							class="uiButton isLink">
 							Save in Background
 						</button>
 						<span class="htmx-indicator">

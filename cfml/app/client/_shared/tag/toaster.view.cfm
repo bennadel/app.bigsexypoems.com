@@ -29,7 +29,7 @@
 				@click="removeItem( i )"
 				@keydown="handleKeydown( $event, i )"
 				tabindex="0"
-				class="uiButton isText dismiss">
+				class="uiButton isLink dismiss">
 				Dismiss
 			</button>
 		</div>
