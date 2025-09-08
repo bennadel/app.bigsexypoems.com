@@ -145,10 +145,12 @@
 	--button-inverted-hover-stroke: var( --stone-10 ) ;
 
 	// Form inputs.
-	--input-text: #0d0f12 ;
+	--input-text: inherit ;
 	--input-fill: #ffffff ;
-	--input-stroke: #16191d ;
-	--input-error-stroke: #c92a2a ;
+	--input-stroke: var( --stone-7 ) ;
+	--input-focus-stroke: var( --pink-7 ) ;
+	--input-error-text: var( --red-9 ) ;
+	--input-error-stroke: var( --red-9 ) ;
 	--input-inset-shadow: inset 1px 1px 2px #dadada ;
 
 	// Accent / focus.
@@ -183,19 +185,14 @@
 	--info-stroke: var( --stone-9 ) ;
 	--info-text: var( --stone-9 ) ;
 
+	// Rules / dividers.
+	--rule-nav: var( --stone-9 ) ;
+	--rule-content: var( --stone-5 );
+	--rule-accent: var( --cyan-9 ) ;
+
 	// Highlighted text.
 	--mark-text: #121210 ;
 	--mark-fill: #ffe066 ;
-
-	--img-shadow: #e0e4e5 ;
-
-	--rule-nav: var( --stone-5 ) ;
-	--rule-content: var( --stone-7 );
-
-
-	--rule-hard: #999999 ;
-	--rule-soft: #cccccc ;
-	--rule-accent: #cccccc ;
 
 	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
 	// There appears to be a race condition with Parcel > Less > Url().
@@ -246,8 +243,6 @@
 	--button-secondary-fill: transparent ;
 	--button-secondary-stroke: #383838 ;
 	--button-secondary-stroke-hover: #93b8dc ;
-
-	--img-shadow: #e0e4e5 ;
 
 	--nav-text: var( --text ) ;
 	--nav-fill: var( --fill ) ;
@@ -781,6 +776,10 @@ pre code {
 		max-width: 100% ;
 		padding: var( --pad-block ) var( --pad-inline ) ;
 		width: 100% ;
+
+		&:focus {
+			border-color: var( --input-focus-stroke ) ;
+		}
 	}
 
 	:where( &.isSmall ) {
@@ -886,6 +885,10 @@ pre code {
 		padding: var( --pad-block ) var( --pad-inline ) ;
 		padding-right: 2rem ; // To make room for caret.
 		width: 100% ;
+
+		&:focus {
+			border-color: var( --input-focus-stroke ) ;
+		}
 	}
 
 	:where( &.isAuto ) {
@@ -906,6 +909,10 @@ pre code {
 		line-height: var( --line-height-ui ) ;
 		padding: var( --pad-block ) var( --pad-inline ) ;
 		width: 100% ;
+
+		&:focus {
+			border-color: var( --input-focus-stroke ) ;
+		}
 	}
 }
 
