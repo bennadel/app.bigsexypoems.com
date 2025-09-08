@@ -30,7 +30,7 @@
 				</label>
 				<div class="uiField_content">
 					<p class="uiField_description">
-						This name is for <strong>your eyes only</strong>; and is only helpful if you want to send your poem to different people with different notes. This name will help differentiate one share link from another.
+						This name is <strong>for your eyes only</strong>; and is only helpful if you want to send your poem to different people with different notes. This name will help differentiate one share link from another.
 					</p>
 
 					<input
@@ -50,15 +50,19 @@
 					Note:
 				</label>
 				<div class="uiField_content">
+					<p id="form--noteMarkdown--description" class="uiField_description">
+						This note is <strong>for your reader / recipient</strong> within the share experience. It gives you an opportunity to say something special; or, to introduce the poem in some way.
+					</p>
+
 					<textarea
 						id="form--noteMarkdown"
-						aria-describedby="form--noteMarkdown--description"
+						aria-describedby="form--noteMarkdown--description form--noteMarkdown--hint"
 						name="noteMarkdown"
 						maxlength="1000"
 						class="uiTextarea"
 					>#e( form.noteMarkdown )#</textarea>
 
-					<p id="form--noteMarkdown--description" class="uiField_hint">
+					<p id="form--noteMarkdown--hint" class="uiField_hint">
 						The note uses <a href="##markdownDisclosure">Markdown</a> and supports basic formatting.
 					</p>
 				</div>
