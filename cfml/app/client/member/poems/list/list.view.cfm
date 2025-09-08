@@ -27,10 +27,6 @@
 				<tr>
 					<td>
 						<a #ui.attrHref( "member.poems.view", "poemID", poem.id )#>#e( poem.name )#</a>
-						(
-							<a #ui.attrHref( "member.poems.edit", "poemID", poem.id )#>Edit</a>,
-							<a #ui.attrHref( "member.poems.delete", "poemID", poem.id )#>Delete</a>
-						)
 					</td>
 					<td>
 						#poem.createdAt.dateFormat( "mmmm d, yyyy" )#
