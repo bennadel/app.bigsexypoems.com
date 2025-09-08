@@ -151,6 +151,7 @@
 	--input-focus-stroke: var( --pink-7 ) ;
 	--input-error-text: var( --red-9 ) ;
 	--input-error-stroke: var( --red-9 ) ;
+	--input-placeholder-text: var( --stone-6 ) ;
 	--input-inset-shadow: inset 1px 1px 2px #dadada ;
 
 	// Accent / focus.
@@ -937,6 +938,13 @@ pre code {
 		&:focus {
 			border-color: var( --input-focus-stroke ) ;
 		}
+	}
+}
+
+.uiInput,
+.uiTextarea {
+	:where( & )::placeholder {
+		color: var( --input-placeholder-text );
 	}
 }
 
