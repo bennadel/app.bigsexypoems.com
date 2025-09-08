@@ -20,7 +20,7 @@
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
 			<div class="uiField">
-				<label for="form--name" class="uiField_label">
+				<label class="uiField_label">
 					Poem:
 				</label>
 				<div class="uiField_content">
@@ -29,7 +29,7 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--name" class="uiField_label">
+				<label class="uiField_label">
 					Share:
 				</label>
 				<div class="uiField_content">
