@@ -177,7 +177,7 @@
 	--warning-stroke: var( --yellow-9 ) ;
 	--warning-text: var( --yellow-10 ) ;
 
-	--error-fill: var( --red-1 ) ;
+	--error-fill: var( --red-0 ) ;
 	--error-stroke: var( --red-9 ) ;
 	--error-text: var( --red-10 ) ;
 
@@ -822,24 +822,43 @@ pre code {
 
 .uiCheckbox {
 	:where( & ) {
-		-webkit-appearance: none ;
+			-webkit-appearance: none ;
 		appearance: none ;
 		background-color: var( --input-fill ) ;
 		border: 1px solid var( --input-stroke ) ;
 		border-radius: var( --radius ) ;
 		box-shadow: var( --input-inset-shadow ) ;
-		display: flex ;
-		height: 18px ;
-		width: 18px ;
+		flex-shrink: 0 ; // In case it's used in a flex layout.
+		height: 20px ;
+		position: relative ;
+		width: 21px ;
+
+		&:focus {
+			border-color: var( --input-focus-stroke ) ;
+		}
 	}
 
+	:where( &:checked )::before {
+		background-color: var( --accent ) ;
+		border-radius: 5px ;
+		content: "" ;
+		height: 16px ;
+		left: 8px ;
+		position: absolute ;
+		top: 1px ;
+		transform: rotate( 45deg ) ;
+		width: 4px ;
+	}
 	:where( &:checked )::after {
 		background-color: var( --accent ) ;
-		border-radius: 3px ;
+		border-radius: 5px ;
 		content: "" ;
-		height: 12px ;
-		margin: auto ;
-		width: 12px ;
+		height: 16px ;
+		left: 8px ;
+		position: absolute ;
+		top: 1px ;
+		transform: rotate( -45deg ) ;
+		width: 4px ;
 	}
 }
 
@@ -852,17 +871,22 @@ pre code {
 		border-radius: 18px ;
 		box-shadow: var( --input-inset-shadow ) ;
 		display: flex ;
-		height: 18px ;
-		width: 18px ;
+		flex-shrink: 0 ; // In case it's used in a flex layout.
+		height: 20px ;
+		width: 20px ;
+
+		&:focus {
+			border-color: var( --input-focus-stroke ) ;
+		}
 	}
 
 	:where( &:checked )::after {
 		background-color: var( --accent ) ;
-		border-radius: 8px ;
+		border-radius: var( --radius-round ) ;
 		content: "" ;
-		height: 8px ;
+		height: 10px ;
 		margin: auto ;
-		width: 8px ;
+		width: 10px ;
 	}
 }
 
