@@ -60,6 +60,7 @@
 						name="noteMarkdown"
 						maxlength="1000"
 						class="uiTextarea"
+						x-meta-enter-submit
 					>#e( form.noteMarkdown )#</textarea>
 
 					<p id="form--noteMarkdown--hint" class="uiField_hint">

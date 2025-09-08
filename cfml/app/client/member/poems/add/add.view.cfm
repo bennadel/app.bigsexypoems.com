@@ -42,7 +42,9 @@
 						id="form--content"
 						name="content"
 						maxlength="3000"
-						class="uiTextarea">#e( form.content )#</textarea>
+						class="uiTextarea"
+						x-meta-enter-submit
+					>#e( form.content )#</textarea>
 				</div>
 			</div>
 

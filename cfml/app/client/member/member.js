@@ -1,5 +1,6 @@
 
 // Import app modules.
+import "../_shared/js/xMetaEnterSubmit.js";
 import "../_shared/less/ui.less";
 import "../_shared/tag/errorMessage.view.{js,less}";
 import "../_shared/tag/flashMessage.view.{js,less}";

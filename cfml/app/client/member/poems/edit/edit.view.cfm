@@ -43,6 +43,7 @@
 						name="content"
 						maxlength="3000"
 						class="uiTextarea"
+						x-meta-enter-submit
 					>#e( form.content )#</textarea>
 				</div>
 			</div>
