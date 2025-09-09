@@ -6,13 +6,13 @@ component
 	include "/core/cfmlx.cfm";
 
 	// ---
-	// PUBLIC METHODS.
+	// VALIDATION METHODS.
 	// ---
 
 	/**
 	* I validate and return the normalized value.
 	*/
-	public string function testToken( required string input ) {
+	public string function tokenFrom( required string input ) {
 
 		return pipeline(
 			normalizeString( input ).lcase(),
@@ -23,6 +23,9 @@ component
 
 	}
 
+	// ---
+	// ERROR METHODS.
+	// ---
 
 	/**
 	* I throw a not-found error.

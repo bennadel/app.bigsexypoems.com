@@ -6,13 +6,13 @@ component
 	include "/core/cfmlx.cfm";
 
 	// ---
-	// PUBLIC METHODS.
+	// VALIDATION METHODS.
 	// ---
 
 	/**
 	* I validate and return the normalized value.
 	*/
-	public string function testEmail( required string input ) {
+	public string function emailFrom( required string input ) {
 
 		return pipeline(
 			normalizeString( input ).lcase(),
@@ -31,7 +31,7 @@ component
 	/**
 	* I validate and return the normalized value.
 	*/
-	public string function testName( required string input ) {
+	public string function nameFrom( required string input ) {
 
 		return pipeline(
 			normalizeString( input ),
@@ -44,6 +44,9 @@ component
 
 	}
 
+	// ---
+	// ERROR METHODS.
+	// ---
 
 	/**
 	* I throw an already-exists error.

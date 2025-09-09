@@ -6,13 +6,13 @@ component
 	include "/core/cfmlx.cfm";
 
 	// ---
-	// PUBLIC METHODS.
+	// VALIDATION METHODS.
 	// ---
 
 	/**
 	* I validate and return the normalized value.
 	*/
-	public string function testName( required string input ) {
+	public string function nameFrom( required string input ) {
 
 		return pipeline(
 			normalizeString( input ),
@@ -28,7 +28,7 @@ component
 	/**
 	* I validate and return the normalized value.
 	*/
-	public string function testNoteHtml( required string input ) {
+	public string function noteHtmlFrom( required string input ) {
 
 		return pipeline(
 			normalizeString( input ),
@@ -41,7 +41,7 @@ component
 	/**
 	* I validate and return the normalized value.
 	*/
-	public string function testNoteMarkdown( required string input ) {
+	public string function noteMarkdownFrom( required string input ) {
 
 		return pipeline(
 			normalizeString( input ),
@@ -53,6 +53,9 @@ component
 
 	}
 
+	// ---
+	// ERROR METHODS.
+	// ---
 
 	/**
 	* I throw a not-found error.

@@ -6,18 +6,21 @@ component
 	include "/core/cfmlx.cfm";
 
 	// ---
-	// PUBLIC METHODS.
+	// VALIDATION METHODS.
 	// ---
 
 	/**
 	* I validate and return the normalized value.
 	*/
-	public numeric function testOffsetInMinutes( required numeric input ) {
+	public numeric function offsetInMinutesFrom( required numeric input ) {
 
 		return val( input );
 
 	}
 
+	// ---
+	// ERROR METHODS.
+	// ---
 
 	/**
 	* I throw an already-exists error.

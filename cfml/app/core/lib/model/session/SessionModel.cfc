@@ -22,7 +22,7 @@ component {
 		required date createdAt
 		) {
 
-		ipAddress = validation.testIpAddress( ipAddress );
+		ipAddress = validation.ipAddressFrom( ipAddress );
 
 		var id = gateway.create(
 			token = token,

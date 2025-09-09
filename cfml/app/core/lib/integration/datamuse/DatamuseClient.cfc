@@ -26,7 +26,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		return makeRequestAndNormalizeResults(
 			resource = "words",
 			searchParams = {
-				ml: testWord( word ),
+				ml: wordFrom( word ),
 				md: "fps", // Frequency, parts of speech, syllable count.
 				max: limit
 			}
@@ -46,7 +46,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		return makeRequestAndNormalizeResults(
 			resource = "words",
 			searchParams = {
-				rel_rhy: testWord( word ),
+				rel_rhy: wordFrom( word ),
 				md: "fps", // Frequency, parts of speech, syllable count.
 				max: limit
 			}
@@ -63,7 +63,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		var results = makeRequestAndNormalizeResults(
 			resource = "words",
 			searchParams = {
-				"sp": testWord( word ),
+				"sp": wordFrom( word ),
 				"qe": "sp",
 				"md": "fps", // Frequency, parts of speech, syllable count.
 				"max": 1
@@ -90,7 +90,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		return makeRequestAndNormalizeResults(
 			resource = "words",
 			searchParams = {
-				rel_syn: testWord( word ),
+				rel_syn: wordFrom( word ),
 				md: "fps", // Frequency, parts of speech, syllable count.
 				max: limit
 			}
@@ -228,7 +228,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	* I test and normalize the given word before sending it to Datamuse. Not sure if this
 	* makes any difference, but I like having a predictable API.
 	*/
-	private string function testWord( required string word ) {
+	private string function wordFrom( required string word ) {
 
 		word = word.trim().lcase();
 

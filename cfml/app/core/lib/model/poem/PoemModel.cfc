@@ -21,8 +21,8 @@ component {
 		required date createdAt
 		) {
 
-		name = validation.testName( name );
-		content = validation.testContent( content );
+		name = validation.nameFrom( name );
+		content = validation.contentFrom( content );
 
 		return gateway.create(
 			userID = userID,
@@ -129,11 +129,11 @@ component {
 
 		name = isNull( name )
 			? existing.name
-			: validation.testName( name )
+			: validation.nameFrom( name )
 		;
 		content = isNull( content )
 			? existing.content
-			: validation.testContent( content )
+			: validation.contentFrom( content )
 		;
 		updatedAt = isNull( updatedAt )
 			? existing.updatedAt

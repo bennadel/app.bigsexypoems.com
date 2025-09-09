@@ -63,7 +63,7 @@ component {
 			}
 		);
 
-		email = userValidation.testEmail( email );
+		email = userValidation.emailFrom( email );
 
 		// Since we're going to redirect the user after the login, we want to make very
 		// sure that we don't accidentally redirect them to an external / malicious site.

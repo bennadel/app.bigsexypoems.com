@@ -27,7 +27,7 @@ component {
 
 		}
 
-		offsetInMinutes = validation.testOffsetInMinutes( offsetInMinutes );
+		offsetInMinutes = validation.offsetInMinutesFrom( offsetInMinutes );
 
 		gateway.create(
 			userID = userID,
@@ -112,7 +112,7 @@ component {
 
 		offsetInMinutes = isNull( offsetInMinutes )
 			? existing.offsetInMinutes
-			: validation.testOffsetInMinutes( offsetInMinutes )
+			: validation.offsetInMinutesFrom( offsetInMinutes )
 		;
 
 		gateway.update(

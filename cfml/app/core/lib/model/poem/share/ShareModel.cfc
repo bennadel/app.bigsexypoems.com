@@ -24,9 +24,9 @@ component {
 		required date updatedAt
 		) {
 
-		name = validation.testName( name );
-		noteMarkdown = validation.testNoteMarkdown( noteMarkdown );
-		noteHtml = validation.testNoteHtml( noteHtml );
+		name = validation.nameFrom( name );
+		noteMarkdown = validation.noteMarkdownFrom( noteMarkdown );
+		noteHtml = validation.noteHtmlFrom( noteHtml );
 
 		return gateway.create(
 			poemID = poemID,
@@ -138,11 +138,11 @@ component {
 
 		name = isNull( name )
 			? existing.name
-			: validation.testName( name )
+			: validation.nameFrom( name )
 		;
 		noteMarkdown = isNull( noteMarkdown )
 			? existing.noteMarkdown
-			: validation.testNoteMarkdown( noteMarkdown )
+			: validation.noteMarkdownFrom( noteMarkdown )
 		;
 		noteHtml = isNull( noteHtml )
 			? existing.noteHtml

@@ -22,8 +22,8 @@ component {
 		required numeric offsetInMinutes
 		) {
 
-		name = userValidation.testName( name );
-		email = userValidation.testEmail( email );
+		name = userValidation.nameFrom( name );
+		email = userValidation.emailFrom( email );
 
 		var maybeUser = userModel.maybeGetByFilter( email = email );
 

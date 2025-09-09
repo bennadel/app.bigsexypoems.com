@@ -24,7 +24,7 @@ component {
 		required boolean isVerb
 		) {
 
-		token = validation.testToken( token );
+		token = validation.tokenFrom( token );
 
 		gateway.create(
 			token = token,

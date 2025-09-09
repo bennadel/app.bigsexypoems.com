@@ -20,8 +20,8 @@ component {
 		required date createdAt
 		) {
 
-		name = validation.testName( name );
-		email = validation.testEmail( email );
+		name = validation.nameFrom( name );
+		email = validation.emailFrom( email );
 
 		var existing = gateway.getByFilter( email = email );
 
@@ -123,11 +123,11 @@ component {
 
 		name = isNull( name )
 			? existing.name
-			: validation.testName( name )
+			: validation.nameFrom( name )
 		;
 		email = isNull( email )
 			? existing.email
-			: validation.testEmail( email )
+			: validation.emailFrom( email )
 		;
 
 		gateway.update(
