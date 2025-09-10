@@ -25,13 +25,13 @@
 				<th>
 					Started
 				</th>
-				<th>
+				<th align="center">
 					Requests
 				</th>
 				<th>
 					IP Address
 				</th>
-				<th>
+				<th align="center">
 					Current
 				</th>
 				<th>
@@ -39,32 +39,43 @@
 				</th>
 			</tr>
 		</thead>
-		<cfloop array="#sessions#" item="entry">
+		<cfloop array="#sessions#" item="element">
 			<tr>
 				<td>
-					#ui.userDate( entry.lastRequestAt, "mmm d, yyyy" )#
+					#ui.userDate( element.lastRequestAt, "mmm d, yyyy" )#
 				</td>
 				<td>
-					#ui.userDate( entry.createdAt, "mmm d, yyyy" )#
+					#ui.userDate( element.createdAt, "mmm d, yyyy" )#
+				</td>
+				<td align="center">
+					#numberFormat( element.requestCount )#
 				</td>
 				<td>
-					#numberFormat( entry.requestCount )#
+					<a href="https://ipinfo.io/#e4u( element.ipAddress )#" target="_blank">#e( element.ipAddress )#</a>
 				</td>
-				<td>
-					<a href="https://ipinfo.io/#e4u( entry.ipAddress )#" target="_blank">#e( entry.ipAddress )#</a>
-				</td>
-				<td>
-					<cfif entry.isCurrent>
+				<td align="center">
+					<cfif element.isCurrent>
 						Yes
 					</cfif>
 				</td>
 				<td>
 					<form method="post" action="#request.postBackAction#">
 						<cfmodule template="/client/_shared/tag/xsrf.cfm">
-						<input type="hidden" name="sessionID" value="#e4a( entry.id )#" />
+						<input type="hidden" name="sessionID" value="#e4a( element.id )#" />
 
-						<button type="submit" name="action" value="endSession" class="uiButton">
-							End Session
+						<button
+							type="submit"
+							name="action"
+							value="endSession"
+							#ui.attrClass({
+								uiButton: true,
+								isDanger: element.isCurrent
+							})#>
+							<cfif element.isCurrent>
+								Log Out
+							<cfelse>
+								End Session
+							</cfif>
 						</button>
 					</form>
 				</td>

@@ -4,7 +4,7 @@
 	router = request.ioc.get( "core.lib.web.Router" );
 	sessionService = request.ioc.get( "core.lib.service.session.SessionService" );
 	ui = request.ioc.get( "core.lib.web.UI" );
-	viewPartial = request.ioc.get( "client.member.session.list.ListPartial" );
+	viewPartial = request.ioc.get( "client.member.sessions.list.ListPartial" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -38,7 +38,7 @@
 						// Logged-out of the current session.
 						? "auth.logout.success"
 						// Logged-out of a adjacent session.
-						: "account.session"
+						: "member.sessions"
 					;
 
 					router.goto({

@@ -393,6 +393,9 @@ td {
 		font-family: inherit ;
 		font-size: inherit ;
 		padding: var( --pad-block ) var( --pad-inline ) ;
+	}
+
+	:where( &:not([align]) ) {
 		text-align: left ;
 	}
 }
@@ -400,6 +403,10 @@ td {
 th {
 	:where( & ) {
 		font-weight: var( --font-weight-bold ) ;
+	}
+
+	:where( &:not([valign]) ) {
+		vertical-align: bottom ;
 	}
 }
 

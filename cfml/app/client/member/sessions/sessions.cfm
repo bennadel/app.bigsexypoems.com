@@ -5,7 +5,7 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	request.response.activeNav = "account.session";
+	request.response.activeNav = "sessions";
 
 	switch ( router.next( "list" ) ) {
 		case "list":

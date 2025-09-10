@@ -107,11 +107,11 @@
 						</li>
 						<li>
 							<a
-								#ui.attrHref( "member.session" )#
+								#ui.attrHref( "member.sessions" )#
 								mpjwb9
 								#ui.attrClass([
 									navLink: true,
-									isOn: ( request.response.activeNav == "session" )
+									isOn: ( request.response.activeNav == "sessions" )
 								])#>
 								<span mpjwb9 class="navLink_pill">
 									<span mpjwb9 class="navLink_icon">

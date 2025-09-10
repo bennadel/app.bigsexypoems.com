@@ -5,7 +5,7 @@
 		<cfargument name="userID" type="numeric" />
 
 		<cfquery name="local.results" result="local.metaResults" returnType="array">
-			/* DEBUG: client.member.session.list.ListGateway. */
+			/* DEBUG: client.member.sessions.list.ListGateway. */
 			SELECT
 				s.id,
 				s.isAuthenticated,

@@ -18,7 +18,7 @@
 		case "home":
 		case "poems":
 		case "profile":
-		case "session":
+		case "sessions":
 			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
