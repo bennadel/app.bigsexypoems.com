@@ -11,7 +11,7 @@
 		<cfinclude template="/wwwroot/public/main/vendor/vendor.html">
 		<cfinclude template="/wwwroot/public/main/member/member.html">
 	</head>
-	<body x-data="mpjwb9.AppShell" mpjwb9 class="body">
+	<body x-data="mpjwb9.AppShell" mpjwb9 class="mpjwb9 body">
 
 		<cfmodule template="/client/_shared/tag/svgSprite.cfm">
 
@@ -86,9 +86,12 @@
 						</li>
 						<li>
 							<a
-								#ui.attrHref( "account" )#
+								#ui.attrHref( "member.profile" )#
 								mpjwb9
-								class="navLink">
+								#ui.attrClass([
+									navLink: true,
+									isOn: ( request.response.activeNav == "profile" )
+								])#>
 								<span mpjwb9 class="navLink_pill">
 									<span mpjwb9 class="navLink_icon">
 										<cfmodule
@@ -97,25 +100,34 @@
 										</cfmodule>
 									</span>
 									<span mpjwb9 class="navLink_label">
-										Account
+										Profile
+									</span>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a
+								#ui.attrHref( "member.session" )#
+								mpjwb9
+								#ui.attrClass([
+									navLink: true,
+									isOn: ( request.response.activeNav == "session" )
+								])#>
+								<span mpjwb9 class="navLink_pill">
+									<span mpjwb9 class="navLink_icon">
+										<cfmodule
+											template="/client/_shared/tag/svgIcon.cfm"
+											type="sessions">
+										</cfmodule>
+									</span>
+									<span mpjwb9 class="navLink_label">
+										Sessions
 									</span>
 								</span>
 							</a>
 						</li>
 					</ul>
 				</nav>
-
-				<div mpjwb9 class="header_account account">
-					<span mpjwb9 class="account_description">
-						You're logged-in as:
-					</span>
-					<span mpjwb9 class="account_email">
-						#e( user.email )#
-					</span>
-					<a #ui.attrHref( "auth.logout" )# mpjwb9 class="account_logout">
-						Logout
-					</a>
-				</div>
 
 			</header>
 			<main

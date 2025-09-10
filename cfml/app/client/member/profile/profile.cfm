@@ -19,7 +19,7 @@
 	errorResponse = "";
 
 	request.response.title = title;
-	request.response.activeNav = "account.profile";
+	request.response.activeNav = "profile";
 
 	if ( request.isGet ) {
 
@@ -38,7 +38,7 @@
 			);
 
 			router.goto([
-				event: "account.profile",
+				event: "member.profile",
 				flash: "your.user.account.updated"
 			]);
 

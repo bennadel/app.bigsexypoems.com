@@ -10,11 +10,6 @@
     "build": "npm run clean && parcel build"
   },
   "targets": {
-    "account": {
-      "source": "./src/account.html",
-      "distDir": "./dist/account",
-      "publicUrl": "/public/main/account"
-    },
     "auth": {
       "source": "./src/auth.html",
       "distDir": "./dist/auth",

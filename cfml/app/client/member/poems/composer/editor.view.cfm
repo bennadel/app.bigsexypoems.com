@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article class="uiReadableWidth">
+	<article>
 
 		<h1>
 			#e( title )#

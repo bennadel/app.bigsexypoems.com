@@ -1,7 +1,7 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="gateway" ioc:type="client.account.session.list.ListGateway";
+	property name="gateway" ioc:type="client.member.session.list.ListGateway";
 
 	// ---
 	// PUBLIC METHODS.
