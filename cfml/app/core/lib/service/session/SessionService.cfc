@@ -6,10 +6,10 @@ component hint = "I provide methods for accessing the session associated with th
 	property name="presenceModel" ioc:type="core.lib.model.session.PresenceModel";
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
+	property name="sessionAccess" ioc:type="core.lib.service.session.SessionAccess";
 	property name="sessionCascade" ioc:type="core.lib.service.session.SessionCascade";
 	property name="sessionCookies" ioc:type="core.lib.service.session.SessionCookies";
 	property name="sessionModel" ioc:type="core.lib.model.session.SessionModel";
-	property name="sessionValidation" ioc:type="core.lib.model.session.SessionValidation";
 	property name="timezoneModel" ioc:type="core.lib.model.user.TimezoneModel";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
@@ -80,14 +80,18 @@ component hint = "I provide methods for accessing the session associated with th
 	/**
 	* I end the all actives sessions for the given user.
 	*/
-	public void function endAllSessions( required numeric userID ) {
+	public void function endAllSessions(
+		required struct authContext,
+		required numeric userID
+		) {
 
-		var user = userModel.get( userID );
-		var sessions = sessionModel.getByFilter( userID = userID );
+		var context = sessionAccess.getContextForParent( authContext, userID, "canDeleteAny" );
+		var user = context.user;
+		var sessions = sessionModel.getByFilter( userID = user.id );
 
-		for ( var entry in sessions ) {
+		for ( var userSession in sessions ) {
 
-			sessionCascade.deleteSession( user, entry );
+			sessionCascade.deleteSession( user, userSession );
 
 		}
 
@@ -100,18 +104,13 @@ component hint = "I provide methods for accessing the session associated with th
 	* I end the given session for the given user.
 	*/
 	public void function endSession(
-		required numeric userID,
+		required struct authContext,
 		required numeric sessionID
 		) {
 
-		var user = userModel.get( userID );
-		var userSession = sessionModel.get( sessionID );
-
-		if ( userSession.userID != user.id ) {
-
-			sessionValidation.throwNotFoundError();
-
-		}
+		var context = sessionAccess.getContext( authContext, sessionID, "canDelete" );
+		var user = context.user;
+		var userSession = context.userSession;
 
 		sessionCascade.deleteSession( user, userSession );
 

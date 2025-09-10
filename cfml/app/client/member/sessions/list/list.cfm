@@ -30,7 +30,7 @@
 				case "endSession":
 
 					sessionService.endSession(
-						userID = request.authContext.user.id,
+						authContext = request.authContext,
 						sessionID = val( form.sessionID )
 					);
 
@@ -49,7 +49,10 @@
 				break;
 				case "endAllSessions":
 
-					sessionService.endAllSessions( request.authContext.user.id );
+					sessionService.endAllSessions(
+						authContext = request.authContext,
+						userID = request.authContext.user.id
+					);
 
 					router.goto({
 						event: "auth.logout.success",
