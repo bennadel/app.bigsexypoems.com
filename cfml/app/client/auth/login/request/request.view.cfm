@@ -8,7 +8,7 @@
 		</h1>
 
 		<p>
-			You can use your email address to log-in or sign-up. A verification link will be sent to your email address so we can verify your account.
+			You can use your email address to log-in or sign-up. A verification link will be sent to your email address so we can verify your account. This verification link will be sent from <mark>#e( fromEmail )#</mark> (during the beta).
 		</p>
 
 		<cfmodule
@@ -35,6 +35,24 @@
 						maxlength="75"
 						autocapitalize="off"
 						autocomplete="email"
+						class="uiInput"
+					/>
+				</div>
+			</div>
+			<div class="uiField">
+				<label for="form--betaPassword" class="uiField_label">
+					Beta Password:
+				</label>
+				<div class="uiField_content">
+					<p class="uiField_description">
+						During the development phase of this application, you need a special password in order to log-in. If you're keen to try BigSexyPoems, just let me know.
+					</p>
+
+					<input
+						id="form--betaPassword"
+						type="password"
+						name="betaPassword"
+						maxlength="30"
 						class="uiInput"
 					/>
 				</div>

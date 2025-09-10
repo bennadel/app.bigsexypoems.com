@@ -89,7 +89,6 @@ component {
 		// NEW USER rate-limiting.
 		} else {
 
-			rateLimitService.testRequest( "login-request-by-app", "app" );
 			rateLimitService.testRequest( "login-request-by-ip", ipAddress );
 			rateLimitService.testRequest( "login-request-by-unknown-email", email );
 
