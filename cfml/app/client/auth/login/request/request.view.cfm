@@ -45,7 +45,7 @@
 				</label>
 				<div class="uiField_content">
 					<p class="uiField_description">
-						During the development phase of this application, you need a special password in order to log-in. If you're keen to try BigSexyPoems, just let me know.
+						During the development phase of this application, <strong>new users</strong> need a special password in order to log-in. If you're keen to try BigSexyPoems, just let me know.
 					</p>
 
 					<input

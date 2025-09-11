@@ -2,7 +2,6 @@
 
 	authenticationService = request.ioc.get( "core.lib.service.authentication.AuthenticationService" );
 	config = request.ioc.get( "config" );
-	rateLimitService = request.ioc.get( "core.lib.util.RateLimitService" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
@@ -45,16 +44,6 @@
 
 		try {
 
-			rateLimitService.testRequest( "login-request-by-app", "app" );
-
-			// Note: since this is just a temporary password, I'm going pretty loose on
-			// the security. No bCrypt, just some simple rate-limiting above.
-			if ( compare( form.betaPassword, config.betaPassword ) ) {
-
-				throw( type = "BetaPassword.Invalid" );
-
-			}
-
 			// For ease of development, Turnstile only required in production.
 			if ( config.turnstile.isEnabled ) {
 
@@ -64,6 +53,7 @@
 
 			authenticationService.requestMagicLink(
 				email = form.email,
+				betaPassword = form.betaPassword,
 				offsetInMinutes = val( form.timezoneOffsetInMinutes ),
 				redirectTo = url.redirectTo
 			);
@@ -74,10 +64,15 @@
 
 		} catch ( any error ) {
 
-			errorMessage = requestHelper.processError( error ).message;
+			errorMessage = requestHelper.processError( error )
+				.message
+			;
 
 			// Special overrides to create a better affordance for the user.
 			switch ( error.type ) {
+				case "App.Authentication.BetaPassword.Invalid":
+					errorMessage = "Your beta password is incorrect. Please see me for help.";
+				break;
 				case "App.Model.User.Email.Example":
 					errorMessage = "Please enter a real email address.";
 				break;
@@ -86,9 +81,6 @@
 				case "App.Model.User.Email.SuspiciousEncoding":
 				case "App.Model.User.Email.TooLong":
 					errorMessage = "Please enter a valid email address.";
-				break;
-				case "BetaPassword.Invalid":
-					errorMessage = "Your beta password is incorrect. Please see me for help.";
 				break;
 				case "TurnstileClient.InvalidToken":
 					errorMessage = "It looks like your one-time form token failed to load. This error happens intermittently (and is not your fault). Please try logging-in again.";

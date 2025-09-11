@@ -3,14 +3,13 @@ component {
 	// Define properties for dependency-injection.
 	property name="authenticationEmailer" ioc:type="core.lib.service.authentication.AuthenticationEmailer";
 	property name="authenticationUrlSigner" ioc:type="core.lib.service.authentication.AuthenticationUrlSigner";
-	property name="isLive" ioc:get="config.isLive";
+	property name="config" ioc:type="config";
 	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="oneTimeTokens" ioc:type="core.lib.util.OneTimeTokens";
 	property name="rateLimitService" ioc:type="core.lib.util.RateLimitService";
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="router" ioc:type="core.lib.web.Router";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
-	property name="site" ioc:get="config.site";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 	property name="userProvisioner" ioc:type="core.lib.service.user.UserProvisioner";
 	property name="userValidation" ioc:type="core.lib.model.user.UserValidation";
@@ -46,22 +45,10 @@ component {
 	*/
 	public void function requestMagicLink(
 		required string email,
+		required string betaPassword, // Temporary argument.
 		numeric offsetInMinutes = 0,
 		string redirectTo = ""
 		) {
-
-		var ipAddress = requestMetadata.getIpAddress();
-
-		// TEMPORARY: Long term, I don't need to be logging this information; however,
-		// while we're still getting things up-and-running, I want to have my finger on
-		// the pulse so I can get a sense of whether or not this feature is being abused.
-		logger.info(
-			"Magic link workflow requested.",
-			{
-				email: email,
-				ipAddress: ipAddress
-			}
-		);
 
 		email = userValidation.emailFrom( email );
 
@@ -80,6 +67,7 @@ component {
 		// going to have different rate-limiting characteristics for a known user vs. a
 		// new user.
 		var maybeUser = userModel.maybeGetByFilter( email = email );
+		var ipAddress = requestMetadata.getIpAddress();
 
 		// KNOWN USER rate-limiting.
 		if ( maybeUser.exists ) {
@@ -89,10 +77,32 @@ component {
 		// NEW USER rate-limiting.
 		} else {
 
+			rateLimitService.testRequest( "login-request-by-app", "app" );
 			rateLimitService.testRequest( "login-request-by-ip", ipAddress );
 			rateLimitService.testRequest( "login-request-by-unknown-email", email );
 
+			// Note: since this is just a temporary password, I'm being pretty loose on
+			// the security. Meaning, no bCrypt or salting or anything like that, just
+			// some simple rate-limiting above which will prevent brute-force guessing of
+			// the password.
+			if ( compare( betaPassword, config.betaPassword ) ) {
+
+				throw( type = "App.Authentication.BetaPassword.Invalid" );
+
+			}
+
 		}
+
+		// TEMPORARY: Long term, I don't need to be logging this information; however,
+		// while we're still getting things up-and-running, I want to have my finger on
+		// the pulse so I can get a sense of whether or not this feature is being abused.
+		logger.info(
+			"Magic link workflow requested.",
+			{
+				email,
+				ipAddress
+			}
+		);
 
 		// Note: the expiration of the one-time token will IMPLICITLY create an overall
 		// expiration for the login URL itself.
@@ -117,7 +127,7 @@ component {
 
 		// In order to make local development less tedious, I'm going to output the login
 		// URL directly in the "sent" page.
-		if ( ! isLive ) {
+		if ( ! config.isLive ) {
 
 			cookie.loginUrlForLocalDevelopment = {
 				value: loginUrl,
@@ -142,7 +152,7 @@ component {
 
 		authenticationEmailer.sendMagicLink(
 			email = email,
-			subject = "Log into #site.name# - Expires at #expiresAtString#",
+			subject = "Log into #config.site.name# - Expires at #expiresAtString#",
 			loginUrl = loginUrl,
 			loginExpiration = "#expiresInMinutes# minutes"
 		);
