@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article>
+	<article z6s31p>
 
 		<h1>
 			#e( title )#
@@ -15,63 +15,58 @@
 		<form method="post" action="#request.postBackAction#">
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
-			<div class="uiField">
-				<label for="form--name" class="uiField_label">
-					Name:
-				</label>
-				<div class="uiField_content">
-					<input
-						id="form--name"
-						type="text"
-						name="name"
-						value="#e4a( form.name )#"
-						maxlength="255"
-						autocomplete="off"
-						class="uiInput"
-					/>
+			<label for="form--name" class="uiScreenReader">
+				Name:
+			</label>
+
+			<input
+				id="form--name"
+				type="text"
+				name="name"
+				value="#e4a( form.name )#"
+				maxlength="255"
+				autocomplete="off"
+				z6s31p class="uiInput name"
+			/>
+
+			<label for="form--content" class="uiScreenReader">
+				Content:
+			</label>
+
+			<div z6s31p class="proser">
+				<textarea
+					x-data="z6s31p.ProseContent"
+					id="form--content"
+					name="content"
+					maxlength="3000"
+					z6s31p class="uiTextarea proser_content"
+					@input="resizeContent()"
+				>#e( form.content )#</textarea>
+
+				<div
+					hx-post="#router.urlForParts( 'member.poems.composer.syllables' )#"
+					hx-trigger="load, input delay:1s from:previous textarea"
+					hx-sync="this:replace"
+					z6s31p class="proser_counts">
+					<!--- Syllable counts, populated by HTMX. --->
 				</div>
 			</div>
 
-			<div class="uiField">
-				<label for="form--content" class="uiField_label">
-					Content:
-				</label>
-				<div class="uiField_content uiVstack">
-
-					<div class="uiHstack isStretched">
-						<textarea
-							id="form--content"
-							name="content"
-							maxlength="3000"
-							class="uiTextarea"
-						>#e( form.content )#</textarea>
-
-						<div
-							hx-post="#router.urlForParts( 'member.poems.composer.syllables' )#"
-							hx-trigger="load, input delay:1s from:previous textarea"
-							hx-sync="this:replace">
-							<!--- Syllable counts, populated by HTMX. --->
-						</div>
-					</div>
-
-					<div>
-						<button
-							type="button"
-							hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground', 'poemID', poem.id )#"
-							hx-trigger="click, input delay:1s from:previous textarea"
-							hx-target="next .background-reponse"
-							hx-sync="this:replace"
-							hx-indicator="next"
-							class="uiButton isLink">
-							Save in Background
-						</button>
-						<span class="htmx-indicator">
-							Saving....
-						</span>
-						<div class="background-reponse"></div>
-					</div>
-
-				</div>
+			<div>
+				<button
+					type="button"
+					hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground', 'poemID', poem.id )#"
+					hx-trigger="click, input delay:1s from:previous textarea"
+					hx-target="next .background-reponse"
+					hx-sync="this:replace"
+					hx-indicator="next"
+					class="uiButton isLink">
+					Save in Background
+				</button>
+				<span class="htmx-indicator">
+					Saving....
+				</span>
+				<div class="background-reponse"></div>
 			</div>
 
 			<div class="uiFormButtons">

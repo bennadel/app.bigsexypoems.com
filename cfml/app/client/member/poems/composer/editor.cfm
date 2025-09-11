@@ -19,7 +19,7 @@
 		poemID = val( url.poemID )
 	);
 	poem = partial.poem;
-	title = poem.name;
+	title = "Poem Composer";
 	errorResponse = "";
 
 	request.response.title = title;

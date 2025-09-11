@@ -1,4 +1,29 @@
 [z6s31p] {
+	&.name {
+		font-size: var( --font-size-l ) ;
+		margin-bottom: var( --space-block ) ;
+	}
+
+	&.proser {
+		display: flex ;
+		gap: var( --space-inline ) ;
+
+		&_content {
+			font-size: var( --font-size-l ) ;
+			height: auto ;
+			overflow: hidden ;
+		}
+
+		&_counts {
+			background-color: var( --stone-1 ) ;
+			border: 1px solid var( --stone-1 ) ;
+			border-radius: var( --radius ) ;
+			font-size: var( --font-size-l ) ;
+			height: auto ;
+			padding: var( --pad-block ) var( --pad-inline ) ;
+		}
+	}
+
 	&.wordTools {
 		align-items: flex-start ;
 		display: flex ;
