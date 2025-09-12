@@ -157,6 +157,7 @@
 	// Accent / focus.
 	--accent: var( --pink-6 ) ;
 	--focus-ring-stroke: var( --pink-7 ) ;
+	--focus-ring-stroke-muted: var( --pink-1 ) ;
 
 	// Required indicator.
 	--star-text: #9c0099 ;
@@ -556,14 +557,24 @@ pre code {
 *[tabindex="0"]:focus,
 *:focus-visible {
 	:where( & ) {
-		&:not([tabindex="-1"]) {
-			animation-duration: var( --duration-s ) ;
-			animation-name: focus-visible-ring-enter ;
-			animation-iteration-count: 1 ;
-			animation-timing-function: ease-in ;
-		}
+		animation-duration: var( --duration-s ) ;
+		animation-name: focus-visible-ring-enter ;
+		animation-fill-mode: forwards ;
+		animation-iteration-count: 1 ;
+		animation-timing-function: ease-in ;
 		outline: 2px solid var( --focus-ring-stroke ) ;
-		outline-offset: 3px ;
+
+		&[tabindex="-1"],
+		&.isLongTermFocus {
+			animation-duration:
+				var( --duration-s ),
+				1000ms
+			;
+			animation-name:
+				focus-visible-ring-enter,
+				focus-visible-ring-disappear
+			;
+		}
 	}
 }
 
@@ -573,6 +584,15 @@ pre code {
 	}
 	to {
 		outline-offset: 3px ;
+	}
+}
+
+@keyframes focus-visible-ring-disappear {
+	from {
+		outline-color: var( --focus-ring-stroke ) ;
+	}
+	to {
+		outline-color: var( --focus-ring-stroke-muted ) ; // "Fade" to background color.
 	}
 }
 
@@ -1067,7 +1087,7 @@ pre code {
 
 // ---
 // UTILITY CLASSES.
-// 
+//
 // Note: these are here as a last resort. I think I might use these during the exploratory
 // phase. And then, when I discover a pattern, I can go back and replace them with "ui"
 // components.

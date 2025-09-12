@@ -39,7 +39,7 @@
 					id="form--content"
 					name="content"
 					maxlength="3000"
-					z6s31p class="uiTextarea proser_content"
+					z6s31p class="uiTextarea isLongTermFocus proser_content"
 					@input.debounce.250ms="resizeContent()"
 				>#e( form.content )#</textarea>
 
