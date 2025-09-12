@@ -34,7 +34,8 @@
 		// with some massaging. There are edge-cases that this won't account for; but, it
 		// will get us closer.
 		var lineCounts = input
-			.reMatch( "[^\r\n]*" )
+			.reReplace( "\r\n?", chr( 10 ), "all" )
+			.reMatch( "[^\n]*" )
 			.map(
 				( line ) => {
 
