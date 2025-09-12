@@ -40,7 +40,7 @@
 					name="content"
 					maxlength="3000"
 					z6s31p class="uiTextarea proser_content"
-					@input.throttle.1000ms="resizeContent()"
+					@input.debounce.250ms="resizeContent()"
 				>#e( form.content )#</textarea>
 
 				<div
