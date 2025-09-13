@@ -3,11 +3,11 @@
 
 	<cfif isSimpleValue( errorResponse )>
 
-		You poem has been saved.
+		Saved.
 
 	<cfelse>
 
-		#e( errorResponse.message )#
+		An error occurred.
 
 	</cfif>
 

@@ -27,6 +27,43 @@
 		}
 	}
 
+	&.autosaver {
+		display: flex ;
+		gap: var( --space-inline-s ) ;
+		margin-top: var( --space-block-xs ) ;
+
+		&_status {
+			color: var( --text-muted ) ;
+			text-transform: lowercase ;
+		}
+
+		&_indicator {
+			color: var( --text-muted ) ;
+			opacity: 0 ;
+			text-transform: lowercase ;
+		}
+
+		&.htmx-request &_indicator {
+			// We're using an animation delay to prevent "flicker" of the UI for quick
+			// saves. Now, it will only show if the save operation is taking longer than
+			// might be expected.
+			animation-delay: 300ms ;
+			animation-duration: var( --duration ) ;
+			animation-fill-mode: forwards ;
+			animation-iteration-count: 1 ;
+			animation-name: z6s31p-autosaver-indicator ;
+		}
+	}
+
+	@keyframes z6s31p-autosaver-indicator {
+		from {
+			opacity: 0 ;
+		}
+		to {
+			opacity: 1 ;
+		}
+	}
+
 	&.wordTools {
 		align-items: flex-start ;
 		display: flex ;

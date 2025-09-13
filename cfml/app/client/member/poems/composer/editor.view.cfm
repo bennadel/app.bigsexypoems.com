@@ -52,21 +52,30 @@
 				</div>
 			</div>
 
-			<div>
-				<button
-					type="button"
-					hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground', 'poemID', poem.id )#"
-					hx-trigger="click, input delay:1s from:previous textarea"
-					hx-target="next .background-reponse"
-					hx-sync="this:replace"
-					hx-indicator="next"
-					class="uiButton isLink">
-					Save in Background
-				</button>
-				<span class="htmx-indicator">
+			<div z6s31p class="autosaver">
+				<span>
+					Poem will automatically
+					<button
+						type="button"
+						hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground', 'poemID', poem.id )#"
+						hx-trigger="
+							click,
+							input delay:1s from:previous textarea
+						"
+						hx-target=".autosaver_status"
+						hx-sync="this:replace"
+						hx-indicator=".autosaver"
+						class="uiButton isLink">
+						save
+					</button>
+					as you type:
+				</span>
+				<span z6s31p class="autosaver_status">
+					Saved.
+				</span>
+				<span z6s31p class="autosaver_indicator">
 					Saving....
 				</span>
-				<div class="background-reponse"></div>
 			</div>
 
 			<div class="uiFormButtons">

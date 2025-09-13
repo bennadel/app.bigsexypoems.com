@@ -46,6 +46,18 @@
 			// I'm using a different processing method (doesn't change status code).
 			errorResponse = requestHelper.processErrorForHtmx( error );
 
+			// Todo: this is NOT the right place for this. This should be a setting on
+			// the template rendering. But, putting this here while I discover patterns.
+			cfheader(
+				name = "HX-Trigger",
+				value = serializeJson({
+					"app:toast": {
+						message: errorResponse.message,
+						isError: true
+					}
+				})
+			);
+
 		}
 
 	}

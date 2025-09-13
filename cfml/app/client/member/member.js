@@ -13,6 +13,9 @@ import "./*/**/*.{js,less}";
 // ----------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------- //
 
+// Disable injection of CSS for htmx indicator styles.
+htmx.config.includeIndicatorStyles = false;
+
 // Note: by starting Alpine after the DOM is ready, it should give any other deferred
 // scripts time to load and register components before Alpine is bootstrapped.
 document.addEventListener(
