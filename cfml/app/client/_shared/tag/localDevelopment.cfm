@@ -1,5 +1,6 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	config = request.ioc.get( "config" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 

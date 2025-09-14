@@ -1,5 +1,6 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	poemAccess = request.ioc.get( "core.lib.service.poem.PoemAccess" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 

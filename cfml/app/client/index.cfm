@@ -1,8 +1,12 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //

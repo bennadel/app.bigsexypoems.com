@@ -1,5 +1,6 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	config = request.ioc.get( "config" );
 
 	// ColdFusion language extensions (global functions).

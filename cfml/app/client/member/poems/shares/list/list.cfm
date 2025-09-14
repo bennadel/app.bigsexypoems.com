@@ -1,5 +1,6 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	shareAccess = request.ioc.get( "core.lib.service.poem.share.ShareAccess" );
 	shareModel = request.ioc.get( "core.lib.model.poem.share.ShareModel" );
 	ui = request.ioc.get( "core.lib.web.UI" );

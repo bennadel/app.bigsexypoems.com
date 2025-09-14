@@ -1,5 +1,6 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	poemModel = request.ioc.get( "core.lib.model.poem.PoemModel" );
 	// requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	rateLimitService = request.ioc.get( "core.lib.util.RateLimitService" );
@@ -7,6 +8,9 @@
 	router = request.ioc.get( "core.lib.web.Router" );
 	shareModel = request.ioc.get( "core.lib.model.poem.share.ShareModel" );
 	shareValidation = request.ioc.get( "core.lib.model.poem.share.ShareValidation" );
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
