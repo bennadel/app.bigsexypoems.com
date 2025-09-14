@@ -1,5 +1,6 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 
 	// ColdFusion language extensions (global functions).

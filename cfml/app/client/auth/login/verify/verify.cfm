@@ -1,5 +1,6 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	authenticationService = request.ioc.get( "core.lib.service.authentication.AuthenticationService" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );

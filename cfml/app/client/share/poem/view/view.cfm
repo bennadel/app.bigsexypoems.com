@@ -1,5 +1,6 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	ui = request.ioc.get( "core.lib.web.UI" );
 	userModel = request.ioc.get( "core.lib.model.user.UserModel" );
 

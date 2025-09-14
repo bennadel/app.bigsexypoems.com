@@ -1,5 +1,6 @@
 <cfscript>
 
+	// Define properties for dependency-injection.
 	flashTranslator = request.ioc.get( "core.lib.web.FlashTranslator" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
