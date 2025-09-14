@@ -159,7 +159,13 @@ component {
 
 		if ( isSimpleValue( value ) ) {
 
-			return trim( value );
+			return trim( value )
+				// This isn't strictly part of the "trim" operation; but it is white-space
+				// replaced. I'd like to normalize the line-endings on the request as
+				// well. This will just make some in-request reFind()/reReplace() type
+				// operations easier.
+				.reReplace( "\r\n?", chr( 10 ), "all" )
+			;
 
 		}
 
