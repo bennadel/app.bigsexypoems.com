@@ -11,7 +11,7 @@
 					#e( group.label )#
 				</h3>
 
-				<ul>
+				<ul class="uiUnlist">
 					<cfloop array="#group.results#" item="result">
 						<li>
 							#e( result.word )#.

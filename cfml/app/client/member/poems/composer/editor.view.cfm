@@ -52,39 +52,40 @@
 				</div>
 			</div>
 
-			<div z6s31p class="autosaver">
-				<span>
-					Poem will automatically
-					<button
-						type="button"
-						hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground', 'poemID', poem.id )#"
-						hx-trigger="
-							click,
-							input delay:1s from:previous textarea
-						"
-						hx-target=".autosaver_status"
-						hx-sync="this:replace"
-						hx-indicator=".autosaver"
-						class="uiButton isLink">
-						save
-					</button>
-					as you type:
-				</span>
-				<span z6s31p class="autosaver_status">
-					Saved.
-				</span>
-				<span z6s31p class="autosaver_indicator">
-					Saving....
-				</span>
-			</div>
-
-			<div class="uiFormButtons">
+			<div z6s31p class="buttons">
 				<button type="submit" class="uiButton isSubmit">
 					Save Poem
 				</button>
+
 				<a #ui.attrHref( "member.poems.view", "poemID", poem.id )# class="uiButton isCancel">
 					Back to Detail
 				</a>
+
+				<div z6s31p class="autosaver">
+					<span>
+						Poem will automatically
+						<button
+							type="button"
+							hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground', 'poemID', poem.id )#"
+							hx-trigger="
+								click,
+								input delay:1s from:previous textarea
+							"
+							hx-target=".autosaver_status"
+							hx-sync="this:replace"
+							hx-indicator=".autosaver"
+							class="uiButton isLink">
+							save
+						</button>
+						as you type:
+					</span>
+					<span z6s31p class="autosaver_status">
+						Saved.
+					</span>
+					<span z6s31p class="autosaver_indicator">
+						Saving....
+					</span>
+				</div>
 			</div>
 		</form>
 
@@ -93,14 +94,12 @@
 	<div z6s31p class="wordTools">
 		<section>
 			<h2>
-				BigSexy Rhymes
+				<span class="bigSexy">BigSexy</span>Rhymes
 			</h2>
-			<p>
-				Find words that rhyme well with each other.
-			</p>
+
 			<form
 				hx-get="#router.urlForParts( 'member.poems.composer.rhymes' )#"
-				hx-target="next"
+				hx-target="next .results"
 				hx-sync="this:replace"
 				class="uiVstack">
 
@@ -150,21 +149,20 @@
 					</label>
 				</fieldset>
 			</form>
-			<div>
-				<!--- Results shown here. --->
+			<div class="results">
+				<p>
+					Find words that rhyme well with each other...
+				</p>
 			</div>
 		</section>
 
 		<section>
 			<h2>
-				BigSexy Synonyms
+				<span class="bigSexy">BigSexy</span>Synonyms
 			</h2>
-			<p>
-				Find words that mean roughly the same thing.
-			</p>
 			<form
 				hx-get="#router.urlForParts( 'member.poems.composer.synonyms' )#"
-				hx-target="next"
+				hx-target="next .results"
 				hx-sync="this:replace"
 				class="uiVstack">
 
@@ -214,14 +212,18 @@
 					</label>
 				</fieldset>
 			</form>
-			<div>
-				<!--- Results shown here. --->
+			<div class="results">
+				<p>
+					Find words that mean roughly the same thing...
+				</p>
 			</div>
 		</section>		
 	</div>
 
+	<hr class="uiRule" />
+
 	<p>
-		Rhymes and synonyms are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
+		Rhymes, synonyms, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
 	</p>
 
 </cfoutput>

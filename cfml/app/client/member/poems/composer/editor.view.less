@@ -17,7 +17,7 @@
 
 		&_counts {
 			background-color: var( --stone-1 ) ;
-			border: 1px solid var( --stone-1 ) ;
+			border: 1px solid var( --stone-1 ) ; // To match textarea.
 			border-radius: var( --radius ) ;
 			font-size: var( --font-size-l ) ;
 			height: auto ;
@@ -27,10 +27,17 @@
 		}
 	}
 
+	&.buttons {
+		align-items: center ;
+		display: flex ;
+		gap: var( --space-inline ) ;
+		margin-top: var( --space-block ) ;
+	}
+
 	&.autosaver {
 		display: flex ;
 		gap: var( --space-inline-s ) ;
-		margin-top: var( --space-block-xs ) ;
+		margin-left: var( --space-inline-s ) ;
 
 		&_status {
 			color: var( --text-muted ) ;
@@ -72,6 +79,24 @@
 
 		> * {
 			flex: 1 1 50% ;
+		}
+
+		.bigSexy {
+			display: inline-block ;
+			font-weight: var( --font-weight ) ;
+			margin-right: var( --space-inline-xxs ) ;
+		}
+
+		.results {
+			background-color: var( --stone-1 ) ;
+			border-radius: var( --radius ) ;
+			margin-top: var( --space-block ) ;
+			padding: var( --pad-block ) var( --pad-inline ) ;
+
+			p {
+				margin: 0 ;
+				font-style: italic ;
+			}
 		}
 	}
 }
