@@ -34,8 +34,8 @@
 								type="logo">
 							</cfmodule>
 						</span>
-						<span mpjwb9 class="navLink_label">
-							<strong>BigSexyPoems</strong>
+						<span mpjwb9 class="navLink_label bigSexy">
+							<strong>BigSexy</strong>Poems
 						</span>
 					</span>
 				</a>

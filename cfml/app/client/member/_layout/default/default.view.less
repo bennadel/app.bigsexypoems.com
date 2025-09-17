@@ -76,7 +76,12 @@
 			}
 		}
 
-		&_label {}
+		&_label {
+			&.bigSexy {
+				display: flex ;
+				gap: var( --space-inline-xxs ) ;
+			}
+		}
 
 		&:not(.isOn):hover &_label {
 			text-decoration: underline ;
