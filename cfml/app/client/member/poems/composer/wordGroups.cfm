@@ -10,23 +10,12 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	param name="url.word" type="string";
-	param name="url.limit" type="numeric";
-	param name="url.groupBy" type="string";
+	param name="attributes.thing" type="string";
+	param name="attributes.groups" type="array";
 
-	groups = wordService.getRhyme(
-		word = url.word,
-		limit = clamp( url.limit, 50, 500 ),
-		groupBy = url.groupBy
-	);
+	thing = attributes.thing;
+	groups = attributes.groups;
 
-	request.response.template = "blank";
-
-	// Shared view with synonyms.
-	cfmodule(
-		template = "./wordGroups.cfm",
-		thing = "rhymes",
-		groups = groups
-	);
+	include "./wordGroups.view.cfm";
 
 </cfscript>

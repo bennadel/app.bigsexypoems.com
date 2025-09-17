@@ -218,7 +218,7 @@
 					Find words that mean roughly the same thing...
 				</p>
 			</div>
-		</section>		
+		</section>
 	</div>
 
 	<hr class="uiRule" />
