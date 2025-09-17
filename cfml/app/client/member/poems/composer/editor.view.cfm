@@ -40,6 +40,7 @@
 					name="content"
 					maxlength="3000"
 					z6s31p class="uiTextarea isLongTermFocus proser_content"
+					x-meta-enter-submit
 					@input.debounce.250ms="resizeContent()"
 				>#e( form.content )#</textarea>
 
@@ -69,7 +70,7 @@
 							hx-post="#router.urlForParts( 'member.poems.composer.saveInBackground', 'poemID', poem.id )#"
 							hx-trigger="
 								click,
-								input delay:1s from:previous textarea
+								input delay:1s from:##form--content
 							"
 							hx-target=".autosaver_status"
 							hx-sync="this:replace"
