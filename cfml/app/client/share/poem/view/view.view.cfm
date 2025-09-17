@@ -1,35 +1,39 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<cfif share.noteHtml.len()>
+	<div dtodzq class="dtodzq">
 
-		<section>
-			#share.noteHtml#
-		</section>
+		<cfif share.noteHtml.len()>
 
-		<hr class="uiRule" />
+			<section>
+				#share.noteHtml#
+			</section>
 
-	</cfif>
+			<hr class="uiRule" />
 
-	<article>
+		</cfif>
 
-		<h1>
-			#e( title )#
-		</h1>
+		<article>
 
-		<pre>#e( poem.content )#</pre>
+			<h1>
+				#e( title )#
+			</h1>
 
-		<p>
-			&mdash; <em>#e( user.name )#</em>
+			<pre>#e( poem.content )#</pre>
+
+			<p>
+				&mdash; <em>#e( user.name )#</em>
+			</p>
+
+		</article>
+
+		<hr style="margin-top: 50px ;">
+
+		<p style="font-size: 14px ;">
+			Want to share your own poems? <a href="/">Sign-up for a free account</a>.
 		</p>
 
-	</article>
-
-	<hr style="margin-top: 50px ;">
-
-	<p style="font-size: 14px ;">
-		Want to share your own poems? <a href="/">Sign-up for a free account</a>.
-	</p>
+	</div>
 
 </cfoutput>
 </cfsavecontent>
