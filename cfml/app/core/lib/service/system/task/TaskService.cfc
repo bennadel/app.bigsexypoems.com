@@ -143,6 +143,12 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 			);
 		}
 
+		// Todo: it might be worth logging failed requests here. This should only ever
+		// happen if the network requests fail (such as an unreachable domain or an
+		// unsupported SSL certificate). However, once the tasks have been demonstrated
+		// to be working, they shouldn't suddenly fail. As such, I'm going to defer for
+		// now; but, leave a note that it might be worthwhile as a best practice.
+
 	}
 
 }
