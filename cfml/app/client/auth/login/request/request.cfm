@@ -71,9 +71,6 @@
 
 			// Special overrides to create a better affordance for the user.
 			switch ( error.type ) {
-				case "App.Authentication.BetaPassword.Invalid":
-					errorMessage = "Your beta password is incorrect. Please see me for help.";
-				break;
 				case "App.Model.User.Email.Example":
 					errorMessage = "Please enter a real email address.";
 				break;
