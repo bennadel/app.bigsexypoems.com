@@ -13,17 +13,19 @@ Mostly, I just want a real-world application in which I can experiment with idea
 Try it out for yourself: [https://app.bigsexypoems.com/][app]
 
 
-## Folder Organization
+## File And Folder Organization
 
 The bulk of the application is stored in `cfml/app`. This folder is then subdivided into the following folders:
 
 * **`build`**: Contains client-side (JavaScript + LessCSS) compilation mechanics. This folder is mounted by the `client` and `client-dev` Docker containers.
 
+  Each "entry point" in the Parcel.js build process corresponds to a "subsystem" `.js` file within the `client` folder. Essentially, each subsystem (ex, `member`, `auth`), has a `.js` file which **glob-imports** all of the `**/*.js` and `**/*.less` files contained within that subsystem.
+
 * **`client`**: The controller layer of the application. Contains all of the routing and view-related rendering logic.
 
   **Note**: Unlike your traditional MVC (Model-View-Controller) applications, the `client` folder contains _both_ the Controller and the View files. The biggest point-of-frustration that I've historically felt with MVC is the distance between the `C` and `V` files, despite the fact that these two layers are tightly coupled. My `client` folder **collocates** these two concerns, literally putting the "Controller" and "View" files side-by-side in the file-system.
 
-* **`config`**: Contains the environment variables and settings. The `config.template.json` documents the structure of the configuration object. The `config.json` (which is ignored by `git`) defines the settings.
+* **`config`**: Contains the environment variables and settings. The `config.template.json` documents the structure of the configuration object. The `config.json` (which is ignored by `git`) defines the concrete settings.
 
 * **`core`**: Contains all of the business logic for the application.
 
