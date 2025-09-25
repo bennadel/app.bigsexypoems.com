@@ -34,11 +34,11 @@
 			</html:p>
 
 			<app:CallToAction href="#partial.verification.url#" margins="normal double">
-				Login Now &rarr;
+				Log In Now &rarr;
 			</app:CallToAction>
 
 			<html:p>
-				Or, <html:a href="#encodeForHtmlAttribute( partial.verification.url )#">use this link to log-in</html:a> to the app.
+				Or, <html:a href="#encodeForHtmlAttribute( partial.verification.url )#">use this link to log in</html:a> to the app.
 			</html:p>
 
 			<html:h2 margins="normal quarter" class="copy-size">

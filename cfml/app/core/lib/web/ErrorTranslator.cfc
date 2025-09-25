@@ -31,7 +31,7 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Authentication.VerifyLogin.Expired":
 				return as403({
 					type: error.type,
-					message: "Your login link has expired. Please try logging-in again."
+					message: "Your login link has expired. Please try logging in again."
 				});
 			break;
 			case "App.BadRequest":
@@ -396,7 +396,7 @@ component hint = "I help translate application errors into appropriate response 
 			statusText: "Unauthorized",
 			type: "App.Unauthorized",
 			title: "Unauthorized",
-			message: "Please login and try submitting your request again."
+			message: "Please log in and try submitting your request again."
 		};
 
 	}

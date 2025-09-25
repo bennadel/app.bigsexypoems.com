@@ -4,11 +4,11 @@
 	<article>
 
 		<h1>
-			Login
+			#e( config.site.name )# Login
 		</h1>
 
 		<p>
-			You can use your email address to log-in or sign-up. A verification link will be sent to your email address so we can verify your account. This verification link will be sent from <mark>#e( fromEmail )#</mark> (during the beta).
+			You can use your email address to log in or sign up. A verification link will be sent to your email address so we can verify your account. This verification link will be sent from <mark>#e( fromEmail )#</mark> (during the beta).
 		</p>
 
 		<cfmodule
@@ -45,7 +45,7 @@
 				</label>
 				<div class="uiField_content">
 					<p class="uiField_description">
-						During the development phase of this application, <strong><mark>new users</mark></strong> need a special password in order to log-in. If you're keen to try BigSexyPoems, just let me know.
+						During the development phase of this application, <strong><mark>new users</mark></strong> need a special password in order to log in. If you're keen to try BigSexyPoems, just let me know.
 					</p>
 
 					<input
@@ -83,7 +83,7 @@
 
 			<div class="uiFormButtons">
 				<button type="submit" class="uiButton isSubmit">
-					Login or Sign-Up
+					Log In or Sign Up
 				</button>
 			</div>
 		</form>

@@ -39,7 +39,7 @@
 	fromEmail = config.systemEmail.address;
 	errorMessage = "";
 
-	request.response.title = "Request Login / Sign-Up";
+	request.response.title = "Request Login / Signup";
 
 	if ( request.isPost && form.email.len() ) {
 

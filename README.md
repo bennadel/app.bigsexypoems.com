@@ -6,11 +6,11 @@ by [Ben Nadel][ben-nadel]
 
 ## Overview
 
-This is a codification of my **BigSexyPoems** concept. Historically, the poem editor was a static, Angular-based proof-of-concept (PoC) application hosted on Netlify. I'm trying to transition that to a **ColdFusion**, **HTMX**, and **AlpineJS** application in which the poems can be saved and shared using persisted data.
+This is a codification of my [**BigSexyPoems**][app] concept. Historically, the poem editor was a static, Angular-based proof-of-concept (PoC) application hosted on Netlify. I'm trying to transition that to a **ColdFusion**, **HTMX**, and **AlpineJS** application in which the poems can be saved and shared using persisted data.
 
 Mostly, I just want a real-world application in which I can experiment with ideas and try out new paradigms for organizing my code.
 
-Try it out for yourself: _\[login coming soon\]_
+Try it out for yourself: [https://app.bigsexypoems.com/][app]
 
 
 ## Docker Setup
@@ -65,6 +65,8 @@ Since the `package.json` and `package-lock.json` files are mounted via Docker vo
 
 
 [alpinejs]: https://alpinejs.dev/
+
+[app]: https://app.bigsexypoems.com/
 
 [ben-nadel]: https://www.bennadel.com/
 
