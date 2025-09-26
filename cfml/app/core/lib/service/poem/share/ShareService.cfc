@@ -1,12 +1,15 @@
 component {
 
 	// Define properties for dependency-injection.
+	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
+	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
 	property name="shareAccess" ioc:type="core.lib.service.poem.share.ShareAccess";
 	property name="shareCascade" ioc:type="core.lib.service.poem.share.ShareCascade";
 	property name="shareModel" ioc:type="core.lib.model.poem.share.ShareModel";
 	property name="shareNoteParser" ioc:type="core.lib.model.poem.share.ShareNoteParser";
 	property name="shareNoteSanitizer" ioc:type="core.lib.model.poem.share.ShareNoteSanitizer";
+	property name="viewingModel" ioc:type="core.lib.model.poem.share.ViewingModel";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -37,6 +40,7 @@ component {
 			name = shareName,
 			noteMarkdown = shareNoteMarkdown,
 			noteHtml = shareNoteHtml,
+			viewingCount = 0,
 			createdAt = createdAt,
 			updatedAt = createdAt
 		);
@@ -82,6 +86,37 @@ component {
 			shareCascade.deleteShare( user, poem, share );
 
 		}
+
+	}
+
+
+	/**
+	* I log the unique viewing of the given share link.
+	*/
+	public void function logShareViewing( required numeric shareID ) {
+
+		var share = shareModel.get( shareID );
+		var poem = poemModel.get( share.poemID );
+		var ipAddress = requestMetadata.getIpAddress();
+		var createdAt = utcNow();
+
+		viewingModel.create(
+			poemID = poem.id,
+			shareID = share.id,
+			ipAddress = ipAddress,
+			createdAt = createdAt
+		);
+
+		// Recalculate the viewing aggregate.
+		var viewingCount = viewingModel.getCountByFilter(
+			poemID = poem.id,
+			shareID = share.id
+		);
+
+		shareModel.update(
+			id = share.id,
+			viewingCount = viewingCount
+		);
 
 	}
 

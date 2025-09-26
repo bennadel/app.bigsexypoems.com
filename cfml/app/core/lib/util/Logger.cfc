@@ -319,7 +319,7 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 	*/
 	private void function sendToDevLog( required struct payload ) {
 
-		var stub = now().dateTimeFormat( "HH-nn-ss" );
+		var stub = now().dateTimeFormat( "yyyy-mm-dd-HH-nn-ss" );
 		var suffix = lcase( payload.error.type ?: payload.level ?: "unknown" );
 
 		writeDump(

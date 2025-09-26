@@ -7,6 +7,7 @@
 		<cfargument name="name" type="string" required="true" />
 		<cfargument name="noteMarkdown" type="string" required="true" />
 		<cfargument name="noteHtml" type="string" required="true" />
+		<cfargument name="viewingCount" type="numeric" required="true" />
 		<cfargument name="createdAt" type="date" required="true" />
 		<cfargument name="updatedAt" type="date" required="true" />
 
@@ -19,6 +20,7 @@
 				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
 				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
 				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
+				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="cf_sql_bigint" />,
 				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
 				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
 			;
@@ -87,6 +89,7 @@
 				name,
 				noteMarkdown,
 				noteHtml,
+				viewingCount,
 				createdAt,
 				updatedAt
 			FROM
@@ -125,6 +128,7 @@
 		<cfargument name="name" type="string" required="true" />
 		<cfargument name="noteMarkdown" type="string" required="true" />
 		<cfargument name="noteHtml" type="string" required="true" />
+		<cfargument name="viewingCount" type="numeric" required="true" />
 		<cfargument name="updatedAt" type="date" required="true" />
 
 		<cfquery name="local.results" result="local.metaResults">
@@ -134,6 +138,7 @@
 				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
 				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
 				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
+				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="cf_sql_bigint" />,
 				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
 			WHERE
 				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />

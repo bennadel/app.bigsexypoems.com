@@ -1,3 +1,4 @@
+
 CREATE TABLE `poem_share` (
 	`id` bigint unsigned NOT NULL AUTO_INCREMENT,
 	`poemID` bigint unsigned NOT NULL,

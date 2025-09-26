@@ -2,6 +2,7 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="shareModel" ioc:type="core.lib.model.poem.share.ShareModel";
+	property name="viewingModel" ioc:type="core.lib.model.poem.share.ViewingModel";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -19,6 +20,10 @@ component {
 		required struct share
 		) {
 
+		viewingModel.deleteByFilter(
+			poemID = poem.id,
+			shareID = share.id
+		);
 		shareModel.deleteByFilter( id = share.id );
 
 	}

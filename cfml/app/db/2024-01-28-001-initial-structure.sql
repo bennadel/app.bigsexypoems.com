@@ -1,3 +1,4 @@
+
 CREATE TABLE `one_time_token` (
 	`id` bigint unsigned NOT NULL AUTO_INCREMENT,
 	`slug` varchar(50) NOT NULL,

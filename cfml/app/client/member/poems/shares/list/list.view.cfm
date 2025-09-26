@@ -30,6 +30,9 @@
 					Note
 				</th>
 				<th>
+					Views
+				</th>
+				<th>
 					Actions
 				</th>
 			</tr>
@@ -48,6 +51,9 @@
 				</td>
 				<td>
 					#e( share.noteMarkdown )#
+				</td>
+				<td>
+					#numberFormat( share.viewingCount )#
 				</td>
 				<td>
 					<div class="uiHstack">

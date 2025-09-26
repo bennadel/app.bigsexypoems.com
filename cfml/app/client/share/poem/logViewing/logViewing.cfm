@@ -1,9 +1,7 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
-	router = request.ioc.get( "core.lib.web.Router" );
-	ui = request.ioc.get( "core.lib.web.UI" );
-	userModel = request.ioc.get( "core.lib.model.user.UserModel" );
+	shareService = request.ioc.get( "core.lib.service.poem.share.ShareService" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -11,13 +9,9 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	poem = request.poem;
-	share = request.share;
-	title = poem.name;
-	user = userModel.get( poem.userID );
+	shareService.logShareViewing( request.share.id );
 
-	request.response.title = title;
-
-	include "./view.view.cfm";
+	// Todo: figure out how to deal with this.
+	abort;
 
 </cfscript>

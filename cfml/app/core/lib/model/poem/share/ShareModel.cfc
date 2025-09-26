@@ -20,6 +20,7 @@ component {
 		required string name,
 		required string noteMarkdown,
 		required string noteHtml,
+		required numeric viewingCount,
 		required date createdAt,
 		required date updatedAt
 		) {
@@ -34,6 +35,7 @@ component {
 			name = name,
 			noteMarkdown = noteMarkdown,
 			noteHtml = noteHtml,
+			viewingCount = viewingCount,
 			createdAt = createdAt,
 			updatedAt = updatedAt
 		);
@@ -131,6 +133,7 @@ component {
 		string name,
 		string noteMarkdown,
 		string noteHtml,
+		numeric viewingCount,
 		date updatedAt
 		) {
 
@@ -148,6 +151,10 @@ component {
 			? existing.noteHtml
 			: noteHtml
 		;
+		viewingCount = isNull( viewingCount )
+			? existing.viewingCount
+			: viewingCount
+		;
 		updatedAt = isNull( updatedAt )
 			? existing.updatedAt
 			: updatedAt
@@ -158,6 +165,7 @@ component {
 			name = name,
 			noteMarkdown = noteMarkdown,
 			noteHtml = noteHtml,
+			viewingCount = viewingCount,
 			updatedAt = updatedAt
 		);
 

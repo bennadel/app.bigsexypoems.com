@@ -59,6 +59,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	switch ( router.next( "view" ) ) {
+		case "logViewing":
 		case "view":
 			cfmodule( template = router.nextTemplate() );
 		break;
