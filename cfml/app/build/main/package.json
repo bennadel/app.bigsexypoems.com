@@ -1,52 +1,52 @@
 {
-  "name": "client:main",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "clean": "npm run clean-parcel-cache  &&  npm run clean-dist",
-    "clean-parcel-cache": "rm -rf ./.parcel-cache/*",
-    "clean-dist": "rm -rf ./dist/*",
-    "watch": "parcel watch --no-hmr",
-    "build": "npm run clean && parcel build"
-  },
-  "targets": {
-    "auth": {
-      "source": "./src/auth.html",
-      "distDir": "./dist/auth",
-      "publicUrl": "/public/main/auth"
-    },
-    "error": {
-      "source": "./src/error.html",
-      "distDir": "./dist/error",
-      "publicUrl": "/public/main/error"
-    },
-    "member": {
-      "source": "./src/member.html",
-      "distDir": "./dist/member",
-      "publicUrl": "/public/main/member"
-    },
-    "sharePoem": {
-      "source": "./src/sharePoem.html",
-      "distDir": "./dist/sharePoem",
-      "publicUrl": "/public/main/sharePoem"
-    },
-    "system": {
-      "source": "./src/system.html",
-      "distDir": "./dist/system",
-      "publicUrl": "/public/main/system"
-    },
-    "vendor": {
-      "source": "./src/vendor.html",
-      "distDir": "./dist/vendor",
-      "publicUrl": "/public/main/vendor"
-    }
-  },
-  "browserslist": "defaults",
-  "devDependencies": {
-    "@parcel/resolver-glob": "2.15.4",
-    "@parcel/transformer-less": "2.15.4",
-    "alpinejs": "3.14.9",
-    "htmx.org": "2.0.6",
-    "parcel": "2.15.4"
-  }
+	"name": "client:main",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"clean": "npm run clean-parcel-cache  &&  npm run clean-dist",
+		"clean-parcel-cache": "rm -rf ./.parcel-cache/*",
+		"clean-dist": "rm -rf ./dist/*",
+		"watch": "parcel watch --no-hmr",
+		"build": "npm run clean && parcel build"
+	},
+	"targets": {
+		"auth": {
+			"source": "./src/auth.html",
+			"distDir": "./dist/auth",
+			"publicUrl": "/public/main/auth"
+		},
+		"error": {
+			"source": "./src/error.html",
+			"distDir": "./dist/error",
+			"publicUrl": "/public/main/error"
+		},
+		"member": {
+			"source": "./src/member.html",
+			"distDir": "./dist/member",
+			"publicUrl": "/public/main/member"
+		},
+		"sharePoem": {
+			"source": "./src/sharePoem.html",
+			"distDir": "./dist/sharePoem",
+			"publicUrl": "/public/main/sharePoem"
+		},
+		"system": {
+			"source": "./src/system.html",
+			"distDir": "./dist/system",
+			"publicUrl": "/public/main/system"
+		},
+		"vendor": {
+			"source": "./src/vendor.html",
+			"distDir": "./dist/vendor",
+			"publicUrl": "/public/main/vendor"
+		}
+	},
+	"browserslist": "defaults",
+	"devDependencies": {
+		"@parcel/resolver-glob": "2.15.4",
+		"@parcel/transformer-less": "2.15.4",
+		"alpinejs": "3.14.9",
+		"htmx.org": "2.0.6",
+		"parcel": "2.15.4"
+	}
 }
