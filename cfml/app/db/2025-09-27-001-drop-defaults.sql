@@ -1,0 +1,10 @@
+
+ALTER TABLE
+	`poem_share`
+ALTER COLUMN
+	`name` DROP DEFAULT,
+ALTER COLUMN
+	`viewingCount` DROP DEFAULT,
+ALTER COLUMN
+	`updatedAt` DROP DEFAULT
+;
