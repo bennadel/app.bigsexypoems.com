@@ -65,6 +65,17 @@ component hint = "I provide utility methods to aide in making CFHttp requests." 
 
 
 	/**
+	* I determine if the given response has a corrupt status code (usually indicating a
+	* connection failure).
+	*/
+	public boolean function statusCodeIsCorrupt( required struct httpResponse ) {
+
+		return ! parseStatusCode( httpResponse ).code;
+
+	}
+
+
+	/**
 	* I determine if the given response has a failure status code.
 	*/
 	public boolean function statusCodeIsFailure( required struct httpResponse ) {

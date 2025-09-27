@@ -1,6 +1,7 @@
 component hint = "I provide workflow methods pertaining to scheduled tasks." {
 
 	// Define properties for dependency-injection.
+	property name="httpUtilities" ioc:type="core.lib.util.HttpUtilities";
 	property name="ioc" ioc:type="core.lib.util.Injector";
 	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="scheduledTasks" ioc:get="config.scheduledTasks";
@@ -125,7 +126,7 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 		// NOTE: We're using a small timeout because we want the tasks to all fire in
 		// parallel (as much as possible).
 		cfhttp(
-			result = "local.results",
+			result = "local.httpResponse",
 			method = "post",
 			url = "#scheduledTasks.url#/index.cfm?event=system.tasks.one",
 			timeout = 1
@@ -143,11 +144,27 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 			);
 		}
 
-		// Todo: it might be worth logging failed requests here. This should only ever
-		// happen if the network requests fail (such as an unreachable domain or an
-		// unsupported SSL certificate). However, once the tasks have been demonstrated
-		// to be working, they shouldn't suddenly fail. As such, I'm going to defer for
-		// now; but, leave a note that it might be worthwhile as a best practice.
+		var statusCode = httpUtilities.parseStatusCode( httpResponse );
+		// For the most part, we're expecting a `408 Request Timeout` to occur since we're
+		// not waiting for the individual scheduled tasks to complete execution. However,
+		// if the resultant status code is corrupted, it means that the CFHTTP tag was
+		// unable to round-trip back to the ColdFusion server. This usually happens if we
+		// attempt to connect over HTTPS using an SSL cert that ColdFusion doesn't trust.
+		// To fix this, we need to:
+		// 
+		// 1. Use an `http` URL in order to avoid certificate issues.
+		// 
+		// 2. Ensure that we have a `hosts` entry so the request doesn't leave the server,
+		//    but can still hit the correct host in IIS.
+		if ( ! statusCode.ok && ( statusCode.code != 408 ) ) {
+
+			throw(
+				type = "UnexpectedStatusCode",
+				message = "Possible connection failure.",
+				extendedInfo = serializeJson( statusCode )
+			);
+
+		}
 
 	}
 
