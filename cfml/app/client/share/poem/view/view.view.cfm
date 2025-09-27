@@ -36,17 +36,23 @@
 	</div>
 
 	<!---
-		Log viewing asynchronously. I'm doing this as a subsequent client-side form POST
-		with a small delay to try and omit bot-based requests from share links that have
-		been posted to a public forum.
+		Log viewing asynchronously (if the user is not the poem author - we don't want to
+		log instances of the author testing the look-and-feel of the share experience).
+		I'm performing this as a subsequent client-side form POST with a small delay in
+		order to try and omit bot-based requests from share links that have been posted to
+		a public forum.
 	--->
-	<form
-		hx-post="#router.urlForParts( 'share.poem.logViewing' )#"
-		hx-trigger="load delay:2s"
-		hx-swap="none"
-		style="display: none ;">
-		<cfmodule template="/client/_shared/tag/xsrf.cfm">
-	</form>
+	<cfif ( poem.userID != request.authContext.user.id )>
+
+		<form
+			hx-post="#router.urlForParts( 'share.poem.logViewing' )#"
+			hx-trigger="load delay:2s"
+			hx-swap="none"
+			style="display: none ;">
+			<cfmodule template="/client/_shared/tag/xsrf.cfm">
+		</form>
+
+	</cfif>
 
 </cfoutput>
 </cfsavecontent>

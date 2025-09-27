@@ -6,6 +6,7 @@
 	rateLimitService = request.ioc.get( "core.lib.util.RateLimitService" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
+	sessionService = request.ioc.get( "core.lib.service.session.SessionService" );
 	shareModel = request.ioc.get( "core.lib.model.poem.share.ShareModel" );
 	shareValidation = request.ioc.get( "core.lib.model.poem.share.ShareValidation" );
 
@@ -17,6 +18,9 @@
 
 	// SECURITY: This entire subsystem requires an identified user.
 	// request.authContext = requestHelper.ensureIdentifiedContext();
+	// --
+	// Todo: will probably replace with something more official in the future.
+	request.authContext = sessionService.getAuthenticationContext();
 
 	// This rate limiting is here just to prevent brute-force guessing of share links. As
 	// such, the limit can be relatively high.
