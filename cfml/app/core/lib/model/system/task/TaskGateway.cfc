@@ -55,7 +55,6 @@
 				nextExecutedAt = <cfqueryparam value="#nextExecutedAt#" cfsqltype="cf_sql_timestamp" />
 			WHERE
 				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_varchar" />
-			;
 		</cfquery>
 
 	</cffunction>

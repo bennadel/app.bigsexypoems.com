@@ -17,7 +17,6 @@
 				content = <cfqueryparam value="#content#" cfsqltype="cf_sql_varchar" />,
 				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
 				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
-			;
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -54,7 +53,6 @@
 				AND
 					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
 			</cfif>
-			;
 		</cfquery>
 
 	</cffunction>
@@ -99,7 +97,6 @@
 
 			ORDER BY
 				id ASC
-			;
 		</cfquery>
 
 		<cfreturn results />
@@ -123,7 +120,6 @@
 				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
 			WHERE
 				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
-			;
 		</cfquery>
 
 	</cffunction>

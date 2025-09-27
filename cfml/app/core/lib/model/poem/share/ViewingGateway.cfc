@@ -15,7 +15,6 @@
 				shareID = <cfqueryparam value="#shareID#" cfsqltype="cf_sql_bigint" />,
 				ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="cf_sql_varchar" />,
 				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />
-			;
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -58,7 +57,6 @@
 				AND
 					shareID = <cfqueryparam value="#shareID#" cfsqltype="cf_sql_bigint" />
 			</cfif>
-			;
 		</cfquery>
 
 	</cffunction>
@@ -99,7 +97,6 @@
 					ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="cf_sql_string" />
 			</cfif>
 
-			;
 		</cfquery>
 
 		<cfreturn results.rowCount />
@@ -157,7 +154,6 @@
 
 			ORDER BY
 				id ASC
-			;
 		</cfquery>
 
 		<cfreturn results />
