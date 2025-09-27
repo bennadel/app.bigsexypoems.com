@@ -19,9 +19,15 @@
 				#e( title )#
 			</h1>
 
-			<pre>#e( poem.content )#</pre>
+			<ul dtodzq class="lines">
+				<cfloop array="#lines#" item="line">
+					<li>
+						#e( line )#<br />
+					</li>
+				</cfloop>
+			</ul>
 
-			<p>
+			<p dtodzq class="author">
 				&mdash; <em>#e( user.name )#</em>
 			</p>
 

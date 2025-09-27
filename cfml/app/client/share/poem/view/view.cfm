@@ -16,6 +16,8 @@
 	title = poem.name;
 	user = userModel.get( poem.userID );
 
+	lines = poem.content.reMatch( "[^\n]*" );
+
 	request.response.title = title;
 
 	include "./view.view.cfm";

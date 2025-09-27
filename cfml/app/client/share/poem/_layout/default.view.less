@@ -11,115 +11,20 @@
 		}
 	}
 
-	&.shell {
-		align-items: flex-start ;
-		display: flex ;
+	&.main {
+		min-height: 100vh ;
+		padding: 1.5rem 2.3rem  ;
 
-		&_header {
-			border-right: 1px solid var( --rule-nav ) ;
-			flex: 0 0 auto ;
-			min-height: 100vh ;
-			position: sticky ;
-			top: 0 ;
-			width: 300px ;
-			z-index: var( --layer-sticky ) ;
-		}
-
-		&_main {
-			flex: 1 1 auto ;
-			min-height: 100vh ;
-			padding: 1.5rem 2.3rem  ;
-
-			// Since the main element touches the edges of the browser, the normal outline
-			// will be clipped by the browser viewport. As such, we're going to inset the
-			// programmatic focus on the main content.
-			&:focus-visible {
-				outline-width: 3px ;
-				outline-offset: -6px ;
-			}
-		}
-	}
-
-	&.header {
-		display: flex ;
-		flex-direction: column ;
-		gap: 25px ;
-		padding: 10px 0 15px ;
-
-		&_logo {}
-
-		&_nav {}
-
-		&_account {
-			margin-top: auto ;
-		}
-	}
-
-	&.nav {}
-
-	&.navLink {
-		border: 4px solid var( --nav-fill ) ;
-		border-width: 4px 8px ;
-		display: block ;
-		text-decoration: none ;
-		white-space: nowrap ;
-
-		&_pill {
-			align-items: center ;
-			border-radius: 5px ;
-			color: var( --nav-text ) ;
-			display: flex ;
-			gap: 13px ;
-			padding: 7px 8px ;
-		}
-
-		&_icon {
-			display: flex ;
-			height: 32px ;
-			width: 32px ;
-
-			svg {
-				height: 24px ;
-				margin: auto ;
-				width: 24px ;
-			}
-		}
-
-		&_label {}
-
-		&:hover &_label,
-		&.isOn &_label {
-			text-decoration: underline ;
-		}
-
-		&.isOn &_pill {
-			background-color: var( --nav-fill-on ) ;
-			border-radius: 3px ;
-			color: var( --nav-text-on ) ;
-		}
-
-		// Since these elements butt-up against each other, the focus ring might get
-		// clipped by the neighboring element. As such, we're going to inset the focus on
-		// the element.
+		// Since the main element touches the edges of the browser, the normal outline
+		// will be clipped by the browser viewport. As such, we're going to inset the
+		// programmatic focus on the main content.
 		&:focus-visible {
-			outline-width: 2px ;
-			outline-offset: -4px ;
-		}
-	}
-
-	&.account {
-		display: flex ;
-		flex-direction: column ;
-		padding: 16px 16px 0 ;
-
-		&_description {}
-
-		&_email {
-			margin-bottom: 8px ;
+			outline-width: 3px ;
+			outline-offset: -6px ;
 		}
 
-		&_logout {
-			align-self: flex-start ;
+		@media ( max-width: 500px ) {
+			padding: 20px 16px ;
 		}
 	}
 }

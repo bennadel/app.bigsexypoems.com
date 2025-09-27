@@ -34,25 +34,21 @@
 		<a
 			href="##main-content-anchor"
 			@click="focusMain()"
-			cj4s1o
-			class="uiButton isInverted skipToMain">
+			cj4s1o class="uiButton isInverted skipToMain">
 			Skip to main content
 		</a>
 
-		<div cj4s1o class="shell">
-			<main
-				id="main-content-anchor"
-				x-ref="main"
-				tabindex="-1"
-				cj4s1o
-				class="shell_main">
+		<main
+			id="main-content-anchor"
+			x-ref="main"
+			tabindex="-1"
+			cj4s1o class="main">
 
-				<cfmodule template="/client/_shared/tag/flashMessage.cfm">
+			<cfmodule template="/client/_shared/tag/flashMessage.cfm">
 
-				#request.response.body#
+			#request.response.body#
 
-			</main>
-		</div>
+		</main>
 
 		<cfmodule template="/client/_shared/tag/toaster.cfm">
 		<cfmodule template="/client/_shared/tag/localDevelopment.cfm">
