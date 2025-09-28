@@ -12,16 +12,14 @@
 		</p>
 
 		<form
-			x-data="lzlbk2.FormController"
 			method="post"
 			action="#request.postBackAction#"
-			@submit="handleSubmit( event )">
+			x-prevent-double-submit>
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
 			<button
 				type="submit"
-				x-ref="button"
-				:disabled="isSubmitting"
+				x-auto-submit-button
 				class="uiButton isSubmit">
 				Continue to App &rarr;
 			</button>
