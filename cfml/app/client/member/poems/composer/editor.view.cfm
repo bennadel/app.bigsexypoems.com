@@ -12,7 +12,7 @@
 			response="#errorResponse#">
 		</cfmodule>
 
-		<form method="post" action="#request.postBackAction#">
+		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
 			<label for="form--name" class="uiScreenReader">

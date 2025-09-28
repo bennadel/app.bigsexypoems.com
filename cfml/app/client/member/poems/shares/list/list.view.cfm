@@ -60,7 +60,10 @@
 						<a #ui.attrHref( "member.poems.shares.edit", "shareID", share.id )#>
 							Edit
 						</a>
-						<form method="post" #ui.attrAction( "member.poems.shares.delete", "shareID", share.id )#>
+						<form
+							method="post"
+							#ui.attrAction( "member.poems.shares.delete", "shareID", share.id )#
+							x-prevent-double-submit>
 							<cfmodule template="/client/_shared/tag/xsrf.cfm">
 							<input type="hidden" name="isConfirmed" value="true" />
 							<!--- <input type="hidden" name="formToken" value="#e4a( formToken )#" /> --->

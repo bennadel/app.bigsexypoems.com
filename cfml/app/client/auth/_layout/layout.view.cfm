@@ -11,7 +11,7 @@
 		<cfinclude template="/wwwroot/public/main/vendor/vendor.html">
 		<cfinclude template="/wwwroot/public/main/auth/auth.html">
 	</head>
-	<body l9uznd class="body">
+	<body x-data l9uznd class="body">
 
 		<cfmodule template="/client/_shared/tag/svgSprite.cfm">
 		<cfmodule template="/client/_shared/tag/flashMessage.cfm">

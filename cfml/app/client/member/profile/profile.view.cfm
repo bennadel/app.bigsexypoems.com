@@ -12,7 +12,11 @@
 			response="#errorResponse#">
 		</cfmodule>
 
-		<form method="post" action="#request.postBackAction#" class="uiReadableWidth">
+		<form
+			method="post"
+			action="#request.postBackAction#"
+			x-prevent-double-submit
+			class="uiReadableWidth">
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
 			<div class="uiField">
