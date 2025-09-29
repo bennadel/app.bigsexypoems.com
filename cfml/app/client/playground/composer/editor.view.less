@@ -1,0 +1,65 @@
+[r2mwmx] {
+	&.title {
+		font-weight: var( --font-weight ) ;
+		margin-bottom: var( --space-block ) ;
+		margin-top: var( --space-block ) ;
+
+		.bigSexy {
+			display: inline-block ;
+			font-weight: var( --font-weight-bold ) ;
+			margin-right: var( --space-inline-xxs ) ;
+		}
+	}
+
+	&.proser {
+		display: flex ;
+		gap: var( --space-inline ) ;
+
+		&_content {
+			font-size: var( --font-size-l ) ;
+			height: auto ;
+			min-height: 14em ; // Roughly two stanzas.
+			overflow: hidden ;
+		}
+
+		&_counts {
+			background-color: var( --stone-1 ) ;
+			border: 1px solid var( --stone-1 ) ; // To match textarea.
+			border-radius: var( --radius ) ;
+			font-size: var( --font-size-l ) ;
+			height: auto ;
+			line-height: var( --line-height-ui ) ; // To match textarea.
+			padding: var( --pad-block ) var( --pad-inline ) ;
+			text-align: right ;
+		}
+	}
+
+	&.wordTools {
+		align-items: flex-start ;
+		display: flex ;
+		gap: var( --space-inline-xl ) ;
+		margin-top: var( --space-block-xl ) ;
+
+		> * {
+			flex: 1 1 50% ;
+		}
+
+		.bigSexy {
+			display: inline-block ;
+			font-weight: var( --font-weight ) ;
+			margin-right: var( --space-inline-xxs ) ;
+		}
+
+		.results {
+			background-color: var( --stone-1 ) ;
+			border-radius: var( --radius ) ;
+			margin-top: var( --space-block ) ;
+			padding: var( --pad-block ) var( --pad-inline ) ;
+
+			p {
+				margin: 0 ;
+				font-style: italic ;
+			}
+		}
+	}
+}

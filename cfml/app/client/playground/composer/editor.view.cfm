@@ -1,0 +1,193 @@
+<cfsavecontent variable="request.response.body">
+<cfoutput>
+
+	<article r2mwmx>
+
+		<h1 r2mwmx class="title">
+			<span class="bigSexy">BigSexy</span>Poems
+		</h1>
+
+		<!--- Todo: is there a need for errors here? --->
+
+		<form method="post" action="#request.postBackAction#">
+			<cfmodule template="/client/_shared/tag/xsrf.cfm">
+
+			<label for="form--content" class="uiScreenReader">
+				Content:
+			</label>
+
+			<div r2mwmx class="proser">
+				<textarea
+					x-data="r2mwmx.ProseContent"
+					id="form--content"
+					name="content"
+					maxlength="3000"
+					r2mwmx class="uiTextarea isLongTermFocus proser_content"
+					x-meta-enter-submit
+					@input.debounce.250ms="resizeContent()"
+				>#e( form.content )#</textarea>
+
+				<div
+					hx-post="#router.urlForParts( 'playground.composer.syllables' )#"
+					hx-trigger="load, input delay:1s from:previous textarea"
+					hx-sync="this:replace"
+					r2mwmx class="proser_counts">
+					<!--- Syllable counts, populated by HTMX. --->
+				</div>
+			</div>
+		</form>
+
+	</article>
+
+	<div r2mwmx class="wordTools">
+		<section>
+			<h2>
+				<span class="bigSexy">BigSexy</span>Rhymes
+			</h2>
+
+			<form
+				hx-get="#router.urlForParts( 'playground.composer.rhymes' )#"
+				hx-trigger="submit, load"
+				hx-target="next .results"
+				hx-sync="this:replace"
+				class="uiVstack">
+
+				<div class="uiHstack">
+					<!---
+						Todo: playing around with a default word to show how the feature
+						works. I will likely remove this in the future. When doing so, be
+						sure to remove the hx-trigger on the parent form.
+					--->
+					<input
+						type="text"
+						name="word"
+						value="Big"
+						class="uiInput"
+					/>
+					<select name="limit" class="uiSelect isAuto">
+						<option value="50">50 results</option>
+						<option value="100" selected>100 results</option>
+						<option value="150">150 results</option>
+						<option value="200">200 results</option>
+						<option value="300">300 results</option>
+						<option value="400">400 results</option>
+						<option value="500">500 results</option>
+					</select>
+					<button type="submit" class="uiButton">
+						Search
+					</button>
+				</div>
+				<fieldset class="uiFieldset uiHstack isLoose">
+					<legend class="uiLegend">
+						Sort By:
+					</legend>
+					<label for="form--rhymes--groupBy--a" class="uiHstack isTight">
+						<input
+							id="form--rhymes--groupBy--a"
+							type="radio"
+							name="groupBy"
+							value="syllableCount"
+							class="uiRadio"
+							checked
+						/>
+						Syllable Count
+					</label>
+					<label for="form--rhymes--groupBy--b" class="uiHstack isTight">
+						<input
+							id="form--rhymes--groupBy--b"
+							type="radio"
+							name="groupBy"
+							value="typeOfSpeech"
+							class="uiRadio"
+						/>
+						Type of Speech
+					</label>
+				</fieldset>
+			</form>
+			<div class="results">
+				<p>
+					Find words that rhyme well with each other...
+				</p>
+			</div>
+		</section>
+
+		<section>
+			<h2>
+				<span class="bigSexy">BigSexy</span>Synonyms
+			</h2>
+			<form
+				hx-get="#router.urlForParts( 'playground.composer.synonyms' )#"
+				hx-trigger="submit, load"
+				hx-target="next .results"
+				hx-sync="this:replace"
+				class="uiVstack">
+
+				<div class="uiHstack">
+					<!---
+						Todo: playing around with a default word to show how the feature
+						works. I will likely remove this in the future. When doing so, be
+						sure to remove the hx-trigger on the parent form.
+					--->
+					<input
+						type="text"
+						name="word"
+						value="Sexy"
+						class="uiInput"
+					/>
+					<select name="limit" class="uiSelect isAuto">
+						<option value="50">50 results</option>
+						<option value="100" selected>100 results</option>
+						<option value="150">150 results</option>
+						<option value="200">200 results</option>
+						<option value="300">300 results</option>
+						<option value="400">400 results</option>
+						<option value="500">500 results</option>
+					</select>
+					<button type="submit" class="uiButton">
+						Search
+					</button>
+				</div>
+				<fieldset class="uiFieldset uiHstack isLoose">
+					<legend class="uiLegend">
+						Sort By:
+					</legend>
+					<label for="form--syllable--groupBy--a" class="uiHstack isTight">
+						<input
+							id="form--syllable--groupBy--a"
+							type="radio"
+							name="groupBy"
+							value="syllableCount"
+							class="uiRadio"
+						/>
+						Syllable Count
+					</label>
+					<label for="form--syllable--groupBy--b" class="uiHstack isTight">
+						<input
+							id="form--syllable--groupBy--b"
+							type="radio"
+							name="groupBy"
+							value="typeOfSpeech"
+							class="uiRadio"
+							checked
+						/>
+						Type of Speech
+					</label>
+				</fieldset>
+			</form>
+			<div class="results">
+				<p>
+					Find words that mean roughly the same thing...
+				</p>
+			</div>
+		</section>
+	</div>
+
+	<hr class="uiRule" />
+
+	<p>
+		Hosting provided by <a href="https://www.xbytecloud.com/cloud" target="_blank">xByte Cloud</a>.&nbsp;
+		Rhymes, synonyms, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
+	</p>
+
+</cfoutput>
+</cfsavecontent>

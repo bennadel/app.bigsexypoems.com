@@ -50,6 +50,7 @@
 			case "account":
 			case "auth":
 			case "member":
+			case "playground":
 			case "share":
 			case "system":
 				cfmodule( template = router.nextTemplate() );

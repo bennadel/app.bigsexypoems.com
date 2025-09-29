@@ -25,6 +25,11 @@
 			"distDir": "./dist/member",
 			"publicUrl": "/public/main/member"
 		},
+		"playground.composer": {
+			"source": "./src/playground/composer.html",
+			"distDir": "./dist/playground/composer",
+			"publicUrl": "/public/main/playground/composer"
+		},
 		"sharePoem": {
 			"source": "./src/sharePoem.html",
 			"distDir": "./dist/sharePoem",
