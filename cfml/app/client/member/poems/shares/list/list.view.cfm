@@ -66,7 +66,7 @@
 							x-prevent-double-submit>
 							<cfmodule template="/client/_shared/tag/xsrf.cfm">
 							<input type="hidden" name="isConfirmed" value="true" />
-							<!--- <input type="hidden" name="formToken" value="#e4a( formToken )#" /> --->
+
 							<button type="submit" class="uiButton">
 								Revoke
 							</button>
