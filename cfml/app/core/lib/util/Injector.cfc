@@ -1,6 +1,7 @@
 component hint = "I provide an Inversion of Control (IoC) container." {
 
 	// Define properties for dependency-injection.
+	property name="internalCache" ioc:skip;
 	property name="services" ioc:skip;
 	property name="typeMappings" ioc:skip;
 
@@ -12,6 +13,13 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 	*/
 	public void function init() {
 
+		// In order to allow for circular references to not blow-up the construction of
+		// the dependency graph, we need to keep an internal scratch-pad of services that
+		// might be "in process" before we save the given injectable to the external
+		// service cache.
+		variables.internalCache = [:];
+		// The "services" container will, therefore, only contain fully constructed
+		// dependency graphs that are safe to return to the calling context.
 		variables.services = [:];
 		variables.typeMappings = [:];
 
@@ -103,7 +111,7 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 		required any serviceValue
 		) {
 
-		services[ serviceToken ] = serviceValue;
+		services[ serviceToken ] = internalCache[ serviceToken ] = serviceValue;
 
 		return serviceValue;
 
@@ -190,7 +198,7 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 
 		if ( entry.type.len() ) {
 
-			return ( services[ entry.type ] ?: buildService( entry.type ) );
+			return ( internalCache[ entry.type ] ?: buildService( entry.type ) );
 
 		}
 
@@ -198,7 +206,7 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 		// the injector cache.
 		if ( entry.get.len() ) {
 
-			var value = structGet( "variables.services.#entry.get#" );
+			var value = structGet( "variables.internalCache.#entry.get#" );
 
 			// Caution: Unfortunately, the StructGet() function basically "never fails".
 			// If you try to access a value that doesn't exist, ColdFusion will auto-
@@ -224,9 +232,9 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 		// to the TYPE. However, this will only be considered valid if there is already a
 		// service cached under the given name - we can't assume that the name matches a
 		// valid ColdFusion component since it isn't fully qualified.
-		if ( services.keyExists( entry.name ) ) {
+		if ( internalCache.keyExists( entry.name ) ) {
 
-			return services[ entry.name ];
+			return internalCache[ entry.name ];
 
 		}
 
@@ -269,25 +277,31 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 	*/
 	private any function buildService( required string serviceToken ) {
 
-		// Caution: I'm caching the "uninitialized" component instance in the services
-		// collection so that we avoid potentially hanging on a circular dependency. This
-		// way, each service can be injected into another service before it is ready. This
-		// might leave the application in an unpredictable state; but, only if people are
-		// foolish enough to have circular dependencies and swallow errors during the app
-		// bootstrapping.
+		// Caution: I'm caching the "uninitialized" component instance in the internal
+		// cache so that we avoid potentially hanging on a circular reference. This way,
+		// each service can be injected into another service before it is ready. However,
+		// the internally cached services are only "promoted" to the "services cache" once
+		// they are fully wired-up. As such, it should create a stable application since
+		// no calling context can ever be given an "uninitialized" instance.
 		try {
 
-			var service = services[ serviceToken ] = buildComponent( serviceToken );
-			// Caution: The buildInjectables() method may turn around and call the
-			// buildService() recursively in order to create the dependency graph.
+			var service = internalCache[ serviceToken ] = buildComponent( serviceToken );
 			var injectables = buildInjectables( serviceToken, service );
+			// Wire injectables into the transient service and finish initializing it.
+			// Once it's initialized, the service can be promoted from the internal cache
+			// to the external "services" cache.
+			services[ serviceToken ] = setupComponent( service, injectables );
 
-			return setupComponent( service, injectables );
+			return service;
 
 		// If the service couldn't be created without error, evict it from the cache. This
-		// should only matter durring development.
+		// should only matter during development. Meaning, if an error is thrown here, it
+		// will likely lead to code that never gets deployed to production. As such, we
+		// just want to semi-reset the injector (for this entry) in order to aide in
+		// easier development.
 		} catch ( any error ) {
 
+			internalCache.delete( serviceToken );
 			services.delete( serviceToken );
 			rethrow;
 
