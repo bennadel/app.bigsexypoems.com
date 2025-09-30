@@ -8,10 +8,13 @@ function ProseContent() {
 	return {
 		// Properties.
 		lineCount: 0,
+		storageKey: "playground-poem",
 		// Life-Cycle Methods.
 		init,
-		// Private Methods.
+		// Public Methods.
+		loadContent,
 		resizeContent,
+		saveContent,
 	};
 
 	// ---
@@ -23,6 +26,7 @@ function ProseContent() {
 	*/
 	function init() {
 
+		this.loadContent();
 		this.resizeContent();
 
 	}
@@ -30,6 +34,25 @@ function ProseContent() {
 	// ---
 	// PUBLIC METHODS.
 	// ---
+
+	/**
+	* I load any persisted poem from LocalStorage into the element.
+	*/
+	function loadContent() {
+
+		try {
+
+			this.$el.value = ( localStorage.getItem( this.storageKey ) || this.$el.dataset.defaultValue );
+
+		} catch ( error ) {
+
+			console.warn( "Couldn't load poem from local storage." );
+			console.error( error );
+
+		}
+
+	}
+
 
 	/**
 	* I update the textarea height to match the text height (within reason).
@@ -57,6 +80,25 @@ function ProseContent() {
 		// height of the content, which we then store back into the element. Thankfully,
 		// this control-flow doesn't appear to cause any UI flashing on the desktop.
 		this.$el.style.height = `${ this.$el.scrollHeight }px`;
+
+	}
+
+
+	/**
+	* I persist the poem to the localStorage for future loads.
+	*/
+	function saveContent() {
+
+		try {
+
+			localStorage.setItem( this.storageKey, this.$el.value );
+
+		} catch ( error ) {
+
+			console.warn( "Couldn't persist poem to local storage." );
+			console.error( error );
+
+		}
 
 	}
 

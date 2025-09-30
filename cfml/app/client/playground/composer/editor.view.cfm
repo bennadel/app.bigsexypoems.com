@@ -18,21 +18,40 @@
 
 			<div r2mwmx class="proser">
 				<textarea
-					x-data="r2mwmx.ProseContent"
 					id="form--content"
 					name="content"
+					data-default-value="#e4a( form.content )#"
 					maxlength="3000"
 					r2mwmx class="uiTextarea isLongTermFocus proser_content"
+					x-data="r2mwmx.ProseContent"
 					x-meta-enter-submit
+					@input.debounce.1s="saveContent()"
 					@input.debounce.250ms="resizeContent()"
-				>#e( form.content )#</textarea>
+				></textarea>
 
+				<!---
+					Note: minor delay on LOAD trigger gives poem content time to load from
+					the localStorage if it exists.
+				--->
 				<div
 					hx-post="#router.urlForParts( 'playground.composer.syllables' )#"
-					hx-trigger="load, input delay:1s from:previous textarea"
+					hx-trigger="
+						load delay:50ms,
+						input delay:1s from:previous textarea
+					"
 					hx-sync="this:replace"
 					r2mwmx class="proser_counts">
 					<!--- Syllable counts, populated by HTMX. --->
+				</div>
+			</div>
+
+			<div r2mwmx class="buttons">
+				<button type="submit" disabled class="uiButton isSubmit">
+					Save Poem (Coming soon)
+				</button>
+
+				<div r2mwmx class="autosaver">
+					Your poem is cached in the browser's memory as you type.
 				</div>
 			</div>
 		</form>
