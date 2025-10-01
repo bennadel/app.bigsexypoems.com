@@ -218,6 +218,11 @@
 		<p>
 			Hosting provided by <a href="https://www.xbytecloud.com/cloud" target="_blank">xByte Cloud</a>.
 		</p>
+
+		<p>
+			Created by <a href="https://www.bennadel.com/" target="_blank">Ben Nadel</a>
+			&copy; #year( now() )#
+		</p>
 	</section>
 
 </cfoutput>
