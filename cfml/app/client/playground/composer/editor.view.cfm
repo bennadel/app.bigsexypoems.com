@@ -203,10 +203,22 @@
 
 	<hr class="uiRule" />
 
-	<p>
-		Hosting provided by <a href="https://www.xbytecloud.com/cloud" target="_blank">xByte Cloud</a>.&nbsp;
-		Rhymes, synonyms, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
-	</p>
+	<section r2mwmx class="footerText">
+		<p>
+			<strong>BigSexy</strong>:
+			<em>( /biɡ &##712;seks&##275;/ ) noun</em>.
+			&mdash;
+			Your muse. Your inspiration. The part of your soul that feels deeply, lives with abandon, and loves without limits.
+		</p>
+
+		<p>
+			Rhymes, synonyms, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
+		</p>
+
+		<p>
+			Hosting provided by <a href="https://www.xbytecloud.com/cloud" target="_blank">xByte Cloud</a>.
+		</p>
+	</section>
 
 </cfoutput>
 </cfsavecontent>
