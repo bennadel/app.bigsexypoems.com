@@ -66,6 +66,24 @@
 
 		cfmodule( template = "./error/error.cfm" );
 
+		// Edge-case: ColdFusion isn't always super reliable when it comes to creating the
+		// per-application datasource during the bootstrapping process. If we ever get the
+		// error that the datasource cannot be found, shut the application down and exit.
+		// The next request should re-start the ColdFusion application and the datasource
+		// will _likely_ have been created successfully at that point.
+		// --
+		// Note: the error will be logged within the error-module above.
+		if (
+			( error.type == "database" ) &&
+			( error.message contains "datasource" ) &&
+			( error.message contains "could not be found" )
+			) {
+
+			applicationStop();
+			abort;
+
+		}
+
 	}
 
 </cfscript>

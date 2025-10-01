@@ -96,6 +96,11 @@ component hint = "I define the application settings and event handlers." {
 		// application in the global onError() event handler.
 		application.isBootstrapped = true;
 
+		// Log the start of the application for debugging purposes.
+		ioc.get( "core.lib.util.Logger" )
+			.info( "Application has been bootstrapped" )
+		;
+
 	}
 
 

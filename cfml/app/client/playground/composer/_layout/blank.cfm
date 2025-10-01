@@ -12,10 +12,10 @@
 	// Override the response status code.
 	cfheader( statusCode = request.response.statusCode );
 
-	// Reset the output buffer and send response.
-	cfcontent(
-		type = "text/html; charset=utf-8",
-		variable = charsetDecode( request.response.body, "utf-8" )
-	);
+	// Reset the output buffer.
+	cfcontent( type = "text/html; charset=utf-8" );
+
+	// Send down the response.
+	echo( request.response.body );
 
 </cfscript>
