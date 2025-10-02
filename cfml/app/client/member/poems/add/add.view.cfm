@@ -43,6 +43,7 @@
 						name="content"
 						maxlength="3000"
 						class="uiTextarea"
+						x-data="spbiun.ContentController( '#e4j( url.importFrom )#' )"
 						x-meta-enter-submit
 					>#e( form.content )#</textarea>
 				</div>
@@ -52,7 +53,7 @@
 				<button type="submit" class="uiButton isSubmit">
 					Create Poem
 				</button>
-				<a #ui.attrHref( "member.poems" )# class="uiButton isCancel">
+				<a #ui.attrHref( cancelToEvent )# class="uiButton isCancel">
 					Cancel
 				</a>
 			</div>

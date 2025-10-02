@@ -11,7 +11,21 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	param name="form.content" type="string" default=getDefaultPoem();
+	localStorageKey = "playground-poem";
+
+	if ( request.isPost ) {
+
+		// Todo: if the user isn't logged-in (request.authContent.session.isAuthenticated),
+		// we might want to send them to an intersticial page before the login form in
+		// order to give them some more context about the workflow. But, for now, everyone
+		// goes directly to the login form.
+
+		router.goto([
+			event: "member.poems.add",
+			importFrom: localStorageKey
+		]);
+
+	}
 
 	request.response.title = config.site.name;
 

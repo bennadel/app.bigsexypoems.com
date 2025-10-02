@@ -12,10 +12,18 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
+	param name="url.importFrom" type="string" default="";
 	param name="form.name" type="string" default="";
 	param name="form.content" type="string" default="";
 
-	title = "Create New Poem";
+	title = url.importFrom.len()
+		? "Import Poem From Playground"
+		: "Create New Poem"
+	;
+	cancelToEvent = url.importFrom.len()
+		? "playground"
+		: "member.poems"
+	;
 	errorResponse = "";
 
 	request.response.title = title;

@@ -7,8 +7,6 @@
 			<span class="bigSexy">BigSexy</span>Poems
 		</h1>
 
-		<!--- Todo: is there a need for errors here? --->
-
 		<form method="post" action="#request.postBackAction#">
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
 
@@ -20,12 +18,12 @@
 				<textarea
 					id="form--content"
 					name="content"
-					data-default-value="#e4a( form.content )#"
+					data-default-value="#e4a( getDefaultPoem() )#"
 					maxlength="3000"
 					r2mwmx class="uiTextarea isLongTermFocus proser_content"
-					x-data="r2mwmx.ProseContent"
-					x-meta-enter-submit
-					@input.debounce.1s="saveContent()"
+					x-data="r2mwmx.ProseContent( '#e4j( localStorageKey )#' )"
+					@beforeunload.window="saveContent()"
+					@input.debounce.200ms="saveContent()"
 					@input.debounce.250ms="resizeContent()"
 				></textarea>
 
@@ -46,8 +44,8 @@
 			</div>
 
 			<div r2mwmx class="buttons">
-				<button type="submit" disabled class="uiButton isSubmit">
-					Save Poem (Coming soon)
+				<button type="submit" class="uiButton isSubmit">
+					Save Poem to Account
 				</button>
 
 				<div r2mwmx class="autosaver">

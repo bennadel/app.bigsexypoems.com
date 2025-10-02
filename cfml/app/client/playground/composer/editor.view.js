@@ -3,12 +3,12 @@ window.r2mwmx = {
 	ProseContent
 };
 
-function ProseContent() {
+function ProseContent( localStorageKey ) {
 
 	return {
 		// Properties.
 		lineCount: 0,
-		storageKey: "playground-poem",
+		storageKey: localStorageKey,
 		// Life-Cycle Methods.
 		init,
 		// Public Methods.
