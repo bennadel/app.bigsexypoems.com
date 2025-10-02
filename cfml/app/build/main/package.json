@@ -30,10 +30,10 @@
 			"distDir": "./dist/playground/composer",
 			"publicUrl": "/public/main/playground/composer"
 		},
-		"sharePoem": {
-			"source": "./src/sharePoem.html",
-			"distDir": "./dist/sharePoem",
-			"publicUrl": "/public/main/sharePoem"
+		"share.poem": {
+			"source": "./src/share/poem.html",
+			"distDir": "./dist/share/poem",
+			"publicUrl": "/public/main/share/poem"
 		},
 		"system": {
 			"source": "./src/system.html",
