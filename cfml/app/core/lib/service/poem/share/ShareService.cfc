@@ -98,12 +98,21 @@ component {
 		var share = shareModel.get( shareID );
 		var poem = poemModel.get( share.poemID );
 		var ipAddress = requestMetadata.getIpAddress();
+		// Let's trim the city/region since it doesn't much matter if they get truncated
+		// in the database. I'd rather them get truncated than have a user-provided value
+		// (more or less) possibly throw an error.
+		var ipCity = requestMetadata.getIpCity().left( 50 );
+		var ipRegion = requestMetadata.getIpRegion().left( 50 );
+		var ipCountry = requestMetadata.getIpCountry();
 		var createdAt = utcNow();
 
 		viewingModel.create(
 			poemID = poem.id,
 			shareID = share.id,
 			ipAddress = ipAddress,
+			ipCity = ipCity,
+			ipRegion = ipRegion,
+			ipCountry = ipCountry,
 			createdAt = createdAt
 		);
 

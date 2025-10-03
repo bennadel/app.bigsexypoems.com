@@ -165,6 +165,66 @@ component hint = "I provide utility methods for accessing metadata about the cur
 
 
 	/**
+	* I return the most trusted IP city reported for the current request.
+	*/
+	public string function getIpCity() {
+
+		// This header value is being provided by the Cloudflare geolocation settings. As
+		// such, let's only trust this value when the core IP address header is populated
+		// by Cloudflare. This probably isn't a meaningful distinction. But, for now, it
+		// makes it feel slightly defensive against user-provided values.
+		if ( ! isHeaderPopulated( getHeaders(), "CF-Connecting-IP" ) ) {
+
+			return "";
+
+		}
+
+		return getHeader( "CF-IPCity" );
+
+	}
+
+
+	/**
+	* I return the most trusted IP country reported for the current request.
+	*/
+	public string function getIpCountry() {
+
+		// This header value is being provided by the Cloudflare geolocation settings. As
+		// such, let's only trust this value when the core IP address header is populated
+		// by Cloudflare. This probably isn't a meaningful distinction. But, for now, it
+		// makes it feel slightly defensive against user-provided values.
+		if ( ! isHeaderPopulated( getHeaders(), "CF-Connecting-IP" ) ) {
+
+			return "";
+
+		}
+
+		return getHeader( "CF-IPCountry" );
+
+	}
+
+
+	/**
+	* I return the most trusted IP region reported for the current request.
+	*/
+	public string function getIpRegion() {
+
+		// This header value is being provided by the Cloudflare geolocation settings. As
+		// such, let's only trust this value when the core IP address header is populated
+		// by Cloudflare. This probably isn't a meaningful distinction. But, for now, it
+		// makes it feel slightly defensive against user-provided values.
+		if ( ! isHeaderPopulated( getHeaders(), "CF-Connecting-IP" ) ) {
+
+			return "";
+
+		}
+
+		return getHeader( "CF-IPRegion" );
+
+	}
+
+
+	/**
 	* I return the HTTP method.
 	*/
 	public string function getMethod() {

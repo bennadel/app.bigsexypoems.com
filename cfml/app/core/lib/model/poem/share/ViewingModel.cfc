@@ -18,15 +18,24 @@ component {
 		required numeric poemID,
 		required numeric shareID,
 		required string ipAddress,
+		required string ipCity,
+		required string ipRegion,
+		required string ipCountry,
 		required date createdAt
 		) {
 
 		ipAddress = validation.ipAddressFrom( ipAddress );
+		ipCity = validation.ipCityFrom( ipCity );
+		ipRegion = validation.ipRegionFrom( ipRegion );
+		ipCountry = validation.ipCountryFrom( ipCountry );
 
 		return gateway.create(
 			poemID = poemID,
 			shareID = shareID,
 			ipAddress = ipAddress,
+			ipCity = ipCity,
+			ipRegion = ipRegion,
+			ipCountry = ipCountry,
 			createdAt = createdAt
 		);
 

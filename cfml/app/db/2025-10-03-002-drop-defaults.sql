@@ -1,0 +1,10 @@
+
+ALTER TABLE
+	`poem_share_viewing`
+ALTER COLUMN
+	`ipCity` DROP DEFAULT,
+ALTER COLUMN
+	`ipRegion` DROP DEFAULT,
+ALTER COLUMN
+	`ipCountry` DROP DEFAULT
+;

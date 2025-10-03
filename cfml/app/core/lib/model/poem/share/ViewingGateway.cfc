@@ -5,6 +5,9 @@
 		<cfargument name="poemID" type="numeric" required="true" />
 		<cfargument name="shareID" type="numeric" required="true" />
 		<cfargument name="ipAddress" type="string" required="true" />
+		<cfargument name="ipCity" type="string" required="true" />
+		<cfargument name="ipRegion" type="string" required="true" />
+		<cfargument name="ipCountry" type="string" required="true" />
 		<cfargument name="createdAt" type="date" required="true" />
 
 		<cfquery name="local.results" result="local.metaResults">
@@ -14,6 +17,9 @@
 				poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />,
 				shareID = <cfqueryparam value="#shareID#" cfsqltype="cf_sql_bigint" />,
 				ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="cf_sql_varchar" />,
+				ipCity = <cfqueryparam value="#ipCity#" cfsqltype="cf_sql_varchar" />,
+				ipRegion = <cfqueryparam value="#ipRegion#" cfsqltype="cf_sql_varchar" />,
+				ipCountry = <cfqueryparam value="#ipCountry#" cfsqltype="cf_sql_varchar" />,
 				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />
 		</cfquery>
 
@@ -126,6 +132,9 @@
 				poemID,
 				shareID,
 				ipAddress,
+				ipCity,
+				ipRegion,
+				ipCountry,
 				createdAt
 			FROM
 				poem_share_viewing
