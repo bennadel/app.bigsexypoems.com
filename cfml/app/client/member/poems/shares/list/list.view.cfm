@@ -53,7 +53,7 @@
 					#e( share.noteMarkdown )#
 				</td>
 				<td>
-					#numberFormat( share.viewingCount )#
+					<a #ui.attrHref( "member.poems.shares.viewing", "shareID", share.id )#>#numberFormat( share.viewingCount )#</a>
 				</td>
 				<td>
 					<div class="uiHstack">

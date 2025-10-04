@@ -10,12 +10,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	switch ( router.next( "list" ) ) {
-		case "add":
-		case "delete":
-		case "deleteAll":
-		case "edit":
 		case "list":
-		case "viewing":
 			cfmodule( template = router.nextTemplate() );
 		break;
 		default:

@@ -75,6 +75,16 @@ component
 	// ---
 
 	/**
+	* I throw a forbidden error.
+	*/
+	public void function throwForbiddenError() {
+
+		throw( type = "App.Model.Poem.Share.Viewing.Forbidden" );
+
+	}
+
+
+	/**
 	* I throw a not-found error.
 	*/
 	public void function throwNotFoundError() {
