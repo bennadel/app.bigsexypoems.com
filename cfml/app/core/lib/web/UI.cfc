@@ -139,14 +139,15 @@ component {
 
 
 	/**
-	* I format the date/time in the user's local timezone.
+	* I format the date/time in the user's local timezone. This combines the userDate()
+	* and the userTime() method using the given separator.
 	*/
 	public string function userDateTime(
 		required date input,
-		required string mask
+		string separator = " at "
 		) {
 
-		return dateTimeFormat( dateAdd( "n", request.authContext.timezone.offsetInMinutes, input ), mask );
+		return ( userDate( input ) & separator & userTime( input ) );
 
 	}
 
@@ -156,10 +157,12 @@ component {
 	*/
 	public string function userTime(
 		required date input,
-		required string mask
+		string mask = "h:nntt"
 		) {
 
-		return timeFormat( dateAdd( "n", request.authContext.timezone.offsetInMinutes, input ), mask );
+		return timeFormat( dateAdd( "n", request.authContext.timezone.offsetInMinutes, input ), mask )
+			.lcase()
+		;
 
 	}
 

@@ -35,7 +35,7 @@
 				<cfloop array="#viewings#" item="viewing">
 					<tr>
 						<td>
-							#ui.userDate( viewing.createdAt )#
+							#ui.userDateTime( viewing.createdAt )#
 						</td>
 						<td>
 							<cfif viewing.ipCountry.len()>
