@@ -219,7 +219,7 @@ component hint = "I provide utility methods for accessing metadata about the cur
 
 		}
 
-		return getHeader( "CF-IPRegion" );
+		return getHeader( "CF-Region" );
 
 	}
 
