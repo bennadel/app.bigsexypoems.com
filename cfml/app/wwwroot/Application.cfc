@@ -283,6 +283,8 @@ component hint = "I define the application settings and event handlers." {
 				"?allowMultiQueries=true" &
 				"&characterEncoding=UTF-8" &
 				"&serverTimezone=UTC" &
+				"&connectionTimeZone=SERVER" &
+				"&preserveInstants=true" &
 				"&tinyInt1isBit=false" &
 				// Max Performance properties: https://github.com/mysql/mysql-connector-j/blob/release/8.0/src/main/resources/com/mysql/cj/configurations/maxPerformance.properties
 				"&useConfigs=maxPerformance"
