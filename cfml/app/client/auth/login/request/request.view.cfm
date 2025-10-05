@@ -41,11 +41,11 @@
 			</div>
 			<div class="uiField">
 				<label for="form--betaPassword" class="uiField_label">
-					Beta Password:
+					Beta Invitation Code:
 				</label>
 				<div class="uiField_content">
 					<p class="uiField_description">
-						During the development phase of this application, <strong><mark>new users</mark></strong> need a special password in order to log in. If you're keen to try BigSexyPoems, just let me know.
+						During the development phase of this application, <strong><mark>new users</mark></strong> need a special invitation code in order to log in. If you're keen to try BigSexyPoems, just reach out using <a href="https://linkedin.com/in/bennadel" target="_blank">LinkedIn</a> or <a href="https://www.bennadel.com/contact/contact-ben-nadel.htm" target="_blank">my blog</a>.
 					</p>
 
 					<input

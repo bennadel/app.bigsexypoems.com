@@ -25,7 +25,7 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Authentication.BetaPassword.Invalid":
 				return as403({
 					type: error.type,
-					message: "Your beta password is incorrect. Please contact me for help (either via LinkedIn or my website)."
+					message: "Your invitation code is incorrect. Please contact me for help (either via LinkedIn or my website)."
 				});
 			break;
 			case "App.Authentication.VerifyLogin.Expired":
