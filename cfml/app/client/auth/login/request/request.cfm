@@ -8,6 +8,7 @@
 	router = request.ioc.get( "core.lib.web.Router" );
 	sessionService = request.ioc.get( "core.lib.service.session.SessionService" );
 	turnstileClient = request.ioc.get( "core.lib.integration.turnstile.TurnstileClient" );
+	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";

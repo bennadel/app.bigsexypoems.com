@@ -4,7 +4,7 @@
 	<article r2mwmx>
 
 		<h1 r2mwmx class="title">
-			<span class="bigSexy">BigSexy</span>Poems
+			<a href="/" class="uiLink isSurprise"><span class="bigSexy">BigSexy</span>Poems</a>
 		</h1>
 
 		<form method="post" action="#request.postBackAction#">
