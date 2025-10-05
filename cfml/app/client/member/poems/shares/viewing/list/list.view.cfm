@@ -21,13 +21,13 @@
 						Viewed
 					</th>
 					<th>
-						Country
+						City
 					</th>
 					<th>
 						Region
 					</th>
 					<th>
-						City
+						Country
 					</th>
 				</tr>
 			</thead>
@@ -38,8 +38,8 @@
 							#ui.userDateTime( viewing.createdAt )#
 						</td>
 						<td>
-							<cfif viewing.ipCountry.len()>
-								#e( viewing.ipCountry )#
+							<cfif viewing.ipCity.len()>
+								#e( viewing.ipCity )#
 							<cfelse>
 								<em>Unknown</em>
 							</cfif>
@@ -52,8 +52,8 @@
 							</cfif>
 						</td>
 						<td>
-							<cfif viewing.ipCity.len()>
-								#e( viewing.ipCity )#
+							<cfif viewing.ipCountry.len()>
+								#e( viewing.ipCountry )#
 							<cfelse>
 								<em>Unknown</em>
 							</cfif>
