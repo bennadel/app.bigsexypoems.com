@@ -20,9 +20,9 @@
 
 	switch ( router.next( "home" ) ) {
 		case "home":
-		case "poems":
+		case "poem":
 		case "profile":
-		case "sessions":
+		case "session":
 			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
