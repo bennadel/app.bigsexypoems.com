@@ -65,7 +65,7 @@
 						</li>
 						<li>
 							<a
-								#ui.attrHref( "member.poems" )#
+								#ui.attrHref( "member.poem" )#
 								mpjwb9
 								#ui.attrClass([
 									navLink: true,
@@ -107,7 +107,7 @@
 						</li>
 						<li>
 							<a
-								#ui.attrHref( "member.sessions" )#
+								#ui.attrHref( "member.session" )#
 								mpjwb9
 								#ui.attrClass([
 									navLink: true,

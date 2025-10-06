@@ -21,7 +21,7 @@
 		// goes directly to the login form.
 
 		router.goto([
-			event: "member.poems.add",
+			event: "member.poem.add",
 			importFrom: localStorageKey
 		]);
 
