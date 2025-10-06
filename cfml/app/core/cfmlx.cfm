@@ -12,6 +12,27 @@
 	// ------------------------------------------------------------------------------- //
 
 	/**
+	* I convert the given arguments collection into a proper array.
+	*/
+	private array function argumentsToArray(
+		required any args,
+		boolean includeNullValues = true
+		) {
+
+		var result = arrayMap( args, ( arg ) => arguments?.arg );
+
+		if ( includeNullValues ) {
+
+			return result;
+
+		}
+
+		return result.filter( ( value ) => ! isNull( value ) );
+
+	}
+
+
+	/**
 	* I return a shallow copy / slice of the given array.
 	*/
 	private array function arrayCopy( required array collection ) {
@@ -173,10 +194,44 @@
 
 
 	/**
+	* I return the first non-null argument.
+	*/
+	private any function coalesce(/* variadic function */) {
+
+		// Caution: the `false` argument omits null values during conversion.
+		for ( var value in argumentsToArray( arguments, false ) ) {
+
+			return value;
+
+		}
+
+	}
+
+
+	/**
+	* I return the first truthy / non-falsy argument.
+	*/
+	private any function coalesceTruthy(/* variadic function */) {
+
+		// Caution: the `false` argument omits null values during conversion.
+		for ( var value in argumentsToArray( arguments, false ) ) {
+
+			if ( isTruthy( value ) ) {
+
+				return value;
+
+			}
+
+		}
+
+	}
+
+
+	/**
 	* I return the number of milliseconds since January 1, 1970, 00:00:00 GMT represented
 	* by this given date/time value.
 	*/
-	public numeric function dateGetTime( required any input ) {
+	private numeric function dateGetTime( required any input ) {
 
 		if ( isInstanceOf( input, "java.util.Date" ) ) {
 
@@ -331,6 +386,43 @@
 
 
 	/**
+	* I determine if the given value is a Falsy (according to JavaScript rules).
+	*
+	* See JavaScript definition on the Mozilla Developer Network (MDN):
+	* https://developer.mozilla.org/en-US/docs/Glossary/Falsy
+	*/
+	private boolean function isFalsy( any value ) {
+
+		if ( isNull( value ) ) {
+
+			return true;
+
+		}
+
+		if ( ! isSimpleValue( value ) ) {
+
+			return false;
+
+		}
+
+		if ( isString( value ) ) {
+
+			return ! value.len();
+
+		}
+
+		if ( isBoolean( value ) || isNumeric( value ) ) {
+
+			return ! value;
+
+		}
+
+		return false;
+
+	}
+
+
+	/**
 	* Polyfill Lucee CFML's isInThread() function using Adobe ColdFusion's page-context.
 	*/
 	private boolean function isInThread() {
@@ -346,6 +438,26 @@
 	private boolean function isString( required any value ) {
 
 		return isInstanceOf( value, "java.lang.String" );
+
+	}
+
+
+	/**
+	* I determine if the given value is a Truthy (according to JavaScript rules). A
+	* Truthy value is any value that is not explicitly designated as a Falsy.
+	*
+	* See JavaScript definition on the Mozilla Developer Network (MDN):
+	* https://developer.mozilla.org/en-US/docs/Glossary/Truthy
+	*/
+	private boolean function isTruthy( any value ) {
+
+		if ( isNull( value ) ) {
+
+			return false;
+
+		}
+
+		return ! isFalsy( value );
 
 	}
 
@@ -551,7 +663,7 @@
 	/**
 	* I return the current date/time in UTC.
 	*/
-	public date function utcNow() {
+	private date function utcNow() {
 
 		return dateConvert( "local2utc", now() );
 

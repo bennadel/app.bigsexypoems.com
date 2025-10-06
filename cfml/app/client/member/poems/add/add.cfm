@@ -15,6 +15,7 @@
 	param name="url.importFrom" type="string" default="";
 	param name="form.name" type="string" default="";
 	param name="form.content" type="string" default="";
+	param name="form.switchToComposer" type="boolean" default=false;
 
 	title = url.importFrom.len()
 		? "Import Poem From Playground"
@@ -30,6 +31,15 @@
 
 	if ( request.isPost ) {
 
+		// If the user is switching to the composer experience, we need to ensure that the
+		// poem has a name (since this is a required field). If there's no name, we'll
+		// just use a generic one that they can change once in the composer.
+		if ( form.switchToComposer ) {
+
+			form.name = coalesceTruthy( form.name, "New Poem at #ui.userTime( utcNow() )#" );
+
+		}
+
 		try {
 
 			poemID = poemService.createPoem(
@@ -38,6 +48,15 @@
 				poemName = form.name,
 				poemContent = form.content
 			);
+
+			if ( form.switchToComposer ) {
+
+				router.goto([
+					event: "member.poems.composer",
+					poemID: poemID
+				]);
+
+			}
 
 			router.goto([
 				event: "member.poems.view",

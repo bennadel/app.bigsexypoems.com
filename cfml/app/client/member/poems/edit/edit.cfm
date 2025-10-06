@@ -16,6 +16,7 @@
 	param name="url.poemID" type="numeric";
 	param name="form.name" type="string" default="";
 	param name="form.content" type="string" default="";
+	param name="form.switchToComposer" type="boolean" default=false;
 
 	partial = getPartial(
 		authContext = request.authContext,
@@ -39,12 +40,21 @@
 
 		try {
 
-			poemID = poemService.updatePoem(
+			poemService.updatePoem(
 				authContext = request.authContext,
 				poemID = poem.id,
 				poemName = form.name,
 				poemContent = form.content
 			);
+
+			if ( form.switchToComposer ) {
+
+				router.goto([
+					event: "member.poems.composer",
+					poemID: poem.id
+				]);
+
+			}
 
 			router.goto([
 				event: "member.poems.view",

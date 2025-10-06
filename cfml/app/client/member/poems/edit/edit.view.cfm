@@ -14,6 +14,7 @@
 
 		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
 			<cfmodule template="/client/_shared/tag/xsrf.cfm">
+			<cfmodule template="/client/_shared/tag/hiddenSubmit.cfm">
 
 			<div class="uiField">
 				<label for="form--name" class="uiField_label">
@@ -38,6 +39,10 @@
 					Content:
 				</label>
 				<div class="uiField_content">
+					<p class="uiField_description">
+						This is the "plain text" editor. To get <mark>syllable counts</mark>, <mark>rhymes</mark>, and <mark>synonyms</mark>, <button type="submit" name="switchToComposer" value="true" class="uiButton isLink">use the <strong>poem composer</strong></button> &rarr;
+					</p>
+
 					<textarea
 						id="form--content"
 						name="content"
