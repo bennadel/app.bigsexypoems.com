@@ -11,8 +11,6 @@
 	param name="attributes.xClassToken" type="string" default="";
 
 	include "./markdownDisclosure.view.cfm";
-
-	// Allow for aesthetic no-op closing tag.
 	exit;
 
 </cfscript>

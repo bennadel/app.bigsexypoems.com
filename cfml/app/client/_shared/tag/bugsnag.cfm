@@ -24,5 +24,6 @@
 	}
 
 	include "./bugsnag.view.cfm";
+	exit;
 
 </cfscript>

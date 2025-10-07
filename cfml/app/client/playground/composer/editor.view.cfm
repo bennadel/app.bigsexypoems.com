@@ -8,7 +8,7 @@
 		</h1>
 
 		<form method="post" action="#request.postBackAction#">
-			<cfmodule template="/client/_shared/tag/xsrf.cfm">
+			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
 			<label for="form--content" class="uiScreenReader">
 				Content:

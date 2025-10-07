@@ -28,8 +28,6 @@
 	}
 
 	include "./errorMessage.view.cfm";
-
-	// For CFML hierarchy purposes, allow for closing tag, but don't execute a second time.
 	exit;
 
 </cfscript>

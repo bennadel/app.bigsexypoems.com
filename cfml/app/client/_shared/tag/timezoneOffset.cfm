@@ -9,5 +9,6 @@
 	param name="attributes.xName" type="string" default="timezoneOffsetInMinutes";
 
 	include "./timezoneOffset.view.cfm";
+	exit;
 
 </cfscript>

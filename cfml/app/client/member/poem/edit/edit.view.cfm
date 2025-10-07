@@ -13,8 +13,8 @@
 		</cfmodule>
 
 		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
-			<cfmodule template="/client/_shared/tag/xsrf.cfm">
-			<cfmodule template="/client/_shared/tag/hiddenSubmit.cfm">
+			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
+			<cfmodule template="/client/_shared/tag/hiddenSubmit.cfm" />
 
 			<div class="uiField">
 				<label for="form--name" class="uiField_label">

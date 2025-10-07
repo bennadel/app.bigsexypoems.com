@@ -64,7 +64,7 @@
 							method="post"
 							#ui.attrAction( "member.poem.share.delete", "shareID", share.id )#
 							x-prevent-double-submit>
-							<cfmodule template="/client/_shared/tag/xsrf.cfm">
+							<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 							<input type="hidden" name="isConfirmed" value="true" />
 
 							<button type="submit" class="uiButton">

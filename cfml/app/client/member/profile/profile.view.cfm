@@ -17,7 +17,7 @@
 			action="#request.postBackAction#"
 			x-prevent-double-submit
 			class="uiReadableWidth">
-			<cfmodule template="/client/_shared/tag/xsrf.cfm">
+			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
 			<div class="uiField">
 				<div class="uiField_label">

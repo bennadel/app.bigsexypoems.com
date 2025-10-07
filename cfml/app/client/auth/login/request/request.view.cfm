@@ -17,7 +17,7 @@
 		</cfmodule>
 
 		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
-			<cfmodule template="/client/_shared/tag/xsrf.cfm">
+			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 			<input type="hidden" name="timezoneOffsetInMinutes" x-data="TzOffsetController" />
 
 			<div class="uiField">
