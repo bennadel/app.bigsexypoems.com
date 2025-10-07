@@ -55,7 +55,7 @@
 			hx-trigger="load delay:2s"
 			hx-swap="none"
 			style="display: none ;">
-			<cfmodule template="/client/_shared/tag/xsrf.cfm">
+			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 		</form>
 
 	</cfif>

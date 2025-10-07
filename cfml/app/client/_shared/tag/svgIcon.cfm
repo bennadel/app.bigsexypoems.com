@@ -23,8 +23,6 @@
 	href = icons[ attributes.type ];
 
 	include "./svgIcon.view.cfm";
-
-	// Allow for aesthetic no-op closing tag.
 	exit;
 
 </cfscript>

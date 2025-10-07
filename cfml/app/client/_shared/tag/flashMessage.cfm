@@ -25,5 +25,6 @@
 	flashResponse = flashTranslator.translate( flashToken, flashData );
 
 	include "./flashMessage.view.cfm";
+	exit;
 
 </cfscript>

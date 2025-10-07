@@ -60,7 +60,7 @@
 				</td>
 				<td>
 					<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
-						<cfmodule template="/client/_shared/tag/xsrf.cfm">
+						<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 						<input type="hidden" name="sessionID" value="#e4a( element.id )#" />
 
 						<button
@@ -84,7 +84,7 @@
 		</table>
 
 		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
-			<cfmodule template="/client/_shared/tag/xsrf.cfm">
+			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
 			<button type="submit" name="action" value="endAllSessions" class="uiButton isDanger">
 				End All Sessions

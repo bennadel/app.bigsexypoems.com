@@ -24,11 +24,11 @@
 	<!doctype html>
 	<html lang="en">
 	<head>
-		<cfmodule template="/client/_shared/tag/meta.cfm">
-		<cfmodule template="/client/_shared/tag/title.cfm">
-		<cfmodule template="/client/_shared/tag/favicon.cfm">
-		<cfmodule template="/client/_shared/tag/bugsnag.cfm">
-		<cfmodule template="/client/_shared/tag/opengraph.cfm">
+		<cfmodule template="/client/_shared/tag/meta.cfm" />
+		<cfmodule template="/client/_shared/tag/title.cfm" />
+		<cfmodule template="/client/_shared/tag/favicon.cfm" />
+		<cfmodule template="/client/_shared/tag/bugsnag.cfm" />
+		<cfmodule template="/client/_shared/tag/opengraph.cfm" />
 
 		<!---
 			Todo: I should separate out the base CSS so that I can use it in places like

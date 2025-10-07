@@ -12,5 +12,6 @@
 	param name="request.response.title" type="string" default=config.site.name;
 
 	include "./title.view.cfm";
+	exit;
 
 </cfscript>

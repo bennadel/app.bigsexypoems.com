@@ -13,5 +13,6 @@
 	challengeToken = request.xsrfToken;
 
 	include "./xsrf.view.cfm";
+	exit;
 
 </cfscript>

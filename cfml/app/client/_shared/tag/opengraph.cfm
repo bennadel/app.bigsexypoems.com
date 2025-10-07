@@ -17,5 +17,6 @@
 	};
 
 	include "./opengraph.view.cfm";
+	exit;
 
 </cfscript>
