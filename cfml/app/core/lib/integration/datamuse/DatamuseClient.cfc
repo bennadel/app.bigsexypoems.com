@@ -11,9 +11,21 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
 
+	variables.DEFAULT_HTTP_TIMEOUT = 5;
+
 	// ---
 	// PUBLIC METHODS.
 	// ---
+
+	/**
+	* I return the default request timeout used for the underlying HTTP call.
+	*/
+	public numeric function getDefaultHttpTimeout() {
+
+		return DEFAULT_HTTP_TIMEOUT;
+
+	}
+
 
 	/**
 	* I get words that generally mean the same thing as the given word.
@@ -122,7 +134,11 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		// 	.filter( ( result ) => normalizeResult( result ) )
 		// ;
 
-		var results = gateway.makeRequest( resource, searchParams );
+		var results = gateway.makeRequest(
+			resource = resource,
+			searchParams = searchParams,
+			timeoutInSeconds = DEFAULT_HTTP_TIMEOUT
+		);
 		var filteredResults = [];
 
 		for ( var result in results ) {

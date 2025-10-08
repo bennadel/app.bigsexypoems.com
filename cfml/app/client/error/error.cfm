@@ -16,8 +16,8 @@
 
 	if ( request.isHtmx && ! request.htmx.boosted ) {
 
-		// Responses to an (non-boosted) htmx request are intended to be transcluded into
-		// an existing UI. As such, the response wrapper is minimal.
+		// Responses to a non-boosted htmx request are intended to be transcluded into an
+		// existing UI. As such, the response wrapper is minimal.
 		cfmodule( template = "./htmx/htmx.cfm" );
 
 	} else {

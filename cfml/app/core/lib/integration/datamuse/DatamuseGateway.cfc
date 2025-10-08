@@ -16,7 +16,7 @@ component hint = "I provide low-level HTTP access to the Datamuse API." {
 	public any function makeRequest(
 		required string resource,
 		required struct searchParams,
-		numeric timeoutInSeconds = 5
+		required numeric timeoutInSeconds
 		) {
 
 		cfhttp(
