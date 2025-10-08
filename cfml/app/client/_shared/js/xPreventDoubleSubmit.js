@@ -15,6 +15,7 @@ function PreventDoubleSubmitDirective( element, metadata, framework ) {
 
 	var isSubmitting = false;
 
+	window.addEventListener( "pageshow", handlePageshow );
 	element.addEventListener( "submit", handleSubmit );
 
 	// ---
@@ -32,7 +33,34 @@ function PreventDoubleSubmitDirective( element, metadata, framework ) {
 
 
 	/**
-	* I handle the submit event.
+	* I handle the pageshow event which is triggered when the page is rendered due to
+	* browser navigation. This puts the form back into a submittable state so that the
+	* user can re-submit it.
+	*/
+	function handlePageshow( event ) {
+
+		// If the page wasn't pulled from the bfcache (Back/Forward), then the controller
+		// is already in a good state.
+		if ( ! event.persisted ) {
+
+			return;
+
+		}
+
+		isSubmitting = false;
+
+		for ( var node of getButtons() ) {
+
+			node.classList.remove( "isDisabled" );
+			node.disabled = false;
+
+		}
+
+	}
+
+
+	/**
+	* I handle the submit event, disabling buttons to prevent double-submission.
 	*/
 	function handleSubmit( event ) {
 
