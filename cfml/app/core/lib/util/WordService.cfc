@@ -23,16 +23,6 @@ component hint = "I provide methods for getting words related to other words." {
 	// ---
 
 	/**
-	* I return the maximum request timeout used by the underlying remote API look-ups.
-	*/
-	public numeric function getMaxRequestTimeout() {
-
-		return datamuseClient.getDefaultHttpTimeout();
-
-	}
-
-
-	/**
 	* I get the words that loosely relate to the given word.
 	*/
 	public array function getMeansLike(

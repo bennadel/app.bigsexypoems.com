@@ -6,27 +6,24 @@
 component hint = "I provide high-level HTTP access to the Datamuse API." {
 
 	// Define properties for dependency-injection.
-	property name="DEFAULT_HTTP_TIMEOUT" ioc:skip;
 	property name="gateway" ioc:type="core.lib.integration.datamuse.DatamuseGateway";
+	property name="timeoutInSeconds" ioc:skip;
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
 
-	variables.DEFAULT_HTTP_TIMEOUT = 5;
+	/**
+	* I initialize the service.
+	*/
+	public void function init( numeric timeoutInSeconds = 5 ) {
+
+		variables.timeoutInSeconds = arguments.timeoutInSeconds;
+
+	}
 
 	// ---
 	// PUBLIC METHODS.
 	// ---
-
-	/**
-	* I return the default request timeout used for the underlying HTTP call.
-	*/
-	public numeric function getDefaultHttpTimeout() {
-
-		return DEFAULT_HTTP_TIMEOUT;
-
-	}
-
 
 	/**
 	* I get words that generally mean the same thing as the given word.
@@ -138,7 +135,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		var results = gateway.makeRequest(
 			resource = resource,
 			searchParams = searchParams,
-			timeoutInSeconds = DEFAULT_HTTP_TIMEOUT
+			timeoutInSeconds = timeoutInSeconds
 		);
 		var filteredResults = [];
 

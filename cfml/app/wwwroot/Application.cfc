@@ -114,6 +114,17 @@ component hint = "I define the application settings and event handlers." {
 	*/
 	public void function onRequestStart() {
 
+		// Note: my thinking about the request timeout is currently in flux. Previously,
+		// I was trying to keep the timeout extra small (and then override as necessary on
+		// a per-request basis). But, this added a lot of complexity to a workflow that is
+		// inherently unpredictable. Now, I'm going back to using a more flexible request
+		// timeout in order to provide more wiggle-room, generally. I'll then monitor the
+		// server using something like PMT (Performance Monitoring Tool); and, explicitly
+		// address slow-running requests as they emerge.
+		cfsetting( requestTimeout = 20 );
+		cfsetting( showDebugOutput = false );
+
+		// Reload the application config when prompted.
 		if ( url?.init == this.config.initPassword ) {
 
 			this.onApplicationStart();
@@ -128,16 +139,7 @@ component hint = "I define the application settings and event handlers." {
 
 		}
 
-		// By default, we want the request timeout to be relatively low so that we lock
-		// page processing down. This means that we have to make a cognizant choice to
-		// create slow(er) pages later on by explicitly extending the timeout.
-		cfsetting(
-			requestTimeout = 5,
-			showDebugOutput = false
-		);
-
 		request.ioc = application.ioc;
-
 		// Polyfill the Lucee CFML behavior in which "field[]" notation causes multiple
 		// fields (form or url) to be grouped together as an array. This is the way.
 		request.ioc.get( "core.lib.web.ParameterGroupingPolyfill" )
