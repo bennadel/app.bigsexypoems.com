@@ -478,6 +478,17 @@
 
 
 	/**
+	* I polyfill the nullValue() function in Adobe ColdFusion.
+	*/
+	private void function nullValue() {
+
+		// Atreyu: What is the Nothing?
+		// Gmork: It's the emptiness that's left. It is like a despair, destroying this world.
+
+	}
+
+
+	/**
 	* I create a new range with the given indicies.
 	*/
 	private array function rangeNew(
