@@ -64,7 +64,7 @@
 
 		title = request.response.title = "Could Not Verify Login";
 
-		include "./verify.error.cfm";
+		include "./verify.error.view.cfm";
 
 	} else {
 

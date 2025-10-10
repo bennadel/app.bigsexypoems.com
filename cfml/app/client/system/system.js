@@ -2,7 +2,7 @@
 // Import app modules.
 import "../_shared/less/ui.less";
 import "../_shared/tag/localDevelopment.view.{js,less}";
-import "./*/**/*.{js,less}";
+import "./**/*.view.{js,less}";
 
 // ----------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------- //
