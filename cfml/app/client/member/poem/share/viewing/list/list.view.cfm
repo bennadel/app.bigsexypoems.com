@@ -14,7 +14,7 @@
 
 		<cfif viewings.len()>
 
-			<table border="1" cellspacing="5" cellpadding="10">
+			<table class="uiTable">
 			<thead>
 				<tr>
 					<th>

@@ -11,13 +11,13 @@
 			<a #ui.attrHref( "member.poem.add" )#>Add Poem</a>
 		</p>
 
-		<table border="1" cellspacing="5" cellpadding="10">
+		<table class="uiTable">
 		<thead>
 			<tr>
 				<th>
 					Name
 				</th>
-				<th>
+				<th class="w-1">
 					Created
 				</th>
 			</tr>
@@ -28,7 +28,7 @@
 					<td>
 						<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.name )#</a>
 					</td>
-					<td>
+					<td class="isNoWrap">
 						#poem.createdAt.dateFormat( "mmmm d, yyyy" )#
 					</td>
 				</tr>

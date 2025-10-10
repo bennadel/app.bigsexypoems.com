@@ -1,13 +1,13 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article class="uiReadableWidth">
+	<article>
 
 		<h1>
 			#e( title )#
 		</h1>
 
-		<p>
+		<p class="uiReadableWidth">
 			Your user is currently associated with the following sessions.
 		</p>
 
@@ -16,7 +16,7 @@
 			response="#errorResponse#">
 		</cfmodule>
 
-		<table border="1" cellpadding="10">
+		<table class="uiTable">
 		<thead>
 			<tr>
 				<th>
@@ -34,7 +34,7 @@
 				<th align="center">
 					Current
 				</th>
-				<th>
+				<th class="w-1">
 					<br />
 				</th>
 			</tr>
@@ -58,7 +58,7 @@
 						Yes
 					</cfif>
 				</td>
-				<td>
+				<td class="isNoWrap">
 					<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
 						<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 						<input type="hidden" name="sessionID" value="#e4a( element.id )#" />

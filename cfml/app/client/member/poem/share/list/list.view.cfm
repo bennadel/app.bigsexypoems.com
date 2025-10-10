@@ -14,7 +14,7 @@
 			<a #ui.attrHref( "member.poem.share.add", "poemID", poem.id )#>Add share links</a>
 		</p>
 
-		<table border="1" cellspacing="5" cellpadding="10">
+		<table class="uiTable">
 		<thead>
 			<tr>
 				<th>
@@ -32,7 +32,7 @@
 				<th>
 					Views
 				</th>
-				<th>
+				<th class="w-1">
 					Actions
 				</th>
 			</tr>
@@ -55,7 +55,7 @@
 				<td>
 					<a #ui.attrHref( "member.poem.share.viewing", "shareID", share.id )#>#numberFormat( share.viewingCount )#</a>
 				</td>
-				<td>
+				<td class="isNoWrap">
 					<div class="uiHstack">
 						<a #ui.attrHref( "member.poem.share.edit", "shareID", share.id )#>
 							Edit

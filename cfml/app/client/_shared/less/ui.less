@@ -188,6 +188,10 @@
 	--info-stroke: var( --stone-9 ) ;
 	--info-text: var( --stone-9 ) ;
 
+	// Tables.
+	--table-stroke: var( --stone-9 ) ;
+	--table-fill-hover: var( --yellow-0 ) ;
+
 	// Rules / dividers.
 	--rule-nav: var( --stone-9 ) ;
 	--rule-content: var( --stone-5 );
@@ -384,7 +388,7 @@ table {
 	:where( & ) {
 		border-collapse: collapse ;
 		border-spacing: 0 ;
-		margin-bottom: var( --space-block ) ;
+		margin-bottom: var( --space-block-l ) ;
 	}
 }
 
@@ -705,6 +709,44 @@ pre code {
 		&:hover {
 			color: var( --link-hover-text ) ;
 			text-decoration: underline ;
+		}
+	}
+}
+
+.uiTable {
+	:where( & ) {
+		border: 1px solid var( --table-stroke ) ;
+		width: 100% ;
+	}
+
+	> thead > tr > th,
+	        > tr > th,
+	> tbody > tr > td,
+	> tfoot > tr > td,
+	        > tr > td {
+		:where( & ) {
+			border: 1px solid var( --table-stroke ) ;
+			padding: var( --pad-block ) var( --pad-inline ) ;
+		}
+	}
+
+	> tbody > tr:hover > th,
+	> tbody > tr:hover > td,
+	        > tr:hover > td {
+		:where( & ) {
+			background-color: var( --table-fill-hover ) ;
+		}
+	}
+
+	> thead > tr > th,
+	        > tr > th,
+	> tbody > tr > th,
+	> tbody > tr > td,
+	> tfoot > tr > th,
+	> tfoot > tr > td,
+	>         tr > td {
+		:where( &.isNoWrap ) {
+			text-wrap: nowrap ;
 		}
 	}
 }
@@ -1150,4 +1192,305 @@ pre code {
 }
 :where( .mbxl ) {
 	margin-bottom: var( --space-block-xl );
+}
+
+:where( .w-1 ) {
+	width: 1% ;
+}
+:where( .w-2 ) {
+	width: 2% ;
+}
+:where( .w-3 ) {
+	width: 3% ;
+}
+:where( .w-4 ) {
+	width: 4% ;
+}
+:where( .w-5 ) {
+	width: 5% ;
+}
+:where( .w-6 ) {
+	width: 6% ;
+}
+:where( .w-7 ) {
+	width: 7% ;
+}
+:where( .w-8 ) {
+	width: 8% ;
+}
+:where( .w-9 ) {
+	width: 9% ;
+}
+:where( .w-10 ) {
+	width: 10% ;
+}
+:where( .w-11 ) {
+	width: 11% ;
+}
+:where( .w-12 ) {
+	width: 12% ;
+}
+:where( .w-13 ) {
+	width: 13% ;
+}
+:where( .w-14 ) {
+	width: 14% ;
+}
+:where( .w-15 ) {
+	width: 15% ;
+}
+:where( .w-16 ) {
+	width: 16% ;
+}
+:where( .w-17 ) {
+	width: 17% ;
+}
+:where( .w-18 ) {
+	width: 18% ;
+}
+:where( .w-19 ) {
+	width: 19% ;
+}
+:where( .w-20 ) {
+	width: 20% ;
+}
+:where( .w-21 ) {
+	width: 21% ;
+}
+:where( .w-22 ) {
+	width: 22% ;
+}
+:where( .w-23 ) {
+	width: 23% ;
+}
+:where( .w-24 ) {
+	width: 24% ;
+}
+:where( .w-25 ) {
+	width: 25% ;
+}
+:where( .w-26 ) {
+	width: 26% ;
+}
+:where( .w-27 ) {
+	width: 27% ;
+}
+:where( .w-28 ) {
+	width: 28% ;
+}
+:where( .w-29 ) {
+	width: 29% ;
+}
+:where( .w-30 ) {
+	width: 30% ;
+}
+:where( .w-31 ) {
+	width: 31% ;
+}
+:where( .w-32 ) {
+	width: 32% ;
+}
+:where( .w-33 ) {
+	width: 33% ;
+}
+:where( .w-34 ) {
+	width: 34% ;
+}
+:where( .w-35 ) {
+	width: 35% ;
+}
+:where( .w-36 ) {
+	width: 36% ;
+}
+:where( .w-37 ) {
+	width: 37% ;
+}
+:where( .w-38 ) {
+	width: 38% ;
+}
+:where( .w-39 ) {
+	width: 39% ;
+}
+:where( .w-40 ) {
+	width: 40% ;
+}
+:where( .w-41 ) {
+	width: 41% ;
+}
+:where( .w-42 ) {
+	width: 42% ;
+}
+:where( .w-43 ) {
+	width: 43% ;
+}
+:where( .w-44 ) {
+	width: 44% ;
+}
+:where( .w-45 ) {
+	width: 45% ;
+}
+:where( .w-46 ) {
+	width: 46% ;
+}
+:where( .w-47 ) {
+	width: 47% ;
+}
+:where( .w-48 ) {
+	width: 48% ;
+}
+:where( .w-49 ) {
+	width: 49% ;
+}
+:where( .w-50 ) {
+	width: 50% ;
+}
+:where( .w-51 ) {
+	width: 51% ;
+}
+:where( .w-52 ) {
+	width: 52% ;
+}
+:where( .w-53 ) {
+	width: 53% ;
+}
+:where( .w-54 ) {
+	width: 54% ;
+}
+:where( .w-55 ) {
+	width: 55% ;
+}
+:where( .w-56 ) {
+	width: 56% ;
+}
+:where( .w-57 ) {
+	width: 57% ;
+}
+:where( .w-58 ) {
+	width: 58% ;
+}
+:where( .w-59 ) {
+	width: 59% ;
+}
+:where( .w-60 ) {
+	width: 60% ;
+}
+:where( .w-61 ) {
+	width: 61% ;
+}
+:where( .w-62 ) {
+	width: 62% ;
+}
+:where( .w-63 ) {
+	width: 63% ;
+}
+:where( .w-64 ) {
+	width: 64% ;
+}
+:where( .w-65 ) {
+	width: 65% ;
+}
+:where( .w-66 ) {
+	width: 66% ;
+}
+:where( .w-67 ) {
+	width: 67% ;
+}
+:where( .w-68 ) {
+	width: 68% ;
+}
+:where( .w-69 ) {
+	width: 69% ;
+}
+:where( .w-70 ) {
+	width: 70% ;
+}
+:where( .w-71 ) {
+	width: 71% ;
+}
+:where( .w-72 ) {
+	width: 72% ;
+}
+:where( .w-73 ) {
+	width: 73% ;
+}
+:where( .w-74 ) {
+	width: 74% ;
+}
+:where( .w-75 ) {
+	width: 75% ;
+}
+:where( .w-76 ) {
+	width: 76% ;
+}
+:where( .w-77 ) {
+	width: 77% ;
+}
+:where( .w-78 ) {
+	width: 78% ;
+}
+:where( .w-79 ) {
+	width: 79% ;
+}
+:where( .w-80 ) {
+	width: 80% ;
+}
+:where( .w-81 ) {
+	width: 81% ;
+}
+:where( .w-82 ) {
+	width: 82% ;
+}
+:where( .w-83 ) {
+	width: 83% ;
+}
+:where( .w-84 ) {
+	width: 84% ;
+}
+:where( .w-85 ) {
+	width: 85% ;
+}
+:where( .w-86 ) {
+	width: 86% ;
+}
+:where( .w-87 ) {
+	width: 87% ;
+}
+:where( .w-88 ) {
+	width: 88% ;
+}
+:where( .w-89 ) {
+	width: 89% ;
+}
+:where( .w-90 ) {
+	width: 90% ;
+}
+:where( .w-91 ) {
+	width: 91% ;
+}
+:where( .w-92 ) {
+	width: 92% ;
+}
+:where( .w-93 ) {
+	width: 93% ;
+}
+:where( .w-94 ) {
+	width: 94% ;
+}
+:where( .w-95 ) {
+	width: 95% ;
+}
+:where( .w-96 ) {
+	width: 96% ;
+}
+:where( .w-97 ) {
+	width: 97% ;
+}
+:where( .w-98 ) {
+	width: 98% ;
+}
+:where( .w-99 ) {
+	width: 99% ;
+}
+:where( .w-100 ) {
+	width: 100% ;
 }
