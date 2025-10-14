@@ -1,6 +1,5 @@
 <cfscript>
 
-	// poemAccess = request.ioc.get( "core.lib.service.poem.PoemAccess" );
 	poemModel = request.ioc.get( "core.lib.model.poem.PoemModel" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
