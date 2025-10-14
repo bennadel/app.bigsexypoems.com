@@ -9,6 +9,8 @@
 
 		<p>
 			<a #ui.attrHref( "member.poem.add" )#>Add Poem</a>
+			|
+			<a #ui.attrHref( "member.poem.shareAll" )#>All Share Links</a>
 		</p>
 
 		<table class="uiTable">

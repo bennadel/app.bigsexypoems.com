@@ -10,14 +10,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	switch ( router.next( "list" ) ) {
-		case "add":
-		case "composer":
-		case "edit":
-		case "delete":
 		case "list":
-		case "share":
-		case "shareAll":
-		case "view":
 			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
