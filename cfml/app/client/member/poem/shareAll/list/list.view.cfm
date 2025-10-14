@@ -39,14 +39,14 @@
 				<tr>
 					<cfif ( shareIndex eq 1 )>
 						<td valign="top" rowspan="#poem.shares.len()#">
-							<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.name )#</a>
+							<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#><strong>#e( poem.name )#</strong></a>
 						</td>
 					</cfif>
 					<td>
 						<a #ui.attrHref( "member.poem.share.list", "poemID", poem.id )#>#e( coalesceTruthy( share.name, "Unnamed" ) )#</a>
 					</td>
 					<td>
-						#e( share.noteMarkdown )#
+						#e( truncate( share.noteMarkdown, 30 ) )#
 					</td>
 					<td>
 						<cfif share.viewingCount>

@@ -656,6 +656,36 @@
 
 
 	/**
+	* I truncate the given input at the given length (if exceeded).
+	*/
+	private string function truncate(
+		required string input,
+		required numeric maxLength,
+		string ellipse = "..."
+		) {
+
+		if ( input.len() <= maxLength ) {
+
+			return input;
+
+		}
+
+		// Edge-case protection against absurd values.
+		if (
+			( ellipse.len() >= maxLength ) ||
+			( ellipse.len() >= input )
+			) {
+
+			return input;
+
+		}
+
+		return ( input.left( maxLength - ellipse.len() ) & ellipse );
+
+	}
+
+
+	/**
 	* I polyfill the ucFirst() function in Adobe ColdFusion.
 	*/
 	private string function ucFirst( required string input ) {
