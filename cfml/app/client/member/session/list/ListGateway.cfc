@@ -1,11 +1,11 @@
-<cfcomponent output="false">
+<cfcomponent extends="core.lib.model.BaseGateway">
 
 	<cffunction name="getSessions" returnType="array">
 
 		<cfargument name="userID" type="numeric" />
 
 		<cfquery name="local.results" result="local.metaResults" returnType="array">
-			/* DEBUG: client.member.session.list.ListGateway. */
+			#DEBUGGING_COMMENT#
 			SELECT
 				s.id,
 				s.isAuthenticated,

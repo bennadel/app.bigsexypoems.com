@@ -31,25 +31,15 @@
 
 		for ( var result in results ) {
 
-			if ( result.poem_id != poem.id ) {
+			if ( result.poem.id != poem.id ) {
 
-				poem = {
-					id: result.poem_id,
-					name: result.poem_name,
-					shares: []
-				};
+				poem = result.poem;
+				poem.shares = [];
 				poems.append( poem );
 
 			}
 
-			poem.shares.append({
-				id: result.share_id,
-				token: result.share_token,
-				name: result.share_name,
-				noteMarkdown: result.share_noteMarkdown,
-				viewingCount: result.share_viewingCount,
-				createdAt: result.share_createdAt
-			});
+			poem.shares.append( result.share );
 
 		}
 

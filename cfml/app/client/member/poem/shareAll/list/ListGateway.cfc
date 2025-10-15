@@ -1,11 +1,11 @@
-<cfcomponent output="false">
+<cfcomponent extends="core.lib.model.BaseGateway">
 
 	<cffunction name="getShares" returnType="array">
 
 		<cfargument name="userID" type="numeric" />
 
 		<cfquery name="local.results" result="local.metaResults" returnType="array">
-			/* DEBUG: client.member.poem.shareAll.list.ListGateway. */
+			#DEBUGGING_COMMENT#
 			SELECT
 				<!--- Poem data. --->
 				p.id AS poem_id,
@@ -34,7 +34,7 @@
 				share_id ASC
 		</cfquery>
 
-		<cfreturn results />
+		<cfreturn normalizeCrossProduct( results ) />
 
 	</cffunction>
 
