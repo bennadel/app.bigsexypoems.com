@@ -577,41 +577,6 @@
 
 
 	/**
-	* I split the given struct into multiple structs. The name of each sub-struct is
-	* determined by the first element in the delimiter-based list. Each sub-struct key is
-	* then determined by the second element in the delimiter-based list.
-	*/
-	private struct function structSplit(
-		required struct input,
-		string delimiter = "_",
-		string structType = ""
-		) {
-
-		return input.reduce(
-			( reduction, key, value ) => {
-
-				// Each top-level key is expected to contain two parts: the sub-struct
-				// name and the sub-struct key: `{ objectName }_{ objectKey }`.
-				var [ objectName, objectKey ] = key.listToArray( delimiter );
-
-				if ( ! reduction.keyExists( objectName ) ) {
-
-					reduction[ objectName ] = structNew( structType );
-
-				}
-
-				reduction[ objectName ][ objectKey ] = value;
-
-				return reduction;
-
-			},
-			{} // Initial reduction (holds the sub-structs).
-		);
-
-	}
-
-
-	/**
 	* I polyfill the systemOutput() function in Adobe ColdFusion.
 	*/
 	private void function systemOutput(

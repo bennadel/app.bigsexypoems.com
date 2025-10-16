@@ -25,11 +25,46 @@ component output = false {
 	// ---
 
 	/**
-	* I split each row (within a cross-join) into a collection of separate objects.
+	* I split each row (within a cross-join) into a collection of separate objects. This
+	* transformation is performed in-place.
 	*/
-	private array function normalizeCrossProduct( required array results ) {
+	private array function normalizeCrossJoin( required array results ) {
 
-		return results.map( ( row ) => structSplit( row ) );
+		return results.each( ( row ) => normalizeCrossJoinNamespaces( row ) )
+			?: results // Hack because ACF doesn't return a collection from .each().
+		;
+
+	}
+
+
+	/**
+	* I split the given cross-product struct into multiple structs. The name of each
+	* sub-struct is determined by the first element in the delimited list. This
+	* transformation is performed in-place.
+	*/
+	private void function normalizeCrossJoinNamespaces( required struct input ) {
+
+		for ( var key in input.keyArray() ) {
+
+			// Expects most entries to be in the form of `{subName}_{subKey}`.
+			var parts = key.listToArray( "_" );
+
+			// If there's no namespace, or the delimiter occurs too many times, skip over
+			// the key - it's unclear how to process it.
+			if ( parts.len() != 2 ) {
+
+				continue;
+
+			}
+
+			var subName = parts[ 1 ];
+			var subKey = parts[ 2 ];
+			// MOVE KEY into sub-key. Note that ColdFusion will create a new struct as-
+			// needed. We don't have to perform any special check for the namespace.
+			input[ subName ][ subKey ] = input[ key ];
+			input.delete( key );
+
+		}
 
 	}
 

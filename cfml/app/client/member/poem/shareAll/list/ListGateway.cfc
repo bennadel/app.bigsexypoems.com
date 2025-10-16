@@ -34,7 +34,7 @@
 				share_id ASC
 		</cfquery>
 
-		<cfreturn normalizeCrossProduct( results ) />
+		<cfreturn normalizeCrossJoin( results ) />
 
 	</cffunction>
 
