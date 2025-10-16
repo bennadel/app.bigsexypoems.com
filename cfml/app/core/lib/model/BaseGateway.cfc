@@ -2,7 +2,7 @@ component output = false {
 
 	// Define properties for dependency-injection.
 	property name="DEBUGGING_COMMENT" ioc:skip;
-	property name="dotPath" ioc:skip;
+	property name="DOT_PATH" ioc:skip;
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
