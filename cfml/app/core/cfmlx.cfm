@@ -327,6 +327,9 @@
 				**/
 
 				html body table[class^='cfdump_'] {
+					border-collapse: separate ;
+					border-spacing: 2px ;
+					font-family: verdana, arial, helvetica, sans-serif ;
 					margin-bottom: 1.5rem ;
 
 					& table[class^='cfdump_'] {

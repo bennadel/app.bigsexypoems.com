@@ -22,10 +22,11 @@
 					Last Processed Error
 				</h2>
 
-				<cfdump
-					var="#error#"
-					hide="Element, ErrNumber, Id, ObjectType, Raw_Trace, ResolvedName, Stacktrace, Suppressed"
-				/>
+				<!--- Note: I'm using my internal polyfill for better output control. --->
+				<cfset dump(
+					var = "#error#",
+					hide = "Element, ErrNumber, Id, ObjectType, Raw_Trace, ResolvedName, Stacktrace, Suppressed"
+				) />
 
 			</section>
 
