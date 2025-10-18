@@ -1,4 +1,4 @@
-<cfcomponent output="false">
+<cfcomponent extends="core.lib.model.BaseGateway">
 
 	<cffunction name="getByFilter" returnType="array">
 
@@ -34,7 +34,13 @@
 				id ASC
 		</cfquery>
 
-		<cfreturn decodeColumns( results ) />
+		<cfreturn decodeColumns(
+			results,
+			{
+				isDailyTask: "boolean",
+				state: "json"
+			}
+		) />
 
 	</cffunction>
 
@@ -56,23 +62,6 @@
 			WHERE
 				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_varchar" />
 		</cfquery>
-
-	</cffunction>
-
-	<!--- Private methods. --->
-
-	<cffunction name="decodeColumns" returnType="array" access="private">
-
-		<cfargument name="results" type="array" required="true" />
-
-		<cfloop array="#results#" index="local.element">
-
-			<cfset element.isDailyTask = !! element.isDailyTask />
-			<cfset element.state = deserializeJson( element.state ) />
-
-		</cfloop>
-
-		<cfreturn results />
 
 	</cffunction>
 

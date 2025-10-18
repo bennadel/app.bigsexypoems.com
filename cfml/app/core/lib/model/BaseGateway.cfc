@@ -25,6 +25,38 @@ component output = false {
 	// ---
 
 	/**
+	* When storing data in the database, we often have to use constructs that don't
+	* exactly match the intent of the modeled data. This method provides a high-level way
+	* to map common database values back into their ColdFusion counterparts.
+	*/
+	private array function decodeColumns(
+		required array results,
+		required struct mappings
+		) {
+
+		for ( var row in results ) {
+
+			for ( var key in mappings ) {
+
+				switch ( mappings[ key ] ) {
+					case "boolean":
+						row[ key ] = !! row[ key ];
+					break;
+					case "json":
+						row[ key ] = deserializeJson( row[ key ] );
+					break;
+				}
+
+			}
+
+		}
+
+		return results;
+
+	}
+
+
+	/**
 	* I split each row (within a cross-join) into a collection of separate objects. This
 	* transformation is performed in-place.
 	*/

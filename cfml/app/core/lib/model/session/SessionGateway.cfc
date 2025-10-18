@@ -1,4 +1,4 @@
-<cfcomponent output="false">
+<cfcomponent extends="core.lib.model.BaseGateway">
 
 	<cffunction name="create" returnType="numeric">
 
@@ -105,7 +105,12 @@
 				id ASC
 		</cfquery>
 
-		<cfreturn decodeColumns( results ) />
+		<cfreturn decodeColumns(
+			results,
+			{
+				isAuthenticated: "boolean"
+			}
+		) />
 
 	</cffunction>
 
@@ -123,22 +128,6 @@
 			WHERE
 				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
 		</cfquery>
-
-	</cffunction>
-
-	<!--- Private methods. --->
-
-	<cffunction name="decodeColumns" returnType="array" access="private">
-
-		<cfargument name="results" type="array" required="true" />
-
-		<cfloop array="#results#" index="local.element">
-
-			<cfset element.isAuthenticated = !! element.isAuthenticated />
-
-		</cfloop>
-
-		<cfreturn results />
 
 	</cffunction>
 
