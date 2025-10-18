@@ -190,9 +190,9 @@
 					<legend class="uiLegend">
 						Sort By:
 					</legend>
-					<label for="form--syllable--groupBy--a" class="uiHstack isTight">
+					<label for="form--synonyms--groupBy--a" class="uiHstack isTight">
 						<input
-							id="form--syllable--groupBy--a"
+							id="form--synonyms--groupBy--a"
 							type="radio"
 							name="groupBy"
 							value="syllableCount"
@@ -200,9 +200,9 @@
 						/>
 						Syllable Count
 					</label>
-					<label for="form--syllable--groupBy--b" class="uiHstack isTight">
+					<label for="form--synonyms--groupBy--b" class="uiHstack isTight">
 						<input
-							id="form--syllable--groupBy--b"
+							id="form--synonyms--groupBy--b"
 							type="radio"
 							name="groupBy"
 							value="typeOfSpeech"
