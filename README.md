@@ -198,11 +198,11 @@ In order to create end-to-end encryption through to the origin server, I'm using
 
 17. Add a binding and choose:
 
-  * Type: `https`
-  * Host name: `app.bigsexypoems.com`
-  * Enable: `Require server name authentication` - this ensures that IIS uses the host name when figuring out which SSL certificate to use.
-  * SSL Certificate: Choose the imported certificate.
+    * Type: `https`
+    * Host name: `app.bigsexypoems.com`
+    * Enable: `Require server name authentication` - this ensures that IIS uses the host name when figuring out which SSL certificate to use.
+    * SSL Certificate: Choose the imported certificate.
 
-  Click `Ok`.
+    Click `Ok`.
 
 And that's all there is to it - just _17 easy steps_ (lolol). But at least this will last for 15-years.
