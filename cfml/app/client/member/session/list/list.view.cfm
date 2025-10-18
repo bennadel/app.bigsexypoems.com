@@ -39,6 +39,7 @@
 				</th>
 			</tr>
 		</thead>
+		<tbody>
 		<cfloop array="#sessions#" item="element">
 			<tr>
 				<td>
@@ -81,6 +82,7 @@
 				</td>
 			</tr>
 		</cfloop>
+		</tbody>
 		</table>
 
 		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
