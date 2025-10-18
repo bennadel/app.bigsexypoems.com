@@ -64,7 +64,11 @@
 
 			<form
 				hx-get="#router.urlForParts( 'playground.composer.rhymes' )#"
-				hx-trigger="submit, load"
+				hx-trigger="
+					load,
+					submit,
+					input from:.isHtmxRhymesTrigger
+				"
 				hx-target="next .results"
 				hx-sync="this:replace"
 				class="uiVstack">
@@ -81,7 +85,7 @@
 						value="Big"
 						class="uiInput"
 					/>
-					<select name="limit" class="uiSelect isAuto">
+					<select name="limit" class="uiSelect isAuto isHtmxRhymesTrigger">
 						<option value="50">50 results</option>
 						<option value="100" selected>100 results</option>
 						<option value="150">150 results</option>
@@ -104,7 +108,7 @@
 							type="radio"
 							name="groupBy"
 							value="syllableCount"
-							class="uiRadio"
+							class="uiRadio isHtmxRhymesTrigger"
 							checked
 						/>
 						Syllable Count
@@ -115,7 +119,7 @@
 							type="radio"
 							name="groupBy"
 							value="typeOfSpeech"
-							class="uiRadio"
+							class="uiRadio isHtmxRhymesTrigger"
 						/>
 						Type of Speech
 					</label>
@@ -134,7 +138,11 @@
 			</h2>
 			<form
 				hx-get="#router.urlForParts( 'playground.composer.synonyms' )#"
-				hx-trigger="submit, load"
+				hx-trigger="
+					load,
+					submit,
+					input from:.isHtmxSynonymsTrigger
+				"
 				hx-target="next .results"
 				hx-sync="this:replace"
 				class="uiVstack">
@@ -151,7 +159,7 @@
 						value="Sexy"
 						class="uiInput"
 					/>
-					<select name="limit" class="uiSelect isAuto">
+					<select name="limit" class="uiSelect isAuto isHtmxSynonymsTrigger">
 						<option value="50">50 results</option>
 						<option value="100" selected>100 results</option>
 						<option value="150">150 results</option>
@@ -174,7 +182,7 @@
 							type="radio"
 							name="groupBy"
 							value="syllableCount"
-							class="uiRadio"
+							class="uiRadio isHtmxSynonymsTrigger"
 						/>
 						Syllable Count
 					</label>
@@ -184,7 +192,7 @@
 							type="radio"
 							name="groupBy"
 							value="typeOfSpeech"
-							class="uiRadio"
+							class="uiRadio isHtmxSynonymsTrigger"
 							checked
 						/>
 						Type of Speech
