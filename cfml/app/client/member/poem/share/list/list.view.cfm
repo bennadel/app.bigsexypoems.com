@@ -67,7 +67,7 @@
 							<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 							<input type="hidden" name="isConfirmed" value="true" />
 
-							<button type="submit" class="uiButton">
+							<button type="submit" class="uiButton isDanger isLink">
 								Revoke
 							</button>
 						</form>

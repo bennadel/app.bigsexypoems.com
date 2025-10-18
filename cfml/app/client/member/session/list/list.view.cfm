@@ -56,10 +56,10 @@
 				</td>
 				<td align="center">
 					<cfif element.isCurrent>
-						Yes
+						<strong>Yes</strong>
 					</cfif>
 				</td>
-				<td class="isNoWrap">
+				<td align="center" class="isNoWrap">
 					<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
 						<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 						<input type="hidden" name="sessionID" value="#e4a( element.id )#" />
@@ -68,12 +68,9 @@
 							type="submit"
 							name="action"
 							value="endSession"
-							#ui.attrClass({
-								uiButton: true,
-								isDanger: element.isCurrent
-							})#>
+							class="uiButton isLink isDanger">
 							<cfif element.isCurrent>
-								Log Out
+								<strong>Log Out</strong>
 							<cfelse>
 								End Session
 							</cfif>

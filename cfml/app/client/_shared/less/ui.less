@@ -136,6 +136,9 @@
 	--button-danger-hover-text: #ffffff ;
 	--button-danger-hover-fill: var( --red-9 ) ;
 	--button-danger-hover-stroke: var( --red-11 ) ;
+	// Specialized link-only version.
+	--button-danger-link-text: var( --red-7 ) ;
+	--button-danger-link-hover-text: var( --red-9 ) ;
 
 	// Visually contrasted buttons (no special semantics).
 	--button-inverted-text: #ffffff ;
@@ -846,6 +849,14 @@ pre code {
 		&:hover {
 			background-color: transparent ;
 			color: inherit ;
+		}
+
+		:where( &.isDanger ) {
+			color: var( --button-danger-link-text ) ;
+
+			&:hover {
+				color: var( --button-danger-link-hover-text ) ;
+			}
 		}
 	}
 }
