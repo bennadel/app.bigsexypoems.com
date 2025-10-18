@@ -172,17 +172,17 @@ In order to create end-to-end encryption through to the origin server, I'm using
 
 10. Since I'm hosting this ColdFusion site on a Windows server, I have to convert the certificate into a format that Windows IIS will understand (`.pfx`). I can do this using `openssl`.
 
-  Create a file called `convert.sh`, and paste-in:
+    Create a file called `convert.sh`, and paste-in:
 
-  ```sh
-  openssl pkcs12 -export \
-    -out bigsexypoems.pfx \
-    -inkey bigsexypoems.key \
-    -in bigsexypoems.pem \
-    -password pass:password
-  ```
+    ```sh
+    openssl pkcs12 -export \
+      -out bigsexypoems.pfx \
+      -inkey bigsexypoems.key \
+      -in bigsexypoems.pem \
+      -password pass:password
+    ```
 
-  Use `chmod +x convert.sh` to make this file an executable and then execute it. It should produce `bigsexypoems.pfx` with a temporary password (`password`).
+    Use `chmod +x convert.sh` to make this file an executable and then execute it. It should produce `bigsexypoems.pfx` with a temporary password (`password`).
 
 11. Upload the `bigsexypoems.pfx` file to the Window server.
 
