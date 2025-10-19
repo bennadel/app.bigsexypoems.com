@@ -15,7 +15,8 @@
 		"addressWithUser": "\"Big Sexy Poems\" <ben@bennadel.com>"
 	},
 	"scheduledTasks": {
-		"url": "http://cfml:8080",
+		"url": "http://127.0.0.1:8080",
+		"host": "app.local.bigsexypoems.com",
 		"password": "password"
 	},
 	"datasource": {
