@@ -133,11 +133,6 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 			) {
 
 			cfhttpparam(
-				type = "header",
-				name = "host",
-				value = scheduledTasks.host
-			);
-			cfhttpparam(
 				type = "formfield",
 				name = "taskID",
 				value = task.id
