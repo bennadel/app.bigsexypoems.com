@@ -57,7 +57,9 @@ component hint = "I provide utility methods for accessing metadata about the cur
 		string fallbackValue = ""
 		) {
 
-		var headers = ( request.$$requestMetadataVariables.headers ?: {} );
+		// Caution: using structNew() instead of an implicit struct notation in order to
+		// avoid memory leak caused by implicit syntax bug within an Elvis expression.
+		var headers = ( request.$$requestMetadataVariables.headers ?: structNew() );
 
 		return ( headers[ name ] ?: fallbackValue );
 
@@ -69,7 +71,9 @@ component hint = "I provide utility methods for accessing metadata about the cur
 	*/
 	public struct function getHeaders( array includeOnly = [] ) {
 
-		var headers = ( request.$$requestMetadataVariables.headers ?: {} );
+		// Caution: using structNew() instead of an implicit struct notation in order to
+		// avoid memory leak caused by implicit syntax bug within an Elvis expression.
+		var headers = ( request.$$requestMetadataVariables.headers ?: structNew() );
 
 		if ( ! includeOnly.len() ) {
 

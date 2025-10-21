@@ -152,7 +152,7 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 				context: {
 					cgi,
 					url,
-					form
+					form: buildFormScope()
 				}
 			]);
 			return;
@@ -200,7 +200,15 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 	*/
 	private struct function buildFormScope() {
 
-		var formScope = form.copy();
+		// Note to self: there are strange edge-cases in Adobe ColdFusion where the form
+		// scope is undefined. You will probably never run into them; but, they include
+		// `?wsdl` (Web Services Description Language) invocation of ColdFusion components
+		// and `ITaskEventHandler` invocation of scheduled tasks. In such cases, let's
+		// fall back to an empty scope to make the rest of the code more fault tolerant.
+		// --
+		// Caution: using structNew() instead of implicit struct to get around variable
+		// leakage bug caused by implicit struct inside of Elvis expression.
+		var formScope = structCopy( form ?: structNew() );
 
 		formScope.delete( "fieldnames" );
 
@@ -261,7 +269,7 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 	*/
 	private array function buildStacktraceForError( required struct error ) {
 
-		var tagContext = ( error.tagContext ?: [] );
+		var tagContext = ( error.tagContext ?: arrayNew( 1 ) );
 
 		return tagContext
 			.filter(
