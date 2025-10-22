@@ -132,8 +132,9 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 			timeout = 1
 			) {
 
+			// Note: I'm passing the taskID in the URL to make debugging easier.
 			cfhttpparam(
-				type = "formfield",
+				type = "url",
 				name = "taskID",
 				value = task.id
 			);
