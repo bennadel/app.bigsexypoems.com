@@ -204,6 +204,9 @@
 	--mark-text: #121210 ;
 	--mark-fill: #ffe066 ;
 
+	// Status indicator.
+	--indicator-stroke: var( --purple-8 ) ;
+
 	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
 	// There appears to be a race condition with Parcel > Less > Url().
 	--select-carrot-image: ~"url( 'data:image/svg+xml;utf8,%3Csvg%20width=%2213%22%20height=%227%22%20viewBox=%220%200%2013%207%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpolygon%20stroke=%22none%22%20fill=%22%25230d0f12%22%20fill-rule=%22evenodd%22%20points=%220%200%206.5%207%2013%200%22%3E%3C/polygon%3E%3C/svg%3E' )" ;
@@ -1153,6 +1156,73 @@ pre code {
 
 	:where( & > * ) {
 		flex: 0 1 auto ;
+	}
+}
+
+.uiIndicator {
+	border: 4px solid var( --indicator-stroke ) ;
+	border-right: 4px solid transparent ;
+	border-radius: 26px ;
+	display: none ;
+	height: 26px ;
+	width: 26px ;
+
+	// Instant animation.
+	& {
+		animation-name: uiIndicator-spinning ;
+		animation-duration: 500ms ;
+		animation-iteration-count: infinite ;
+		animation-timing-function: linear ;
+	}
+
+	// Delayed animation.
+	&.isDelayed {
+		animation-name:
+			uiIndicator-spinning,
+			uiIndicator-enter
+		;
+		animation-delay:
+			0ms,        // spinning.
+			200ms       // enter.
+		;
+		animation-duration:
+			500ms,      // spinning.
+			200ms       // enter.
+		;
+		animation-fill-mode:
+			forwards,   // spinning.
+			both        // enter.
+		;
+		animation-iteration-count:
+			infinite,   // spinning.
+			1           // enter.
+		;
+		animation-timing-function:
+			linear,     // spinning.
+			ease-out    // enter.
+		;
+	}
+
+	&.htmx-request {
+		display: block ;
+	}
+}
+
+@keyframes uiIndicator-spinning {
+	0% {
+		transform: rotate( 0deg ) ;
+	}
+	100% {
+		transform: rotate( 360deg ) ;
+	}
+}
+
+@keyframes uiIndicator-enter {
+	0% {
+		opacity: 0 ;
+	}
+	100% {
+		opacity: 1 ;
 	}
 }
 

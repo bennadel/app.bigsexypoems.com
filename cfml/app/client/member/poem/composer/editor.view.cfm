@@ -104,8 +104,9 @@
 					submit,
 					input from:.isHtmxRhymesTrigger
 				"
-				hx-target="next .results"
+				hx-target="next .results_content"
 				hx-sync="this:replace"
+				hx-indicator="next .uiIndicator"
 				class="uiVstack">
 
 				<div class="uiHstack">
@@ -155,9 +156,14 @@
 				</fieldset>
 			</form>
 			<div class="results">
-				<p>
-					Find words that rhyme well with each other...
-				</p>
+				<span
+					class="uiIndicator isDelayed">
+				</span>
+				<div class="results_content">
+					<p>
+						Find words that rhyme well with each other...
+					</p>
+				</div>
 			</div>
 		</section>
 
@@ -171,8 +177,9 @@
 					submit,
 					input from:.isHtmxSynonymsTrigger
 				"
-				hx-target="next .results"
+				hx-target="next .results_content"
 				hx-sync="this:replace"
+				hx-indicator="next .uiIndicator"
 				class="uiVstack">
 
 				<div class="uiHstack">
@@ -222,9 +229,14 @@
 				</fieldset>
 			</form>
 			<div class="results">
-				<p>
-					Find words that mean roughly the same thing...
-				</p>
+				<span
+					class="uiIndicator isDelayed">
+				</span>
+				<div class="results_content">
+					<p>
+						Find words that mean roughly the same thing...
+					</p>
+				</div>
 			</div>
 		</section>
 	</div>
