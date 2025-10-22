@@ -3,9 +3,14 @@
 
 	<article r2mwmx>
 
-		<h1 r2mwmx class="title">
-			<a href="/" class="uiLink isSurprise"><span class="bigSexy">BigSexy</span>Poems</a>
-		</h1>
+		<div r2mwmx class="title">
+			<h1>
+				<a href="/" class="uiLink isSurprise"><span class="bigSexy">BigSexy</span>Poems</a>
+			</h1>
+			<p>
+				<a href="/">Log in or Sign up</a>
+			</p>
+		</div>
 
 		<form method="post" action="#request.postBackAction#">
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
