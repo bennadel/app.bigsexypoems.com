@@ -48,10 +48,11 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 			throwOnTimeout = false
 			{
 
-			var nextState = ioc
-				.get( "core.lib.service.system.task.handler.#task.id#" )
-				.executeTask( task )
-			;
+			var executor = ioc.get( "core.lib.service.system.task.handler.#task.id#" );
+
+			var startedAt = getTickCount();
+			var nextState = ( executor.executeTask( task ) ?: task.state );
+			var excuteDuration = ( getTickCount() - startedAt );
 
 			if ( task.isDailyTask ) {
 
@@ -75,9 +76,19 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 
 			taskModel.update(
 				id = task.id,
-				state = ( nextState ?: task.state ),
+				state = nextState,
 				lastExecutedAt = lastExecutedAt,
 				nextExecutedAt = nextExecutedAt
+			);
+
+			logger.info(
+				"Scheduled task executed.",
+				[
+					taskID: task.id,
+					duration: "#numberFormat( excuteDuration )# ms",
+					nextState: nextState,
+					nextExecutedAt: nextExecutedAt.dateTimeFormat( "iso" )
+				]
 			);
 
 		} // END: Task lock.
