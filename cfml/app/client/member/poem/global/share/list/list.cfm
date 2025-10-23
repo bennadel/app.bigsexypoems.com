@@ -1,7 +1,7 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
-	listGateway = request.ioc.get( "client.member.poem.shareAll.list.ListGateway" );
+	listGateway = request.ioc.get( "client.member.poem.global.share.list.ListGateway" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).

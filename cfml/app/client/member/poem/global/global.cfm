@@ -9,15 +9,8 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	switch ( router.next( "list" ) ) {
-		case "add":
-		case "composer":
-		case "edit":
-		case "delete":
-		case "global":
-		case "list":
+	switch ( router.next() ) {
 		case "share":
-		case "view":
 			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
