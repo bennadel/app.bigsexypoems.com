@@ -36,6 +36,14 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 
 		if ( task.nextExecutedAt > timestamp ) {
 
+			logger.warning(
+				"Scheduled task executed too early.",
+				[
+					taskID: task.id,
+					nextExecutedAt: task.nextExecutedAt.dateTimeFormat( "iso" ),
+					timestamp: timestamp.dateTimeFormat( "iso" )
+				]
+			);
 			return;
 
 		}
