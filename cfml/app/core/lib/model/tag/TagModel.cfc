@@ -1,8 +1,8 @@
 component {
 
 	// Define properties for dependency-injection.
-	property name="gateway" ioc:type="core.lib.model.poem.PoemGateway";
-	property name="validation" ioc:type="core.lib.model.poem.PoemValidation";
+	property name="gateway" ioc:type="core.lib.model.tag.TagGateway";
+	property name="validation" ioc:type="core.lib.model.tag.TagValidation";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -17,17 +17,23 @@ component {
 	public numeric function create(
 		required numeric userID,
 		required string name,
-		required string content,
+		required string slug,
+		required string fillHex,
+		required string textHex,
 		required date createdAt
 		) {
 
 		name = validation.nameFrom( name );
-		content = validation.contentFrom( content );
+		slug = validation.slugFrom( slug );
+		fillHex = validation.fillHexFrom( fillHex );
+		textHex = validation.textHexFrom( textHex );
 
 		return gateway.create(
 			userID = userID,
 			name = name,
-			content = content,
+			slug = slug,
+			fillHex = fillHex,
+			textHex = textHex,
 			createdAt = createdAt,
 			updatedAt = createdAt
 		);
@@ -121,7 +127,9 @@ component {
 	public void function update(
 		required numeric id,
 		string name,
-		string content,
+		string slug,
+		string fillHex,
+		string textHex,
 		date updatedAt
 		) {
 
@@ -131,9 +139,17 @@ component {
 			? existing.name
 			: validation.nameFrom( name )
 		;
-		content = isNull( content )
-			? existing.content
-			: validation.contentFrom( content )
+		slug = isNull( slug )
+			? existing.slug
+			: validation.slugFrom( slug )
+		;
+		fillHex = isNull( fillHex )
+			? existing.fillHex
+			: validation.fillHexFrom( fillHex )
+		;
+		textHex = isNull( textHex )
+			? existing.textHex
+			: validation.textHexFrom( textHex )
 		;
 		updatedAt = isNull( updatedAt )
 			? existing.updatedAt
@@ -143,7 +159,9 @@ component {
 		gateway.update(
 			id = existing.id,
 			name = name,
-			content = content,
+			slug = slug,
+			fillHex = fillHex,
+			textHex = textHex,
 			updatedAt = updatedAt
 		);
 

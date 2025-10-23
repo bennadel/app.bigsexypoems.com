@@ -100,6 +100,39 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.Session.NotFound":
 				return asModelNotFound( error, "session" );
 			break;
+			case "App.Model.Tag.FillHex.Invalid":
+				return as422({
+					type: error.type,
+					message: "Your fill color must be a 6-digit hexadecimal value (e.g ""ff3366"")."
+				});
+			break;
+			case "App.Model.Tag.Name.Empty":
+				return asModelStringEmpty( error, "tag name" );
+			break;
+			case "App.Model.Tag.Name.SuspiciousEncoding":
+				return asModelStringSuspiciousEncoding( error, "tag name" );
+			break;
+			case "App.Model.Tag.Name.TooLong":
+				return asModelStringTooLong( error, "tag name", metadata );
+			break;
+			case "App.Model.Tag.NotFound":
+				return asModelNotFound( error, "tag" );
+			break;
+			case "App.Model.Tag.Slug.Empty":
+				return asModelStringEmpty( error, "tag slug" );
+			break;
+			case "App.Model.Tag.Slug.SuspiciousEncoding":
+				return asModelStringSuspiciousEncoding( error, "tag slug" );
+			break;
+			case "App.Model.Tag.Slug.TooLong":
+				return asModelStringTooLong( error, "tag slug", metadata );
+			break;
+			case "App.Model.Tag.TextHex.Invalid":
+				return as422({
+					type: error.type,
+					message: "Your text color must be a 6-digit hexadecimal value (e.g ""ffffff"")."
+				});
+			break;
 			case "App.Model.User.Account.NotFound":
 				return asModelNotFound( error, "account" );
 			break;

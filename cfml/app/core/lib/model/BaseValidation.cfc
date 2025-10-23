@@ -26,6 +26,23 @@ component {
 
 
 	/**
+	* I assert that the given input is a 6-digit hex color
+	*/
+	public void function assertHexColor(
+		required string input,
+		required string errorType
+		) {
+
+		if ( ! input.reFind( "^[a-z0-f]{6}$" ) ) {
+
+			throw( type = errorType );
+
+		}
+
+	}
+
+
+	/**
 	* I assert that the given input looks like a valid IP address.
 	*/
 	public void function assertIpAddress(
@@ -36,6 +53,29 @@ component {
 		if ( input.reFind( "[^0-9a-f:.]" ) ) {
 
 			throw( type = errorType );
+
+		}
+
+	}
+
+
+	/**
+	* I assert that the given input is the given length.
+	*/
+	public void function assertLength(
+		required string input,
+		required numeric length,
+		required string errorType
+		) {
+
+		if ( input.len() != length ) {
+
+			throw(
+				type = errorType,
+				extendedInfo = embedMetadata({
+					length: length
+				})
+			);
 
 		}
 

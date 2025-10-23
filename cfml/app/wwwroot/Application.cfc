@@ -1,5 +1,8 @@
 component hint = "I define the application settings and event handlers." {
 
+	// ColdFusion language extensions (global functions).
+	include "../core/cfmlx.cfm";
+
 	// Define the application settings.
 	this.name = "AppBigSexyPoemsCom";
 	this.applicationTimeout = createTimeSpan( 7, 0, 0, 0 );
@@ -253,7 +256,7 @@ component hint = "I define the application settings and event handlers." {
 
 			// We are local, dump the error out for debugging.
 			cfheader( statusCode = 500 );
-			writeDump( var = exception, top = 5 );
+			dumpN( exception );
 			abort;
 
 		}
