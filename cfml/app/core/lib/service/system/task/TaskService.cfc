@@ -40,8 +40,8 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 				"Scheduled task executed too early.",
 				[
 					taskID: task.id,
-					nextExecutedAt: task.nextExecutedAt.dateTimeFormat( "iso" ),
-					timestamp: timestamp.dateTimeFormat( "iso" )
+					nextExecutedAt: task.nextExecutedAt.dateTimeFormat( "medium" ),
+					timestamp: timestamp.dateTimeFormat( "medium" )
 				]
 			);
 			return;
@@ -93,9 +93,9 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 				"Scheduled task executed.",
 				[
 					taskID: task.id,
-					duration: "#numberFormat( excuteDuration )# ms",
-					nextState: nextState,
-					nextExecutedAt: nextExecutedAt.dateTimeFormat( "iso" )
+					duration: excuteDuration,
+					lastExecutedAt: lastExecutedAt.dateTimeFormat( "medium" ),
+					nextExecutedAt: nextExecutedAt.dateTimeFormat( "medium" )
 				]
 			);
 
