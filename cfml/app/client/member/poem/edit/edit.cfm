@@ -16,6 +16,7 @@
 	param name="url.poemID" type="numeric";
 	param name="form.name" type="string" default="";
 	param name="form.content" type="string" default="";
+	param name="form.tagID" type="numeric" default=0;
 	param name="form.switchToComposer" type="boolean" default=false;
 
 	partial = getPartial(
@@ -33,6 +34,7 @@
 
 		form.name = poem.name;
 		form.content = poem.content;
+		form.tagID = poem.tagID;
 
 	}
 
@@ -43,6 +45,7 @@
 			poemService.updatePoem(
 				authContext = request.authContext,
 				poemID = poem.id,
+				poemTagID = val( form.tagID ),
 				poemName = form.name,
 				poemContent = form.content
 			);

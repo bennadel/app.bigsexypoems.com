@@ -3,6 +3,7 @@
 	<cffunction name="create" returnType="numeric">
 
 		<cfargument name="userID" type="numeric" required="true" />
+		<cfargument name="tagID" type="numeric" required="true" />
 		<cfargument name="name" type="string" required="true" />
 		<cfargument name="content" type="string" required="true" />
 		<cfargument name="createdAt" type="date" required="true" />
@@ -13,6 +14,7 @@
 				poem
 			SET
 				userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />,
+				tagID = <cfqueryparam value="#tagID#" cfsqltype="cf_sql_bigint" />,
 				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
 				content = <cfqueryparam value="#content#" cfsqltype="cf_sql_varchar" />,
 				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
@@ -62,6 +64,7 @@
 
 		<cfargument name="id" type="numeric" required="false" />
 		<cfargument name="userID" type="numeric" required="false" />
+		<cfargument name="tagID" type="numeric" required="false" />
 
 		<cfif (
 			isNull( id ) &&
@@ -76,6 +79,7 @@
 			SELECT
 				id,
 				userID,
+				tagID,
 				name,
 				content,
 				createdAt,
@@ -95,6 +99,11 @@
 					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
 			</cfif>
 
+			<cfif ! isNull( tagID )>
+				AND
+					tagID = <cfqueryparam value="#tagID#" cfsqltype="cf_sql_bigint" />
+			</cfif>
+
 			ORDER BY
 				id ASC
 		</cfquery>
@@ -107,6 +116,7 @@
 	<cffunction name="update" returnType="void">
 
 		<cfargument name="id" type="numeric" required="true" />
+		<cfargument name="tagID" type="numeric" required="true" />
 		<cfargument name="name" type="string" required="true" />
 		<cfargument name="content" type="string" required="true" />
 		<cfargument name="updatedAt" type="date" required="true" />
@@ -115,6 +125,7 @@
 			UPDATE
 				poem
 			SET
+				tagID = <cfqueryparam value="#tagID#" cfsqltype="cf_sql_bigint" />,
 				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
 				content = <cfqueryparam value="#content#" cfsqltype="cf_sql_varchar" />,
 				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />

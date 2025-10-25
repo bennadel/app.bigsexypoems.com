@@ -53,6 +53,17 @@
 				</div>
 			</div>
 
+			<div class="uiField">
+				<label for="form--tagID" class="uiField_label">
+					Tag:
+				</label>
+				<div class="uiField_content">
+					<select id="form--tagID" name="tagID" class="uiSelect">
+						<option value="0">&mdash; Coming soon &mdash;</option>
+					</select>
+				</div>
+			</div>
+
 			<div class="uiFormButtons">
 				<button type="submit" class="uiButton isSubmit">
 					Update Poem

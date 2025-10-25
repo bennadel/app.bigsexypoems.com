@@ -89,15 +89,17 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 				nextExecutedAt = nextExecutedAt
 			);
 
-			logger.info(
-				"Scheduled task executed.",
-				[
-					taskID: task.id,
-					duration: excuteDuration,
-					lastExecutedAt: lastExecutedAt.dateTimeFormat( "medium" ),
-					nextExecutedAt: nextExecutedAt.dateTimeFormat( "medium" )
-				]
-			);
+			// Commenting out for now (to remove noise from the logs).
+			// --
+			// logger.info(
+			// 	"Scheduled task executed.",
+			// 	[
+			// 		taskID: task.id,
+			// 		duration: excuteDuration,
+			// 		lastExecutedAt: lastExecutedAt.dateTimeFormat( "medium" ),
+			// 		nextExecutedAt: nextExecutedAt.dateTimeFormat( "medium" )
+			// 	]
+			// );
 
 		} // END: Task lock.
 

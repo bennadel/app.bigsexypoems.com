@@ -15,6 +15,7 @@
 	param name="url.importFrom" type="string" default="";
 	param name="form.name" type="string" default="";
 	param name="form.content" type="string" default="";
+	param name="form.tagID" type="numeric" default=0;
 	param name="form.switchToComposer" type="boolean" default=false;
 
 	title = url.importFrom.len()
@@ -45,6 +46,7 @@
 			poemID = poemService.createPoem(
 				authContext = request.authContext,
 				userID = request.authContext.user.id,
+				poemTagID = val( form.tagID ),
 				poemName = form.name,
 				poemContent = form.content
 			);

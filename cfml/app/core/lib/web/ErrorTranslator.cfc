@@ -61,6 +61,9 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.Poem.Content.SuspiciousEncoding":
 				return asModelStringSuspiciousEncoding( error, "poem" );
 			break;
+			case "App.Model.Poem.Forbidden":
+				return as403();
+			break;
 			case "App.Model.Poem.Name.Empty":
 				return asModelStringEmpty( error, "poem name" );
 			break;

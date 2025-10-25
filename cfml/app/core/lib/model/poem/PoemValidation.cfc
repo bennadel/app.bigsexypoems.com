@@ -46,7 +46,17 @@ component
 	// ---
 
 	/**
-	* I throw a not-found error.
+	* I throw a model error.
+	*/
+	public void function throwForbiddenError() {
+
+		throw( type = "App.Model.Poem.Forbidden" );
+
+	}
+
+
+	/**
+	* I throw a model error.
 	*/
 	public void function throwNotFoundError() {
 
