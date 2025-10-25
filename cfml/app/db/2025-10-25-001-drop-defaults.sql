@@ -1,0 +1,6 @@
+
+ALTER TABLE
+	`poem`
+ALTER COLUMN
+	`tagID` DROP DEFAULT
+;
