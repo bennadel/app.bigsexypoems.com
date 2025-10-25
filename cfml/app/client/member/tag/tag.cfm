@@ -9,17 +9,13 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	request.response.activeNav = "poems";
+	request.response.activeNav = "tags";
 
 	switch ( router.next( "list" ) ) {
 		case "add":
-		case "composer":
-		case "edit":
 		case "delete":
-		case "global":
+		case "edit":
 		case "list":
-		case "share":
-		case "view":
 			cfmodule( template = router.nextTemplate() );
 		break;
 		default:

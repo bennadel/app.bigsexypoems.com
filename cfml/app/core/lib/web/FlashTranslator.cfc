@@ -63,6 +63,15 @@ component {
 			case "your.session.allDeleted":
 				return asResponse( "All of your sessions have been ended. You've been logged-out across all of your devices." );
 			break;
+			case "your.tag.created":
+				return asResponse( "Your tag has been created." );
+			break;
+			case "your.tag.deleted":
+				return asResponse( "Your tag has been unlinked and deleted." );
+			break;
+			case "your.tag.updated":
+				return asResponse( "Your tag has been updated." );
+			break;
 			case "your.user.account.updated":
 				return asResponse( "Your account has been updated." );
 			break;

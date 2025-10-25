@@ -73,4 +73,14 @@
 		</g>
 	</symbol>
 
+	<!--- https://www.streamlinehq.com/icons/download/tags-double--18113 --->
+	<symbol id="svg-sprite--tags-double--18113" viewBox="0 0 24 24">
+		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+			<path d="M4.5 1.06h6.879a1.5 1.5 0 0 1 1.06 0.439L22.5 11.56"></path>
+			<path d="M9.129 4.06H3a1.5 1.5 0 0 0 -1.5 1.5v6.128a1.5 1.5 0 0 0 0.439 1.061l9.75 9.75a1.499 1.499 0 0 0 2.122 0l6.128 -6.129a1.5 1.5 0 0 0 0 -2.121L10.189 4.5a1.5 1.5 0 0 0 -1.06 -0.44v0Z"></path>
+			<path d="M6 8.935a0.375 0.375 0 0 1 0 -0.75"></path>
+			<path d="M6 8.935a0.375 0.375 0 0 0 0 -0.75"></path>
+		</g>
+	</symbol>
+
 </svg>

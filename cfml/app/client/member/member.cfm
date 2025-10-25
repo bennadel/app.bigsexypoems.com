@@ -23,6 +23,7 @@
 		case "poem":
 		case "profile":
 		case "session":
+		case "tag":
 			cfmodule( template = router.nextTemplate() );
 		break;
 		default:

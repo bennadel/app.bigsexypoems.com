@@ -64,10 +64,10 @@ component {
 	public void function updateTag(
 		required struct authContext,
 		required numeric tagID,
-		required string tagName,
-		required string tagSlug,
-		required string tagFillHex,
-		required string tagTextHex
+		string tagName,
+		string tagSlug,
+		string tagFillHex,
+		string tagTextHex
 		) {
 
 		var context = tagAccess.getContext( authContext, tagID, "canUpdate" );
@@ -75,10 +75,10 @@ component {
 
 		tagModel.update(
 			id = tag.id,
-			name = tagName,
-			slug = tagSlug,
-			fillHex = tagFillHex,
-			textHex = tagTextHex,
+			name = arguments?.tagName,
+			slug = arguments?.tagSlug,
+			fillHex = arguments?.tagFillHex,
+			textHex = arguments?.tagTextHex,
 			updatedAt = utcNow()
 		);
 

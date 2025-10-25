@@ -86,6 +86,27 @@
 						</li>
 						<li>
 							<a
+								#ui.attrHref( "member.tag" )#
+								mpjwb9
+								#ui.attrClass([
+									navLink: true,
+									isOn: ( request.response.activeNav == "tags" )
+								])#>
+								<span mpjwb9 class="navLink_pill">
+									<span mpjwb9 class="navLink_icon">
+										<cfmodule
+											template="/client/_shared/tag/svgIcon.cfm"
+											type="tags">
+										</cfmodule>
+									</span>
+									<span mpjwb9 class="navLink_label">
+										Tags
+									</span>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a
 								#ui.attrHref( "member.profile" )#
 								mpjwb9
 								#ui.attrClass([

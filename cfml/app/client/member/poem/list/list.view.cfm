@@ -31,7 +31,7 @@
 					<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.name )#</a>
 				</td>
 				<td class="isNoWrap">
-					#poem.createdAt.dateFormat( "mmmm d, yyyy" )#
+					#ui.userDate( poem.createdAt )#
 				</td>
 			</tr>
 		</cfloop>
