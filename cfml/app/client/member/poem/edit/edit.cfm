@@ -5,6 +5,7 @@
 	poemService = request.ioc.get( "core.lib.service.poem.PoemService" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
+	tagModel = request.ioc.get( "core.lib.model.tag.TagModel" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
@@ -24,6 +25,7 @@
 		poemID = val( url.poemID )
 	);
 	poem = partial.poem;
+	tags = partial.tags;
 
 	title = "Update Poem";
 	errorResponse = "";
@@ -89,8 +91,14 @@
 		var context = poemAccess.getContext( authContext, poemID, "canUpdate" );
 		var poem = context.poem;
 
+		var tags = tagModel
+			.getByFilter( userID = authContext.user.id )
+			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
+		;
+
 		return {
-			poem
+			poem,
+			tags
 		};
 
 	}

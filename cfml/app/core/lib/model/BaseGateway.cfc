@@ -96,6 +96,15 @@ component output = false {
 			input[ subName ][ subKey ] = input[ key ];
 			input.delete( key );
 
+			// Edge-case: if we're normalizing the ID column in a LEFT join, it would be
+			// more convenient for consumption in the view if a failed join had a ZERO id.
+			// This way, it could be treated as truthy.
+			switch ( subKey ) {
+				case "id":
+					input[ subName ][ subKey ] = val( input[ subName ][ subKey ] );
+				break;
+			}
+
 		}
 
 	}

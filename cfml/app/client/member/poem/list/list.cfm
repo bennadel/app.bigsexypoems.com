@@ -1,5 +1,6 @@
 <cfscript>
 
+	listGateway = request.ioc.get( "client.member.poem.list.ListGateway" );
 	poemModel = request.ioc.get( "core.lib.model.poem.PoemModel" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
@@ -25,10 +26,7 @@
 	*/
 	private struct function getPartial( required struct authContext ) {
 
-		var poems = poemModel
-			.getByFilter( userID = authContext.user.id )
-			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
-		;
+		var poems = listGateway.getPoems( authContext.user.id );
 
 		return {
 			poems

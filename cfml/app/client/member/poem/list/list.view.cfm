@@ -20,7 +20,10 @@
 					Name
 				</th>
 				<th class="w-1">
-					Created
+					Tag
+				</th>
+				<th class="w-1">
+					Updated
 				</th>
 			</tr>
 		</thead>
@@ -31,7 +34,12 @@
 					<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.name )#</a>
 				</td>
 				<td class="isNoWrap">
-					#ui.userDate( poem.createdAt )#
+					<cfif poem.tag.id>
+						<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.tag.name )#</a>
+					</cfif>
+				</td>
+				<td class="isNoWrap">
+					#ui.userDate( poem.updatedAt )#
 				</td>
 			</tr>
 		</cfloop>

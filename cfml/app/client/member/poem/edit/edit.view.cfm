@@ -39,12 +39,13 @@
 					Content:
 				</label>
 				<div class="uiField_content">
-					<p class="uiField_description">
+					<p id="form--content--description" class="uiField_description">
 						This is the "plain text" editor. To get <mark>syllable counts</mark>, <mark>rhymes</mark>, and <mark>synonyms</mark>, <button type="submit" name="switchToComposer" value="true" class="uiButton isLink">use the <strong>poem composer</strong></button> &rarr;
 					</p>
 
 					<textarea
 						id="form--content"
+						aria-describedby="form--content--description"
 						name="content"
 						maxlength="3000"
 						class="uiTextarea"
@@ -58,8 +59,23 @@
 					Tag:
 				</label>
 				<div class="uiField_content">
-					<select id="form--tagID" name="tagID" class="uiSelect">
-						<option value="0">&mdash; Coming soon &mdash;</option>
+					<p id="form--tagID--description" class="uiField_description">
+						A tag allows you to group poems together for organizational purposes.
+					</p>
+
+					<select
+						id="form--tagID"
+						aria-describedby="form--tagID--description"
+						name="tagID"
+						class="uiSelect">
+						<option value="0">- Select -</option>
+						<cfloop array="#tags#" item="tag">
+							<option
+								value="#e4a( tag.id )#"
+								#ui.attrSelected( form.tagID eq tag.id )#>
+								#e( tag.name )#
+							</option>
+						</cfloop>
 					</select>
 				</div>
 			</div>
