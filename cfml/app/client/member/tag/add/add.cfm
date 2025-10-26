@@ -31,7 +31,7 @@
 
 			tagID = tagService.createTag(
 				authContext = request.authContext,
-				userID = request.authContext.user.id,
+				tagUserID = request.authContext.user.id,
 				tagName = form.name,
 				tagSlug = form.slug,
 				// Todo: these will be user-driven in the future.

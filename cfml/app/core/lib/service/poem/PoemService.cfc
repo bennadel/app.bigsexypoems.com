@@ -21,16 +21,16 @@ component {
 	*/
 	public numeric function createPoem(
 		required struct authContext,
-		required numeric userID,
+		required numeric poemUserID,
 		required numeric poemTagID,
 		required string poemName,
 		required string poemContent
 		) {
 
-		var context = poemAccess.getContextForParent( authContext, userID, "canCreateAny" );
+		var context = poemAccess.getContextForParent( authContext, poemUserID, "canCreateAny" );
 		var user = context.user;
 
-		testTagID( authContext, userID, poemTagID );
+		testTagID( authContext, poemUserID, poemTagID );
 
 		var poemID = poemModel.create(
 			userID = user.id,

@@ -17,14 +17,14 @@ component {
 	*/
 	public numeric function createTag(
 		required struct authContext,
-		required numeric userID,
+		required numeric tagUserID,
 		required string tagName,
 		required string tagSlug,
 		required string tagFillHex,
 		required string tagTextHex
 		) {
 
-		var context = tagAccess.getContextForParent( authContext, userID, "canCreateAny" );
+		var context = tagAccess.getContextForParent( authContext, tagUserID, "canCreateAny" );
 		var user = context.user;
 
 		var tagID = tagModel.create(
