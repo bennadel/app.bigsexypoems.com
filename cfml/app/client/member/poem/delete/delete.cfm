@@ -39,7 +39,7 @@
 
 			poemService.deletePoem(
 				authContext = request.authContext,
-				poemID = poem.id
+				id = poem.id
 			);
 
 			router.goto([

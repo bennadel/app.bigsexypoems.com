@@ -38,9 +38,9 @@
 
 			poemService.updatePoem(
 				authContext = request.authContext,
-				poemID = poem.id,
-				poemName = form.name,
-				poemContent = form.content
+				id = poem.id,
+				name = form.name,
+				content = form.content
 			);
 
 			router.goto([

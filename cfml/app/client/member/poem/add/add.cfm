@@ -49,10 +49,10 @@
 
 			poemID = poemService.createPoem(
 				authContext = request.authContext,
-				poemUserID = request.authContext.user.id,
-				poemTagID = val( form.tagID ),
-				poemName = form.name,
-				poemContent = form.content
+				userID = request.authContext.user.id,
+				tagID = val( form.tagID ),
+				name = form.name,
+				content = form.content
 			);
 
 			if ( form.switchToComposer ) {

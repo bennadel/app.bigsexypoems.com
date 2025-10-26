@@ -21,22 +21,22 @@ component {
 	*/
 	public numeric function createPoem(
 		required struct authContext,
-		required numeric poemUserID,
-		required numeric poemTagID,
-		required string poemName,
-		required string poemContent
+		required numeric userID,
+		required numeric tagID,
+		required string name,
+		required string content
 		) {
 
-		var context = poemAccess.getContextForParent( authContext, poemUserID, "canCreateAny" );
+		var context = poemAccess.getContextForParent( authContext, userID, "canCreateAny" );
 		var user = context.user;
 
-		testTagID( authContext, poemUserID, poemTagID );
+		testTagID( authContext, userID, tagID );
 
 		var poemID = poemModel.create(
 			userID = user.id,
-			tagID = poemTagID,
-			name = poemName,
-			content = poemContent,
+			tagID = tagID,
+			name = name,
+			content = content,
 			createdAt = utcNow()
 		);
 
@@ -50,10 +50,10 @@ component {
 	*/
 	public void function deletePoem(
 		required struct authContext,
-		required numeric poemID
+		required numeric id
 		) {
 
-		var context = poemAccess.getContext( authContext, poemID, "canDelete" );
+		var context = poemAccess.getContext( authContext, id, "canDelete" );
 		var user = context.user;
 		var poem = context.poem;
 
@@ -67,22 +67,22 @@ component {
 	*/
 	public void function updatePoem(
 		required struct authContext,
-		required numeric poemID,
-		numeric poemTagID,
-		string poemName,
-		string poemContent
+		required numeric id,
+		numeric tagID,
+		string name,
+		string content
 		) {
 
-		var context = poemAccess.getContext( authContext, poemID, "canUpdate" );
+		var context = poemAccess.getContext( authContext, id, "canUpdate" );
 		var poem = context.poem;
 
-		testTagID( authContext, poem.userID, arguments?.poemTagID );
+		testTagID( authContext, poem.userID, arguments?.tagID );
 
 		poemModel.update(
 			id = poem.id,
-			tagID = arguments?.poemTagID,
-			name = arguments?.poemName,
-			content = arguments?.poemContent,
+			tagID = arguments?.tagID,
+			name = arguments?.name,
+			content = arguments?.content,
 			updatedAt = utcNow()
 		);
 

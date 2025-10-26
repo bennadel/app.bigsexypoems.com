@@ -16,11 +16,11 @@ component {
 	*/
 	public void function updateUser(
 		required struct authContext,
-		required numeric userID,
-		required string userName
+		required numeric id,
+		required string name
 		) {
 
-		var context = userAccess.getContext( authContext, userID, "canUpdate" );
+		var context = userAccess.getContext( authContext, id, "canUpdate" );
 		var user = context.user;
 
 		// Idea: for updating email address, we'll want to go through an email validation
@@ -28,7 +28,7 @@ component {
 
 		userModel.update(
 			id = user.id,
-			name = userName
+			name = name
 		);
 
 	}

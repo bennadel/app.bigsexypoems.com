@@ -17,22 +17,22 @@ component {
 	*/
 	public numeric function createTag(
 		required struct authContext,
-		required numeric tagUserID,
-		required string tagName,
-		required string tagSlug,
-		required string tagFillHex,
-		required string tagTextHex
+		required numeric userID,
+		required string name,
+		required string slug,
+		required string fillHex,
+		required string textHex
 		) {
 
-		var context = tagAccess.getContextForParent( authContext, tagUserID, "canCreateAny" );
+		var context = tagAccess.getContextForParent( authContext, userID, "canCreateAny" );
 		var user = context.user;
 
 		var tagID = tagModel.create(
 			userID = user.id,
-			name = tagName,
-			slug = tagSlug,
-			fillHex = tagFillHex,
-			textHex = tagTextHex,
+			name = name,
+			slug = slug,
+			fillHex = fillHex,
+			textHex = textHex,
 			createdAt = utcNow()
 		);
 
@@ -46,10 +46,10 @@ component {
 	*/
 	public void function deleteTag(
 		required struct authContext,
-		required numeric tagID
+		required numeric id
 		) {
 
-		var context = tagAccess.getContext( authContext, tagID, "canDelete" );
+		var context = tagAccess.getContext( authContext, id, "canDelete" );
 		var user = context.user;
 		var tag = context.tag;
 
@@ -63,22 +63,22 @@ component {
 	*/
 	public void function updateTag(
 		required struct authContext,
-		required numeric tagID,
-		string tagName,
-		string tagSlug,
-		string tagFillHex,
-		string tagTextHex
+		required numeric id,
+		string name,
+		string slug,
+		string fillHex,
+		string textHex
 		) {
 
-		var context = tagAccess.getContext( authContext, tagID, "canUpdate" );
+		var context = tagAccess.getContext( authContext, id, "canUpdate" );
 		var tag = context.tag;
 
 		tagModel.update(
 			id = tag.id,
-			name = arguments?.tagName,
-			slug = arguments?.tagSlug,
-			fillHex = arguments?.tagFillHex,
-			textHex = arguments?.tagTextHex,
+			name = arguments?.name,
+			slug = arguments?.slug,
+			fillHex = arguments?.fillHex,
+			textHex = arguments?.textHex,
 			updatedAt = utcNow()
 		);
 

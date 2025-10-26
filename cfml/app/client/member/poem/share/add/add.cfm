@@ -34,8 +34,8 @@
 			shareID = shareService.createShare(
 				authContext = request.authContext,
 				poemID = poem.id,
-				shareName = form.name,
-				shareNoteMarkdown = form.noteMarkdown
+				name = form.name,
+				noteMarkdown = form.noteMarkdown
 			);
 
 			router.goto([

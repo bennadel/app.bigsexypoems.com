@@ -31,12 +31,12 @@
 
 			tagID = tagService.createTag(
 				authContext = request.authContext,
-				tagUserID = request.authContext.user.id,
-				tagName = form.name,
-				tagSlug = form.slug,
+				userID = request.authContext.user.id,
+				name = form.name,
+				slug = form.slug,
 				// Todo: these will be user-driven in the future.
-				tagFillHex = "ffffff",
-				tagTextHex = "000000"
+				fillHex = "ffffff",
+				textHex = "000000"
 			);
 
 			router.goto([

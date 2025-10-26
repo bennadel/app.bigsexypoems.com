@@ -39,7 +39,7 @@
 
 			shareService.deleteShare(
 				authContext = request.authContext,
-				shareID = share.id
+				id = share.id
 			);
 
 			router.goto([

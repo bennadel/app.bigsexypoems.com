@@ -45,9 +45,9 @@
 
 			tagID = tagService.updateTag(
 				authContext = request.authContext,
-				tagID = tag.id,
-				tagName = form.name,
-				tagSlug = form.slug
+				id = tag.id,
+				name = form.name,
+				slug = form.slug
 			);
 
 			router.goto([

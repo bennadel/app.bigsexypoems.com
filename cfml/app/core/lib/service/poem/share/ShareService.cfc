@@ -24,22 +24,22 @@ component {
 	public numeric function createShare(
 		required struct authContext,
 		required numeric poemID,
-		required string shareName,
-		required string shareNoteMarkdown
+		required string name,
+		required string noteMarkdown
 		) {
 
 		var context = shareAccess.getContextForParent( authContext, poemID, "canCreateAny" );
 		var poem = context.poem;
 		var token = secureRandom.getToken( 32 );
-		var shareNoteHtml = parseShareNote( shareNoteMarkdown );
+		var noteHtml = parseShareNote( noteMarkdown );
 		var createdAt = utcNow();
 
 		var shareID = shareModel.create(
 			poemID = poem.id,
 			token = token,
-			name = shareName,
-			noteMarkdown = shareNoteMarkdown,
-			noteHtml = shareNoteHtml,
+			name = name,
+			noteMarkdown = noteMarkdown,
+			noteHtml = noteHtml,
 			viewingCount = 0,
 			createdAt = createdAt,
 			updatedAt = createdAt
@@ -55,10 +55,10 @@ component {
 	*/
 	public void function deleteShare(
 		required struct authContext,
-		required numeric shareID
+		required numeric id
 		) {
 
-		var context = shareAccess.getContext( authContext, shareID, "canDelete" );
+		var context = shareAccess.getContext( authContext, id, "canDelete" );
 		var user = context.user;
 		var poem = context.poem;
 		var share = context.share;
@@ -93,9 +93,9 @@ component {
 	/**
 	* I log the unique viewing of the given share link.
 	*/
-	public void function logShareViewing( required numeric shareID ) {
+	public void function logShareViewing( required numeric id ) {
 
-		var share = shareModel.get( shareID );
+		var share = shareModel.get( id );
 		var poem = poemModel.get( share.poemID );
 		var ipAddress = requestMetadata.getIpAddress();
 		// Let's trim the city/region since it doesn't much matter if they get truncated
@@ -158,21 +158,21 @@ component {
 	*/
 	public void function updateShare(
 		required struct authContext,
-		required numeric shareID,
-		required string shareName,
-		required string shareNoteMarkdown
+		required numeric id,
+		required string name,
+		required string noteMarkdown
 		) {
 
-		var context = shareAccess.getContext( authContext, shareID, "canUpdate" );
+		var context = shareAccess.getContext( authContext, id, "canUpdate" );
 		var share = context.share;
-		var shareNoteHtml = parseShareNote( shareNoteMarkdown );
+		var noteHtml = parseShareNote( noteMarkdown );
 		var updatedAt = utcNow();
 
 		shareModel.update(
 			id = share.id,
-			name = shareName,
-			noteMarkdown = shareNoteMarkdown,
-			noteHtml = shareNoteHtml,
+			name = name,
+			noteMarkdown = noteMarkdown,
+			noteHtml = noteHtml,
 			updatedAt = updatedAt
 		);
 

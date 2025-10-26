@@ -41,9 +41,9 @@
 
 			shareID = shareService.updateShare(
 				authContext = request.authContext,
-				shareID = share.id,
-				shareName = form.name,
-				shareNoteMarkdown = form.noteMarkdown
+				id = share.id,
+				name = form.name,
+				noteMarkdown = form.noteMarkdown
 			);
 
 			router.goto([
