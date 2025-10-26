@@ -39,7 +39,7 @@
 
 			tagService.deleteTag(
 				authContext = request.authContext,
-				tagID = tag.id
+				id = tag.id
 			);
 
 			router.goto([
