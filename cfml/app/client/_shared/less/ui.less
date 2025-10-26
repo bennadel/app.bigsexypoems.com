@@ -310,6 +310,10 @@ html {
 		font-size: var( --font-size ) ;
 		font-weight: var( --font-weight ) ;
 		line-height: var( --line-height-body ) ;
+		scrollbar-gutter: stable ;
+			-moz-text-size-adjust: none ;
+			-webkit-text-size-adjust: none ;
+		text-size-adjust: none ;
 	}
 
 	*,
@@ -317,6 +321,10 @@ html {
 	*:after {
 		box-sizing: inherit ;
 	}
+}
+
+body {
+	min-height: 100vh ;
 }
 
 article,
