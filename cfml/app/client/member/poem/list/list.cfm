@@ -53,22 +53,13 @@
 
 		}
 
-		return arrayCopy( poems )
-			.sort(
-				( a, b ) => {
+		var sortedPoems = arraySortByOperators(
+			arrayCopy( poems ),
+			( a, b ) => dateCompare( b.updatedAt, a.updatedAt ),
+			( a, b ) => ( b.id - a.id )
+		);
 
-					if ( a.updatedAt != b.updatedAt ) {
-
-						return dateCompare( b.updatedAt, a.updatedAt );
-
-					}
-
-					return sgn( b.id - a.id );
-
-				}
-			)
-			.slice( 1, count )
-		;
+		return sortedPoems.slice( 1, count );
 
 	}
 

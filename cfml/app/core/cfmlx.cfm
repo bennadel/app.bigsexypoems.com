@@ -180,6 +180,43 @@
 
 
 	/**
+	* I perform an in-place sort of the given array using the provided operators. Each
+	* subsequent operator is only consumed when the previous operator returns 0.
+	*/
+	public array function arraySortByOperators(
+		required array collection,
+		required function operator
+		/* , operator-2 */
+		/* , operator-3 */
+		/* , operator-4 */
+		) {
+
+		var operators = argumentsToArray( arguments ).slice( 2 )
+
+		return collection.sort(
+			( a, b ) => {
+
+				for ( var operator in operators ) {
+
+					var comparison = sgn( operator( a, b ) );
+
+					if ( comparison != 0 ) {
+
+						return comparison;
+
+					}
+
+				}
+
+				return 0;
+
+			}
+		);
+
+	}
+
+
+	/**
 	* I clamp the given value to the given bounds.
 	*/
 	private numeric function clamp(
