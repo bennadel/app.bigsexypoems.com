@@ -13,38 +13,42 @@
 			<a #ui.attrHref( "member.poem.global.share.list" )#>All Share Links</a>
 		</p>
 
-		<table class="uiTable">
-		<thead>
-			<tr>
-				<th>
-					Name
-				</th>
-				<th class="w-1">
-					Tag
-				</th>
-				<th class="w-1">
-					Updated
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-		<cfloop array="#poems#" item="poem">
-			<tr>
-				<td>
-					<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.name )#</a>
-				</td>
-				<td class="isNoWrap">
-					<cfif poem.tag.id>
-						<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.tag.name )#</a>
-					</cfif>
-				</td>
-				<td class="isNoWrap">
-					#ui.userDate( poem.updatedAt )#
-				</td>
-			</tr>
-		</cfloop>
-		</tbody>
-		</table>
+		<cfif recentPoems.len()>
+
+			<h2>
+				Recently Updated Poems
+			</h2>
+
+			<cfmodule
+				template="./poemTable.cfm"
+				poems="#recentPoems#"
+			/>
+
+		</cfif>
+
+		<cfif poems.len()>
+
+			<!--- We only need the title if we have to differentiate two sections. --->
+			<cfif recentPoems.len()>
+				<h2>
+					All Poems
+				</h2>
+			</cfif>
+
+			<cfmodule
+				template="./poemTable.cfm"
+				poems="#poems#"
+			/>
+
+		</cfif>
+
+		<cfif ! poems.len()>
+
+			<p>
+				You have no poems yet. <a #ui.attrHref( "member.poem.add" )#>Write your first poem</a>.
+			</p>
+
+		</cfif>
 
 	</article>
 
