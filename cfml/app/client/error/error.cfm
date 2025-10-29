@@ -16,9 +16,10 @@
 
 	if ( request.isHtmx && ! request.htmx.boosted ) {
 
-		// Responses to a non-boosted htmx request are intended to be transcluded into an
-		// existing UI. As such, the response wrapper is minimal.
+		// HTMX errors (that bubble up to the global error handler) are reported using the
+		// hx-trigger header. As such, we'll use the blank template.
 		cfmodule( template = "./htmx/htmx.cfm" );
+		cfmodule( template = "/client/_shared/layout/blank.cfm" );
 
 	} else {
 

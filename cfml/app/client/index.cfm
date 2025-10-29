@@ -1,6 +1,7 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
+	config = request.ioc.get( "config" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
@@ -36,6 +37,9 @@
 	// this, we're going to use the CGI.QUERY_STRING value to drive form actions, with any
 	// additional data being provided as form inputs.
 	request.postBackAction = router.buildPostBackAction();
+	// Define globally convenient short-hands.
+	request.isLive = config.isLive;
+	request.isLocal = ! request.isLive;
 	request.isGet = requestMetadata.isGet();
 	request.isPost = requestMetadata.isPost();
 	request.htmx = requestMetadata.getHtmxHeaders();
