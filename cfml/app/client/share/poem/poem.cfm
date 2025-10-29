@@ -72,6 +72,6 @@
 		break;
 	}
 
-	cfmodule( template = "./_layout/default.cfm" );
+	cfmodule( template = "./_shared/layout/default.cfm" );
 
 </cfscript>

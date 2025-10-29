@@ -23,7 +23,7 @@
 	} else {
 
 		cfmodule( template = "./message/message.cfm" );
-		cfmodule( template = "./_layout/layout.cfm" );
+		cfmodule( template = "./_shared/layout/default.cfm" );
 
 	}
 

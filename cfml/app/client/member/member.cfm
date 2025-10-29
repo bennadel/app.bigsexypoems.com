@@ -33,13 +33,13 @@
 
 	switch ( request.response.template ) {
 		case "binary":
-			cfmodule( template = "./_layout/binary/binary.cfm" );
+			cfmodule( template = "/client/_shared/layout/binary.cfm" );
 		break;
 		case "blank":
-			cfmodule( template = "./_layout/blank/blank.cfm" );
+			cfmodule( template = "/client/_shared/layout/blank.cfm" );
 		break;
 		case "default":
-			cfmodule( template = "./_layout/default/default.cfm" );
+			cfmodule( template = "./_shared/layout/default.cfm" );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidTemplate" );

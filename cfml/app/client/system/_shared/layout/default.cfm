@@ -16,6 +16,6 @@
 	// Reset the output buffer.
 	cfcontent( type = "text/html; charset=utf-8" );
 
-	include "./layout.view.cfm";
+	include "./default.view.cfm";
 
 </cfscript>

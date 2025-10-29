@@ -25,6 +25,6 @@
 		break;
 	}
 
-	cfmodule( template = "./_layout/layout.cfm" );
+	cfmodule( template = "./_shared/layout/default.cfm" );
 
 </cfscript>
