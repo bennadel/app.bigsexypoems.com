@@ -15,13 +15,10 @@
 
 		<cfmodule template="/client/_shared/tag/svgSprite.cfm" />
 
-		<a
-			href="##main-content-anchor"
-			@click="focusMain()"
-			mpjwb9
-			class="uiButton isInverted skipToMain">
-			Skip to main content
-		</a>
+		<cfmodule
+			template="/client/_shared/tag/skipToMain.cfm"
+			anchor="main-content-anchor"
+		/>
 
 		<div mpjwb9 class="shell">
 			<header mpjwb9 class="shell_header header">
@@ -153,7 +150,6 @@
 			</header>
 			<main
 				id="main-content-anchor"
-				x-ref="main"
 				tabindex="-1"
 				mpjwb9
 				class="shell_main">

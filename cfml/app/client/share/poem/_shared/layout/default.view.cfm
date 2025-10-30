@@ -18,16 +18,13 @@
 
 		<cfmodule template="/client/_shared/tag/svgSprite.cfm" />
 
-		<a
-			href="##main-content-anchor"
-			@click="focusMain()"
-			cj4s1o class="uiButton isInverted skipToMain">
-			Skip to main content
-		</a>
+		<cfmodule
+			template="/client/_shared/tag/skipToMain.cfm"
+			anchor="main-content-anchor"
+		/>
 
 		<main
 			id="main-content-anchor"
-			x-ref="main"
 			tabindex="-1"
 			cj4s1o class="main">
 

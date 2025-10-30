@@ -5,23 +5,8 @@ window.cj4s1o = {
 
 function AppShell() {
 
-	return {
-		// Methods.
-		focusMain: focusMain
-	};
-
-	// ---
-	// PUBLIC METHODS.
-	// ---
-
-	/**
-	* I programmatically focus the main content area.
-	*/
-	function focusMain() {
-
-		this.$refs.main.focus();
-		this.$refs.main.scrollIntoView();
-
-	}
+	// Note: I'm leaving this component in because the [x-data] in the root ensures that
+	// the rest of the page is alpine aware (otherwise, custom directives may not fire).
+	return {};
 
 }
