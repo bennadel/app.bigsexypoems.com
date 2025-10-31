@@ -16,6 +16,7 @@ component {
 	*/
 	public numeric function create(
 		required numeric userID,
+		required numeric collectionID,
 		required numeric tagID,
 		required string name,
 		required string content,
@@ -27,6 +28,7 @@ component {
 
 		return gateway.create(
 			userID = userID,
+			collectionID = collectionID,
 			tagID = tagID,
 			name = name,
 			content = content,
@@ -74,6 +76,7 @@ component {
 	public array function getByFilter(
 		numeric id,
 		numeric userID,
+		numeric collectionID,
 		numeric tagID
 		) {
 
@@ -98,6 +101,7 @@ component {
 	public struct function maybeGetByFilter(
 		numeric id,
 		numeric userID,
+		numeric collectionID,
 		numeric tagID
 		) {
 
@@ -124,6 +128,7 @@ component {
 	*/
 	public void function update(
 		required numeric id,
+		numeric collectionID,
 		numeric tagID,
 		string name,
 		string content,
@@ -132,6 +137,10 @@ component {
 
 		var existing = get( id );
 
+		collectionID = isNull( collectionID )
+			? existing.collectionID
+			: collectionID
+		;
 		tagID = isNull( tagID )
 			? existing.tagID
 			: tagID
@@ -151,6 +160,7 @@ component {
 
 		gateway.update(
 			id = existing.id,
+			collectionID = collectionID,
 			tagID = tagID,
 			name = name,
 			content = content,

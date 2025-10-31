@@ -10,3 +10,9 @@ CREATE TABLE `collection` (
 	PRIMARY KEY (`id`),
 	KEY `byUser` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+ALTER TABLE
+	`poem`
+ADD COLUMN
+	`collectionID` bigint unsigned NOT NULL DEFAULT '0' AFTER `userID`
+;

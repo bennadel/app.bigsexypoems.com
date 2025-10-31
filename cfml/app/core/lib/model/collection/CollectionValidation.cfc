@@ -77,4 +77,25 @@ component
 
 	}
 
+
+	/**
+	* I throw a model error.
+	*/
+	public void function throwUnsafeDescriptionError( required struct unsafeMarkup ) {
+
+		var tagNames = unsafeMarkup
+			.tags
+			.map( ( entry ) => entry.tagName )
+			.toList( ", " )
+		;
+
+		throw(
+			type = "App.Model.Collection.DescriptionMarkdown.Unsafe",
+			extendedInfo = embedMetadata({
+				tagNames: tagNames
+			})
+		);
+
+	}
+
 }

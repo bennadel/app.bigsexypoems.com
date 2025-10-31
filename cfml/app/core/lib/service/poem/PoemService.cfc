@@ -34,6 +34,7 @@ component {
 
 		var poemID = poemModel.create(
 			userID = user.id,
+			collectionID = 0, // Todo: implement select.
 			tagID = tagID,
 			name = name,
 			content = content,
