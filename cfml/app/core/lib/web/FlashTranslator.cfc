@@ -36,6 +36,15 @@ component {
 			// 	linkText = "View client",
 			// 	linkHref = router.urlForParts( "member.client.view", "clientID", flashID )
 			// );
+			case "your.collection.created":
+				return asResponse( "Your collection has been created." );
+			break;
+			case "your.collection.deleted":
+				return asResponse( "Your collection has been unlinked from its content and then delete." );
+			break;
+			case "your.collection.updated":
+				return asResponse( "Your collection has been updated." );
+			break;
 			case "your.poem.created":
 				return asResponse( "Your poem has been created." );
 			break;
