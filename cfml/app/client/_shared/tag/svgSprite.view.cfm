@@ -83,4 +83,12 @@
 		</g>
 	</symbol>
 
+	<!--- https://www.streamlinehq.com/icons/download/book-flip-page--18271 --->
+	<symbol id="svg-sprite--book-flip-page--18271" viewBox="0 0 24 24">
+		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+			<path d="M18 4.14a30.54 30.54 0 0 1 4.73 -0.39 0.55 0.55 0 0 1 0.37 0.14 0.51 0.51 0 0 1 0.15 0.36V20a0.51 0.51 0 0 1 -0.5 0.5C14.46 20.62 12 23.25 12 23.25V6.48S9.55 3.86 1.27 3.75a0.55 0.55 0 0 0 -0.37 0.14 0.51 0.51 0 0 0 -0.15 0.36V20a0.51 0.51 0 0 0 0.5 0.5C9.54 20.62 12 23.25 12 23.25"></path>
+			<path d="M12 22.76a6 6 0 0 1 1.64 -3.45A8.18 8.18 0 0 1 18 16.85V1.24a0.46 0.46 0 0 0 -0.23 -0.4 0.6 0.6 0 0 0 -0.49 -0.06 7.79 7.79 0 0 0 -3.64 2.27A6.2 6.2 0 0 0 12 6.48"></path>
+		</g>
+	</symbol>
+
 </svg>

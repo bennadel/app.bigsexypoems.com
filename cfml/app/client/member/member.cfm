@@ -19,6 +19,7 @@
 	request.response.template = "default";
 
 	switch ( router.next( "home" ) ) {
+		case "collection":
 		case "home":
 		case "poem":
 		case "profile":

@@ -12,6 +12,7 @@
 
 	icons = {
 		"back": "svg-sprite--move-back--18116",
+		"collections": "svg-sprite--book-flip-page--18271",
 		"home": "svg-sprite--house-chimney-2--18112",
 		"logout": "svg-sprite--logout-2--18167",
 		"logo": "svg-sprite--mask-heart--18299",

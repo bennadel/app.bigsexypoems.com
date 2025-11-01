@@ -83,6 +83,27 @@
 						</li>
 						<li>
 							<a
+								#ui.attrHref( "member.collection" )#
+								mpjwb9
+								#ui.attrClass([
+									navLink: true,
+									isOn: ( request.response.activeNav == "collections" )
+								])#>
+								<span mpjwb9 class="navLink_pill">
+									<span mpjwb9 class="navLink_icon">
+										<cfmodule
+											template="/client/_shared/tag/svgIcon.cfm"
+											type="collections">
+										</cfmodule>
+									</span>
+									<span mpjwb9 class="navLink_label">
+										Collections
+									</span>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a
 								#ui.attrHref( "member.tag" )#
 								mpjwb9
 								#ui.attrClass([

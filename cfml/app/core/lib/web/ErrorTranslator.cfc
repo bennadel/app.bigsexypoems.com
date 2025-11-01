@@ -55,6 +55,30 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.MethodNotAllowed":
 				return as405();
 			break;
+			case "App.Model.Collection.DescriptionMarkdown.SuspiciousEncoding":
+				return asModelStringSuspiciousEncoding( error, "collection description" );
+			break;
+			case "App.Model.Collection.DescriptionMarkdown.TooLong":
+				return asModelStringTooLong( error, "collection description", metadata );
+			break;
+			case "App.Model.Collection.DescriptionMarkdown.Unsafe":
+				return asModelMarkdownUnsafe( error, "collection description", metadata );
+			break;
+			case "App.Model.Collection.Forbidden":
+				return as403();
+			break;
+			case "App.Model.Collection.Name.Empty":
+				return asModelStringEmpty( error, "collection name" );
+			break;
+			case "App.Model.Collection.Name.SuspiciousEncoding":
+				return asModelStringSuspiciousEncoding( error, "collection name" );
+			break;
+			case "App.Model.Collection.Name.TooLong":
+				return asModelStringTooLong( error, "collection name", metadata );
+			break;
+			case "App.Model.Collection.NotFound":
+				return asModelNotFound( error, "collection" );
+			break;
 			case "App.Model.Poem.Content.TooLong":
 				return asModelStringTooLong( error, "poem", metadata );
 			break;
