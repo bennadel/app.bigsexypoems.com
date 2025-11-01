@@ -1,6 +1,7 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
+	collectionModel = request.ioc.get( "core.lib.model.collection.CollectionModel" );
 	poemAccess = request.ioc.get( "core.lib.service.poem.PoemAccess" );
 	poemService = request.ioc.get( "core.lib.service.poem.PoemService" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
@@ -17,6 +18,7 @@
 	param name="url.poemID" type="numeric";
 	param name="form.name" type="string" default="";
 	param name="form.content" type="string" default="";
+	param name="form.collectionID" type="numeric" default=0;
 	param name="form.tagID" type="numeric" default=0;
 	param name="form.switchToComposer" type="boolean" default=false;
 
@@ -25,6 +27,7 @@
 		poemID = val( url.poemID )
 	);
 	poem = partial.poem;
+	collections = partial.collections;
 	tags = partial.tags;
 
 	title = "Update Poem";
@@ -36,6 +39,7 @@
 
 		form.name = poem.name;
 		form.content = poem.content;
+		form.collectionID = poem.collectionID;
 		form.tagID = poem.tagID;
 
 	}
@@ -47,6 +51,7 @@
 			poemService.updatePoem(
 				authContext = request.authContext,
 				id = poem.id,
+				collectionID = val( form.collectionID ),
 				tagID = val( form.tagID ),
 				name = form.name,
 				content = form.content
@@ -91,6 +96,10 @@
 		var context = poemAccess.getContext( authContext, poemID, "canUpdate" );
 		var poem = context.poem;
 
+		var collections = collectionModel
+			.getByFilter( userID = authContext.user.id )
+			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
+		;
 		var tags = tagModel
 			.getByFilter( userID = authContext.user.id )
 			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
@@ -98,6 +107,7 @@
 
 		return {
 			poem,
+			collections,
 			tags
 		};
 

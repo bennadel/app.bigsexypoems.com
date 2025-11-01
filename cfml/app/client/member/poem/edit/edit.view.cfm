@@ -55,6 +55,32 @@
 			</div>
 
 			<div class="uiField">
+				<label for="form--collectionID" class="uiField_label">
+					Collection:
+				</label>
+				<div class="uiField_content">
+					<p id="form--collectionID--description" class="uiField_description">
+						A collection allows you to group poems together for categorization and sharing purposes.
+					</p>
+
+					<select
+						id="form--collectionID"
+						aria-describedby="form--collectionID--description"
+						name="collectionID"
+						class="uiSelect">
+						<option value="0">- Select -</option>
+						<cfloop array="#collections#" item="collection">
+							<option
+								value="#e4a( collection.id )#"
+								#ui.attrSelected( form.collectionID eq collection.id )#>
+								#e( collection.name )#
+							</option>
+						</cfloop>
+					</select>
+				</div>
+			</div>
+
+			<div class="uiField">
 				<label for="form--tagID" class="uiField_label">
 					Tag:
 				</label>
