@@ -31,7 +31,7 @@
 			<cfloop array="#collections#" item="collection">
 				<tr>
 					<td>
-						<a #ui.attrHref( "member.collection.edit", "collectionID", collection.id )#>#e( collection.name )#</a>
+						<a #ui.attrHref( "member.collection.view", "collectionID", collection.id )#>#e( collection.name )#</a>
 					</td>
 					<td class="isNoWrap">
 						#ui.userDate( collection.createdAt )#

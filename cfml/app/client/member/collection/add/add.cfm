@@ -32,7 +32,8 @@
 			);
 
 			router.goto([
-				event: "member.collection.list",
+				event: "member.collection.view",
+				collectionID: collectionID,
 				flash: "your.collection.created"
 			]);
 
