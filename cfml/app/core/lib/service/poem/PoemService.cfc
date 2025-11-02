@@ -22,6 +22,7 @@ component {
 	public numeric function createPoem(
 		required struct authContext,
 		required numeric userID,
+		required numeric collectionID,
 		required numeric tagID,
 		required string name,
 		required string content
@@ -30,11 +31,12 @@ component {
 		var context = poemAccess.getContextForParent( authContext, userID, "canCreateAny" );
 		var user = context.user;
 
+		testCollectionID( authContext, userID, collectionID );
 		testTagID( authContext, userID, tagID );
 
 		var poemID = poemModel.create(
 			userID = user.id,
-			collectionID = 0, // Todo: implement select.
+			collectionID = collectionID,
 			tagID = tagID,
 			name = name,
 			content = content,

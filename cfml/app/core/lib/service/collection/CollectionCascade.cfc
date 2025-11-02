@@ -44,7 +44,10 @@ component {
 
 		for ( var poem in poems ) {
 
-			poemModel.deleteByFilter( id = poem.id );
+			poemModel.update(
+				id = poem.id,
+				collectionID = 0
+			);
 
 		}
 
