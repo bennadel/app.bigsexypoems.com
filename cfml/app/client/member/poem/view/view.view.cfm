@@ -7,6 +7,13 @@
 			#e( poem.name )#
 		</h1>
 
+		<cfif maybeCollection.exists>
+			<p>
+				<strong>Collection:</strong>
+				<a #ui.attrHref( "member.collection.view", "collectionID", maybeCollection.value.id )#>#e( maybeCollection.value.name )#</a>
+			</p>
+		</cfif>
+
 		<p>
 			&larr; <a #ui.attrHref( "member.poem" )#>Back to Poems</a>
 			|

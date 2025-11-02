@@ -1,6 +1,7 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
+	collectionModel = request.ioc.get( "core.lib.model.collection.CollectionModel" );
 	poemAccess = request.ioc.get( "core.lib.service.poem.PoemAccess" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
@@ -17,6 +18,7 @@
 		poemID = val( url.poemID )
 	);
 	poem = partial.poem;
+	maybeCollection = partial.maybeCollection;
 	title = poem.name;
 
 	request.response.title = title;
@@ -36,9 +38,19 @@
 
 		var context = poemAccess.getContext( authContext, poemID, "canView" );
 		var poem = context.poem;
+		var maybeCollection = {
+			exists: false
+		};
+
+		if ( poem.collectionID ) {
+
+			maybeCollection = collectionModel.maybeGet( id = poem.collectionID );
+
+		}
 
 		return {
-			poem
+			poem,
+			maybeCollection,
 		};
 
 	}
