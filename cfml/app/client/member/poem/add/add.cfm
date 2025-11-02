@@ -5,7 +5,6 @@
 	poemService = request.ioc.get( "core.lib.service.poem.PoemService" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
-	tagModel = request.ioc.get( "core.lib.model.tag.TagModel" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
@@ -18,11 +17,9 @@
 	param name="form.name" type="string" default="";
 	param name="form.content" type="string" default="";
 	param name="form.collectionID" type="numeric" default=0;
-	param name="form.tagID" type="numeric" default=0;
 	param name="form.switchToComposer" type="boolean" default=false;
 
 	partial = getPartial( authContext = request.authContext );
-	tags = partial.tags;
 	collections = partial.collections;
 
 	title = url.importFrom.len()
@@ -54,7 +51,6 @@
 				authContext = request.authContext,
 				userID = request.authContext.user.id,
 				collectionID = val( form.collectionID ),
-				tagID = val( form.tagID ),
 				name = form.name,
 				content = form.content
 			);
@@ -96,14 +92,9 @@
 			.getByFilter( userID = authContext.user.id )
 			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
 		;
-		var tags = tagModel
-			.getByFilter( userID = authContext.user.id )
-			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
-		;
 
 		return {
 			collections,
-			tags
 		};
 
 	}

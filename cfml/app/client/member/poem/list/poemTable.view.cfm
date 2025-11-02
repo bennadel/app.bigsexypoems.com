@@ -7,7 +7,7 @@
 				Name
 			</th>
 			<th class="w-1">
-				Tag
+				Collection
 			</th>
 			<th class="w-1">
 				Updated
@@ -21,8 +21,8 @@
 				<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.name )#</a>
 			</td>
 			<td class="isNoWrap">
-				<cfif poem.tag.id>
-					<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.tag.name )#</a>
+				<cfif poem.collection.id>
+					<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.collection.name )#</a>
 				</cfif>
 			</td>
 			<td class="isNoWrap">

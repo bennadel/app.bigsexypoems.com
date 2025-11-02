@@ -80,32 +80,6 @@
 				</div>
 			</div>
 
-			<div class="uiField">
-				<label for="form--tagID" class="uiField_label">
-					Tag:
-				</label>
-				<div class="uiField_content">
-					<p id="form--tagID--description" class="uiField_description">
-						A tag allows you to group poems together for organizational purposes.
-					</p>
-
-					<select
-						id="form--tagID"
-						aria-describedby="form--tagID--description"
-						name="tagID"
-						class="uiSelect">
-						<option value="0">- Select -</option>
-						<cfloop array="#tags#" item="tag">
-							<option
-								value="#e4a( tag.id )#"
-								#ui.attrSelected( form.tagID eq tag.id )#>
-								#e( tag.name )#
-							</option>
-						</cfloop>
-					</select>
-				</div>
-			</div>
-
 			<div class="uiFormButtons">
 				<button type="submit" class="uiButton isSubmit">
 					Update Poem

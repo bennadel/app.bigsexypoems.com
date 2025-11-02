@@ -6,7 +6,6 @@ component {
 	property name="poemCascade" ioc:type="core.lib.service.poem.PoemCascade";
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
 	property name="poemValidation" ioc:type="core.lib.model.poem.PoemValidation";
-	property name="tagAccess" ioc:type="core.lib.service.tag.TagAccess";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
 	// ColdFusion language extensions (global functions).
@@ -23,7 +22,6 @@ component {
 		required struct authContext,
 		required numeric userID,
 		required numeric collectionID,
-		required numeric tagID,
 		required string name,
 		required string content
 		) {
@@ -32,12 +30,10 @@ component {
 		var user = context.user;
 
 		testCollectionID( authContext, userID, collectionID );
-		testTagID( authContext, userID, tagID );
 
 		var poemID = poemModel.create(
 			userID = user.id,
 			collectionID = collectionID,
-			tagID = tagID,
 			name = name,
 			content = content,
 			createdAt = utcNow()
@@ -72,7 +68,6 @@ component {
 		required struct authContext,
 		required numeric id,
 		numeric collectionID,
-		numeric tagID,
 		string name,
 		string content
 		) {
@@ -81,12 +76,10 @@ component {
 		var poem = context.poem;
 
 		testCollectionID( authContext, poem.userID, arguments?.collectionID );
-		testTagID( authContext, poem.userID, arguments?.tagID );
 
 		poemModel.update(
 			id = poem.id,
 			collectionID = arguments?.collectionID,
-			tagID = arguments?.tagID,
 			name = arguments?.name,
 			content = arguments?.content,
 			updatedAt = utcNow()
@@ -120,35 +113,6 @@ component {
 		;
 
 		if ( collection.userID != userID ) {
-
-			poemValidation.throwForbiddenError();
-
-		}
-
-	}
-
-	/**
-	* I test that the tag with the given ID exists and that it can be associated with the
-	* a poem owned by the given user.
-	*/
-	private void function testTagID(
-		required struct authContext,
-		required numeric userID,
-		numeric tagID = 0
-		) {
-
-		if ( ! tagID ) {
-
-			return;
-
-		}
-
-		var tag = tagAccess
-			.getContext( authContext, tagID, "canView" )
-			.tag
-		;
-
-		if ( tag.userID != userID ) {
 
 			poemValidation.throwForbiddenError();
 

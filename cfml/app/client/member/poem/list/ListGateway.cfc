@@ -10,14 +10,14 @@
 				p.id,
 				p.name,
 				p.updatedAt,
-				( t.id ) AS tag_id,
-				( t.name ) AS tag_name
+				( c.id ) AS collection_id,
+				( c.name ) AS collection_name
 			FROM
 				poem p
 			LEFT OUTER JOIN
-				tag t
+				collection c
 			ON
-				t.id = p.tagID
+				c.id = p.collectionID
 			WHERE
 				p.userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
 			ORDER BY
