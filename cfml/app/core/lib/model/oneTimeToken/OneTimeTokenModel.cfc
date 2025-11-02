@@ -61,20 +61,7 @@ component {
 	*/
 	public struct function maybeGet( required numeric id ) {
 
-		var results = gateway.getByFilter( argumentCollection = arguments );
-
-		if ( results.len() ) {
-
-			return {
-				exists: true,
-				value: results.first()
-			};
-
-		}
-
-		return {
-			exists: false
-		};
+		return maybeArrayFirst( gateway.getByFilter( argumentCollection = arguments ) );
 
 	}
 

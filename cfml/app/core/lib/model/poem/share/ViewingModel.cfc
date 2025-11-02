@@ -123,20 +123,7 @@ component {
 		string ipAddress
 		) {
 
-		var results = getByFilter( argumentCollection = arguments );
-
-		if ( results.len() ) {
-
-			return {
-				exists: true,
-				value: results.first()
-			};
-
-		}
-
-		return {
-			exists: false
-		};
+		return maybeArrayFirst( getByFilter( argumentCollection = arguments ) );
 
 	}
 

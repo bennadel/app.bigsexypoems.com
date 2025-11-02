@@ -83,20 +83,7 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 	*/
 	public struct function maybeGet( required string serviceToken ) {
 
-		if ( services.keyExists( serviceToken ) ) {
-
-			return [
-				exists: true,
-				value: services[ serviceToken ]
-			];
-
-		} else {
-
-			return [
-				exists: false
-			];
-
-		}
+		return maybeNew( services[ serviceToken ] ?: nullValue() );
 
 	}
 

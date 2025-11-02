@@ -70,17 +70,13 @@ component hint = "I provide methods for generating and verifying one-time tokens
 
 		if ( maybeResult.value.expiresAt <= utcNow() ) {
 
-			return {
-				exists: false
-			};
+			return maybeNew();
 
 		}
 
 		if ( compare( passcode, maybeResult.value.passcode ) ) {
 
-			return {
-				exists: false
-			};
+			return maybeNew();
 
 		}
 

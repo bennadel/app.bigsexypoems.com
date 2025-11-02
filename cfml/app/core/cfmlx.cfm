@@ -553,6 +553,52 @@
 
 
 	/**
+	* I return a maybe for the first element in the given array.
+	*/
+	private struct function maybeArrayFirst( required array collection ) {
+
+		return maybeNew( collection[ 1 ] ?: nullValue() );
+
+	}
+
+
+	/**
+	* I create a maybe with the given value. Passing-in a null value results in a non-
+	* exists value.
+	*/
+	private struct function maybeNew( any value ) {
+
+		var maybe = {
+			exists: ! isNull( value ),
+			value: arguments?.value,
+
+			// Implement "member" method for setting the value.
+			setValue: ( newValue ) => maybeSetValue( maybe, newValue )
+		};
+
+		return maybe;
+
+	}
+
+
+	/**
+	* I update the maybe to be an exists value using the given input. The updated-in-place
+	* maybe is returned.
+	*/
+	private struct function maybeSetValue(
+		required struct maybe,
+		required any value
+		) {
+
+		maybe.exists = true;
+		maybe.value = value;
+
+		return maybe;
+
+	}
+
+
+	/**
 	* I return a closure that binds given method to the given source component, allowing
 	* the closure to be passed-around without scoping.
 	*/

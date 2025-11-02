@@ -38,13 +38,11 @@
 
 		var context = poemAccess.getContext( authContext, poemID, "canView" );
 		var poem = context.poem;
-		var maybeCollection = {
-			exists: false
-		};
+		var maybeCollection = maybeNew();
 
 		if ( poem.collectionID ) {
 
-			maybeCollection = collectionModel.maybeGet( id = poem.collectionID );
+			maybeCollection.setValue( collectionModel.get( poem.collectionID ) );
 
 		}
 
