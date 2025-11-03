@@ -568,13 +568,20 @@
 	*/
 	private struct function maybeNew( any value ) {
 
-		var maybe = {
+		return maybePatchMemberMethods({
 			exists: ! isNull( value ),
-			value: arguments?.value,
+			value: arguments?.value
+		});
 
-			// Implement "member" method for setting the value.
-			setValue: ( newValue ) => maybeSetValue( maybe, newValue )
-		};
+	}
+
+
+	/**
+	* I patch-in the member methods for the given maybe.
+	*/
+	private struct function maybePatchMemberMethods( required any maybe ) {
+
+		maybe.set = ( newValue ) => maybeSet( maybe, newValue );
 
 		return maybe;
 
@@ -585,7 +592,7 @@
 	* I update the maybe to be an exists value using the given input. The updated-in-place
 	* maybe is returned.
 	*/
-	private struct function maybeSetValue(
+	private struct function maybeSet(
 		required struct maybe,
 		required any value
 		) {

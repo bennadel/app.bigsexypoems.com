@@ -42,7 +42,7 @@
 
 		if ( poem.collectionID ) {
 
-			maybeCollection.setValue( collectionModel.get( poem.collectionID ) );
+			maybeCollection.set( collectionModel.get( poem.collectionID ) );
 
 		}
 
