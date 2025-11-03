@@ -720,6 +720,21 @@
 
 
 	/**
+	* I return a new struct with the given subset of keys filtered-in.
+	*/
+	private struct function structPick(
+		required struct target,
+		required array keys
+		) {
+
+		var keysIndex = arrayReflect( keys );
+
+		return target.filter( ( key ) => keysIndex.keyExists( key ) );
+
+	}
+
+
+	/**
 	* I polyfill the systemOutput() function in Adobe ColdFusion.
 	*/
 	private void function systemOutput(

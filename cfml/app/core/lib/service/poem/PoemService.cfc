@@ -2,6 +2,7 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="collectionAccess" ioc:type="core.lib.service.collection.CollectionAccess";
+	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="poemAccess" ioc:type="core.lib.service.poem.PoemAccess";
 	property name="poemCascade" ioc:type="core.lib.service.poem.PoemCascade";
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
@@ -55,6 +56,22 @@ component {
 		var context = poemAccess.getContext( authContext, id, "canDelete" );
 		var user = context.user;
 		var poem = context.poem;
+
+		// Log the poem content for Support purposes. This will copy the content into the
+		// logs which will then be automatically flushed within a few days (the logs are
+		// all transient). This way, if someone deletes a poem accidentally, we'll have a
+		// few days to manually recover it for them.
+		// --
+		// Note: logging PII (personally identifiable information) is frowned upon. But,
+		// I think the amount of information is sufficiently safe; and is out-weighed by
+		// the possible happiness this might bring the user (after an accidental delete).
+		logger.info(
+			"Poem deleted (logged for recovery purposes).",
+			{
+				user: structPick( user, [ "id", "email" ] ),
+				poem: structPick( poem, [ "name", "content" ] )
+			}
+		);
 
 		poemCascade.delete( user, poem );
 
