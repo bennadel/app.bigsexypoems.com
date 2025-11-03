@@ -37,7 +37,7 @@
 
 			}
 
-			shareService.deleteShare(
+			shareService.delete(
 				authContext = request.authContext,
 				id = share.id
 			);

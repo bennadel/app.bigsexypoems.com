@@ -15,7 +15,7 @@ component {
 	/**
 	* I delete the given share and any data contained under it.
 	*/
-	public void function deleteShare(
+	public void function delete(
 		required struct user,
 		required struct poem,
 		required struct share

@@ -33,7 +33,7 @@
 
 		try {
 
-			poemService.updatePoem(
+			poemService.update(
 				authContext = request.authContext,
 				id = poem.id,
 				name = form.name,

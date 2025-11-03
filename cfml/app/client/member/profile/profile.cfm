@@ -32,7 +32,7 @@
 
 		try {
 
-			userService.updateUser(
+			userService.update(
 				authContext = request.authContext,
 				id = request.authContext.user.id,
 				name = form.name

@@ -36,7 +36,7 @@
 
 			}
 
-			shareService.deleteSharesForPoem(
+			shareService.deleteForPoem(
 				authContext = request.authContext,
 				poemID = poem.id
 			);

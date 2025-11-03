@@ -15,7 +15,7 @@ component {
 	/**
 	* I delete the given poem and any data contained under it.
 	*/
-	public void function deletePoem(
+	public void function delete(
 		required struct user,
 		required struct poem
 		) {

@@ -37,7 +37,7 @@
 
 			}
 
-			tagService.deleteTag(
+			tagService.delete(
 				authContext = request.authContext,
 				id = tag.id
 			);

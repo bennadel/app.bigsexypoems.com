@@ -47,7 +47,7 @@
 
 		try {
 
-			poemID = poemService.createPoem(
+			poemID = poemService.create(
 				authContext = request.authContext,
 				userID = request.authContext.user.id,
 				collectionID = val( form.collectionID ),

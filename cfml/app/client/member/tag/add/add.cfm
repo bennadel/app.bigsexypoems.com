@@ -29,7 +29,7 @@
 				: form.name.left( 20 ).lcase()
 			;
 
-			tagID = tagService.createTag(
+			tagID = tagService.create(
 				authContext = request.authContext,
 				userID = request.authContext.user.id,
 				name = form.name,

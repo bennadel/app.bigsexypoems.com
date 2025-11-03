@@ -14,7 +14,7 @@ component {
 	/**
 	* I update the given user.
 	*/
-	public void function updateUser(
+	public void function update(
 		required struct authContext,
 		required numeric id,
 		required string name

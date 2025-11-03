@@ -31,7 +31,7 @@
 
 		try {
 
-			shareID = shareService.createShare(
+			shareID = shareService.create(
 				authContext = request.authContext,
 				poemID = poem.id,
 				name = form.name,

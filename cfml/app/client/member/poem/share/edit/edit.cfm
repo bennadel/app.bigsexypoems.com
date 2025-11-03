@@ -39,7 +39,7 @@
 
 		try {
 
-			shareID = shareService.updateShare(
+			shareID = shareService.update(
 				authContext = request.authContext,
 				id = share.id,
 				name = form.name,

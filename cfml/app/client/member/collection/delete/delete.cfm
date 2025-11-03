@@ -37,7 +37,7 @@
 
 			}
 
-			collectionService.deleteCollection(
+			collectionService.delete(
 				authContext = request.authContext,
 				id = collection.id
 			);

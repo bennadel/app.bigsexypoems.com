@@ -17,7 +17,7 @@ component {
 	/**
 	* I create a new collection.
 	*/
-	public numeric function createCollection(
+	public numeric function create(
 		required struct authContext,
 		required numeric userID,
 		required string name,
@@ -26,7 +26,7 @@ component {
 
 		var context = collectionAccess.getContextForParent( authContext, userID, "canCreateAny" );
 		var user = context.user;
-		var descriptionHtml = parseCollectionDescription( descriptionMarkdown );
+		var descriptionHtml = parseDescriptionMarkdown( descriptionMarkdown );
 		var createdAt = utcNow();
 
 		var id = collectionModel.create(
@@ -45,7 +45,7 @@ component {
 	/**
 	* I delete the given collection.
 	*/
-	public void function deleteCollection(
+	public void function delete(
 		required struct authContext,
 		required numeric id
 		) {
@@ -54,7 +54,7 @@ component {
 		var user = context.user;
 		var collection = context.collection;
 
-		collectionCascade.deleteCollection( user, collection );
+		collectionCascade.delete( user, collection );
 
 	}
 
@@ -62,7 +62,7 @@ component {
 	/**
 	* I parse the collection description markdown into sanitized HTML.
 	*/
-	public string function parseCollectionDescription( required string descriptionMarkdown ) {
+	public string function parseDescriptionMarkdown( required string descriptionMarkdown ) {
 
 		var unsafeHtml = collectionDescriptionParser.parse( descriptionMarkdown );
 		var sanitizedResults = collectionDescriptionSanitizer.sanitize( unsafeHtml );
@@ -85,7 +85,7 @@ component {
 	/**
 	* I update the given collection.
 	*/
-	public void function updateCollection(
+	public void function update(
 		required struct authContext,
 		required numeric id,
 		string name,
@@ -97,7 +97,7 @@ component {
 
 		if ( ! isNull( descriptionMarkdown ) ) {
 
-			var descriptionHtml = parseCollectionDescription( descriptionMarkdown );
+			var descriptionHtml = parseDescriptionMarkdown( descriptionMarkdown );
 
 		}
 

@@ -43,7 +43,7 @@
 				: form.name.left( 20 ).lcase()
 			;
 
-			tagID = tagService.updateTag(
+			tagID = tagService.update(
 				authContext = request.authContext,
 				id = tag.id,
 				name = form.name,

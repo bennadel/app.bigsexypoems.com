@@ -44,7 +44,7 @@
 
 		try {
 
-			poemService.updatePoem(
+			poemService.update(
 				authContext = request.authContext,
 				id = poem.id,
 				collectionID = val( form.collectionID ),

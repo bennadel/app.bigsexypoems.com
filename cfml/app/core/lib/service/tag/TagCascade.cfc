@@ -13,7 +13,7 @@ component {
 	/**
 	* I delete the given tag and any data contained under it.
 	*/
-	public void function deleteTag(
+	public void function delete(
 		required struct user,
 		required struct tag
 		) {

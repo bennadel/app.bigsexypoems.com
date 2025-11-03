@@ -38,7 +38,7 @@
 
 		try {
 
-			collectionService.updateCollection(
+			collectionService.update(
 				authContext = request.authContext,
 				id = collection.id,
 				name = form.name,

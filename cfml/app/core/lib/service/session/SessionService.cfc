@@ -49,7 +49,7 @@ component hint = "I provide methods for accessing the session associated with th
 	/**
 	* I create a new session for the given user.
 	*/
-	public void function createSession(
+	public void function create(
 		required numeric userID,
 		required boolean isAuthenticated
 		) {
@@ -91,7 +91,7 @@ component hint = "I provide methods for accessing the session associated with th
 
 		for ( var userSession in sessions ) {
 
-			sessionCascade.deleteSession( user, userSession );
+			sessionCascade.delete( user, userSession );
 
 		}
 
@@ -112,7 +112,7 @@ component hint = "I provide methods for accessing the session associated with th
 		var user = context.user;
 		var userSession = context.userSession;
 
-		sessionCascade.deleteSession( user, userSession );
+		sessionCascade.delete( user, userSession );
 
 		// If this was the current session, let's also delete the cookies.
 		if ( sessionCookies.getCookie().sessionID == sessionID ) {
@@ -202,7 +202,7 @@ component hint = "I provide methods for accessing the session associated with th
 
 			var user = userModel.get( maybeSession.value.userID );
 
-			sessionCascade.deleteSession( user, maybeSession.value );
+			sessionCascade.delete( user, maybeSession.value );
 
 		}
 

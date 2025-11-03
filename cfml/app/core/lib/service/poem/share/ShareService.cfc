@@ -21,7 +21,7 @@ component {
 	/**
 	* I create a share.
 	*/
-	public numeric function createShare(
+	public numeric function create(
 		required struct authContext,
 		required numeric poemID,
 		required string name,
@@ -31,7 +31,7 @@ component {
 		var context = shareAccess.getContextForParent( authContext, poemID, "canCreateAny" );
 		var poem = context.poem;
 		var token = secureRandom.getToken( 32 );
-		var noteHtml = parseShareNote( noteMarkdown );
+		var noteHtml = parseNoteMarkdown( noteMarkdown );
 		var createdAt = utcNow();
 
 		var shareID = shareModel.create(
@@ -53,7 +53,7 @@ component {
 	/**
 	* I delete a share.
 	*/
-	public void function deleteShare(
+	public void function delete(
 		required struct authContext,
 		required numeric id
 		) {
@@ -63,7 +63,7 @@ component {
 		var poem = context.poem;
 		var share = context.share;
 
-		shareCascade.deleteShare( user, poem, share );
+		shareCascade.delete( user, poem, share );
 
 	}
 
@@ -71,7 +71,7 @@ component {
 	/**
 	* I delete all the share for the given poem.
 	*/
-	public void function deleteSharesForPoem(
+	public void function deleteForPoem(
 		required struct authContext,
 		required numeric poemID
 		) {
@@ -83,7 +83,7 @@ component {
 
 		for ( var share in shares ) {
 
-			shareCascade.deleteShare( user, poem, share );
+			shareCascade.delete( user, poem, share );
 
 		}
 
@@ -133,7 +133,7 @@ component {
 	/**
 	* I parse the share note markdown into sanitized HTML.
 	*/
-	public string function parseShareNote( required string noteMarkdown ) {
+	public string function parseNoteMarkdown( required string noteMarkdown ) {
 
 		var unsafeHtml = shareNoteParser.parse( noteMarkdown );
 		var sanitizedResults = shareNoteSanitizer.sanitize( unsafeHtml );
@@ -156,7 +156,7 @@ component {
 	/**
 	* I update a share.
 	*/
-	public void function updateShare(
+	public void function update(
 		required struct authContext,
 		required numeric id,
 		required string name,
@@ -165,7 +165,7 @@ component {
 
 		var context = shareAccess.getContext( authContext, id, "canUpdate" );
 		var share = context.share;
-		var noteHtml = parseShareNote( noteMarkdown );
+		var noteHtml = parseNoteMarkdown( noteMarkdown );
 		var updatedAt = utcNow();
 
 		shareModel.update(

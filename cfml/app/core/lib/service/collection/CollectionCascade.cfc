@@ -14,7 +14,7 @@ component {
 	/**
 	* I cascade delete the given collection.
 	*/
-	public void function deleteCollection(
+	public void function delete(
 		required struct user,
 		required struct collection
 		) {

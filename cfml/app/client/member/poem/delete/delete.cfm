@@ -37,7 +37,7 @@
 
 			}
 
-			poemService.deletePoem(
+			poemService.delete(
 				authContext = request.authContext,
 				id = poem.id
 			);

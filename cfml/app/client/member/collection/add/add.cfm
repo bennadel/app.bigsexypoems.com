@@ -24,7 +24,7 @@
 
 		try {
 
-			collectionID = collectionService.createCollection(
+			collectionID = collectionService.create(
 				authContext = request.authContext,
 				userID = request.authContext.user.id,
 				name = form.name,

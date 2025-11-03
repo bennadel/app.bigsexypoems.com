@@ -15,7 +15,7 @@ component {
 	/**
 	* I create a new tag.
 	*/
-	public numeric function createTag(
+	public numeric function create(
 		required struct authContext,
 		required numeric userID,
 		required string name,
@@ -44,7 +44,7 @@ component {
 	/**
 	* I delete the given tag.
 	*/
-	public void function deleteTag(
+	public void function delete(
 		required struct authContext,
 		required numeric id
 		) {
@@ -53,7 +53,7 @@ component {
 		var user = context.user;
 		var tag = context.tag;
 
-		tagCascade.deleteTag( user, tag );
+		tagCascade.delete( user, tag );
 
 	}
 
@@ -61,7 +61,7 @@ component {
 	/**
 	* I update the given tag.
 	*/
-	public void function updateTag(
+	public void function update(
 		required struct authContext,
 		required numeric id,
 		string name,

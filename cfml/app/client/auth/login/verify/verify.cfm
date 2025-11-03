@@ -40,7 +40,7 @@
 				signature = url.signature
 			);
 
-			sessionService.createSession(
+			sessionService.create(
 				userID = userID,
 				isAuthenticated = true
 			);

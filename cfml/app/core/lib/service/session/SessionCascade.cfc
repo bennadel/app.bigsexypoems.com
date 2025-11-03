@@ -14,7 +14,7 @@ component {
 	/**
 	* I delete the given session and any data contained under it.
 	*/
-	public void function deleteSession(
+	public void function delete(
 		required struct user,
 		required struct entry
 		) {

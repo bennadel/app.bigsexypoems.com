@@ -18,7 +18,7 @@ component {
 	/**
 	* I create a new poem.
 	*/
-	public numeric function createPoem(
+	public numeric function create(
 		required struct authContext,
 		required numeric userID,
 		required numeric collectionID,
@@ -47,7 +47,7 @@ component {
 	/**
 	* I delete the given poem.
 	*/
-	public void function deletePoem(
+	public void function delete(
 		required struct authContext,
 		required numeric id
 		) {
@@ -56,7 +56,7 @@ component {
 		var user = context.user;
 		var poem = context.poem;
 
-		poemCascade.deletePoem( user, poem );
+		poemCascade.delete( user, poem );
 
 	}
 
@@ -64,7 +64,7 @@ component {
 	/**
 	* I update the given poem.
 	*/
-	public void function updatePoem(
+	public void function update(
 		required struct authContext,
 		required numeric id,
 		numeric collectionID,
