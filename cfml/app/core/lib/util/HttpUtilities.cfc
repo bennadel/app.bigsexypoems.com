@@ -8,6 +8,40 @@ component hint = "I provide utility methods to aide in making CFHttp requests." 
 	// ---
 
 	/**
+	* I apply a 20% jitter to a given back-off delay value in order to ensure some kind of
+	* randomness to the repeated requests against the target. This is a small effort to
+	* prevent the thundering heard problem for the target.
+	*/
+	public numeric function applyJitter( required numeric delayInMilliseconds ) {
+
+		return fix( delayInMilliseconds * ( randRange( 80, 120 ) / 100 ) );
+
+	}
+
+
+	/**
+	* I return the delays durations (in milliseconds) to be used during back-off retries.
+	* Rather than relying on the maths to perform exponential back-off calculations, this
+	* collection provides an explicit set of back-off values and doubles as the number of
+	* attempts that we should execute against the underlying HTTP API.
+	* 
+	* Note: the last value is always "0" to indicate the end of the retry attempts.
+	*/
+	public array function getBackoffDurations() {
+
+		return [
+			applyJitter( 50 ),
+			applyJitter( 100 ),
+			applyJitter( 200 ),
+			applyJitter( 400 ),
+			applyJitter( 800 ),
+			0 // Indicates end of retry attempts.
+		];
+
+	}
+
+
+	/**
 	* I return the embedded fileContent property as a string. This is particularly helpful
 	* when a CFHttp is configured to return binary but there is an underlying network
 	* failure (the network failure won't be returned as binary).
@@ -93,6 +127,28 @@ component hint = "I provide utility methods to aide in making CFHttp requests." 
 		return httpResponse.statusCode
 			.reFind( "2\d\d" )
 		;
+
+	}
+
+
+	/**
+	* I determine if the given HTTP status code is considered safe to retry.
+	*/
+	public boolean function statusCodeIsRetriable( required string statusCode ) {
+
+		switch ( statusCode ) {
+			case 0:   // Connection Failure.
+			case 408: // Request Timeout.
+			case 500: // Server error.
+			case 502: // Bad Gateway.
+			case 503: // Service Unavailable.
+			case 504: // Gateway Timeout.
+				return true;
+			break;
+			default:
+				return false;
+			break;
+		}
 
 	}
 

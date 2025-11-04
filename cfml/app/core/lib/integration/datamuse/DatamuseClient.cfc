@@ -132,7 +132,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		// 	.filter( ( result ) => normalizeResult( result ) )
 		// ;
 
-		var results = gateway.makeRequest(
+		var results = gateway.makeRequestWithRetry(
 			resource = resource,
 			searchParams = searchParams,
 			timeoutInSeconds = timeoutInSeconds
