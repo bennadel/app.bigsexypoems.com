@@ -18,6 +18,8 @@ services:
       - "8080:8080"
     volumes:
       - "./cfml/app:/app"
+    networks:
+      - app_network
     environment:
       APP_DIR: "/app/wwwroot"
     healthcheck:
@@ -46,6 +48,8 @@ services:
       # Makes sure we don't overwrite the node_modules in the build container when we
       # mount the /app directory above.
       - "bigsexypoems_client_node_modules:/app/node_modules"
+    networks:
+      - app_network
 
   # Provides a "watch" execution for the light-weight build above.
   client-dev:
@@ -73,6 +77,8 @@ services:
       # Allow docker to manage the data persistence folder (MySQL doesn't work when you
       # mount the data on the host machine).
       - "bigsexypoems_mysql_data:/var/lib/mysql"
+    networks:
+      - app_network
     healthcheck:
       test: "echo hello"
 
@@ -86,9 +92,15 @@ services:
       dockerfile: "Dockerfile"
     ports:
       - "8025:8025"
+    networks:
+      - app_network
     healthcheck:
       test: "echo hello"
 
 volumes:
   bigsexypoems_client_node_modules:
   bigsexypoems_mysql_data:
+
+networks:
+  app_network:
+    name: appbigsexypoems_network
