@@ -8,6 +8,7 @@ services:
   # - Password: commandbox
   cfml:
     image: "appbigsexypoems-cfml:dev"
+    pull_policy: "never"
     build:
       context: "./cfml/docker/"
       dockerfile: "Dockerfile"
@@ -30,6 +31,7 @@ services:
   # Provides a light-weight build for the front-end files.
   client:
     image: "appbigsexypoems-cfml/main-build:dev"
+    pull_policy: "never"
     build:
       context: "./cfml/app/build/main/"
       dockerfile: "Dockerfile"
@@ -56,6 +58,7 @@ services:
   # http://app.local.bigsexypoems.com:3306/
   mysql:
     image: "appbigsexypoems-mysql:dev"
+    pull_policy: "never"
     build:
       context: "./mysql/docker/"
       dockerfile: "Dockerfile"
@@ -77,6 +80,7 @@ services:
   # http://app.local.bigsexypoems.com:8025/
   mail:
     image: "appbigsexypoems-mail:dev"
+    pull_policy: "never"
     build:
       context: "./mail/docker/"
       dockerfile: "Dockerfile"
