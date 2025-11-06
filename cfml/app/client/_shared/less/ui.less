@@ -475,6 +475,12 @@ blockquote {
 	}
 }
 
+summary {
+	:where( & ) {
+		cursor: pointer ;
+	}
+}
+
 th,
 td,
 blockquote {
@@ -882,6 +888,10 @@ pre code {
 				color: var( --button-danger-link-hover-text ) ;
 			}
 		}
+	}
+
+	:where( &.isNoWrap ) {
+		white-space: nowrap ;
 	}
 }
 

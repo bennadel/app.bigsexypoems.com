@@ -59,6 +59,13 @@
 			</div>
 		</form>
 
+		<cfmodule
+			template="/client/_shared/tag/speechTools.cfm"
+			inputID="form--content"
+			xClassToken="r2mwmx"
+			xClass="speechTools"
+		/>
+
 	</article>
 
 	<div r2mwmx class="wordTools">

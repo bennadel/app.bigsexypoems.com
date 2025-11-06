@@ -90,6 +90,13 @@
 			</div>
 		</form>
 
+		<cfmodule
+			template="/client/_shared/tag/speechTools.cfm"
+			inputID="form--content"
+			xClassToken="z6s31p"
+			xClass="speechTools"
+		/>
+
 	</article>
 
 	<div z6s31p class="wordTools">
