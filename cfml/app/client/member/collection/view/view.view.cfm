@@ -33,7 +33,10 @@
 					<th>
 						Name
 					</th>
-					<th class="w-1">
+					<th class="w-50">
+						Preview
+					</th>
+					<th class="w-13">
 						Updated
 					</th>
 				</tr>
@@ -41,8 +44,14 @@
 			<tbody>
 			<cfloop array="#poems#" item="poem">
 				<tr>
-					<td>
+					<td class="isNoWrap">
 						<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.name )#</a>
+					</td>
+					<td>
+						<cfmodule
+							template="/client/_shared/tag/poemPreviewInTable.cfm"
+							content="#poem.content#"
+						/>
 					</td>
 					<td class="isNoWrap">
 						#ui.userDate( poem.updatedAt )#

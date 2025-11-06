@@ -1,0 +1,27 @@
+[cggnns] {
+	&.container {
+		opacity: 0.75 ;
+		position: relative ;
+
+		&:hover {
+			opacity: 1 ;
+		}
+	}
+
+	&.static {
+		opacity: 0 ;
+		pointer-events: none ;
+		white-space: nowrap ;
+	}
+
+	&.dynamic {
+		left: 0 ;
+		max-width: 100% ;
+		min-width: 0 ;
+		overflow: hidden ;
+		position: absolute ;
+		text-overflow: ellipsis ;
+		top: 0 ;
+		white-space: nowrap ;
+	}
+}

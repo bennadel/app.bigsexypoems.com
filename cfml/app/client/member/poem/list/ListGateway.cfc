@@ -9,6 +9,7 @@
 			SELECT
 				p.id,
 				p.name,
+				p.content,
 				p.updatedAt,
 				( c.id ) AS collection_id,
 				( c.name ) AS collection_name
