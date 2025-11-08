@@ -13,54 +13,66 @@
 
 		<hr />
 
-		<table class="uiTable">
-		<thead>
-			<tr>
-				<th>
-					Poem
-				</th>
-				<th>
-					Share Name
-				</th>
-				<th>
-					Share Note
-				</th>
-				<th>
-					Views
-				</th>
-				<th class="w-1">
-					Created
-				</th>
-			</tr>
-		</thead>
-		<cfloop array="#poems#" item="poem">
-			<tbody>
-			<cfloop array="#poem.shares#" item="share" index="shareIndex">
+		<cfif poems.len()>
+
+			<table class="uiTable">
+			<thead>
 				<tr>
-					<cfif ( shareIndex eq 1 )>
-						<td valign="top" rowspan="#poem.shares.len()#">
-							<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#><strong>#e( poem.name )#</strong></a>
-						</td>
-					</cfif>
-					<td>
-						<a #ui.attrHref( "member.poem.share.list", "poemID", poem.id )#>#e( coalesceTruthy( share.name, "Unnamed" ) )#</a>
-					</td>
-					<td>
-						#e( truncate( share.noteMarkdown, 30 ) )#
-					</td>
-					<td>
-						<cfif share.viewingCount>
-							<a #ui.attrHref( "member.poem.share.viewing.list", "shareID", share.id )#>#numberFormat( share.viewingCount )#</a>
-						</cfif>
-					</td>
-					<td class="isNoWrap">
-						#ui.userDate( share.createdAt )#
-					</td>
+					<th>
+						Poem
+					</th>
+					<th>
+						Share Name
+					</th>
+					<th>
+						Share Note
+					</th>
+					<th>
+						Views
+					</th>
+					<th class="w-1">
+						Created
+					</th>
 				</tr>
+			</thead>
+			<cfloop array="#poems#" item="poem">
+				<tbody>
+				<cfloop array="#poem.shares#" item="share" index="shareIndex">
+					<tr>
+						<cfif ( shareIndex eq 1 )>
+							<td valign="top" rowspan="#poem.shares.len()#">
+								<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#><strong>#e( poem.name )#</strong></a>
+							</td>
+						</cfif>
+						<td>
+							<a #ui.attrHref( "member.poem.share.list", "poemID", poem.id )#>#e( coalesceTruthy( share.name, "Unnamed" ) )#</a>
+						</td>
+						<td>
+							#e( truncate( share.noteMarkdown, 30 ) )#
+						</td>
+						<td>
+							<cfif share.viewingCount>
+								<a #ui.attrHref( "member.poem.share.viewing.list", "shareID", share.id )#>#numberFormat( share.viewingCount )#</a>
+							</cfif>
+						</td>
+						<td class="isNoWrap">
+							#ui.userDate( share.createdAt )#
+						</td>
+					</tr>
+				</cfloop>
+				</tbody>
 			</cfloop>
-			</tbody>
-		</cfloop>
-		</table>
+			</table>
+
+		</cfif>
+
+		<cfif ! poems.len()>
+
+			<p>
+				You have no shares yet.
+			</p>
+
+		</cfif>
 
 	</article>
 
