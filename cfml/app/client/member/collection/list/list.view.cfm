@@ -13,7 +13,7 @@
 
 		<cfif collections.len()>
 
-			<table class="uiTable">
+			<table x-table-row-linker class="uiTable">
 			<thead>
 				<tr>
 					<th>
@@ -31,7 +31,7 @@
 			<cfloop array="#collections#" item="collection">
 				<tr>
 					<td>
-						<a #ui.attrHref( "member.collection.view", "collectionID", collection.id )#>#e( collection.name )#</a>
+						<a #ui.attrHref( "member.collection.view", "collectionID", collection.id )# class="isRowLinker">#e( collection.name )#</a>
 					</td>
 					<td class="isNoWrap">
 						#ui.userDate( collection.createdAt )#

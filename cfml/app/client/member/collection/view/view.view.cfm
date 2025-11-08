@@ -27,7 +27,7 @@
 
 		<cfif poems.len()>
 
-			<table class="uiTable">
+			<table x-table-row-linker class="uiTable">
 			<thead>
 				<tr>
 					<th>
@@ -45,7 +45,7 @@
 			<cfloop array="#poems#" item="poem">
 				<tr>
 					<td class="isNoWrap">
-						<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>#e( poem.name )#</a>
+						<a #ui.attrHref( "member.poem.view", "poemID", poem.id )# class="isRowLinker">#e( poem.name )#</a>
 					</td>
 					<td>
 						<cfmodule
