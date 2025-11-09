@@ -87,12 +87,11 @@
 				class="uiVstack">
 
 				<div class="uiHstack">
-					<!---
-						Todo: playing around with a default word to show how the feature
-						works. I will likely remove this in the future. When doing so, be
-						sure to remove the hx-trigger on the parent form.
-					--->
+					<label for="#ui.nextFieldId()#" class="uiScreenReader">
+						Word to search:
+					</label>
 					<input
+						id="#ui.fieldId()#"
 						type="text"
 						name="word"
 						value="Big"
@@ -115,9 +114,8 @@
 					<legend class="uiLegend">
 						Sort By:
 					</legend>
-					<label for="form--rhymes--groupBy--a" class="uiHstack isTight">
+					<label class="uiHstack isTight">
 						<input
-							id="form--rhymes--groupBy--a"
 							type="radio"
 							name="groupBy"
 							value="syllableCount"
@@ -126,9 +124,8 @@
 						/>
 						Syllable Count
 					</label>
-					<label for="form--rhymes--groupBy--b" class="uiHstack isTight">
+					<label class="uiHstack isTight">
 						<input
-							id="form--rhymes--groupBy--b"
 							type="radio"
 							name="groupBy"
 							value="typeOfSpeech"
@@ -168,12 +165,11 @@
 				class="uiVstack">
 
 				<div class="uiHstack">
-					<!---
-						Todo: playing around with a default word to show how the feature
-						works. I will likely remove this in the future. When doing so, be
-						sure to remove the hx-trigger on the parent form.
-					--->
+					<label for="#ui.nextFieldId()#" class="uiScreenReader">
+						Word to search:
+					</label>
 					<input
+						id="#ui.fieldId()#"
 						type="text"
 						name="word"
 						value="Sexy"
@@ -196,9 +192,8 @@
 					<legend class="uiLegend">
 						Sort By:
 					</legend>
-					<label for="form--synonyms--groupBy--a" class="uiHstack isTight">
+					<label class="uiHstack isTight">
 						<input
-							id="form--synonyms--groupBy--a"
 							type="radio"
 							name="groupBy"
 							value="syllableCount"
@@ -206,9 +201,8 @@
 						/>
 						Syllable Count
 					</label>
-					<label for="form--synonyms--groupBy--b" class="uiHstack isTight">
+					<label class="uiHstack isTight">
 						<input
-							id="form--synonyms--groupBy--b"
 							type="radio"
 							name="groupBy"
 							value="typeOfSpeech"

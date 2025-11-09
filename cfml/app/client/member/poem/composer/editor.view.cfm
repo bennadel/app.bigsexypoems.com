@@ -15,12 +15,12 @@
 		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
-			<label for="form--name" class="uiScreenReader">
+			<label for="#ui.nextFieldId()#" class="uiScreenReader">
 				Name:
 			</label>
 
 			<input
-				id="form--name"
+				id="#ui.fieldId()#"
 				type="text"
 				name="name"
 				value="#e4a( form.name )#"
@@ -117,7 +117,11 @@
 				class="uiVstack">
 
 				<div class="uiHstack">
+					<label for="#ui.nextFieldId()#" class="uiScreenReader">
+						Word to search:
+					</label>
 					<input
+						id="#ui.fieldId()#"
 						type="text"
 						name="word"
 						class="uiInput"
@@ -139,9 +143,8 @@
 					<legend class="uiLegend">
 						Sort By:
 					</legend>
-					<label for="form--rhymes--groupBy--a" class="uiHstack isTight">
+					<label class="uiHstack isTight">
 						<input
-							id="form--rhymes--groupBy--a"
 							type="radio"
 							name="groupBy"
 							value="syllableCount"
@@ -150,9 +153,8 @@
 						/>
 						Syllable Count
 					</label>
-					<label for="form--rhymes--groupBy--b" class="uiHstack isTight">
+					<label class="uiHstack isTight">
 						<input
-							id="form--rhymes--groupBy--b"
 							type="radio"
 							name="groupBy"
 							value="typeOfSpeech"
@@ -190,7 +192,11 @@
 				class="uiVstack">
 
 				<div class="uiHstack">
+					<label for="#ui.nextFieldId()#" class="uiScreenReader">
+						Word to search:
+					</label>
 					<input
+						id="#ui.fieldId()#"
 						type="text"
 						name="word"
 						class="uiInput"
@@ -212,9 +218,8 @@
 					<legend class="uiLegend">
 						Sort By:
 					</legend>
-					<label for="form--synonyms--groupBy--a" class="uiHstack isTight">
+					<label class="uiHstack isTight">
 						<input
-							id="form--synonyms--groupBy--a"
 							type="radio"
 							name="groupBy"
 							value="syllableCount"
@@ -222,9 +227,8 @@
 						/>
 						Syllable Count
 					</label>
-					<label for="form--synonyms--groupBy--b" class="uiHstack isTight">
+					<label class="uiHstack isTight">
 						<input
-							id="form--synonyms--groupBy--b"
 							type="radio"
 							name="groupBy"
 							value="typeOfSpeech"
@@ -252,6 +256,10 @@
 
 	<p>
 		Rhymes, synonyms, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
+	</p>
+
+	<p>
+		Enjoying the poem composer? <a #ui.attrHref( "playground" )# target="_blank">Share the public playground version</a> with a friend (no sign up required). &##x1F970;
 	</p>
 
 </cfoutput>

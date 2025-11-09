@@ -3,6 +3,7 @@
 	// Define properties for dependency-injection.
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
+	ui = request.ioc.get( "core.lib.web.UI" );
 	userModel = request.ioc.get( "core.lib.model.user.UserModel" );
 	userService = request.ioc.get( "core.lib.service.user.UserService" );
 

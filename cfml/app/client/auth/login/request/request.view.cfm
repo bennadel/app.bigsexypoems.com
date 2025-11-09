@@ -21,12 +21,12 @@
 			<input type="hidden" name="timezoneOffsetInMinutes" x-data="TzOffsetController" />
 
 			<div class="uiField">
-				<label for="form--email" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Email:
 				</label>
 				<div class="uiField_content">
 					<input
-						id="form--email"
+						id="#ui.fieldId()#"
 						type="text"
 						inputmode="email"
 						name="email"
@@ -40,7 +40,7 @@
 				</div>
 			</div>
 			<div class="uiField">
-				<label for="form--betaPassword" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Beta Invitation Code:
 				</label>
 				<div class="uiField_content">
@@ -49,7 +49,7 @@
 					</p>
 
 					<input
-						id="form--betaPassword"
+						id="#ui.fieldId()#"
 						type="password"
 						name="betaPassword"
 						maxlength="30"
@@ -61,7 +61,7 @@
 			<!--- For ease of development, Turnstile only required in production. --->
 			<cfif config.turnstile.isEnabled>
 				<div class="uiField">
-					<label for="form--email" class="uiField_label">
+					<label class="uiField_label">
 						Human or Bot:
 					</label>
 					<div class="uiField_content">

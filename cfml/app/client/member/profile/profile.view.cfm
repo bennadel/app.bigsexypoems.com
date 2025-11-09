@@ -29,13 +29,13 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--name" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Name:
 					<span class="uiField_star">*</span>
 				</label>
 				<div class="uiField_content">
 					<input
-						id="form--name"
+						id="#ui.fieldId()#"
 						type="text"
 						name="name"
 						value="#e4a( form.name )#"

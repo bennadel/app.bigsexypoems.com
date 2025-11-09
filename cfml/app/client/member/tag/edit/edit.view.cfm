@@ -16,13 +16,13 @@
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
 			<div class="uiField">
-				<label for="form--name" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Name:
 					<span class="uiField_star">*</span>
 				</label>
 				<div class="uiField_content">
 					<input
-						id="form--name"
+						id="#ui.fieldId()#"
 						type="text"
 						name="name"
 						value="#e4a( form.name )#"
@@ -34,15 +34,16 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--slug" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Slug:
 				</label>
 				<div class="uiField_content">
-					<p class="uiField_description">
+					<p id="#ui.fieldId( "desc" )#" class="uiField_description">
 						This short text (20 characters max) will be rendered for brevity.
 					</p>
 					<input
-						id="form--slug"
+						id="#ui.fieldId()#"
+						aria-describedby="#ui.fieldId( "desc" )#"
 						type="text"
 						name="slug"
 						value="#e4a( form.slug )#"

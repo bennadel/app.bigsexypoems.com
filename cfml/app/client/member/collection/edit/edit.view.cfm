@@ -16,13 +16,13 @@
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
 			<div class="uiField">
-				<label for="form--name" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Name:
 					<span class="uiField_star">*</span>
 				</label>
 				<div class="uiField_content">
 					<input
-						id="form--name"
+						id="#ui.fieldId()#"
 						type="text"
 						name="name"
 						value="#e4a( form.name )#"
@@ -34,20 +34,20 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--descriptionMarkdown" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Description:
 				</label>
 				<div class="uiField_content">
 					<textarea
-						id="form--descriptionMarkdown"
-						aria-describedby="form--descriptionMarkdown--hint"
+						id="#ui.fieldId()#"
+						aria-describedby="#ui.fieldId( "hint" )#"
 						name="descriptionMarkdown"
 						maxlength="500"
 						class="uiTextarea"
 						x-meta-enter-submit
 					>#e( form.descriptionMarkdown )#</textarea>
 
-					<p id="form--descriptionMarkdown--hint" class="uiField_hint">
+					<p id="#ui.fieldId( "hint" )#" class="uiField_hint">
 						The description uses <a href="##markdownDisclosure">Markdown</a> and supports basic formatting.
 					</p>
 				</div>

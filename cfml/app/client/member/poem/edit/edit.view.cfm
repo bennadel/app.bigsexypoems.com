@@ -17,13 +17,13 @@
 			<cfmodule template="/client/_shared/tag/hiddenSubmit.cfm" />
 
 			<div class="uiField">
-				<label for="form--name" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Name:
 					<span class="uiField_star">*</span>
 				</label>
 				<div class="uiField_content">
 					<input
-						id="form--name"
+						id="#ui.fieldId()#"
 						type="text"
 						name="name"
 						value="#e4a( form.name )#"
@@ -35,17 +35,17 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--content" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Content:
 				</label>
 				<div class="uiField_content">
-					<p id="form--content--description" class="uiField_description">
+					<p id="#ui.fieldId( "desc" )#" class="uiField_description">
 						This is the "plain text" editor. To get <mark>syllable counts</mark>, <mark>rhymes</mark>, and <mark>synonyms</mark>, <button type="submit" name="switchToComposer" value="true" class="uiButton isLink">use the <strong>poem composer</strong></button> &rarr;
 					</p>
 
 					<textarea
-						id="form--content"
-						aria-describedby="form--content--description"
+						id="#ui.fieldId()#"
+						aria-describedby="#ui.fieldId( "desc" )#"
 						name="content"
 						maxlength="3000"
 						class="uiTextarea"
@@ -55,17 +55,17 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--collectionID" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Collection:
 				</label>
 				<div class="uiField_content">
-					<p id="form--collectionID--description" class="uiField_description">
+					<p id="#ui.fieldId( "desc" )#" class="uiField_description">
 						A collection allows you to group poems together for categorization and sharing purposes.
 					</p>
 
 					<select
-						id="form--collectionID"
-						aria-describedby="form--collectionID--description"
+						id="#ui.fieldId()#"
+						aria-describedby="#ui.fieldId( "desc" )#"
 						name="collectionID"
 						class="uiSelect">
 						<option value="0">- Select -</option>

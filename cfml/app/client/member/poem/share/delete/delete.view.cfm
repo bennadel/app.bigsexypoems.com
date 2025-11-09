@@ -38,20 +38,20 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--isConfirmed" class="uiField_label">
-					Confirm:
+				<label for="#ui.nextFieldId()#" class="uiField_label">
+					Please Confirm:
 				</label>
 				<div class="uiField_content">
 
-					<label for="form--isConfirmed" class="uiHstack">
+					<label class="uiHstack">
 						<input
-							id="form--isConfirmed"
+							id="#ui.fieldId()#"
 							type="checkbox"
 							name="isConfirmed"
 							value="true"
 							class="uiCheckbox"
 						/>
-						<span id="form--isConfirmed--label">
+						<span>
 							I understand that this action cannot be undone.
 						</span>
 					</label>

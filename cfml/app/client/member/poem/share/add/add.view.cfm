@@ -25,16 +25,17 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--name" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Internal Name:
 				</label>
 				<div class="uiField_content">
-					<p class="uiField_description">
+					<p id="#ui.fieldId( "desc" )#" class="uiField_description">
 						This name is <strong>for your eyes only</strong>; and is only helpful if you want to send your poem to different people with different notes. This name will help differentiate one share link from another.
 					</p>
 
 					<input
-						id="form--name"
+						id="#ui.fieldId()#"
+						aria-describedby="#ui.fieldId( "desc" )#"
 						type="text"
 						name="name"
 						value="#e4a( form.name )#"
@@ -46,24 +47,24 @@
 			</div>
 
 			<div class="uiField">
-				<label for="form--noteMarkdown" class="uiField_label">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
 					Note:
 				</label>
 				<div class="uiField_content">
-					<p id="form--noteMarkdown--description" class="uiField_description">
+					<p id="#ui.fieldId( "desc" )#" class="uiField_description">
 						This note is <strong>for your reader / recipient</strong> within the share experience. It gives you an opportunity to say something special; or, to introduce the poem in some way.
 					</p>
 
 					<textarea
-						id="form--noteMarkdown"
-						aria-describedby="form--noteMarkdown--description form--noteMarkdown--hint"
+						id="#ui.fieldId()#"
+						aria-describedby="#ui.fieldId( "desc hint" )#"
 						name="noteMarkdown"
 						maxlength="1000"
 						class="uiTextarea"
 						x-meta-enter-submit
 					>#e( form.noteMarkdown )#</textarea>
 
-					<p id="form--noteMarkdown--hint" class="uiField_hint">
+					<p id="#ui.fieldId( "hint" )#" class="uiField_hint">
 						The note uses <a href="##markdownDisclosure">Markdown</a> and supports basic formatting.
 					</p>
 				</div>

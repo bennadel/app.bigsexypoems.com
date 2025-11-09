@@ -126,6 +126,44 @@ component {
 
 
 	/**
+	* I get the most recently created field ID token. If a space / comma delimited string
+	* is passed-in, a compound token will be returned.
+	*/
+	public string function fieldId( string after = "" ) {
+
+		var token = "fid$#request?.$$fieldIdCounter#";
+
+		if ( ! after.len() ) {
+
+			return token;
+
+		}
+
+		return after
+			.listToArray( ",; " )
+			.map( ( suffix ) => "#token##suffix#" )
+			.toList( " " )
+		;
+
+	}
+
+
+	/**
+	* I create a new field ID token and return it.
+	*/
+	public string function nextFieldId() {
+
+		// Ensure that the counter exists and is incremented on every call. This is
+		// intended to be used within the context of a single request thread and is NOT
+		// meant to be thread-safe or globally unique.
+		request.$$fieldIdCounter = ( ( request.$$fieldIdCounter ?: 0 ) + 1 );
+
+		return fieldId();
+
+	}
+
+
+	/**
 	* I format the date in the user's local timezone.
 	*/
 	public string function userDate(
