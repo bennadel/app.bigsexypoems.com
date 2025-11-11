@@ -9,6 +9,7 @@
 	sessionService = request.ioc.get( "core.lib.service.session.SessionService" );
 	shareModel = request.ioc.get( "core.lib.model.poem.share.ShareModel" );
 	shareValidation = request.ioc.get( "core.lib.model.poem.share.ShareValidation" );
+	userModel = request.ioc.get( "core.lib.model.user.UserModel" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -35,6 +36,7 @@
 	// This entire section depends on a valid share.
 	request.share = shareModel.get( val( url.shareID ) );
 	request.poem = poemModel.get( request.share.poemID );
+	request.user = userModel.get( request.poem.userID );
 
 	// Todo: put all this logic somewhere better?
 
@@ -64,6 +66,7 @@
 
 	switch ( router.next( "view" ) ) {
 		case "logViewing":
+		case "openGraphImage":
 		case "view":
 			cfmodule( template = router.nextTemplate() );
 		break;

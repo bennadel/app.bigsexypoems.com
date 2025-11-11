@@ -75,6 +75,34 @@ component {
 
 
 	/**
+	* I ensure that the URL scope only contains the given search params. If any additional
+	* params are present, an error is thrown.
+	*/
+	public void function ensureStrictSearchParams( required array searchParams ) {
+
+		var scope = url.copy();
+
+		for ( var key in searchParams ) {
+
+			scope.delete( key );
+
+		}
+
+		// Now that we've deleted all the matching keys, the scope SHOULD BE empty. If the
+		// scope is NOT empty, it means the request has unexpected url entries.
+		if ( ! scope.isEmpty() ) {
+
+			throw(
+				type = "App.Forbidden",
+				message = "URL contains non-strict parameters."
+			);
+
+		}
+
+	}
+
+
+	/**
 	* I ensure that the current request has an XSRF token cookie; and, that any POST has
 	* the XSRF token challenge.
 	*/

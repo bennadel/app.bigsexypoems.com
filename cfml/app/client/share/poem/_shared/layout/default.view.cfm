@@ -11,8 +11,8 @@
 		<cfinclude template="/wwwroot/public/main/vendor/vendor.html">
 		<cfinclude template="/wwwroot/public/main/share/poem/poem.html">
 
-		<!--- Generic open-graph content (for now). --->
-		<cfmodule template="/client/_shared/tag/opengraph.cfm" />
+		<!--- Share-specific open-graph content. --->
+		<cfmodule template="../tag/openGraph.cfm" />
 	</head>
 	<body x-data="cj4s1o.AppShell" cj4s1o class="body">
 
