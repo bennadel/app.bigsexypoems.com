@@ -149,6 +149,10 @@
 
 		imageWrite( ogImage, tempFile, true );
 
+		cfheader(
+			name = "Cache-Control",
+			value = "max-age=#( 60 * 10 )#"
+		);
 		// Todo: add caching headers.
 		// Todo: replace with shared binary template.
 		cfcontent(
