@@ -1,6 +1,7 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
+	logger = request.ioc.get( "core.lib.util.Logger" );
 	reqeustHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 
 	// ColdFusion language extensions (global functions).
@@ -20,6 +21,8 @@
 		"shareID",
 		"shareToken"
 	]);
+
+	logger.info( "Open Graph image generation." );
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
