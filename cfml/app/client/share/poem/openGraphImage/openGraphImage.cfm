@@ -3,6 +3,7 @@
 	// Define properties for dependency-injection.
 	logger = request.ioc.get( "core.lib.util.Logger" );
 	reqeustHelper = request.ioc.get( "core.lib.web.RequestHelper" );
+	router = request.ioc.get( "core.lib.web.Router" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -13,14 +14,34 @@
 	// Caution: this URL is going to be placed behind the CDN caching mechanics. As such,
 	// we want to make sure that this URL contains NOTHING OTHER than the desired search
 	// parameters. Since the CDN will cache unique responses based on changes to the query
-	// string variations, this end-point becomes an attach vector in which the CPU can be
+	// string variations, this end-point becomes an attack vector in which the CPU can be
 	// overloaded by the image generation. If the URL contains any extra data, we're going
 	// to reject it safely.
+	// --
+	// Note: since this is a ColdFusion end-point, a special caching rule has been setup
+	// in Cloudflare to allow this specific URL to be eligible for caching.
 	reqeustHelper.ensureStrictSearchParams([
 		"event",
 		"shareID",
-		"shareToken"
+		"shareToken",
+		"imageVersion"
 	]);
+
+	// Todo: move to a centralized location (ex, PoemService).
+	expectedImageVersion = hash( request.poem.name & request.poem.content & request.user.name );
+
+	// If the version is a mismatch, redirect to the latest version. This allows us to
+	// avoid a 404 Not Found error (from the user's perspective).
+	if ( compare( url.imageVersion, expectedImageVersion ) ) {
+
+		router.goto({
+			event: url.event,
+			shareID: url.shareID,
+			shareToken: url.shareToken,
+			imageVersion: expectedImageVersion
+		});
+
+	}
 
 	logger.info( "Open Graph image generation." );
 
@@ -149,12 +170,13 @@
 	withTempDirectory( ( tempDirectory ) => {
 
 		var tempFile = "#tempDirectory#/open-graph-image.png";
+		var maxAge = ( 60 * 60 * 24 );
 
 		imageWrite( ogImage, tempFile, true );
 
 		cfheader(
 			name = "Cache-Control",
-			value = "max-age=#( 60 * 10 )#"
+			value = "public, max-age=#maxAge#"
 		);
 		// Todo: add caching headers.
 		// Todo: replace with shared binary template.
