@@ -4,6 +4,7 @@
 	logger = request.ioc.get( "core.lib.util.Logger" );
 	reqeustHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
+	scratchDisk = request.ioc.get( "core.lib.util.ScratchDisk" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -167,22 +168,18 @@
 	// There's no way in ColdFusion to get the "rendered image" binary without dealing
 	// with some sort of file I/O. As such, we're going to render the image to a temporary
 	// file, serve the file, and then delete the temporary image.
-	withTempDirectory( ( tempDirectory ) => {
+	scratchDisk.withPngFile( ( pngFile ) => {
 
-		var tempFile = "#tempDirectory#/open-graph-image.png";
-		var maxAge = ( 60 * 60 * 24 );
-
-		imageWrite( ogImage, tempFile, true );
+		imageWrite( ogImage, pngFile, true );
 
 		cfheader(
 			name = "Cache-Control",
-			value = "public, max-age=#maxAge#"
+			value = "public, max-age=#( 60 * 60 * 24 )#"
 		);
-		// Todo: add caching headers.
 		// Todo: replace with shared binary template.
 		cfcontent(
 			type = "image/png",
-			file = tempFile
+			file = pngFile
 		);
 
 	});
@@ -417,30 +414,6 @@
 		textImage.crop( 0, 0, results.width, results.height );
 
 		return results;
-
-	}
-
-
-	/**
-	* I execute the given callback, passing in a temporary directory that can be used for
-	* transient file IO. The temporary directory is deleted after the callback has been
-	* executed.
-	*/
-	private any function withTempDirectory( required function callback ) {
-
-		var folderPath = expandPath( "/upload/temp/" & createUuid() );
-
-		try {
-
-			directoryCreate( folderPath );
-
-			return callback( folderPath );
-
-		} finally {
-
-			directoryDelete( folderPath, true );
-
-		}
 
 	}
 
