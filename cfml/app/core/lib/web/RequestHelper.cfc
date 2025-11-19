@@ -80,6 +80,19 @@ component {
 	*/
 	public void function ensureStrictSearchParams( required array searchParams ) {
 
+		// While not technically a query-string parameter, the path-info represents a part
+		// of the URL that can change independently of the script name. As such, for the
+		// purposes of locking the URL down to a set of search parameters, we're going to
+		// treat the path-info as if it were a search parameter.
+		if ( requestMetadata.getPathInfo().len() ) {
+
+			throw(
+				type = "App.Forbidden",
+				message = "URL contains non-strict path-info."
+			);
+
+		}
+
 		var scope = url.copy();
 
 		for ( var key in searchParams ) {

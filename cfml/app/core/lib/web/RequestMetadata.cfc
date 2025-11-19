@@ -239,6 +239,16 @@ component hint = "I provide utility methods for accessing metadata about the cur
 
 
 	/**
+	* I return the HTTP path_info.
+	*/
+	public string function getPathInfo() {
+
+		return cgi.path_info;
+
+	}
+
+
+	/**
 	* I return the HTTP protocol.
 	*/
 	public string function getProtocol() {
