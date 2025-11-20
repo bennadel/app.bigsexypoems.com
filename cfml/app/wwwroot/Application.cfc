@@ -177,6 +177,30 @@ component hint = "I define the application settings and event handlers." {
 
 
 	/**
+	* I handle requests to non-existent CFML templates.
+	*/
+	public void function onMissingTemplate( required string scriptName ) {
+
+		// Requesting a non-existent, top-level CFML template is almost certainly a
+		// malicious activity in the context of this application (that routes every
+		// request through a single root index file). As such, I probably shouldn't care
+		// about this request. But, to get a sense of where and when this might be
+		// happening, I'm going to handle this like a normal request so I can see the
+		// error show up in the logs.
+
+		// Override the event so that we don't render a valid response at the wrong
+		// script name.
+		url.event = "onMissingTemplate";
+
+		// Simulate the normal ColdFusion application life-cycle.
+		onRequestStart();
+		include "./index.cfm";
+		onRequestEnd();
+
+	}
+
+
+	/**
 	* I handle uncaught errors within the application.
 	*/
 	public void function onError(
