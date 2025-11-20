@@ -28,11 +28,11 @@
 		"imageVersion"
 	]);
 
-	// Todo: move to a centralized location (ex, PoemService).
+	// Todo: move hash logic to a centralized location (ex, ShareService)?
 	expectedImageVersion = hash( request.poem.name & request.poem.content & request.user.name );
 
-	// If the version is a mismatch, redirect to the latest version. This allows us to
-	// avoid a 404 Not Found error (from the user's perspective).
+	// If the image version is a mismatch, redirect to the latest version. This allows us
+	// to avoid a 404 Not Found error from the user's perspective.
 	if ( compare( url.imageVersion, expectedImageVersion ) ) {
 
 		router.goto({
@@ -49,19 +49,15 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	poem = request.poem;
-	share = request.share;
-	user = request.user;
-
-	poemName = poem.name.trim();
-	poemContent = poem.content.trim()
+	poemName = request.poem.name.trim();
+	poemContent = request.poem.content.trim()
 		// Replace double-dashes with em dashes.
 		.replace( "--", "—", "all" )
 		// Replace all white space with a space - we're going to render the poem as a
 		// "single line" in order to more thoroughly use the visual space.
-		.replace( "\s+", " ", "all" )
+		.reReplace( "\s+", " ", "all" )
 	;
-	poemAuthor = user.name.trim().ucase();
+	poemAuthor = request.user.name.trim().ucase();
 	brandName = ucase( "// Big Sexy Poems" );
 
 	// ------------------------------------------------------------------------------- //
@@ -172,6 +168,10 @@
 
 		imageWrite( ogImage, pngFile, true );
 
+		cfheader(
+			name = "ETag",
+			value = expectedImageVersion
+		);
 		cfheader(
 			name = "Cache-Control",
 			value = "public, max-age=#( 60 * 60 * 24 )#"
