@@ -2,6 +2,7 @@
 
 	// Define properties for dependency-injection.
 	logger = request.ioc.get( "core.lib.util.Logger" );
+	rateLimitService = request.ioc.get( "core.lib.util.RateLimitService" );
 	reqeustHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	scratchDisk = request.ioc.get( "core.lib.util.ScratchDisk" );
@@ -44,6 +45,12 @@
 
 	}
 
+	// As a final safe-guard, we're going to rate-limit image generation across the app.
+	rateLimitService.testRequest( "poem-share-og-image-by-app" );
+
+	// If we made it this far without error, image generation is about to begin. Let's
+	// log this for now so that I can get a sense of how often this actually happens (and
+	// if I should be worried about the volume).
 	logger.info( "Open Graph image generation." );
 
 	// ------------------------------------------------------------------------------- //

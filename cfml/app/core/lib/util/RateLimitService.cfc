@@ -26,6 +26,7 @@ component hint = "I provide methods for rate-limiting around a given property." 
 			"login-request-by-ip": createSettings( 3, ONE_MINUTE ),
 			"login-verify-by-email": createSettings( 10, ONE_MINUTE ),
 			"poem-share-by-ip": createSettings( 20, ONE_MINUTE ),
+			"poem-share-og-image-by-app": createSettings( 10, ONE_MINUTE ),
 		};
 		// Windows hold specific instances of a feature being rate-limited for a specific
 		// window ID (ie, the user/client/thing uniquely identifying the request).
@@ -91,7 +92,7 @@ component hint = "I provide methods for rate-limiting around a given property." 
 	*/
 	public struct function testRequest(
 		required string featureID,
-		required string windowID
+		string windowID = "app"
 		) {
 
 		if ( ! features.keyExists( featureID ) ) {
