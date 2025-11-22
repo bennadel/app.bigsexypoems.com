@@ -12,7 +12,7 @@
 			response="#errorResponse#">
 		</cfmodule>
 
-		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
+		<form method="post" action="#request.postBackAction#" x-prevent-double-submit x-keyed-focus>
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 			<cfmodule template="/client/_shared/tag/hiddenSubmit.cfm" />
 

@@ -104,3 +104,6 @@ volumes:
 networks:
   app_network:
     name: appbigsexypoems_network
+    # Caution: this will keep the network name stable; but it means that `docker compose
+    # down` will no longer kill the network. It will have to be removed explicitly.
+    external: true

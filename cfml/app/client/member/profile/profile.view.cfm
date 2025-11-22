@@ -16,6 +16,7 @@
 			method="post"
 			action="#request.postBackAction#"
 			x-prevent-double-submit
+			x-keyed-focus
 			class="uiReadableWidth">
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
