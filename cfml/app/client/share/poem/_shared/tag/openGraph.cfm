@@ -23,7 +23,7 @@
 	// Todo: move hashing to a centralized location (ex, ShareService)?
 	ogImageUrl = router.externalUrlFor({
 		event: "share.poem.openGraphImage",
-		imageVersion: hash( request.poem.name & request.poem.content & request.user.name )
+		imageVersion: hash( "v1" & request.poem.name & request.poem.content & request.user.name )
 	});
 
 	include "./openGraph.view.cfm";

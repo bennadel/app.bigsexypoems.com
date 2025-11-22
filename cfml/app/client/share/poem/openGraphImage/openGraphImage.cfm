@@ -30,7 +30,7 @@
 	]);
 
 	// Todo: move hash logic to a centralized location (ex, ShareService)?
-	expectedImageVersion = hash( request.poem.name & request.poem.content & request.user.name );
+	expectedImageVersion = hash(  "v1" & request.poem.name & request.poem.content & request.user.name );
 
 	// If the image version is a mismatch, redirect to the latest version. This allows us
 	// to avoid a 404 Not Found error from the user's perspective.
