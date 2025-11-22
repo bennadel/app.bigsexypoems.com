@@ -16,7 +16,7 @@
 			response="#errorResponse#">
 		</cfmodule>
 
-		<form method="post" action="#request.postBackAction#" x-prevent-double-submit x-keyed-focus>
+		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
 			<div class="uiField">
@@ -40,6 +40,7 @@
 							type="checkbox"
 							name="isConfirmed"
 							value="true"
+							x-keyed-focus
 							class="uiCheckbox"
 						/>
 						<span>

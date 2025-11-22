@@ -2,6 +2,7 @@
 // Import app modules.
 import "../_shared/js/tzHelper.js";
 import "../_shared/js/xAutoSubmitButton.js";
+import "../_shared/js/xKeyedFocus.js";
 import "../_shared/js/xPreventDoubleSubmit.js";
 import "../_shared/less/ui.less";
 import "../_shared/tag/errorMessage.view.{js,less}";

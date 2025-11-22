@@ -12,7 +12,7 @@
 			response="#errorResponse#">
 		</cfmodule>
 
-		<form method="post" action="#request.postBackAction#" x-prevent-double-submit x-keyed-focus>
+		<form method="post" action="#request.postBackAction#" x-prevent-double-submit>
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 			<cfmodule template="/client/_shared/tag/hiddenSubmit.cfm" />
 
@@ -29,6 +29,7 @@
 						value="#e4a( form.name )#"
 						maxlength="255"
 						autocomplete="off"
+						x-keyed-focus
 						class="uiInput"
 					/>
 				</div>

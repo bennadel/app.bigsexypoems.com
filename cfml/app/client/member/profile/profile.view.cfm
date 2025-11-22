@@ -16,7 +16,6 @@
 			method="post"
 			action="#request.postBackAction#"
 			x-prevent-double-submit
-			x-keyed-focus
 			class="uiReadableWidth">
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
@@ -42,6 +41,7 @@
 						value="#e4a( form.name )#"
 						maxlength="50"
 						autocomplete="name"
+						x-keyed-focus
 						class="uiInput"
 					/>
 				</div>

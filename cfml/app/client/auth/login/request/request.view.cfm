@@ -35,6 +35,7 @@
 						maxlength="75"
 						autocapitalize="off"
 						autocomplete="email"
+						x-keyed-focus
 						class="uiInput"
 					/>
 				</div>

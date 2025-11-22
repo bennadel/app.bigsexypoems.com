@@ -9,20 +9,13 @@ document.addEventListener(
 );
 
 /**
-* I listen to the `F` key as a means to move focus to the first input within the form.
-* This is being done to allow convenient focus without the accessibility concerns that
-* come with the `autofocus` directive.
+* I listen to the `F` key as a means to move focus to the host element. This is being done
+* to allow convenient focus without the accessibility concerns that come with the global
+* `autofocus` attribute.
 */
 function KeyedFocusDirective( element, metadata, framework ) {
 
 	var triggerKey = "f";
-
-	// CSS selector used to find eligible fields to focus.
-	var selector = `
-		input:not(:disabled, [hidden], [type='hidden'], [type='button'], [type='submit'], [type='image']),
-		textarea:not(:disabled, [hidden]),
-		select:not(:disabled, [hidden])
-	`;
 
 	init();
 
@@ -36,15 +29,6 @@ function KeyedFocusDirective( element, metadata, framework ) {
 	function init() {
 
 		framework.cleanup( destroy );
-
-		// If the directive has an expression, use this as the CSS selector when finding
-		// eligible elements to focus.
-		if ( metadata.expression ) {
-
-			selector = metadata.expression;
-
-		}
-
 		window.addEventListener( "keydown", handleKeydown );
 
 	}
@@ -83,25 +67,26 @@ function KeyedFocusDirective( element, metadata, framework ) {
 
 		}
 
+		// If the host element is already focused, there's nothing to do.
+		if ( document.activeElement === element ) {
+
+			return;
+
+		}
+
 		// If the currently active element is an input variation, ignore event. The user
-		// may be working in a sibling form container and we don't want to steal focus.
+		// may be working in a sibling input and we don't want to steal focus.
 		if ( document.activeElement?.matches( "button, input, select, textarea" ) ) {
 
 			return;
 
 		}
 
-		var newTarget = element.querySelector( selector );
-
-		if ( newTarget ) {
-
-			// We're about to move focus to an input before the key life-cycle has
-			// completed. If we don't prevent the default behavior, the browser will
-			// render a character into the focused form control.
-			event.preventDefault();
-			newTarget.focus();
-
-		}
+		// We're about to move focus to the host element before the key life-cycle has
+		// completed. If we don't prevent the default behavior, the browser will render a
+		// character (f) into the host element.
+		event.preventDefault();
+		element.focus();
 
 	}
 
