@@ -145,7 +145,6 @@ component {
 		var errorResponse = errorTranslator.translate( error );
 
 		request.response.statusCode = errorResponse.statusCode;
-		request.response.statusText = errorResponse.statusText;
 		// Used to output error in local debugging.
 		request.error = error;
 

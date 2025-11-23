@@ -25,8 +25,7 @@
 	// Note: this is the one piece outside the core try/catch because it's the one piece
 	// of data that I want any other view to be able to depend on.
 	request.response = {
-		statusCode: 200,
-		statusText: "OK" // CFHeader support removed in Adobe ColdFusion 2025.
+		statusCode: 200
 	};
 
 	// Most forms in this application post back to themselves for processing. For

@@ -437,7 +437,6 @@ component hint = "I help translate application errors into appropriate response 
 
 		return {
 			statusCode: 400,
-			statusText: "Bad Request",
 			type: "App.BadRequest",
 			title: "Bad Request",
 			message: "Your request cannot be processed in its current state. Please validate the information in your request and try submitting it again."
@@ -453,7 +452,6 @@ component hint = "I help translate application errors into appropriate response 
 
 		return {
 			statusCode: 401,
-			statusText: "Unauthorized",
 			type: "App.Unauthorized",
 			title: "Unauthorized",
 			message: "Please log in and try submitting your request again."
@@ -469,7 +467,6 @@ component hint = "I help translate application errors into appropriate response 
 
 		return {
 			statusCode: 403,
-			statusText: "Forbidden",
 			type: "App.Forbidden",
 			title: "Forbidden",
 			message: "Your request is not permitted at this time."
@@ -485,7 +482,6 @@ component hint = "I help translate application errors into appropriate response 
 
 		return {
 			statusCode: 404,
-			statusText: "Not Found",
 			type: "App.NotFound",
 			title: "Page Not Found",
 			message: "The resource that you requested either doesn't exist or has been moved to a new location."
@@ -501,7 +497,6 @@ component hint = "I help translate application errors into appropriate response 
 
 		return {
 			statusCode: 405,
-			statusText: "Method Not Allowed",
 			type: "App.MethodNotAllowed",
 			title: "Method Not Allowed",
 			message: "Your request cannot be processed with the given HTTP method."
@@ -517,7 +512,6 @@ component hint = "I help translate application errors into appropriate response 
 
 		return {
 			statusCode: 422,
-			statusText: "Unprocessable Entity",
 			type: "App.UnprocessableEntity",
 			title: "Unprocessable Entity",
 			message: "Your request cannot be processed in its current state. Please validate the information in your request and try submitting it again."
@@ -533,7 +527,6 @@ component hint = "I help translate application errors into appropriate response 
 
 		return {
 			statusCode: 429,
-			statusText: "Too Many Requests",
 			type: "App.TooManyRequests",
 			title: "Too Many Requests",
 			message: "Your request has been rejected due to rate limiting. Please wait a few minutes and then try submitting your request again."
@@ -549,7 +542,6 @@ component hint = "I help translate application errors into appropriate response 
 
 		return {
 			statusCode: 500,
-			statusText: "Server Error",
 			type: "App.ServerError",
 			title: "Something Went Wrong",
 			message: "Sorry, something seems to have gone wrong while handling your request. I'll see if I can figure out what happened and fix it."
