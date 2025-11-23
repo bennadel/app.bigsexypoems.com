@@ -29,21 +29,18 @@ component hint = "I define the application settings and event handlers." {
 	this.blockedExtForFileUpload = "*";
 
 	// Define the server mappings (for components and expandPath() calls).
-	this.directory = getDirectoryFromPath( getCurrentTemplatePath() );
-	this.approot = "#this.directory#..";
+	this.wwwRoot = getDirectoryFromPath( getCurrentTemplatePath() );
+	this.appRoot = "#this.wwwRoot#..";
 	this.mappings = [
-		"/": this.approot,
-		"/client": "#this.approot#/client",
-		"/config": "#this.approot#/config",
-		"/core": "#this.approot#/core",
-		"/db": "#this.approot#/db",
-		"/email": "#this.approot#/email",
-		"/log": "#this.approot#/log",
-		"/upload": "#this.approot#/upload",
-		"/wwwroot": "#this.approot#/wwwroot"
+		"/": this.appRoot,
+		// Note: since we're defining the `/` mapping, all expandPath() and include calls
+		// are already covered. We only need to explicitly map additional directories that
+		// will be used as the prefix for CFC instantiation.
+		"/client": "#this.appRoot#/client",
+		"/core": "#this.appRoot#/core",
 	];
 
-	// Load the configuration file (caution: uses mappings defined above).
+	// Load the configuration file.
 	this.config = getConfigSettings();
 
 	// Define the data-sources. The data-source names are CASE-SENSITIVE and need to be
@@ -213,10 +210,12 @@ component hint = "I define the application settings and event handlers." {
 
 		var error = ( exception.rootCause ?: exception.cause ?: exception );
 
-		// At this point, we have no idea where in the application life-cycle the error
-		// was thrown. We don't even know if the IoC container exists or if the logger
-		// could be created (and, if created, is it bug-free). As such, we're going to try
-		// using the logger and, if it fails, we'll fallback to using a file-based log.
+		// In this application, all normal runtime errors are caught by the try/catch
+		// block in the root index file. As such, any error that is being handled here is
+		// being handled outside the safe state of the application. We're going to log the
+		// error and then just shut down the application. Something is very wrong.
+
+		// Depending on where the error occurred, we MIGHT have the core logger in place.
 		try {
 
 			application.ioc
@@ -224,71 +223,55 @@ component hint = "I define the application settings and event handlers." {
 				.logException( error )
 			;
 
+		// If the core logger failed, fall back to using a file-based logging strategy.
 		} catch ( any loggingError ) {
 
-			// The core logger failed, falling back to using a file-based logger so at
-			// least we don't lose critical error information.
-			var logDirectory = this.mappings[ '/log' ];
+			var logDirectory = "#this.appRoot#/log";
 			var logFileStub = now().dateTimeFormat( "yyyy-mm-dd-HH-nn-ss-l" );
 
-			dump(
-				var = loggingError,
-				format = "text",
-				output = "#logDirectory#/#logFileStub#-try.txt"
-			);
 			dump(
 				var = error,
 				format = "text",
 				output = "#logDirectory#/#logFileStub#-original.txt"
 			);
+			dump(
+				var = loggingError,
+				format = "text",
+				output = "#logDirectory#/#logFileStub#-try.txt"
+			);
 
 		}
 
-		// If the bootstrapping flag is null, it means that the application failed to
-		// fully initialize. However, we can't be sure where in the process the error
-		// occurred, so we want to just stop the application and let the next inbound
-		// request re-trigger the application start-up.
-		if ( isNull( application.isBootstrapped ) ) {
+		try {
 
 			cfheader( statusCode = 503 );
 			echo( "<h1> Service Unavailable </h1>" );
 			echo( "<p> Please try back in a few minutes. </p>" );
 
-			// If the application isn't actually running yet, attempting to stop it will
-			// throw an error.
+		} catch ( any flushError ) {
+
+			// The content has already been flushed to the client and attempting to reset
+			// the status code caused yet another error.
+
+		}
+
+		// If the application didn't finish bootstrapping, it's in an incomplete state. We
+		// need to TRY and kill it and let the next request restart it.
+		if ( isNull( application.isBootstrapped ) ) {
+
 			try {
 
 				applicationStop();
 
 			} catch ( any stopError ) {
 
-				// Swallow error, let next request start application.
+				// If the application wasn't running, attempting to stop it will throw yet
+				// another error.
 
 			}
 
-			return;
-
 		}
 
-		// Check to see if we are live or not. If we are live then we want to display the
-		// user-friendly error page. However, if we're not live, then we want to render
-		// the error for debugging.
-		// --
-		// Note: remember that this onError() event handler is only for errors that aren't
-		// caught by the application logic.
-		if ( ! this.config.isLive ) {
-
-			// We are local, dump the error out for debugging.
-			cfheader( statusCode = 500 );
-			dumpN( exception );
-			abort;
-
-		}
-
-		// Since we don't know where exactly the error occurred, it's possible that the
-		// request has been flushed already or is in an entirely unusable state. As such,
-		// the best we can do is just show a vanilla error message.
-		echo( "An unexpected error occurred." );
 		abort;
 
 	}
@@ -400,7 +383,7 @@ component hint = "I define the application settings and event handlers." {
 
 		var config
 			= server[ cacheKey ]
-				= deserializeJson( fileRead( this.mappings[ "/config" ] & "/config.json" ) )
+				= deserializeJson( fileRead( "#this.appRoot#/config/config.json" ) )
 		;
 
 		return config;
