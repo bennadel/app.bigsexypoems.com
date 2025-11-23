@@ -79,6 +79,16 @@ component {
 
 
 	/**
+	* I split the given poem content into an array of lines.
+	*/
+	public array function splitLines( required string content ) {
+
+		return content.reMatch( "[^\n]*" );
+
+	}
+
+
+	/**
 	* I update the given poem.
 	*/
 	public void function update(

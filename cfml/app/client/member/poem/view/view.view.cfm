@@ -28,7 +28,13 @@
 
 		<hr />
 
-		<pre>#e( poem.content )#</pre>
+		<ul vyxlrv class="lines">
+			<cfloop array="#lines#" item="line">
+				<li>
+					#e( line )#<br />
+				</li>
+			</cfloop>
+		</ul>
 
 	</article>
 

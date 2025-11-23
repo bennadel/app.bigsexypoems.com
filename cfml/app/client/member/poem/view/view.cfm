@@ -3,6 +3,7 @@
 	// Define properties for dependency-injection.
 	collectionModel = request.ioc.get( "core.lib.model.collection.CollectionModel" );
 	poemAccess = request.ioc.get( "core.lib.service.poem.PoemAccess" );
+	poemService = request.ioc.get( "core.lib.service.poem.PoemService" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
@@ -20,6 +21,8 @@
 	poem = partial.poem;
 	maybeCollection = partial.maybeCollection;
 	title = poem.name;
+
+	lines = poemService.splitLines( poem.content );
 
 	request.response.title = title;
 
