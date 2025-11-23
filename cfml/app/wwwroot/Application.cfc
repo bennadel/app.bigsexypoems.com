@@ -182,17 +182,17 @@ component hint = "I define the application settings and event handlers." {
 	public void function onMissingTemplate( required string scriptName ) {
 
 		// Requesting a non-existent, top-level CFML template is almost certainly a
-		// malicious activity in the context of this application (that routes every
+		// malicious activity in the context of this application (which routes every
 		// request through a single root index file). As such, I probably shouldn't care
 		// about this request. But, to get a sense of where and when this might be
-		// happening, I'm going to handle this like a normal request so I can see the
-		// error show up in the logs.
+		// happening, I'm going to handle this like a normal request so that I can see the
+		// errors show up in the logs.
 
 		// Override the event so that we don't render a valid response at the wrong
 		// script name.
 		url.event = "onMissingTemplate";
 
-		// Simulate the normal ColdFusion application life-cycle.
+		// Simulate the normal ColdFusion application request life-cycle.
 		onRequestStart();
 		include "./index.cfm";
 		onRequestEnd();
@@ -231,12 +231,12 @@ component hint = "I define the application settings and event handlers." {
 			var logDirectory = this.mappings[ '/log' ];
 			var logFileStub = now().dateTimeFormat( "yyyy-mm-dd-HH-nn-ss-l" );
 
-			writeDump(
+			dump(
 				var = loggingError,
 				format = "text",
 				output = "#logDirectory#/#logFileStub#-try.txt"
 			);
-			writeDump(
+			dump(
 				var = error,
 				format = "text",
 				output = "#logDirectory#/#logFileStub#-original.txt"
@@ -251,8 +251,8 @@ component hint = "I define the application settings and event handlers." {
 		if ( isNull( application.isBootstrapped ) ) {
 
 			cfheader( statusCode = 503 );
-			writeOutput( "<h1> Service Unavailable </h1>" );
-			writeOutput( "<p> Please try back in a few minutes. </p>" );
+			echo( "<h1> Service Unavailable </h1>" );
+			echo( "<p> Please try back in a few minutes. </p>" );
 
 			// If the application isn't actually running yet, attempting to stop it will
 			// throw an error.
@@ -288,7 +288,7 @@ component hint = "I define the application settings and event handlers." {
 		// Since we don't know where exactly the error occurred, it's possible that the
 		// request has been flushed already or is in an entirely unusable state. As such,
 		// the best we can do is just show a vanilla error message.
-		writeOutput( "An unexpected error occurred." );
+		echo( "An unexpected error occurred." );
 		abort;
 
 	}
