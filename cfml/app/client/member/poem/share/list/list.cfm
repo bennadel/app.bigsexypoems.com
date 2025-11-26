@@ -22,6 +22,9 @@
 	title = poem.name;
 
 	request.response.title = title;
+	request.response.breadcrumbs.append( request.breadcrumbForPoem( poem ) );
+	request.response.breadcrumbs.append( request.breadcrumbForShareLinks( poem ) );
+	// Note: no terminal breadcrumb for default views.
 
 	include "./list.view.cfm";
 

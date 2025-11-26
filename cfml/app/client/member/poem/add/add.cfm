@@ -33,6 +33,7 @@
 	errorResponse = "";
 
 	request.response.title = title;
+	request.response.breadcrumbs.append( "Add" );
 
 	if ( request.isPost ) {
 

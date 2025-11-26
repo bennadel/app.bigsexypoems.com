@@ -15,8 +15,6 @@
 		</cfif>
 
 		<p>
-			&larr; <a #ui.attrHref( "member.poem" )#>Back to Poems</a>
-			|
 			<a #ui.attrHref( "member.poem.composer", "poemID", poem.id )#>Composer</a>
 			|
 			<a #ui.attrHref( "member.poem.edit", "poemID", poem.id )#>Edit</a>

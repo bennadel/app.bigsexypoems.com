@@ -9,6 +9,9 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
+	// Shared breadcrumb logic for share entity.
+	request.breadcrumbForShareLinks = breadcrumbForShareLinks;
+
 	switch ( router.next( "list" ) ) {
 		case "add":
 		case "delete":
@@ -21,6 +24,18 @@
 		default:
 			throw( type = "App.Routing.InvalidEvent" );
 		break;
+	}
+
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
+	/**
+	* I provide reusable poem-to-breadcrumb logic for nested views.
+	*/
+	private array function breadcrumbForShareLinks( required struct poem ) {
+
+		return [ "Share Links", "member.poem.share", "poemID", poem.id ];
+
 	}
 
 </cfscript>

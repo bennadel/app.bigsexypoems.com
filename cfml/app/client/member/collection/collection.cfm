@@ -10,6 +10,10 @@
 	// ------------------------------------------------------------------------------- //
 
 	request.response.activeNav = "collections";
+	request.response.breadcrumbs.append([ "Home", "member.home" ]);
+	request.response.breadcrumbs.append([ "Collections", "member.collection" ]);
+	// Shared breadcrumb logic for collection entity.
+	request.breadcrumbForCollection = breadcrumbForCollection;
 
 	switch ( router.next( "list" ) ) {
 		case "add":
@@ -22,6 +26,18 @@
 		default:
 			throw( type = "App.Routing.InvalidEvent" );
 		break;
+	}
+
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
+	/**
+	* I provide reusable collection-to-breadcrumb logic for nested views.
+	*/
+	private array function breadcrumbForCollection( required struct collection ) {
+
+		return [ collection.name, "member.collection.view", "collectionID", collection.id ];
+
 	}
 
 </cfscript>

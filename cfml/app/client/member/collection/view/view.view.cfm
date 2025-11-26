@@ -8,8 +8,6 @@
 		</h1>
 
 		<p>
-			&larr; <a #ui.attrHref( "member.collection" )#>Back to Collections</a>
-			|
 			<a #ui.attrHref( "member.collection.edit", "collectionID", collection.id )#>Edit</a>
 			|
 			<a #ui.attrHref( "member.collection.delete", "collectionID", collection.id )#>Delete</a>

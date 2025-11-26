@@ -31,6 +31,8 @@
 	errorResponse = "";
 
 	request.response.title = title;
+	request.response.breadcrumbs.append( request.breadcrumbForPoem( poem ) );
+	request.response.breadcrumbs.append( "Edit" );
 
 	if ( request.isGet ) {
 

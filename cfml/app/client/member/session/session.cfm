@@ -10,6 +10,8 @@
 	// ------------------------------------------------------------------------------- //
 
 	request.response.activeNav = "sessions";
+	request.response.breadcrumbs.append([ "Home", "member.home" ]);
+	request.response.breadcrumbs.append([ "Sessions", "member.session" ]);
 
 	switch ( router.next( "list" ) ) {
 		case "list":

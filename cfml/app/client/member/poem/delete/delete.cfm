@@ -26,6 +26,8 @@
 	errorResponse = "";
 
 	request.response.title = title;
+	request.response.breadcrumbs.append( request.breadcrumbForPoem( poem ) );
+	request.response.breadcrumbs.append( "Delete Confirmation" );
 
 	if ( request.isPost ) {
 

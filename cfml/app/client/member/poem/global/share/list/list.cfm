@@ -14,6 +14,7 @@
 	poems = partial.poems;
 
 	request.response.title = title = "All Shares Across All Poems";
+	request.response.breadcrumbs.append( "Share Links" );
 
 	include "./list.view.cfm";
 

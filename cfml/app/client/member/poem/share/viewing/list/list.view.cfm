@@ -7,11 +7,6 @@
 			#e( title )#
 		</h1>
 
-		<p>
-			&larr;
-			<a #ui.attrHref( "member.poem.share", "poemID", poem.id )#>Back to Shares</a>
-		</p>
-
 		<cfif viewings.len()>
 
 			<table class="uiTable">

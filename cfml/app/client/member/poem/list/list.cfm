@@ -16,6 +16,7 @@
 	title = "Poems";
 
 	request.response.title = title;
+	// Note: no terminal breadcrumb for default views.
 
 	include "./list.view.cfm";
 

@@ -17,6 +17,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	request.response.template = "default";
+	request.response.breadcrumbs = [];
 
 	switch ( router.next( "home" ) ) {
 		case "collection":

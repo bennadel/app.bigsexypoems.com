@@ -22,6 +22,7 @@
 	errorResponse = "";
 
 	request.response.title = title;
+	// Note: no terminal breadcrumb for default views.
 
 	if ( request.isPost ) {
 

@@ -24,6 +24,7 @@
 	errorResponse = "";
 
 	request.response.title = title;
+	request.response.breadcrumbs.append( request.breadcrumbForCollection( collection ) );
 
 	include "./view.view.cfm";
 

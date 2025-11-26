@@ -26,6 +26,8 @@
 	errorResponse = "";
 
 	request.response.title = title;
+	request.response.breadcrumbs.append( request.breadcrumbForCollection( collection ) );
+	request.response.breadcrumbs.append( "Edit" );
 
 	if ( request.isGet ) {
 

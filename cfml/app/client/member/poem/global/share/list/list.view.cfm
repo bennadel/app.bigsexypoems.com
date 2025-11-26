@@ -7,12 +7,6 @@
 			#e( title )#
 		</h1>
 
-		<p>
-			&larr; <a #ui.attrHref( "member.poem" )#>Back to Poems</a>
-		</p>
-
-		<hr />
-
 		<cfif poems.len()>
 
 			<table class="uiTable">

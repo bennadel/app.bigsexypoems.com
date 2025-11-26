@@ -8,9 +8,6 @@
 		</h1>
 
 		<p>
-			&larr;
-			<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>Back to Poem</a>
-			|
 			<a #ui.attrHref( "member.poem.share.add", "poemID", poem.id )#>Add share links</a>
 		</p>
 

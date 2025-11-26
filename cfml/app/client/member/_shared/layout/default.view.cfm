@@ -151,8 +151,30 @@
 			<main
 				id="main-content-anchor"
 				tabindex="-1"
-				mpjwb9
-				class="shell_main">
+				mpjwb9 class="shell_main">
+
+				<cfif breadcrumbs.len()>
+
+					<nav aria-labeledby="#ui.nextFieldId()#" mpjwb9 class="breadcrumbs">
+						<span id="#ui.fieldId()#" class="uiScreenReader">
+							Breadcrumb:
+						</span>
+						<ol class="uiUnlist">
+							<cfloop array="#breadcrumbs#" item="breadcrumb">
+								<cfif breadcrumb.isLast>
+									<li aria-current="page">
+										#e( breadcrumb.text )#
+									</li>
+								<cfelse>
+									<li>
+										<a href="#e4a( breadcrumb.href )#">#e( breadcrumb.text )#</a>
+									</li>
+								</cfif>
+							</cfloop>
+						</ol>
+					</nav>
+
+				</cfif>
 
 				<cfmodule template="/client/_shared/tag/flashMessage.cfm" />
 

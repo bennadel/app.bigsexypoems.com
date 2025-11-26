@@ -22,6 +22,8 @@
 
 	request.response.title = title;
 	request.response.activeNav = "profile";
+	request.response.breadcrumbs.append([ "Home", "member.home" ]);
+	request.response.breadcrumbs.append([ "Profile", "member.profile" ]);
 
 	if ( request.isGet ) {
 

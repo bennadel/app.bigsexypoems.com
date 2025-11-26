@@ -95,4 +95,18 @@
 			z-index: calc( var( --layer-base ) + 1 ) ;
 		}
 	}
+
+	&.breadcrumbs {
+		margin-bottom: var( --space-block ) ;
+
+		ol,
+		li {
+			display: flex ;
+			gap: var( --space-inline-s ) ;
+		}
+
+		li:not(:last-child):after {
+			content: "\203a" ;
+		}
+	}
 }

@@ -10,12 +10,16 @@
 	// ------------------------------------------------------------------------------- //
 
 	request.response.activeNav = "poems";
+	request.response.breadcrumbs.append([ "Home", "member.home" ]);
+	request.response.breadcrumbs.append([ "Poems", "member.poem" ]);
+	// Shared breadcrumb logic for poem entity.
+	request.breadcrumbForPoem = breadcrumbForPoem;
 
 	switch ( router.next( "list" ) ) {
 		case "add":
 		case "composer":
-		case "edit":
 		case "delete":
+		case "edit":
 		case "global":
 		case "list":
 		case "share":
@@ -25,6 +29,18 @@
 		default:
 			throw( type = "App.Routing.InvalidEvent" );
 		break;
+	}
+
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
+	/**
+	* I provide reusable poem-to-breadcrumb logic for nested views.
+	*/
+	private array function breadcrumbForPoem( required struct poem ) {
+
+		return [ poem.name, "member.poem.view", "poemID", poem.id ];
+
 	}
 
 </cfscript>

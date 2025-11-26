@@ -26,6 +26,9 @@
 	;
 
 	request.response.title = title;
+	request.response.breadcrumbs.append( request.breadcrumbForPoem( poem ) );
+	request.response.breadcrumbs.append( request.breadcrumbForShareLinks( poem ) );
+	request.response.breadcrumbs.append( "Viewings" );
 
 	include "./list.view.cfm";
 

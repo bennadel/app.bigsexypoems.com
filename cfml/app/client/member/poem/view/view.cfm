@@ -25,6 +25,7 @@
 	lines = poemService.splitLines( poem.content );
 
 	request.response.title = title;
+	request.response.breadcrumbs.append( request.breadcrumbForPoem( poem ) );
 
 	include "./view.view.cfm";
 
