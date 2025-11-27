@@ -24,8 +24,6 @@
 			<a #ui.attrHref( "member.poem.share", "poemID", poem.id )#>Share Links</a>
 		</p>
 
-		<hr />
-
 		<ul vyxlrv class="lines">
 			<cfloop array="#lines#" item="line">
 				<li>

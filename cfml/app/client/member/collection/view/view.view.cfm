@@ -13,8 +13,6 @@
 			<a #ui.attrHref( "member.collection.delete", "collectionID", collection.id )#>Delete</a>
 		</p>
 
-		<hr />
-
 		<cfif collection.descriptionHtml.len()>
 			#collection.descriptionHtml#
 		</cfif>
