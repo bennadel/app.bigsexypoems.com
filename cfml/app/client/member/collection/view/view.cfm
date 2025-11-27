@@ -42,13 +42,8 @@
 		var context = collectionAccess.getContext( authContext, collectionID, "canView" );
 		var collection = context.collection;
 
-		// Todo: I'm passing in the userID here because the collectionID isn't indexed. I
-		// will add an index to that column.
 		var poems = poemModel
-			.getByFilter(
-				userID = collection.userID,
-				collectionID = collection.id
-			)
+			.getByFilter( collectionID = collection.id )
 			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
 		;
 

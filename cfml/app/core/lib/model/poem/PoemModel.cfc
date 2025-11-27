@@ -42,7 +42,8 @@ component {
 	*/
 	public void function deleteByFilter(
 		numeric id,
-		numeric userID
+		numeric userID,
+		numeric collectionID
 		) {
 
 		gateway.deleteByFilter( argumentCollection = arguments );

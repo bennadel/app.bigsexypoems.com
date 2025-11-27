@@ -30,10 +30,12 @@
 
 		<cfargument name="id" type="numeric" required="false" />
 		<cfargument name="userID" type="numeric" required="false" />
+		<cfargument name="collectionID" type="numeric" required="false" />
 
 		<cfif (
 			isNull( id ) &&
-			isNull( userID )
+			isNull( userID ) &&
+			isNull( collectionID )
 			)>
 
 			<cfthrow type="Gateway.ForbiddenSql" />
@@ -68,7 +70,8 @@
 
 		<cfif (
 			isNull( id ) &&
-			isNull( userID )
+			isNull( userID ) &&
+			isNull( collectionID )
 			)>
 
 			<cfthrow type="Gateway.ForbiddenSql" />
