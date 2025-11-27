@@ -17,7 +17,7 @@
 
 	}
 
-	error = ( request.error ?: "" );
+	error = getRequestError();
 	urlWithInit = getInitUrl();
 	slug = generateSlug();
 
@@ -72,6 +72,64 @@
 			? "#currentUrl#&#flag#"
 			: "#currentUrl#?#flag#"
 		;
+
+	}
+
+
+	/**
+	* I get the (simplified) error object from the request, if available. Otherwise, I
+	* return an empty string.
+	*/
+	private any function getRequestError() {
+
+		if ( isNull( request.error ) ) {
+
+			return "";
+
+		}
+
+		// If there's an error, I'm copying the populated keys into an ordered struct for
+		// easier debugging. This is just a visual preference and has no bearing on the
+		// functionality of the error.
+		var errorLite = [:];
+		var keys = [
+			"type",
+			"message",
+			"detail",
+			"extendedInfo",
+			"errorCode",
+			"code",
+			"tagContext",
+		];
+
+		// Copy over populated keys.
+		for ( var key in keys ) {
+
+			var value = ( request.error[ key ] ?: "" );
+
+			if ( isSimpleValue( value ) && ! len( value ) ) {
+
+				continue;
+
+			}
+
+			errorLite[ key ] = value;
+
+		}
+
+		// Strip out noise in tag context.
+		errorLite.tagContext = errorLite.tagContext.map(
+			( element ) => {
+
+				return [
+					template: element.template,
+					line: element.line
+				];
+
+			}
+		);
+
+		return errorLite;
 
 	}
 
