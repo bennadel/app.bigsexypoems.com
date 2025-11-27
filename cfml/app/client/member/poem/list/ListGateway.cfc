@@ -1,4 +1,4 @@
-<cfcomponent extends="core.lib.model.BaseGateway">
+<cfcomponent extends="core.lib.web.BasePartialGateway">
 
 	<cffunction name="getPoems" returnType="array">
 
