@@ -1,4 +1,16 @@
-<cfcomponent output="false">
+<cfcomponent extends="core.lib.model.BaseGateway">
+
+	<cffunction name="init" returnType="void">
+
+		<cfset super.init(
+			indexPrefixes = [
+				"sessionID",
+			]
+		) />
+
+	</cffunction>
+
+	<!--- PUBLIC METHODS. --->
 
 	<cffunction name="create" returnType="void">
 
@@ -22,11 +34,7 @@
 
 		<cfargument name="sessionID" type="numeric" required="false" />
 
-		<cfif isNull( sessionID )>
-
-			<cfthrow type="Gateway.ForbiddenSql" />
-
-		</cfif>
+		<cfset assertIndexPrefix( arguments ) />
 
 		<cfquery name="local.results" result="local.metaResults">
 			DELETE FROM
@@ -47,11 +55,7 @@
 
 		<cfargument name="sessionID" type="numeric" required="false" />
 
-		<cfif isNull( sessionID )>
-
-			<cfthrow type="Gateway.ForbiddenSql" />
-
-		</cfif>
+		<cfset assertIndexPrefix( arguments ) />
 
 		<cfquery name="local.results" result="local.metaResults" returnType="array">
 			SELECT

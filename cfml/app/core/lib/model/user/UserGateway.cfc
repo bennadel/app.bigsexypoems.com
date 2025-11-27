@@ -1,4 +1,17 @@
-<cfcomponent output="false">
+<cfcomponent extends="core.lib.model.BaseGateway">
+
+	<cffunction name="init" returnType="void">
+
+		<cfset super.init(
+			indexPrefixes = [
+				"id",
+				"email",
+			]
+		) />
+
+	</cffunction>
+
+	<!--- PUBLIC METHODS. --->
 
 	<cffunction name="create" returnType="numeric">
 
@@ -27,14 +40,7 @@
 		<cfargument name="id" type="numeric" required="false" />
 		<cfargument name="email" type="string" required="false" />
 
-		<cfif (
-			isNull( id ) &&
-			isNull( email )
-			)>
-
-			<cfthrow type="Gateway.ForbiddenSql" />
-
-		</cfif>
+		<cfset assertIndexPrefix( arguments ) />
 
 		<cfquery name="local.results" result="local.metaResults">
 			DELETE FROM
@@ -61,14 +67,7 @@
 		<cfargument name="id" type="numeric" required="false" />
 		<cfargument name="email" type="string" required="false" />
 
-		<cfif (
-			isNull( id ) &&
-			isNull( email )
-			)>
-
-			<cfthrow type="Gateway.ForbiddenSql" />
-
-		</cfif>
+		<cfset assertIndexPrefix( arguments ) />
 
 		<cfquery name="local.results" result="local.metaResults" returnType="array">
 			SELECT

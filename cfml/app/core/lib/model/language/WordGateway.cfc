@@ -1,4 +1,16 @@
-<cfcomponent output="false">
+<cfcomponent extends="core.lib.model.BaseGateway">
+
+	<cffunction name="init" returnType="void">
+
+		<cfset super.init(
+			indexPrefixes = [
+				"token",
+			]
+		) />
+
+	</cffunction>
+
+	<!--- PUBLIC METHODS. --->
 
 	<cffunction name="create" returnType="void">
 
@@ -30,11 +42,7 @@
 
 		<cfargument name="token" type="string" required="false" />
 
-		<cfif isNull( token )>
-
-			<cfthrow type="Gateway.ForbiddenSql" />
-
-		</cfif>
+		<cfset assertIndexPrefix( arguments ) />
 
 		<cfquery name="local.results" result="local.metaResults">
 			DELETE FROM
@@ -55,11 +63,7 @@
 
 		<cfargument name="token" type="string" required="false" />
 
-		<cfif isNull( token )>
-
-			<cfthrow type="Gateway.ForbiddenSql" />
-
-		</cfif>
+		<cfset assertIndexPrefix( arguments ) />
 
 		<cfquery name="local.results" result="local.metaResults" returnType="array">
 			SELECT

@@ -1,5 +1,15 @@
 <cfcomponent extends="core.lib.model.BaseGateway">
 
+	<cffunction name="init" returnType="void">
+
+		<cfset super.init(
+			indexPrefixes = []
+		) />
+
+	</cffunction>
+
+	<!--- PUBLIC METHODS. --->
+
 	<cffunction name="getByFilter" returnType="array">
 
 		<cfargument name="id" type="string" required="false" />
