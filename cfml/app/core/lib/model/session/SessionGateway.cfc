@@ -6,7 +6,10 @@
 			indexPrefixes = [
 				"id",
 				"userID",
-			]
+			],
+			decodeMappings = {
+				isAuthenticated: "boolean",
+			}
 		) />
 
 	</cffunction>
@@ -104,12 +107,7 @@
 				id ASC
 		</cfquery>
 
-		<cfreturn decodeColumns(
-			results,
-			{
-				isAuthenticated: "boolean"
-			}
-		) />
+		<cfreturn decodeColumns( results ) />
 
 	</cffunction>
 

@@ -3,7 +3,11 @@
 	<cffunction name="init" returnType="void">
 
 		<cfset super.init(
-			indexPrefixes = []
+			indexPrefixes = [],
+			decodeMappings = {
+				isDailyTask: "boolean",
+				state: "json",
+			}
 		) />
 
 	</cffunction>
@@ -44,13 +48,7 @@
 				id ASC
 		</cfquery>
 
-		<cfreturn decodeColumns(
-			results,
-			{
-				isDailyTask: "boolean",
-				state: "json"
-			}
-		) />
+		<cfreturn decodeColumns( results ) />
 
 	</cffunction>
 
