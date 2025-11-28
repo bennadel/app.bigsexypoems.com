@@ -784,6 +784,30 @@ pre code {
 	}
 }
 
+.uiPageNav {
+	margin-bottom: var( --space-block ) ;
+
+	& > *:first-child {
+		.uiScreenReader() ;
+	}
+
+	ul {
+		.uiUnlist() ;
+
+		display: flex ;
+		gap: var( --space-inline-s ) ;
+	}
+
+	li {
+		display: flex ;
+		gap: var( --space-inline-s ) ;
+	}
+
+	li:not(:last-child):after {
+		content: "/" ;
+	}
+}
+
 // ---
 // Form styles.
 // ---

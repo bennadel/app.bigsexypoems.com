@@ -14,15 +14,25 @@
 			</p>
 		</cfif>
 
-		<p>
-			<a #ui.attrHref( "member.poem.composer", "poemID", poem.id )#>Composer</a>
-			|
-			<a #ui.attrHref( "member.poem.edit", "poemID", poem.id )#>Edit</a>
-			|
-			<a #ui.attrHref( "member.poem.delete", "poemID", poem.id )#>Delete</a>
-			|
-			<a #ui.attrHref( "member.poem.share", "poemID", poem.id )#>Share Links</a>
-		</p>
+		<nav aria-labelledby="#ui.nextFieldId()#" class="uiPageNav">
+			<span id="#ui.fieldId()#">
+				Poem Actions:
+			</span>
+			<ul>
+				<li>
+					<a #ui.attrHref( "member.poem.composer", "poemID", poem.id )#>Composer</a>
+				</li>
+				<li>
+					<a #ui.attrHref( "member.poem.edit", "poemID", poem.id )#>Edit</a>
+				</li>
+				<li>
+					<a #ui.attrHref( "member.poem.delete", "poemID", poem.id )#>Delete</a>
+				</li>
+				<li>
+					<a #ui.attrHref( "member.poem.share", "poemID", poem.id )#>Share Links</a>
+				</li>
+			</ul>
+		</nav>
 
 		<ul vyxlrv class="lines">
 			<cfloop array="#lines#" item="line">

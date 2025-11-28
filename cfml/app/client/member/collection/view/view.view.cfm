@@ -7,11 +7,19 @@
 			#e( collection.name )#
 		</h1>
 
-		<p>
-			<a #ui.attrHref( "member.collection.edit", "collectionID", collection.id )#>Edit</a>
-			|
-			<a #ui.attrHref( "member.collection.delete", "collectionID", collection.id )#>Delete</a>
-		</p>
+		<nav aria-labelledby="#ui.nextFieldId()#" class="uiPageNav">
+			<span id="#ui.fieldId()#">
+				Collection Actions:
+			</span>
+			<ul>
+				<li>
+					<a #ui.attrHref( "member.collection.edit", "collectionID", collection.id )#>Edit</a>
+				</li>
+				<li>
+					<a #ui.attrHref( "member.collection.delete", "collectionID", collection.id )#>Delete</a>
+				</li>
+			</ul>
+		</nav>
 
 		<cfif collection.descriptionHtml.len()>
 			#collection.descriptionHtml#

@@ -7,9 +7,16 @@
 			#e( title )#
 		</h1>
 
-		<p>
-			<a #ui.attrHref( "member.collection.add" )#>Add Collection</a>
-		</p>
+		<nav aria-labelledby="#ui.nextFieldId()#" class="uiPageNav">
+			<span id="#ui.fieldId()#">
+				Collection Actions:
+			</span>
+			<ul>
+				<li>
+					<a #ui.attrHref( "member.collection.add" )#>Add Collection</a>
+				</li>
+			</ul>
+		</nav>
 
 		<cfif collections.len()>
 

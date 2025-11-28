@@ -7,9 +7,16 @@
 			#e( title )#
 		</h1>
 
-		<p>
-			<a #ui.attrHref( "member.tag.add" )#>Add Tag</a>
-		</p>
+		<nav aria-labelledby="#ui.nextFieldId()#" class="uiPageNav">
+			<span id="#ui.fieldId()#">
+				Tag Actions:
+			</span>
+			<ul>
+				<li>
+					<a #ui.attrHref( "member.tag.add" )#>Add Tag</a>
+				</li>
+			</ul>
+		</nav>
 
 		<table class="uiTable">
 		<thead>

@@ -7,9 +7,16 @@
 			Share Links
 		</h1>
 
-		<p>
-			<a #ui.attrHref( "member.poem.share.add", "poemID", poem.id )#>Add share links</a>
-		</p>
+		<nav aria-labelledby="#ui.nextFieldId()#" class="uiPageNav">
+			<span id="#ui.fieldId()#">
+				Share Actions:
+			</span>
+			<ul>
+				<li>
+					<a #ui.attrHref( "member.poem.share.add", "poemID", poem.id )#>Add share links</a>
+				</li>
+			</ul>
+		</nav>
 
 		<cfif shares.len()>
 

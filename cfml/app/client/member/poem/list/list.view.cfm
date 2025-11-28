@@ -7,11 +7,19 @@
 			#e( title )#
 		</h1>
 
-		<p>
-			<a #ui.attrHref( "member.poem.add" )#>Add Poem</a>
-			|
-			<a #ui.attrHref( "member.poem.global.share.list" )#>All Share Links</a>
-		</p>
+		<nav aria-labelledby="#ui.nextFieldId()#" class="uiPageNav">
+			<span id="#ui.fieldId()#">
+				Poem Actions:
+			</span>
+			<ul>
+				<li>
+					<a #ui.attrHref( "member.poem.add" )#>Add Poem</a>
+				</li>
+				<li>
+					<a #ui.attrHref( "member.poem.global.share.list" )#>All Share Links</a>
+				</li>
+			</ul>
+		</nav>
 
 		<cfif recentPoems.len()>
 
