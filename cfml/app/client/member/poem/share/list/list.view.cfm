@@ -61,7 +61,7 @@
 					<td>
 						<a #ui.attrHref( "member.poem.share.viewing", "shareID", share.id )#>#numberFormat( share.viewingCount )#</a>
 					</td>
-					<td class="isNoWrap">
+					<td>
 						<div class="uiHstack">
 							<a #ui.attrHref( "member.poem.share.edit", "shareID", share.id )#>
 								Edit

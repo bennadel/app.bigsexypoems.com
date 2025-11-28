@@ -43,7 +43,7 @@
 					<td class="isNoWrap">
 						#ui.userDate( collection.createdAt )#
 					</td>
-					<td class="isNoWrap">
+					<td>
 						<div class="uiHstack">
 							<a #ui.attrHref( "member.collection.edit", "collectionID", collection.id )#>
 								Edit

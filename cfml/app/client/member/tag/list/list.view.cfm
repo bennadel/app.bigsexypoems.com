@@ -49,7 +49,7 @@
 				<td class="isNoWrap">
 					#ui.userDate( tag.createdAt )#
 				</td>
-				<td class="isNoWrap">
+				<td>
 					<div class="uiHstack">
 						<a #ui.attrHref( "member.tag.edit", "tagID", tag.id )#>
 							Edit

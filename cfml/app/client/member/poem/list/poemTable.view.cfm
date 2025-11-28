@@ -20,7 +20,7 @@
 	<tbody>
 	<cfloop array="#attributes.poems#" item="poem">
 		<tr>
-			<td class="isNoWrap">
+			<td>
 				<a #ui.attrHref( "member.poem.view", "poemID", poem.id )# class="isRowLinker">#e( poem.name )#</a>
 			</td>
 			<td>
@@ -29,7 +29,7 @@
 					content="#poem.content#"
 				/>
 			</td>
-			<td class="isNoWrap">
+			<td>
 				<cfif poem.collection.id>
 					<a #ui.attrHref( "member.collection.view", "collectionID", poem.collection.id )#>#e( poem.collection.name )#</a>
 				</cfif>

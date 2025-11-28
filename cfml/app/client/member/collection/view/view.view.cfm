@@ -48,7 +48,7 @@
 			<tbody>
 			<cfloop array="#poems#" item="poem">
 				<tr>
-					<td class="isNoWrap">
+					<td>
 						<a #ui.attrHref( "member.poem.view", "poemID", poem.id )# class="isRowLinker">#e( poem.name )#</a>
 					</td>
 					<td>
