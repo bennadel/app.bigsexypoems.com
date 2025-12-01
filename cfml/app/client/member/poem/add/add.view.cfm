@@ -52,6 +52,7 @@
 						class="uiTextarea"
 						x-data="spbiun.ContentController( '#e4j( url.importFrom )#' )"
 						x-meta-enter-submit
+						x-auto-resize
 					>#e( form.content )#</textarea>
 				</div>
 			</div>

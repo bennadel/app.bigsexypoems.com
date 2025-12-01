@@ -51,6 +51,7 @@
 						maxlength="3000"
 						class="uiTextarea"
 						x-meta-enter-submit
+						x-auto-resize
 					>#e( form.content )#</textarea>
 				</div>
 			</div>

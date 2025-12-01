@@ -27,9 +27,9 @@
 					maxlength="3000"
 					r2mwmx class="uiTextarea isLongTermFocus proser_content"
 					x-data="r2mwmx.ProseContent( '#e4j( localStorageKey )#' )"
+					x-auto-resize
 					@beforeunload.window="saveContent()"
 					@input.debounce.200ms="saveContent()"
-					@input.debounce.250ms="resizeContent()"
 				></textarea>
 
 				<!---

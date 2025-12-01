@@ -46,6 +46,7 @@
 						maxlength="500"
 						class="uiTextarea"
 						x-meta-enter-submit
+						x-auto-resize
 					>#e( form.descriptionMarkdown )#</textarea>
 
 					<p id="#ui.fieldId( "hint" )#" class="uiField_hint">

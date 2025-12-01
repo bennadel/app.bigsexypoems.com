@@ -1,5 +1,6 @@
 
 // Import app modules.
+import "../_shared/js/xAutoResize.js";
 import "../_shared/js/xKeyedFocus.js";
 import "../_shared/js/xMetaEnterSubmit.js";
 import "../_shared/js/xPreventDoubleSubmit.js";

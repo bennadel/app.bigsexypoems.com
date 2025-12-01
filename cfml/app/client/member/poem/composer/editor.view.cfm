@@ -36,13 +36,12 @@
 
 			<div z6s31p class="proser">
 				<textarea
-					x-data="z6s31p.ProseContent"
 					id="form--content"
 					name="content"
 					maxlength="3000"
 					z6s31p class="uiTextarea isLongTermFocus proser_content"
 					x-meta-enter-submit
-					@input.debounce.250ms="resizeContent()"
+					x-auto-resize
 				>#e( form.content )#</textarea>
 
 				<div

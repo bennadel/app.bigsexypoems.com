@@ -63,6 +63,7 @@
 						maxlength="1000"
 						class="uiTextarea"
 						x-meta-enter-submit
+						x-auto-resize
 					>#e( form.noteMarkdown )#</textarea>
 
 					<p id="#ui.fieldId( "hint" )#" class="uiField_hint">
