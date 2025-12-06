@@ -21,21 +21,39 @@
 		/>
 
 		<div mpjwb9 class="shell">
-			<header mpjwb9 class="shell_header header">
+			<header x-data="mpjwb9.Header" mpjwb9 class="shell_header header">
 
-				<a #ui.attrHref( "member" )# mpjwb9 class="header_logo navLink">
+				<a #ui.attrHref( "member" )# mpjwb9 class="header_logo navLink isLogo">
 					<span mpjwb9 class="navLink_pill">
-						<span mpjwb9 class="navLink_icon">
-							<cfmodule
-								template="/client/_shared/tag/svgIcon.cfm"
-								type="logo">
-							</cfmodule>
-						</span>
+						<cfmodule
+							template="/client/_shared/tag/svgIcon.cfm"
+							type="logo"
+							xClassToken="mpjwb9"
+							xClass="navLink_icon">
+						</cfmodule>
 						<span mpjwb9 class="navLink_label bigSexy">
 							<strong>BigSexy</strong>Poems
 						</span>
 					</span>
 				</a>
+
+				<button
+					@click="toggleNav()"
+					mpjwb9 class="header_toggleNav toggleNav uiButton"
+					:class="{ isOpen: isNavOpen }">
+					<cfmodule
+						template="/client/_shared/tag/svgIcon.cfm"
+						type="hamburger"
+						xClassToken="mpjwb9"
+						xClass="toggleNav_hamburger">
+					</cfmodule>
+					<cfmodule
+						template="/client/_shared/tag/svgIcon.cfm"
+						type="close"
+						xClassToken="mpjwb9"
+						xClass="toggleNav_close">
+					</cfmodule>
+				</button>
 
 				<nav mpjwb9 class="header_nav nav">
 					<ul class="uiUnlist">
@@ -48,12 +66,12 @@
 									isOn: ( request.response.activeNav == "member" )
 								])#>
 								<span mpjwb9 class="navLink_pill">
-									<span mpjwb9 class="navLink_icon">
-										<cfmodule
-											template="/client/_shared/tag/svgIcon.cfm"
-											type="home">
-										</cfmodule>
-									</span>
+									<cfmodule
+										template="/client/_shared/tag/svgIcon.cfm"
+										type="home"
+										xClassToken="mpjwb9"
+										xClass="navLink_icon">
+									</cfmodule>
 									<span mpjwb9 class="navLink_label">
 										Home
 									</span>
@@ -69,12 +87,12 @@
 									isOn: ( request.response.activeNav == "poems" )
 								])#>
 								<span mpjwb9 class="navLink_pill">
-									<span mpjwb9 class="navLink_icon">
-										<cfmodule
-											template="/client/_shared/tag/svgIcon.cfm"
-											type="poems">
-										</cfmodule>
-									</span>
+									<cfmodule
+										template="/client/_shared/tag/svgIcon.cfm"
+										type="poems"
+										xClassToken="mpjwb9"
+										xClass="navLink_icon">
+									</cfmodule>
 									<span mpjwb9 class="navLink_label">
 										Poems
 									</span>
@@ -90,12 +108,12 @@
 									isOn: ( request.response.activeNav == "collections" )
 								])#>
 								<span mpjwb9 class="navLink_pill">
-									<span mpjwb9 class="navLink_icon">
-										<cfmodule
-											template="/client/_shared/tag/svgIcon.cfm"
-											type="collections">
-										</cfmodule>
-									</span>
+									<cfmodule
+										template="/client/_shared/tag/svgIcon.cfm"
+										type="collections"
+										xClassToken="mpjwb9"
+										xClass="navLink_icon">
+									</cfmodule>
 									<span mpjwb9 class="navLink_label">
 										Collections
 									</span>
@@ -111,12 +129,12 @@
 									isOn: ( request.response.activeNav == "profile" )
 								])#>
 								<span mpjwb9 class="navLink_pill">
-									<span mpjwb9 class="navLink_icon">
-										<cfmodule
-											template="/client/_shared/tag/svgIcon.cfm"
-											type="profile">
-										</cfmodule>
-									</span>
+									<cfmodule
+										template="/client/_shared/tag/svgIcon.cfm"
+										type="profile"
+										xClassToken="mpjwb9"
+										xClass="navLink_icon">
+									</cfmodule>
 									<span mpjwb9 class="navLink_label">
 										Profile
 									</span>
@@ -132,12 +150,12 @@
 									isOn: ( request.response.activeNav == "sessions" )
 								])#>
 								<span mpjwb9 class="navLink_pill">
-									<span mpjwb9 class="navLink_icon">
-										<cfmodule
-											template="/client/_shared/tag/svgIcon.cfm"
-											type="sessions">
-										</cfmodule>
-									</span>
+									<cfmodule
+										template="/client/_shared/tag/svgIcon.cfm"
+										type="sessions"
+										xClassToken="mpjwb9"
+										xClass="navLink_icon">
+									</cfmodule>
 									<span mpjwb9 class="navLink_label">
 										Sessions
 									</span>

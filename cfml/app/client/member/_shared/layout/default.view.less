@@ -1,4 +1,7 @@
 [mpjwb9] {
+	// The width at about which the current nav won't fit on the horizontal axis.
+	@mobile-breakpoint: 1024px ;
+
 	&.shell {
 		background-color: var( --fill ) ;
 		margin: 0 auto ;
@@ -23,45 +26,78 @@
 	&.header {
 		align-items: center ;
 		display: flex ;
-		gap: 25px ;
+		flex-wrap: wrap ;
+		gap: var( --space-inline ) ;
 
-		&_logo {}
+		&_logo {
+			flex: 1 1 auto ;
+		}
 
-		&_nav {}
+		&_toggleNav {
+			flex: 0 0 auto ;
+		}
+
+		&_nav {
+			left: -10000px ;
+			position: fixed ;
+			top: -10000px ;
+			width: 100% ; // To force flex-wrap to kick-in.
+		}
+
+		&_nav:focus-within,
+		&_toggleNav.isOpen + &_nav {
+			position: static ;
+		}
 	}
 
-	&.nav {
-		ul {
-			display: flex ;
+	&.toggleNav {
+		padding: var( --pad-block ) var( --pad-inline-l ) ;
+
+		svg {
+			height: 24px ;
+			width: 24px ;
+		}
+
+		&_hamburger,
+		&.isOpen &_close {
+			display: block ;
+		}
+
+		&.isOpen &_hamburger,
+		&_close {
+			display: none ;
 		}
 	}
 
 	&.navLink {
-		border: 4px solid var( --nav-fill ) ;
+		// Note: I'm using the BORDER to put "visual space" between the buttons while
+		// still having the buttons butt-up against each other.
+		border: 2px solid var( --nav-fill ) ;
+		border-inline-width: 0 ;
 		border-radius: var( --radius ) ;
-		border-width: 4px ;
 		display: block ;
 		text-decoration: none ;
 		white-space: nowrap ;
 
+		&.isLogo {
+			border-width: 0 ;
+		}
+
+		// Note: I'm using the pill so that I can have border-radius on the background
+		// color. If we remove the pill wrapper, then the radius gets distorted by the
+		// transparent border on the parent.
 		&_pill {
 			align-items: center ;
+			border-radius: var( --radius ) ;
 			color: var( --nav-text ) ;
 			display: flex ;
-			gap: 10px ;
+			gap: var( --space-inline ) ;
 			padding: var( --pad-block ) var( --pad-inline ) ;
 		}
 
 		&_icon {
-			display: flex ;
-			height: 32px ;
-			width: 32px ;
-
-			svg {
-				height: 24px ;
-				margin: auto ;
-				width: 24px ;
-			}
+			height: 24px ;
+			width: 24px ;
 		}
 
 		&_label {
@@ -77,7 +113,6 @@
 
 		&:hover &_pill {
 			background-color: var( --nav-fill-hover ) ;
-			border-radius: var( --radius ) ;
 			color: var( --nav-text-hover ) ;
 		}
 
@@ -93,6 +128,37 @@
 			outline-offset: 0 ;
 			position: relative ;
 			z-index: calc( var( --layer-base ) + 1 ) ;
+		}
+	}
+
+	@media screen and ( min-width: @mobile-breakpoint ) {
+		&.header {
+			flex-wrap: nowrap ;
+			gap: 25px ;
+
+			&_logo {
+				flex: 0 0 auto ;
+			}
+
+			&_toggleNav {
+				display: none ;
+			}
+
+			&_nav {
+				position: static ;
+				width: auto ;
+			}
+		}
+
+		&.nav {
+			ul {
+				display: flex ;
+			}
+		}
+
+		&.navLink {
+			border-block-width: 0 ;
+			border-inline-width: 4px ;
 		}
 	}
 

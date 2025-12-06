@@ -42,27 +42,6 @@
 		</g>
 	</symbol>
 
-	<!--- https://www.streamlinehq.com/icons/download/logout-2--18167 --->
-	<symbol id="svg-sprite--logout-2--18167" viewBox="0 0 24 24">
-		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-			<path d="M20.25 18.75v1.5a1.5 1.5 0 0 1 -1.5 1.5h-4.5"></path>
-			<path d="M14.25 3.75h4.5a1.5 1.5 0 0 1 1.5 1.5v1.5"></path>
-			<path d="m10.39 23.24 -9 -1.24a0.75 0.75 0 0 1 -0.64 -0.75V3.72A0.75 0.75 0 0 1 1.34 3l9 -2.22a0.75 0.75 0 0 1 0.91 0.73v21a0.74 0.74 0 0 1 -0.86 0.73v0Z"></path>
-			<path d="m20.25 9.75 3 3H15"></path>
-			<path d="m20.25 15.75 3 -3"></path>
-			<path stroke="currentColor" d="M7.375 12.344a0.375 0.375 0 0 1 0 -0.75"></path>
-			<path stroke="currentColor" d="M7.375 12.344a0.375 0.375 0 0 0 0 -0.75"></path>
-		</g>
-	</symbol>
-
-	<!--- https://www.streamlinehq.com/icons/download/move-back--18116 --->
-	<symbol id="svg-sprite--move-back--18116" viewBox="0 0 24 24">
-		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-			<path d="M6 4.498 0.75 9.748 6 14.998"></path>
-			<path d="M0.75 9.748h21a1.5 1.5 0 0 1 1.5 1.5v9"></path>
-		</g>
-	</symbol>
-
 	<!--- https://www.streamlinehq.com/icons/download/pen-write--18149 --->
 	<symbol id="svg-sprite--pen-write--18149" viewBox="0 0 24 24">
 		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
@@ -73,21 +52,28 @@
 		</g>
 	</symbol>
 
-	<!--- https://www.streamlinehq.com/icons/download/tags-double--18113 --->
-	<symbol id="svg-sprite--tags-double--18113" viewBox="0 0 24 24">
-		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-			<path d="M4.5 1.06h6.879a1.5 1.5 0 0 1 1.06 0.439L22.5 11.56"></path>
-			<path d="M9.129 4.06H3a1.5 1.5 0 0 0 -1.5 1.5v6.128a1.5 1.5 0 0 0 0.439 1.061l9.75 9.75a1.499 1.499 0 0 0 2.122 0l6.128 -6.129a1.5 1.5 0 0 0 0 -2.121L10.189 4.5a1.5 1.5 0 0 0 -1.06 -0.44v0Z"></path>
-			<path d="M6 8.935a0.375 0.375 0 0 1 0 -0.75"></path>
-			<path d="M6 8.935a0.375 0.375 0 0 0 0 -0.75"></path>
-		</g>
-	</symbol>
-
 	<!--- https://www.streamlinehq.com/icons/download/book-flip-page--18271 --->
 	<symbol id="svg-sprite--book-flip-page--18271" viewBox="0 0 24 24">
 		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
 			<path d="M18 4.14a30.54 30.54 0 0 1 4.73 -0.39 0.55 0.55 0 0 1 0.37 0.14 0.51 0.51 0 0 1 0.15 0.36V20a0.51 0.51 0 0 1 -0.5 0.5C14.46 20.62 12 23.25 12 23.25V6.48S9.55 3.86 1.27 3.75a0.55 0.55 0 0 0 -0.37 0.14 0.51 0.51 0 0 0 -0.15 0.36V20a0.51 0.51 0 0 0 0.5 0.5C9.54 20.62 12 23.25 12 23.25"></path>
 			<path d="M12 22.76a6 6 0 0 1 1.64 -3.45A8.18 8.18 0 0 1 18 16.85V1.24a0.46 0.46 0 0 0 -0.23 -0.4 0.6 0.6 0 0 0 -0.49 -0.06 7.79 7.79 0 0 0 -3.64 2.27A6.2 6.2 0 0 0 12 6.48"></path>
+		</g>
+	</symbol>
+
+	<!--- https://www.streamlinehq.com/icons/download/navigation-menu--18168 --->
+	<symbol id="svg-sprite--navigation-menu--18168" viewBox="0 0 24 24">
+		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+			<path d="m2.25 18.003 19.5 0"></path>
+			<path d="m2.25 12.003 19.5 0"></path>
+			<path d="m2.25 6.003 19.5 0"></path>
+		</g>
+	</symbol>
+
+	<!--- https://www.streamlinehq.com/icons/download/close--18138 --->
+	<symbol id="svg-sprite--close--18138" viewBox="0 0 24 24">
+		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+			<path d="m0.75 23.249 22.5 -22.5"></path>
+			<path d="M23.25 23.249 0.75 0.749"></path>
 		</g>
 	</symbol>
 
