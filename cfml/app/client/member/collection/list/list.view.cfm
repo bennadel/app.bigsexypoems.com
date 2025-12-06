@@ -20,43 +20,47 @@
 
 		<cfif collections.len()>
 
-			<table x-table-row-linker class="uiTable">
-			<thead>
-				<tr>
-					<th>
-						Name
-					</th>
-					<th class="w-1">
-						Created
-					</th>
-					<th class="w-1">
-						<br />
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-			<cfloop array="#collections#" item="collection">
-				<tr>
-					<td>
-						<a #ui.attrHref( "member.collection.view", "collectionID", collection.id )# class="isRowLinker">#e( collection.name )#</a>
-					</td>
-					<td class="isNoWrap">
-						#ui.userDate( collection.createdAt )#
-					</td>
-					<td>
-						<div class="uiHstack">
-							<a #ui.attrHref( "member.collection.edit", "collectionID", collection.id )#>
-								Edit
-							</a>
-							<a #ui.attrHref( "member.collection.delete", "collectionID", collection.id )#>
-								Delete
-							</a>
-						</div>
-					</td>
-				</tr>
-			</cfloop>
-			</tbody>
-			</table>
+			<div class="uiTable_scroller">
+
+				<table x-table-row-linker class="uiTable">
+				<thead>
+					<tr>
+						<th>
+							Name
+						</th>
+						<th class="w-1">
+							Created
+						</th>
+						<th class="w-1">
+							<br />
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+				<cfloop array="#collections#" item="collection">
+					<tr>
+						<td>
+							<a #ui.attrHref( "member.collection.view", "collectionID", collection.id )# class="isRowLinker">#e( collection.name )#</a>
+						</td>
+						<td class="isNoWrap">
+							#ui.userDate( collection.createdAt )#
+						</td>
+						<td>
+							<div class="uiHstack">
+								<a #ui.attrHref( "member.collection.edit", "collectionID", collection.id )#>
+									Edit
+								</a>
+								<a #ui.attrHref( "member.collection.delete", "collectionID", collection.id )#>
+									Delete
+								</a>
+							</div>
+						</td>
+					</tr>
+				</cfloop>
+				</tbody>
+				</table>
+
+			</div>
 
 		</cfif>
 

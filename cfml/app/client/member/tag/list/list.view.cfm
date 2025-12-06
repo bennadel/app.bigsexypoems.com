@@ -18,51 +18,55 @@
 			</ul>
 		</nav>
 
-		<table class="uiTable">
-		<thead>
-			<tr>
-				<th>
-					Name
-				</th>
-				<th>
-					Slug
-				</th>
-				<th class="w-1">
-					Created
-				</th>
-				<th class="w-1">
-					<br />
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-		<cfloop array="#tags#" item="tag">
-			<tr>
-				<td>
-					<a #ui.attrHref( "member.tag.edit", "tagID", tag.id )#>#e( tag.name )#</a>
-				</td>
-				<td>
-					<a #ui.attrHref( "member.tag.edit", "tagID", tag.id )#>
-						#e( tag.slug )#
-					</a>
-				</td>
-				<td class="isNoWrap">
-					#ui.userDate( tag.createdAt )#
-				</td>
-				<td>
-					<div class="uiHstack">
+		<div class="uiTable_scroller">
+
+			<table class="uiTable">
+			<thead>
+				<tr>
+					<th>
+						Name
+					</th>
+					<th>
+						Slug
+					</th>
+					<th class="w-1">
+						Created
+					</th>
+					<th class="w-1">
+						<br />
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			<cfloop array="#tags#" item="tag">
+				<tr>
+					<td>
+						<a #ui.attrHref( "member.tag.edit", "tagID", tag.id )#>#e( tag.name )#</a>
+					</td>
+					<td>
 						<a #ui.attrHref( "member.tag.edit", "tagID", tag.id )#>
-							Edit
+							#e( tag.slug )#
 						</a>
-						<a #ui.attrHref( "member.tag.delete", "tagID", tag.id )#>
-							Delete
-						</a>
-					</div>
-				</td>
-			</tr>
-		</cfloop>
-		</tbody>
-		</table>
+					</td>
+					<td class="isNoWrap">
+						#ui.userDate( tag.createdAt )#
+					</td>
+					<td>
+						<div class="uiHstack">
+							<a #ui.attrHref( "member.tag.edit", "tagID", tag.id )#>
+								Edit
+							</a>
+							<a #ui.attrHref( "member.tag.delete", "tagID", tag.id )#>
+								Delete
+							</a>
+						</div>
+					</td>
+				</tr>
+			</cfloop>
+			</tbody>
+			</table>
+
+		</div>
 
 	</article>
 

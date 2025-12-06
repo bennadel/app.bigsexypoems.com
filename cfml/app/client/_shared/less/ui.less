@@ -770,6 +770,22 @@ pre code {
 			text-wrap: nowrap ;
 		}
 	}
+
+	// Caution: this is NOT a child of the uiTable; but, I'm using the BEM syntax to
+	// illustrate that these two elements are tightly coupled. And that they can make some
+	// assumptions about how they are intending to be used.
+	&_scroller {
+		:where( & ) {
+			margin-bottom: var( --space-block-l ) ;
+			max-width: 100% ;
+			overflow-x: auto ;
+		}
+
+		:where( & > .uiTable ) {
+			margin-bottom: 10px ;
+			min-width: 1000px ;
+		}
+	}
 }
 
 .uiTag {
