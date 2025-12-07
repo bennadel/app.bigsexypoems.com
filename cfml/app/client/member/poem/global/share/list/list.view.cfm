@@ -27,7 +27,7 @@
 							Views
 						</th>
 						<th class="w-1">
-							Created
+							Last Viewed
 						</th>
 					</tr>
 				</thead>
@@ -52,7 +52,9 @@
 								</cfif>
 							</td>
 							<td class="isNoWrap">
-								#ui.userDate( share.createdAt )#
+								<cfif isDate( share.lastViewingAt )>
+									#ui.userDate( share.lastViewingAt )#
+								</cfif>
 							</td>
 						</tr>
 					</cfloop>

@@ -13,11 +13,11 @@
 			</span>
 			<ul>
 				<li>
-					<a #ui.attrHref( "member.poem.share.add", "poemID", poem.id )#>Add share links</a>
+					<a #ui.attrHref( "member.poem.share.add", "poemID", poem.id )#>Add Share</a>
 				</li>
 				<cfif shares.len()>
 					<li>
-						<a #ui.attrHref( "member.poem.share.deleteAll", "poemID", poem.id )#>Delete all share links</a>
+						<a #ui.attrHref( "member.poem.share.deleteAll", "poemID", poem.id )#>Delete All Shares</a>
 					</li>
 				</cfif>
 			</ul>
@@ -43,7 +43,7 @@
 							Views
 						</th>
 						<th class="w-13">
-							Updated
+							Last Viewed
 						</th>
 					</tr>
 				</thead>
@@ -63,7 +63,9 @@
 							<a #ui.attrHref( "member.poem.share.view", "shareID", share.id, "viewings" )#>#numberFormat( share.viewingCount )#</a>
 						</td>
 						<td class="isNoWrap">
-							#ui.userDate( share.updatedAt )#
+							<cfif isDate( share.lastViewingAt )>
+								#ui.userDate( share.lastViewingAt )#
+							</cfif>
 						</td>
 					</tr>
 				</cfloop>

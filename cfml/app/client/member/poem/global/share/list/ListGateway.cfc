@@ -17,6 +17,7 @@
 				s.name AS share_name,
 				s.noteMarkdown AS share_noteMarkdown,
 				s.viewingCount AS share_viewingCount,
+				s.lastViewingAt AS share_lastViewingAt,
 				s.createdAt AS share_createdAt
 			FROM
 				poem p
