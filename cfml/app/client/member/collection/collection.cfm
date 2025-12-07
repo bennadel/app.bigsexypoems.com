@@ -32,7 +32,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	/**
-	* I provide reusable collection-to-breadcrumb logic for nested views.
+	* I provide reusable breadcrumb logic for nested views.
 	*/
 	private array function breadcrumbForCollection( required struct collection ) {
 

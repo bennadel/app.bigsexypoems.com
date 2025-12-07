@@ -64,7 +64,7 @@
 				<button type="submit" class="uiButton isSubmit">
 					Delete Share
 				</button>
-				<a #ui.attrHref( "member.poem.share", "poemID", poem.id )# class="uiButton isCancel">
+				<a #ui.attrHref( "member.poem.share.view", "shareID", share.id )# class="uiButton isCancel">
 					Cancel
 				</a>
 			</div>

@@ -775,15 +775,17 @@ pre code {
 	// illustrate that these two elements are tightly coupled. And that they can make some
 	// assumptions about how they are intending to be used.
 	&_scroller {
-		:where( & ) {
-			margin-bottom: var( --space-block-l ) ;
-			max-width: 100% ;
-			overflow-x: auto ;
-		}
+		@media screen and ( max-width: 1000px ) {
+			:where( & ) {
+				margin-bottom: var( --space-block-l ) ;
+				max-width: 100% ;
+				overflow-x: auto ;
+			}
 
-		:where( & > .uiTable ) {
-			margin-bottom: 10px ;
-			min-width: 1000px ;
+			:where( & > .uiTable ) {
+				margin-bottom: 10px ;
+				min-width: 1000px ;
+			}
 		}
 	}
 }
@@ -821,6 +823,26 @@ pre code {
 
 	li:not(:last-child):after {
 		content: "/" ;
+	}
+}
+
+.uiProperties {
+	:where( & > div ) {
+		margin-bottom: var( --space-block ) ;
+	}
+
+	:where( & > div > dt ) {
+		font-weight: var( --font-weight-bold ) ;
+		line-height: var( --line-height-ui ) ;
+		margin-bottom: var( --space-block-xs ) ;
+	}
+
+	:where( & > div > dd ) {
+		margin-left: var( --space-block-l ) ;
+
+		@media ( max-width: 600px ) {
+			margin-left: 16px ;
+		}
 	}
 }
 

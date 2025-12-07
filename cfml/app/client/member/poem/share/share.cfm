@@ -10,6 +10,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	// Shared breadcrumb logic for share entity.
+	request.breadcrumbForShare = breadcrumbForShare;
 	request.breadcrumbForShareLinks = breadcrumbForShareLinks;
 
 	switch ( router.next( "list" ) ) {
@@ -18,6 +19,7 @@
 		case "deleteAll":
 		case "edit":
 		case "list":
+		case "view":
 		case "viewing":
 			cfmodule( template = router.nextTemplate() );
 		break;
@@ -30,7 +32,17 @@
 	// ------------------------------------------------------------------------------- //
 
 	/**
-	* I provide reusable poem-to-breadcrumb logic for nested views.
+	* I provide reusable breadcrumb logic for nested views.
+	*/
+	private array function breadcrumbForShare( required struct share ) {
+
+		return [ coalesceTruthy( share.name, "Unnamed" ), "member.poem.share.view", "shareID", share.id ];
+
+	}
+
+
+	/**
+	* I provide reusable breadcrumb logic for nested views.
 	*/
 	private array function breadcrumbForShareLinks( required struct poem ) {
 

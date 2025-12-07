@@ -23,7 +23,7 @@
 						<th>
 							Share Note
 						</th>
-						<th>
+						<th align="center">
 							Views
 						</th>
 						<th class="w-1">
@@ -41,14 +41,14 @@
 								</td>
 							</cfif>
 							<td>
-								<a #ui.attrHref( "member.poem.share.list", "poemID", poem.id )#>#e( coalesceTruthy( share.name, "Unnamed" ) )#</a>
+								<a #ui.attrHref( "member.poem.share.view", "shareID", share.id )#>#e( coalesceTruthy( share.name, "Unnamed" ) )#</a>
 							</td>
 							<td>
 								#e( truncate( share.noteMarkdown, 30 ) )#
 							</td>
-							<td>
+							<td align="center">
 								<cfif share.viewingCount>
-									<a #ui.attrHref( "member.poem.share.viewing.list", "shareID", share.id )#>#numberFormat( share.viewingCount )#</a>
+									<a #ui.attrHref( "member.poem.share.view", "shareID", share.id, "viewings" )#>#numberFormat( share.viewingCount )#</a>
 								</cfif>
 							</td>
 							<td class="isNoWrap">

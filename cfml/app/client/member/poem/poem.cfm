@@ -35,7 +35,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	/**
-	* I provide reusable poem-to-breadcrumb logic for nested views.
+	* I provide reusable breadcrumb logic for nested views.
 	*/
 	private array function breadcrumbForPoem( required struct poem ) {
 

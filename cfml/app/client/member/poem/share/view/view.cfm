@@ -1,10 +1,8 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
-	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
-	router = request.ioc.get( "core.lib.web.Router" );
 	shareAccess = request.ioc.get( "core.lib.service.poem.share.ShareAccess" );
-	shareService = request.ioc.get( "core.lib.service.poem.share.ShareService" );
+	viewingModel = request.ioc.get( "core.lib.model.poem.share.ViewingModel" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
@@ -14,8 +12,6 @@
 	// ------------------------------------------------------------------------------- //
 
 	param name="url.shareID" type="numeric";
-	param name="form.name" type="string" default="";
-	param name="form.noteMarkdown" type="string" default="";
 
 	partial = getPartial(
 		authContext = request.authContext,
@@ -23,48 +19,15 @@
 	);
 	poem = partial.poem;
 	share = partial.share;
-	title = "Edit Share";
-	errorResponse = "";
+	viewings = partial.viewings;
+	title = coalesceTruthy( share.name, "Unnamed" );
 
 	request.response.title = title;
 	request.response.breadcrumbs.append( request.breadcrumbForPoem( poem ) );
 	request.response.breadcrumbs.append( request.breadcrumbForShareLinks( poem ) );
-	request.response.breadcrumbs.append( request.breadcrumbForShare( share ) );
-	request.response.breadcrumbs.append( "Edit" );
+	request.response.breadcrumbs.append( title );
 
-	if ( request.isGet ) {
-
-		form.name = share.name;
-		form.noteMarkdown = share.noteMarkdown;
-
-	}
-
-	if ( request.isPost ) {
-
-		try {
-
-			shareID = shareService.update(
-				authContext = request.authContext,
-				id = share.id,
-				name = form.name,
-				noteMarkdown = form.noteMarkdown
-			);
-
-			router.goto([
-				event: "member.poem.share.view",
-				shareID: share.id,
-				flash: "your.poem.share.updated"
-			]);
-
-		} catch ( any error ) {
-
-			errorResponse = requestHelper.processError( error );
-
-		}
-
-	}
-
-	include "./edit.view.cfm";
+	include "./view.view.cfm";
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
@@ -77,13 +40,22 @@
 		required numeric shareID
 		) {
 
-		var context = shareAccess.getContext( authContext, shareID, "canUpdate" );
-		var poem = context.poem;
+		var context = shareAccess.getContext( authContext, shareID, "canView" );
 		var share = context.share;
+		var poem = context.poem;
+
+		var viewings = viewingModel
+			.getByFilter(
+				poemID = poem.id,
+				shareID = share.id
+			)
+			.sort( ( a, b ) => sgn( b.id - a.id ) )
+		;
 
 		return {
 			poem,
-			share
+			share,
+			viewings
 		};
 
 	}

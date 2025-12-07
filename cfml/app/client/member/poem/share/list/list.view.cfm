@@ -15,6 +15,11 @@
 				<li>
 					<a #ui.attrHref( "member.poem.share.add", "poemID", poem.id )#>Add share links</a>
 				</li>
+				<cfif shares.len()>
+					<li>
+						<a #ui.attrHref( "member.poem.share.deleteAll", "poemID", poem.id )#>Delete all share links</a>
+					</li>
+				</cfif>
 			</ul>
 		</nav>
 
@@ -22,26 +27,23 @@
 
 			<div class="uiTable_scroller">
 
-				<table class="uiTable">
+				<table x-table-row-linker class="uiTable">
 				<thead>
 					<tr>
-						<th>
-							Modified
-						</th>
-						<th>
-							Link
-						</th>
 						<th>
 							Internal Name
 						</th>
 						<th>
-							Note
+							Public Note
 						</th>
 						<th>
+							Public Link
+						</th>
+						<th align="center">
 							Views
 						</th>
-						<th class="w-1">
-							Actions
+						<th class="w-13">
+							Updated
 						</th>
 					</tr>
 				</thead>
@@ -49,37 +51,19 @@
 				<cfloop array="#shares#" item="share">
 					<tr>
 						<td>
-							#ui.userDate( share.updatedAt )#
-						</td>
-						<td>
-							<a #ui.attrHref( "share.poem", "shareID", share.id, "shareToken", share.token )# target="_blank">Public share link (#e( share.id )#)</a>
-						</td>
-						<td>
-							#e( share.name )#
+							<a #ui.attrHref( "member.poem.share.view", "shareID", share.id )# class="isRowLinker">#e( coalesceTruthy( share.name, "Unnamed" ) )#</a>
 						</td>
 						<td>
 							#e( share.noteMarkdown )#
 						</td>
 						<td>
-							<a #ui.attrHref( "member.poem.share.viewing", "shareID", share.id )#>#numberFormat( share.viewingCount )#</a>
+							<a #ui.attrHref( "share.poem", "shareID", share.id, "shareToken", share.token )# target="_blank">Public share link</a>
 						</td>
-						<td>
-							<div class="uiHstack">
-								<a #ui.attrHref( "member.poem.share.edit", "shareID", share.id )#>
-									Edit
-								</a>
-								<form
-									method="post"
-									#ui.attrAction( "member.poem.share.delete", "shareID", share.id )#
-									x-prevent-double-submit>
-									<cfmodule template="/client/_shared/tag/xsrf.cfm" />
-									<input type="hidden" name="isConfirmed" value="true" />
-
-									<button type="submit" class="uiButton isDanger isLink">
-										Revoke
-									</button>
-								</form>
-							</div>
+						<td align="center">
+							<a #ui.attrHref( "member.poem.share.view", "shareID", share.id, "viewings" )#>#numberFormat( share.viewingCount )#</a>
+						</td>
+						<td class="isNoWrap">
+							#ui.userDate( share.updatedAt )#
 						</td>
 					</tr>
 				</cfloop>
@@ -87,10 +71,6 @@
 				</table>
 
 			</div>
-
-			<p>
-				<a #ui.attrHref( "member.poem.share.deleteAll", "poemID", poem.id )#>Delete all share links</a>
-			</p>
 
 		</cfif>
 
