@@ -21,6 +21,7 @@ component {
 		required string noteMarkdown,
 		required string noteHtml,
 		required numeric viewingCount,
+		required any lastViewingAt,
 		required date createdAt,
 		required date updatedAt
 		) {
@@ -36,6 +37,7 @@ component {
 			noteMarkdown = noteMarkdown,
 			noteHtml = noteHtml,
 			viewingCount = viewingCount,
+			lastViewingAt = lastViewingAt,
 			createdAt = createdAt,
 			updatedAt = updatedAt
 		);
@@ -121,6 +123,7 @@ component {
 		string noteMarkdown,
 		string noteHtml,
 		numeric viewingCount,
+		any lastViewingAt,
 		date updatedAt
 		) {
 
@@ -142,6 +145,10 @@ component {
 			? existing.viewingCount
 			: viewingCount
 		;
+		lastViewingAt = isNull( lastViewingAt )
+			? existing.lastViewingAt
+			: lastViewingAt
+		;
 		updatedAt = isNull( updatedAt )
 			? existing.updatedAt
 			: updatedAt
@@ -153,6 +160,7 @@ component {
 			noteMarkdown = noteMarkdown,
 			noteHtml = noteHtml,
 			viewingCount = viewingCount,
+			lastViewingAt = lastViewingAt,
 			updatedAt = updatedAt
 		);
 

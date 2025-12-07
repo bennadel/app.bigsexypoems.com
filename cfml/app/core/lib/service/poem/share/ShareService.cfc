@@ -41,6 +41,7 @@ component {
 			noteMarkdown = noteMarkdown,
 			noteHtml = noteHtml,
 			viewingCount = 0,
+			lastViewingAt = "",
 			createdAt = createdAt,
 			updatedAt = createdAt
 		);
@@ -124,7 +125,8 @@ component {
 
 		shareModel.update(
 			id = share.id,
-			viewingCount = viewingCount
+			viewingCount = viewingCount,
+			lastViewingAt = createdAt
 		);
 
 	}

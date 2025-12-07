@@ -523,6 +523,16 @@
 
 
 	/**
+	* I determine if the given value is NOT a date.
+	*/
+	private boolean function isNotDate( required any value ) {
+
+		return ! isDate( value );
+
+	}
+
+
+	/**
 	* I determine if the given value is a native string.
 	*/
 	private boolean function isString( required any value ) {

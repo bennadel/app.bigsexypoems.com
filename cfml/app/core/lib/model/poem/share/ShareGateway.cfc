@@ -21,6 +21,7 @@
 		<cfargument name="noteMarkdown" type="string" required="true" />
 		<cfargument name="noteHtml" type="string" required="true" />
 		<cfargument name="viewingCount" type="numeric" required="true" />
+		<cfargument name="lastViewingAt" type="any" required="true" />
 		<cfargument name="createdAt" type="date" required="true" />
 		<cfargument name="updatedAt" type="date" required="true" />
 
@@ -34,6 +35,7 @@
 				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
 				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
 				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="cf_sql_bigint" />,
+				lastViewingAt = <cfqueryparam value="#lastViewingAt#" null="#isNotDate( lastViewingAt )#" cfsqltype="cf_sql_timestamp" />,
 				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
 				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
 		</cfquery>
@@ -87,6 +89,7 @@
 				noteMarkdown,
 				noteHtml,
 				viewingCount,
+				lastViewingAt,
 				createdAt,
 				updatedAt
 			FROM
@@ -125,6 +128,7 @@
 		<cfargument name="noteMarkdown" type="string" required="true" />
 		<cfargument name="noteHtml" type="string" required="true" />
 		<cfargument name="viewingCount" type="numeric" required="true" />
+		<cfargument name="lastViewingAt" type="any" required="true" />
 		<cfargument name="updatedAt" type="date" required="true" />
 
 		<cfquery name="local.results" result="local.metaResults">
@@ -135,6 +139,7 @@
 				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
 				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
 				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="cf_sql_bigint" />,
+				lastViewingAt = <cfqueryparam value="#lastViewingAt#" null="#isNotDate( lastViewingAt )#" cfsqltype="cf_sql_timestamp" />,
 				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
 			WHERE
 				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
