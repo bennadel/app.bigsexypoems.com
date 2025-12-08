@@ -51,7 +51,7 @@
 				<cfloop array="#shares#" item="share">
 					<tr>
 						<td>
-							<a #ui.attrHref( "member.poem.share.view", "shareID", share.id )# class="isRowLinker">#e( coalesceTruthy( share.name, "Unnamed" ) )#</a>
+							<a #ui.attrHref( "member.poem.share.view", "shareID", share.id )# class="isRowLinker">#e( share.name )#</a>
 						</td>
 						<td>
 							#e( share.noteMarkdown )#

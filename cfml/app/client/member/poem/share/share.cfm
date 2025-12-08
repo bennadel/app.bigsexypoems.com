@@ -36,7 +36,7 @@
 	*/
 	private array function breadcrumbForShare( required struct share ) {
 
-		return [ coalesceTruthy( share.name, "Unnamed" ), "member.poem.share.view", "shareID", share.id ];
+		return [ share.name, "member.poem.share.view", "shareID", share.id ];
 
 	}
 

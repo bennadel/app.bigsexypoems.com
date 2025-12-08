@@ -41,7 +41,7 @@
 								</td>
 							</cfif>
 							<td>
-								<a #ui.attrHref( "member.poem.share.view", "shareID", share.id )#>#e( coalesceTruthy( share.name, "Unnamed" ) )#</a>
+								<a #ui.attrHref( "member.poem.share.view", "shareID", share.id )#>#e( share.name )#</a>
 							</td>
 							<td>
 								#e( truncate( share.noteMarkdown, 30 ) )#

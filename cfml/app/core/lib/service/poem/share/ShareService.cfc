@@ -1,6 +1,7 @@
 component {
 
 	// Define properties for dependency-injection.
+	property name="DEFAULT_SHARE_NAME" ioc:skip;
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
@@ -13,6 +14,15 @@ component {
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
+
+	/**
+	* I initialize the service.
+	*/
+	public void function init() {
+
+		variables.DEFAULT_SHARE_NAME = "Unnamed Share";
+
+	}
 
 	// ---
 	// PUBLIC METHODS.
@@ -33,6 +43,12 @@ component {
 		var token = secureRandom.getToken( 32 );
 		var noteHtml = parseNoteMarkdown( noteMarkdown );
 		var createdAt = utcNow();
+
+		if ( ! name.len() ) {
+
+			name = DEFAULT_SHARE_NAME;
+
+		}
 
 		var shareID = shareModel.create(
 			poemID = poem.id,
@@ -169,6 +185,12 @@ component {
 		var share = context.share;
 		var noteHtml = parseNoteMarkdown( noteMarkdown );
 		var updatedAt = utcNow();
+
+		if ( ! name.len() ) {
+
+			name = DEFAULT_SHARE_NAME;
+
+		}
 
 		shareModel.update(
 			id = share.id,

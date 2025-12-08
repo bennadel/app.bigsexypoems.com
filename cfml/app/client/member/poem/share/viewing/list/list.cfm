@@ -20,10 +20,7 @@
 	poem = partial.poem;
 	share = partial.share;
 	viewings = partial.viewings;
-	title = share.name.len()
-		? "Viewings For #share.name#"
-		: "Viewings For Unnamed Link"
-	;
+	title = "Viewings For #share.name#";
 
 	request.response.title = title;
 	request.response.breadcrumbs.append( request.breadcrumbForPoem( poem ) );

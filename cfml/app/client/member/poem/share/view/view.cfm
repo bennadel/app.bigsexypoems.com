@@ -20,7 +20,7 @@
 	poem = partial.poem;
 	share = partial.share;
 	viewings = partial.viewings;
-	title = coalesceTruthy( share.name, "Unnamed" );
+	title = share.name;
 
 	request.response.title = title;
 	request.response.breadcrumbs.append( request.breadcrumbForPoem( poem ) );
