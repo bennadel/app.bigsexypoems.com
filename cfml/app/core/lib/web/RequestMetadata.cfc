@@ -183,7 +183,8 @@ component hint = "I provide utility methods for accessing metadata about the cur
 
 		}
 
-		return getHeader( "CF-IPCity" );
+		// Note: converting to UTF-8 for accented characters.
+		return charsetConvert( getHeader( "CF-IPCity" ) );
 
 	}
 
@@ -223,7 +224,8 @@ component hint = "I provide utility methods for accessing metadata about the cur
 
 		}
 
-		return getHeader( "CF-Region" );
+		// Note: converting to UTF-8 for accented characters.
+		return charsetConvert( getHeader( "CF-Region" ) );
 
 	}
 
@@ -367,6 +369,37 @@ component hint = "I provide utility methods for accessing metadata about the cur
 	// ---
 	// PRIVATE METHODS.
 	// ---
+
+	/**
+	* I convert the given string between two encodings. This is intended to convert HTTP
+	* headers as needed.
+	*/
+	private string function charsetConvert(
+		required string input,
+		string fromEncoding = "iso-8859-1",
+		string toEncoding = "utf-8"
+		) {
+
+		if ( ! input.len() ) {
+
+			return input;
+
+		}
+
+		try {
+
+			return charsetEncode( charsetDecode( input, fromEncoding ), toEncoding );
+
+		} catch ( any error ) {
+
+			// ... I'm not sure if there's ever an error due to charset conversions. To
+			// be safe, I'm just going to swallow any errors for now.
+			return input;
+
+		}
+
+	}
+
 
 	/**
 	* I determine if the given header value is populated with a non-empty, SIMPLE value.
