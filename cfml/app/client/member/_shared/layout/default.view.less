@@ -164,6 +164,7 @@
 
 	&.breadcrumbs {
 		margin-bottom: var( --space-block ) ;
+		white-space: nowrap ;
 
 		ol,
 		li {
@@ -173,6 +174,13 @@
 
 		li:not(:last-child):after {
 			content: "\203a" ;
+		}
+
+		@media screen and ( max-width: 1000px ) {
+			margin-bottom: var( --space-block-s ) ;
+			max-width: 100% ;
+			overflow-x: auto ;
+			padding-bottom: var( --pad-block-xs ) ;
 		}
 	}
 }
