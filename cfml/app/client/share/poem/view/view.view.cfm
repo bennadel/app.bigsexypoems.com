@@ -5,7 +5,11 @@
 
 		<cfif share.noteHtml.len()>
 
-			<section>
+			<section dtodzq class="note">
+				<p dtodzq class="note_preamble">
+					A note from the author, #e( user.name )#:
+				</p>
+
 				#share.noteHtml#
 			</section>
 

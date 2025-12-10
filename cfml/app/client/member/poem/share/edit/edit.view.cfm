@@ -84,5 +84,10 @@
 
 	</article>
 
+
+	<cfmodule
+		template="/client/_shared/tag/markdownDisclosure.cfm">
+	</cfmodule>
+
 </cfoutput>
 </cfsavecontent>
