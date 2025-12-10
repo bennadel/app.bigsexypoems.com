@@ -9,9 +9,9 @@ document.addEventListener(
 );
 
 /**
-* I make the rows in the table clickable based on the existence of an isRowLinker link.
-* This will not effect table cells that contain other actionable items (in order to remove
-* the possible confusion of a misclick).
+* I make the rows in the table clickable. The primary gesture is to make the `isRowLinker`
+* anchor the one that is activated on row-click. But, a secondary gesture, a whole cell
+* will be make clickable if it contains a single link and no other actionable elements.
 */
 function TableRowLinkerDirective( element, metadata, framework ) {
 
@@ -80,17 +80,6 @@ function TableRowLinkerDirective( element, metadata, framework ) {
 
 		}
 
-		var row = cell.closest( "tr" );
-		var rowLinker = row.querySelector( selector );
-
-		// If there's no row linker, then this directive is likely being applied to a
-		// table accidentally. Throw an error so that this configuration is logged.
-		if ( ! rowLinker ) {
-
-			throw new Error( `${ attribute } can't find ${ selector }` );
-
-		}
-
 		// If the event originated from an actionable element, ignore.
 		if ( target.closest( "a, button" ) ) {
 
@@ -98,12 +87,35 @@ function TableRowLinkerDirective( element, metadata, framework ) {
 
 		}
 
-		// If the event did NOT originate from an actionable element BUT the target cell
-		// contains other actionable items, ignore. If the user clicked in that cell, but
-		// didn't click one of said actionable items, then there's a good chance this was
-		// just a mis-click on the user's end. We don't want to confuse the user by now
-		// navigating to a page that is unrelated to the intended target.
-		if ( cell.querySelector( `a:not(${ selector }), button` ) ) {
+		var linkNodes = ( cell.querySelectorAll( "a" ) || [] );
+		var actionableNodes = ( cell.querySelectorAll( "a, button" ) || [] );
+
+		// If there's only a single LINK in the cell and NO OTHER actionable elements,
+		// let's activate the link regardless of whether or not it's the row-linker.
+		if (
+			( linkNodes.length === 1 ) &&
+			( actionableNodes.length === 1 )
+			) {
+
+			linkNodes[ 0 ].click();
+			return;
+
+		}
+
+		// If there are any actionable elements in the cell, don't do anything at this
+		// point since this event represents a miss-click on the user's behalf. We don't
+		// want to activate the wrong link or button.
+		if ( actionableNodes.length ) {
+
+			return;
+
+		}
+
+		var row = cell.closest( "tr" );
+		var rowLinker = row.querySelector( selector );
+
+		// If there's no row linker, then no further action can be taken.
+		if ( ! rowLinker ) {
 
 			return;
 

@@ -11,7 +11,7 @@
 
 			<div class="uiTable_scroller">
 
-				<table class="uiTable">
+				<table x-table-row-linker class="uiTable">
 				<thead>
 					<tr>
 						<th>
@@ -37,7 +37,7 @@
 						<tr>
 							<cfif ( shareIndex eq 1 )>
 								<td valign="top" rowspan="#poem.shares.len()#">
-									<a #ui.attrHref( "member.poem.view", "poemID", poem.id )#><strong>#e( poem.name )#</strong></a>
+									<a #ui.attrHref( "member.poem.view", "poemID", poem.id )# class="isRowLinker"><strong>#e( poem.name )#</strong></a>
 								</td>
 							</cfif>
 							<td>
