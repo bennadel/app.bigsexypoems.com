@@ -1,12 +1,12 @@
 
 // Import app modules.
 import "../_shared/js/xAutoResize.js";
+import "../_shared/js/xCopyToClipboard.js";
 import "../_shared/js/xKeyedFocus.js";
 import "../_shared/js/xMetaEnterSubmit.js";
 import "../_shared/js/xPreventDoubleSubmit.js";
 import "../_shared/js/xTableRowLinker.js";
 import "../_shared/less/ui.less";
-import "../_shared/tag/colorPalette.view.{js,less}";
 import "../_shared/tag/errorMessage.view.{js,less}";
 import "../_shared/tag/flashMessage.view.{js,less}";
 import "../_shared/tag/localDevelopment.view.{js,less}";

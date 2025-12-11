@@ -56,8 +56,12 @@
 						<td>
 							#e( share.noteMarkdown )#
 						</td>
-						<td>
-							<a #ui.attrHref( "share.poem", "shareID", share.id, "shareToken", share.token )# target="_blank">Public share link</a>
+						<td class="isNoWrap">
+							<cfset shareUrl = ui.externalUrlForParts( "share.poem", "shareID", share.id, "shareToken", share.token ) />
+
+							<a href="#e4a( shareUrl )#" target="_blank">Public share link</a>
+							&mdash;
+							<button x-copy-to-clipboard="#e4a( shareUrl )#" class="uiButton isLink">Copy Link</button>
 						</td>
 						<td align="center">
 							<a #ui.attrHref( "member.poem.share.view", "shareID", share.id, "viewings" )#>#numberFormat( share.viewingCount )#</a>

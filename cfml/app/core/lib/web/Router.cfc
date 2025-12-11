@@ -112,6 +112,22 @@ component {
 
 
 	/**
+	* I return the external (ie, fully qualified) URL for the given segments.
+	*/
+	public string function externalUrlForParts(
+		required string event
+		/* [ , key, value ] */
+		/* [ , key, value ] */
+		/* [ , key, value ] */
+		/* [ , fragment ] */
+		) {
+
+		return ( site.url & urlForParts( argumentCollection = arguments ) );
+
+	}
+
+
+	/**
 	* I return the URL to be used for an internal redirect.
 	*/
 	public string function getInternalUrl() {

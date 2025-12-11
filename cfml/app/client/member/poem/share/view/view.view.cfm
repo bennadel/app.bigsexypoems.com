@@ -35,7 +35,11 @@
 					Public Link:
 				</dt>
 				<dd>
-					<a #ui.attrHref( "share.poem", "shareID", share.id, "shareToken", share.token )# target="_blank"><mark>Preview public link</mark></a> &rarr;
+					<cfset shareUrl = ui.externalUrlForParts( "share.poem", "shareID", share.id, "shareToken", share.token ) />
+
+					<a href="#e4a( shareUrl )#" target="_blank"><mark>Preview public link</mark></a>
+					&mdash;
+					<button x-copy-to-clipboard="#e4a( shareUrl )#" class="uiButton isLink">Copy Link</button>
 				</dd>
 			</div>
 			<div>

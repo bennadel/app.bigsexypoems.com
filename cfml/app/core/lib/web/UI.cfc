@@ -11,24 +11,11 @@ component {
 	// ---
 
 	/**
-	* I return the given attribute based on the given "parts" inputs.
-	*/
-	public string function attr(
-		required string attributeName,
-		required any attributeArguments
-		) {
-
-		return '#attributeName#="#router.urlForParts( argumentCollection = attributeArguments )#"';
-
-	}
-
-
-	/**
 	* I return the form action attribute based on the given inputs.
 	*/
 	public string function attrAction( required string event ) {
 
-		return attr( "action", arguments );
+		return attrForUrlParts( "action", arguments );
 
 	}
 
@@ -90,11 +77,24 @@ component {
 
 
 	/**
+	* I return the given attribute based on the given "parts" inputs.
+	*/
+	public string function attrForUrlParts(
+		required string attributeName,
+		required any attributeArguments
+		) {
+
+		return '#attributeName#="#urlForParts( argumentCollection = attributeArguments )#"';
+
+	}
+
+
+	/**
 	* I return the href attribute based on the given inputs.
 	*/
 	public string function attrHref( required string event ) {
 
-		return attr( "href", arguments );
+		return attrForUrlParts( "href", arguments );
 
 	}
 
@@ -120,7 +120,24 @@ component {
 	*/
 	public string function attrSrc( required string event ) {
 
-		return attr( "src", arguments );
+		return attrForUrlParts( "src", arguments );
+
+	}
+
+
+	/**
+	* I return an external (ie, fully qualified) URL for the given segments. This is
+	* convenient short-cut to the Router method of the same name.
+	*/
+	public string function externalUrlForParts(
+		required string event
+		/* [ , key, value ] */
+		/* [ , key, value ] */
+		/* [ , key, value ] */
+		/* [ , fragment ] */
+		) {
+
+		return router.externalUrlForParts( argumentCollection = arguments );
 
 	}
 
@@ -159,6 +176,23 @@ component {
 		request.$$fieldIdCounter = ( ( request.$$fieldIdCounter ?: 0 ) + 1 );
 
 		return fieldId();
+
+	}
+
+
+	/**
+	* I generate a URL for the given segments. This is convenient short-cut to the Router
+	* method of the same name.
+	*/
+	public string function urlForParts(
+		required string event
+		/* [ , key, value ] */
+		/* [ , key, value ] */
+		/* [ , key, value ] */
+		/* [ , fragment ] */
+		) {
+
+		return router.urlForParts( argumentCollection = arguments );
 
 	}
 
