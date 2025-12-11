@@ -20,7 +20,6 @@
 		case "edit":
 		case "list":
 		case "view":
-		case "viewing":
 			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
