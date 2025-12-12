@@ -20,6 +20,7 @@
 	error = getRequestError();
 	urlWithInit = getInitUrl();
 	slug = generateSlug();
+	logCount = getLogCount();
 
 	include "./localDevelopment.view.cfm";
 	exit;
@@ -72,6 +73,22 @@
 			? "#currentUrl#&#flag#"
 			: "#currentUrl#?#flag#"
 		;
+
+	}
+
+
+	/**
+	* I get the number of log files in the local directory.
+	*/
+	private numeric function getLogCount() {
+
+		var fileList = directoryList(
+			path = expandPath( "/log" ),
+			listInfo = "name",
+			filter = "*.txt"
+		);
+
+		return fileList.len();
 
 	}
 

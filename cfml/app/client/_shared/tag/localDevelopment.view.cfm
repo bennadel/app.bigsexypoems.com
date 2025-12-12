@@ -12,6 +12,12 @@
 			<a href="/internal/scribble/scribble.cfm" target="_blank">
 				Scribble
 			</a>
+
+			<cfif logCount>
+				<strong style="color: red ;">
+					#numberFormat( logCount )# Logs
+				</strong>
+			</cfif>
 		</div>
 
 		<cfif ! isSimpleValue( error )>
