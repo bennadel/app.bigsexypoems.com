@@ -81,6 +81,9 @@
 		case "blank":
 			cfmodule( template = "/client/_shared/layout/blank.cfm" );
 		break;
+		case "binary":
+			cfmodule( template = "/client/_shared/layout/binary.cfm" );
+		break;
 		case "default":
 			cfmodule( template = "./_shared/layout/default.cfm" );
 		break;

@@ -39,10 +39,16 @@
 		name = "Content-Length",
 		value = arrayLen( request.response.body )
 	);
-	cfheader(
-		name = "Content-Disposition",
-		value = "#request.response.contentDisposition#; filename=""#e4u( request.response.filename )#""; filename*=UTF-8''#e4u( request.response.filename )#"
-	);
+
+	if ( request.response.contentDisposition == "attachment" ) {
+
+		cfheader(
+			name = "Content-Disposition",
+			value = "#request.response.contentDisposition#; filename=""#e4u( request.response.filename )#""; filename*=UTF-8''#e4u( request.response.filename )#"
+		);
+
+	}
+
 	// Reset the output buffer.
 	cfcontent(
 		type = request.response.mimeType,

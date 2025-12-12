@@ -171,25 +171,20 @@
 	// There's no way in ColdFusion to get the "rendered image" binary without dealing
 	// with some sort of file I/O. As such, we're going to render the image to a temporary
 	// file, serve the file, and then delete the temporary image.
-	scratchDisk.withPngFile( ( pngFile ) => {
+	imageBinary = scratchDisk.withPngFile( ( pngFile ) => {
 
 		imageWrite( ogImage, pngFile, true );
-
-		cfheader(
-			name = "ETag",
-			value = expectedImageVersion
-		);
-		cfheader(
-			name = "Cache-Control",
-			value = "public, max-age=#( 60 * 60 * 24 )#"
-		);
-		// Todo: replace with shared binary template.
-		cfcontent(
-			type = "image/png",
-			file = pngFile
-		);
+		return fileReadBinary( pngFile );
 
 	});
+
+	request.response.template = "binary";
+	// request.response.contentDisposition = "inline"; // During development.
+	request.response.etag = expectedImageVersion;
+	request.response.maxAgeInDays = 1;
+	request.response.mimeType = "image/png";
+	request.response.filename = "open-graph-preview-#request.poem.id#.png";
+	request.response.body = imageBinary;
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
