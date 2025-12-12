@@ -1,0 +1,4 @@
+
+DROP TABLE
+	`tag`
+;
