@@ -9,6 +9,8 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
+	param name="request.errorResponse" type="struct";
+
 	title = request.errorResponse.title;
 	message = request.errorResponse.message;
 

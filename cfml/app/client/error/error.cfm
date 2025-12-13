@@ -14,10 +14,11 @@
 
 	request.errorResponse = requestHelper.processError( request.error );
 
-	if ( request.isHtmx && ! request.htmx.boosted ) {
+	// By default, HTMX won't swap-in non-successful HTTP responses. As such, any errors
+	// that bubble up to the global error handler (ie, that weren't explicitly handled by
+	// the controller) need to be reported using an HTTP response header.
+	if ( request.isHtmx ) {
 
-		// HTMX errors (that bubble up to the global error handler) are reported using the
-		// hx-trigger header. As such, we'll use the blank template.
 		cfmodule( template = "./htmx/htmx.cfm" );
 		cfmodule( template = "/client/_shared/layout/blank.cfm" );
 

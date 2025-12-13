@@ -154,15 +154,21 @@ component {
 
 
 	/**
-	* I process the given error and return the error response. Unlike the main process
-	* error call, this one does not apply any changes to the status code so that HTMX will
-	* still render the content.
+	* I perform the processError() call internally and put the error message in the htmx
+	* HTTP response header for an in-app toast.
 	*/
 	public struct function processErrorForHtmx( required any error ) {
 
-		logger.logException( error );
+		var errorResponse = processError( error );
 
-		return errorTranslator.translate( error );
+		request.response.hxTrigger = {
+			"app:toast": {
+				message: errorResponse.message,
+				isError: true
+			}
+		};
+
+		return errorResponse;
 
 	}
 

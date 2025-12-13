@@ -10,7 +10,6 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	param name="request.response.statusCode" type="numeric" default=200;
 	param name="request.response.title" type="string";
 	param name="request.response.body" type="string";
 	param name="request.response.activeNav" type="string" default="";
@@ -19,8 +18,9 @@
 	user = request.authContext.user;
 	breadcrumbs = normalizeBreadcrumbs( request.response.breadcrumbs );
 
-	// Use the correct HTTP status code.
-	cfheader( statusCode = request.response.statusCode );
+	// Include common HTTP response headers.
+	cfmodule( template = "/client/_shared/layout/http/headers.cfm" );
+	cfmodule( template = "/client/_shared/layout/http/headersForHtmx.cfm" );
 
 	// Reset the output buffer.
 	cfcontent( type = "text/html; charset=utf-8" );

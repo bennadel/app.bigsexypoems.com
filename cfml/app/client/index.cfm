@@ -24,9 +24,7 @@
 
 	// Note: this is the one piece outside the core try/catch because it's the one piece
 	// of data that I want any other view to be able to depend on.
-	request.response = {
-		statusCode: 200
-	};
+	request.response = {};
 
 	// Most forms in this application post back to themselves for processing. For
 	// aesthetic reasons, I'd like the URL for these post-back operations to remain the
@@ -67,6 +65,9 @@
 
 		request.error = error;
 
+		// Note: the error module isn't a stand-alone subsystem like its siblings. It
+		// might look and feel like one; but nothing can route directly into it. This is
+		// the only ingress into the error subsystem - as an uncaught error.
 		cfmodule( template = "./error/error.cfm" );
 
 		// Edge-case: ColdFusion isn't always super reliable when it comes to creating the
