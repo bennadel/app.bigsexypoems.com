@@ -108,6 +108,26 @@ component {
 
 
 	/**
+	* I generate a thumbprint of the Open Graph image that's based on the rendered parts
+	* of the image. This thumbprint allows the Open Graph image URL to change in step with
+	* the contents of the poem. The design version (ex, "v1") then allows the URL to
+	* change in step with the graphic design of the image.
+	*/
+	public string function getOpenGraphImageVersion(
+		required string poemName,
+		required string poemContent,
+		required string userName,
+		string design = "v1"
+		) {
+
+		return hash( design & poemName & poemContent & userName )
+			.lcase()
+		;
+
+	}
+
+
+	/**
 	* I log the unique viewing of the given share link.
 	*/
 	public void function logShareViewing( required numeric id ) {

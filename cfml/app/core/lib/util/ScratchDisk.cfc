@@ -11,8 +11,6 @@ component hint = "I provide access to temporary folders and files for scratch wo
 	*/
 	public void function init() {
 
-		// Todo: this isn't really "upload" related, but it's the transient folder that I
-		// already have in the application.
 		variables.rootDirectory = expandPath( "/upload/temp/" );
 
 	}

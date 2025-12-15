@@ -6,6 +6,7 @@
 	reqeustHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	scratchDisk = request.ioc.get( "core.lib.util.ScratchDisk" );
+	shareService = request.ioc.get( "core.lib.service.poem.share.ShareService" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -29,8 +30,11 @@
 		"imageVersion"
 	]);
 
-	// Todo: move hash logic to a centralized location (ex, ShareService)?
-	expectedImageVersion = hash(  "v1" & request.poem.name & request.poem.content & request.user.name );
+	expectedImageVersion = shareService.getOpenGraphImageVersion(
+		poemName = request.poem.name,
+		poemContent = request.poem.content,
+		userName = request.user.name
+	);
 
 	// If the image version is a mismatch, redirect to the latest version. This allows us
 	// to avoid a 404 Not Found error from the user's perspective.

@@ -10,8 +10,6 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	// Todo: should I move this to the requestHelper setupRequest method? Is there any
-	// reason to have this call on its own. Maybe it's only web-based?
 	requestHelper.ensureXsrfToken();
 
 	// ------------------------------------------------------------------------------- //
