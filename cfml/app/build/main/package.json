@@ -20,6 +20,11 @@
 			"distDir": "./dist/error",
 			"publicUrl": "/static/main/error"
 		},
+		"go.overview": {
+			"source": "./src/go/overview.html",
+			"distDir": "./dist/go/overview",
+			"publicUrl": "/static/main/go/overview"
+		},
 		"member": {
 			"source": "./src/member.html",
 			"distDir": "./dist/member",
