@@ -35,8 +35,8 @@
 			this where I don't really need a build process. For the moment, I'm just going
 			to hijack the auth styles, since those represent non-logged-in experiences.
 		--->
-		<cfinclude template="/wwwroot/public/main/vendor/vendor.html">
-		<cfinclude template="/wwwroot/public/main/auth/auth.html">
+		<cfinclude template="/wwwroot/static/main/vendor/vendor.html">
+		<cfinclude template="/wwwroot/static/main/auth/auth.html">
 		<style type="text/css">
 			body {
 				margin: 20px auto ;

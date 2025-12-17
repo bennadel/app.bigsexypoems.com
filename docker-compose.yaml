@@ -43,8 +43,8 @@ services:
       # Mount the ColdFusion app so that the build can access the JS/LESS files that we've
       # collocated with the CFML views.
       - "./cfml/app/client:/app/client"
-      # Save dist files into public CFML volume where they can be consumed by the app.
-      - "./cfml/app/wwwroot/public/main:/app/dist"
+      # Save dist files into static CFML volume where they can be consumed by the app.
+      - "./cfml/app/wwwroot/static/main:/app/dist"
       # Makes sure we don't overwrite the node_modules in the build container when we
       # mount the /app directory above.
       - "bigsexypoems_client_node_modules:/app/node_modules"

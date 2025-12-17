@@ -13,37 +13,37 @@
 		"auth": {
 			"source": "./src/auth.html",
 			"distDir": "./dist/auth",
-			"publicUrl": "/public/main/auth"
+			"publicUrl": "/static/main/auth"
 		},
 		"error": {
 			"source": "./src/error.html",
 			"distDir": "./dist/error",
-			"publicUrl": "/public/main/error"
+			"publicUrl": "/static/main/error"
 		},
 		"member": {
 			"source": "./src/member.html",
 			"distDir": "./dist/member",
-			"publicUrl": "/public/main/member"
+			"publicUrl": "/static/main/member"
 		},
 		"playground.composer": {
 			"source": "./src/playground/composer.html",
 			"distDir": "./dist/playground/composer",
-			"publicUrl": "/public/main/playground/composer"
+			"publicUrl": "/static/main/playground/composer"
 		},
 		"share.poem": {
 			"source": "./src/share/poem.html",
 			"distDir": "./dist/share/poem",
-			"publicUrl": "/public/main/share/poem"
+			"publicUrl": "/static/main/share/poem"
 		},
 		"system": {
 			"source": "./src/system.html",
 			"distDir": "./dist/system",
-			"publicUrl": "/public/main/system"
+			"publicUrl": "/static/main/system"
 		},
 		"vendor": {
 			"source": "./src/vendor.html",
 			"distDir": "./dist/vendor",
-			"publicUrl": "/public/main/vendor"
+			"publicUrl": "/static/main/vendor"
 		}
 	},
 	"browserslist": "defaults",

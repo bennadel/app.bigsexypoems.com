@@ -13,7 +13,7 @@
 		url: config.site.url,
 		title: config.site.name,
 		description: "An online poetry authoring application that helps you unlock your inner BigSexy with syllable counts, rhymes schemes, and synonyms!",
-		imageUrl: "https://app.bigsexypoems.com/public/opengraph/big-sexy-poems.png"
+		imageUrl: "https://app.bigsexypoems.com/static/opengraph/big-sexy-poems.png"
 	};
 
 	include "./opengraph.view.cfm";
