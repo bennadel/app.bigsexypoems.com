@@ -1,6 +1,7 @@
 component hint = "I provide methods for accessing the session associated with the current request." {
 
 	// Define properties for dependency-injection.
+	property name="config" ioc:type="config";
 	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="nullAuthenticationContext" ioc:skip;
 	property name="presenceModel" ioc:type="core.lib.model.session.PresenceModel";
@@ -55,7 +56,23 @@ component hint = "I provide methods for accessing the session associated with th
 		) {
 
 		var ipAddress = requestMetadata.getIpAddress();
+		// Let's trim the city/region since it doesn't much matter if they get truncated
+		// in the database. I'd rather them get truncated than have a user-provided value
+		// (more or less) possibly throw an error.
+		var ipCity = requestMetadata.getIpCity().left( 50 );
+		var ipRegion = requestMetadata.getIpRegion().left( 50 );
+		var ipCountry = requestMetadata.getIpCountry();
 		var sessionToken = secureRandom.getToken( 64 );
+
+		// LOCAL DEVELOPMENT: populate the IP location data so that we have something to
+		// work with in design.
+		if ( ! config.isLive ) {
+
+			ipCity = coalesceTruthy( ipCity, "Desk" );
+			ipRegion = coalesceTruthy( ipRegion, "Your Office" );
+			ipCountry = coalesceTruthy( ipCountry, "US" );
+
+		}
 
 		transaction {
 			var sessionID = sessionModel.create(
@@ -63,6 +80,9 @@ component hint = "I provide methods for accessing the session associated with th
 				userID = userID,
 				isAuthenticated = isAuthenticated,
 				ipAddress = ipAddress,
+				ipCity = ipCity,
+				ipRegion = ipRegion,
+				ipCountry = ipCountry,
 				createdAt = utcNow()
 			);
 			presenceModel.create(

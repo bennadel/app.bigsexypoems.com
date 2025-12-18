@@ -10,6 +10,9 @@
 				s.id,
 				s.isAuthenticated,
 				s.ipAddress,
+				s.ipCity,
+				s.ipRegion,
+				s.ipCountry,
 				s.createdAt,
 				p.requestCount,
 				p.lastRequestAt

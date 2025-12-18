@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article>
+	<article c6hzv7 class="c6hzv7">
 
 		<h1>
 			#e( title )#
@@ -55,6 +55,12 @@
 					</td>
 					<td>
 						<a href="https://ipinfo.io/#e4u( element.ipAddress )#" target="_blank">#e( element.ipAddress )#</a>
+
+						<cfif element.ipLocation.len()>
+							<span class="ipLocation">
+								#e( element.ipLocation )#
+							</span>
+						</cfif>
 					</td>
 					<td align="center">
 						<cfif element.isCurrent>

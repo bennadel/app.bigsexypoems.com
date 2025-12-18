@@ -22,6 +22,9 @@
 		<cfargument name="userID" type="numeric" required="true" />
 		<cfargument name="isAuthenticated" type="boolean" required="true" />
 		<cfargument name="ipAddress" type="string" required="true" />
+		<cfargument name="ipCity" type="string" required="true" />
+		<cfargument name="ipRegion" type="string" required="true" />
+		<cfargument name="ipCountry" type="string" required="true" />
 		<cfargument name="createdAt" type="date" required="true" />
 
 		<cfquery name="local.results" result="local.metaResults">
@@ -32,6 +35,9 @@
 				userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />,
 				isAuthenticated = <cfqueryparam value="#isAuthenticated#" cfsqltype="cf_sql_tinyint" />,
 				ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="cf_sql_varchar" />,
+				ipCity = <cfqueryparam value="#ipCity#" cfsqltype="cf_sql_varchar" />,
+				ipRegion = <cfqueryparam value="#ipRegion#" cfsqltype="cf_sql_varchar" />,
+				ipCountry = <cfqueryparam value="#ipCountry#" cfsqltype="cf_sql_varchar" />,
 				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />
 		</cfquery>
 
@@ -82,6 +88,9 @@
 				userID,
 				isAuthenticated,
 				ipAddress,
+				ipCity,
+				ipRegion,
+				ipCountry,
 				createdAt
 			FROM
 				user_session

@@ -25,6 +25,51 @@ component
 
 	}
 
+
+	/**
+	* I validate and return the normalized value.
+	*/
+	public string function ipCityFrom( required string input ) {
+
+		return pipeline(
+			normalizeString( input ),
+			[
+				assertMaxLength: [ 50, "App.Model.Session.IpCity.TooLong" ]
+			]
+		);
+
+	}
+
+
+	/**
+	* I validate and return the normalized value.
+	*/
+	public string function ipCountryFrom( required string input ) {
+
+		return pipeline(
+			normalizeString( input ).ucase(),
+			[
+				assertMaxLength: [ 2, "App.Model.Session.IpCountry.TooLong" ]
+			]
+		);
+
+	}
+
+
+	/**
+	* I validate and return the normalized value.
+	*/
+	public string function ipRegionFrom( required string input ) {
+
+		return pipeline(
+			normalizeString( input ),
+			[
+				assertMaxLength: [ 50, "App.Model.Session.IpRegion.TooLong" ]
+			]
+		);
+
+	}
+
 	// ---
 	// ERROR METHODS.
 	// ---

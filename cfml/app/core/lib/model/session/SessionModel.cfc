@@ -19,16 +19,25 @@ component {
 		required numeric userID,
 		required boolean isAuthenticated,
 		required string ipAddress,
+		required string ipCity,
+		required string ipRegion,
+		required string ipCountry,
 		required date createdAt
 		) {
 
 		ipAddress = validation.ipAddressFrom( ipAddress );
+		ipCity = validation.ipCityFrom( ipCity );
+		ipRegion = validation.ipRegionFrom( ipRegion );
+		ipCountry = validation.ipCountryFrom( ipCountry );
 
 		var id = gateway.create(
 			token = token,
 			userID = userID,
 			isAuthenticated = isAuthenticated,
 			ipAddress = ipAddress,
+			ipCity = ipCity,
+			ipRegion = ipRegion,
+			ipCountry = ipCountry,
 			createdAt = createdAt
 		);
 
