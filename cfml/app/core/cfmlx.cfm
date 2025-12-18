@@ -730,6 +730,30 @@
 
 
 	/**
+	* I append the token to the base using the given delimiter. If the token is empty, the
+	* base is returned as-is.
+	*/
+	private string function stringAppendIf(
+		required string base,
+		string token = "",
+		string delimiter = ""
+		) {
+
+		if ( ! token.len() ) {
+
+			return base;
+
+		}
+
+		return base.len()
+			? "#base##delimiter##token#"
+			: token
+		;
+
+	}
+
+
+	/**
 	* I return a new struct with the given subset of keys filtered-in.
 	*/
 	private struct function structPick(

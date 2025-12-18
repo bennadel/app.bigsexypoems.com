@@ -109,17 +109,11 @@
 		required string ipCountry
 		) {
 
-		var result = ipCity;
-
-		if ( ipRegion.len() ) {
-
-			result = result.listAppend( ipRegion, ", " );
-
-		}
+		var result = stringAppendIf( ipCity, ipRegion, ", " );
 
 		if ( ipCountry.len() ) {
 
-			result = result.listAppend( "(#ipCountry#)", " " );
+			result = stringAppendIf( result, "(#ipCountry#)", " " );
 
 		}
 
