@@ -21,6 +21,10 @@ component hint = "I define the application settings and event handlers." {
 	// Make sure that all arrays are passed by reference. Historically, arrays have been
 	// passed by value, which has no place in a modern language.
 	this.passArrayByReference = true;
+	// In addition to CFM/CFML files, only allow HTML files to be compiled and executed
+	// as CFML code when transcluded with a cfinclude tag. All other includes will be
+	// consumed as static content.
+	this.compileExtForInclude = "html";
 	// Stop ColdFusion from replacing "<script>" tags with "InvalidTag". This doesn't
 	// really help us out.
 	this.scriptProtect = "none";
