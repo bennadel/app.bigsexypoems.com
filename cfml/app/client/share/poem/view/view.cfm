@@ -14,8 +14,8 @@
 	poem = request.poem;
 	share = request.share;
 	user = request.user;
-	title = poem.name;
 
+	title = poem.name;
 	lines = poemService.splitLines( poem.content );
 
 	request.response.title = title;

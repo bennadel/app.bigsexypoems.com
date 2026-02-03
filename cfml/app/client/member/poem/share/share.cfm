@@ -19,6 +19,7 @@
 		case "deleteAll":
 		case "edit":
 		case "list":
+		case "refresh":
 		case "view":
 			cfmodule( template = router.nextTemplate() );
 		break;

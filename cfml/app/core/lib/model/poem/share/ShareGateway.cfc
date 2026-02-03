@@ -20,6 +20,9 @@
 		<cfargument name="name" type="string" required="true" />
 		<cfargument name="noteMarkdown" type="string" required="true" />
 		<cfargument name="noteHtml" type="string" required="true" />
+		<cfargument name="isSnapshot" type="boolean" required="true" />
+		<cfargument name="snapshotName" type="string" required="true" />
+		<cfargument name="snapshotContent" type="string" required="true" />
 		<cfargument name="viewingCount" type="numeric" required="true" />
 		<cfargument name="lastViewingAt" type="any" required="true" />
 		<cfargument name="createdAt" type="date" required="true" />
@@ -34,6 +37,9 @@
 				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
 				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
 				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
+				isSnapshot = <cfqueryparam value="#isSnapshot#" cfsqltype="cf_sql_tinyint" />,
+				snapshotName = <cfqueryparam value="#snapshotName#" cfsqltype="cf_sql_varchar" />,
+				snapshotContent = <cfqueryparam value="#snapshotContent#" cfsqltype="cf_sql_varchar" />,
 				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="cf_sql_bigint" />,
 				lastViewingAt = <cfqueryparam value="#lastViewingAt#" null="#isNotDate( lastViewingAt )#" cfsqltype="cf_sql_timestamp" />,
 				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
@@ -88,6 +94,9 @@
 				name,
 				noteMarkdown,
 				noteHtml,
+				isSnapshot,
+				snapshotName,
+				snapshotContent,
 				viewingCount,
 				lastViewingAt,
 				createdAt,
@@ -127,6 +136,9 @@
 		<cfargument name="name" type="string" required="true" />
 		<cfargument name="noteMarkdown" type="string" required="true" />
 		<cfargument name="noteHtml" type="string" required="true" />
+		<cfargument name="isSnapshot" type="boolean" required="true" />
+		<cfargument name="snapshotName" type="string" required="true" />
+		<cfargument name="snapshotContent" type="string" required="true" />
 		<cfargument name="viewingCount" type="numeric" required="true" />
 		<cfargument name="lastViewingAt" type="any" required="true" />
 		<cfargument name="updatedAt" type="date" required="true" />
@@ -138,6 +150,9 @@
 				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
 				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
 				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
+				isSnapshot = <cfqueryparam value="#isSnapshot#" cfsqltype="cf_sql_tinyint" />,
+				snapshotName = <cfqueryparam value="#snapshotName#" cfsqltype="cf_sql_varchar" />,
+				snapshotContent = <cfqueryparam value="#snapshotContent#" cfsqltype="cf_sql_varchar" />,
 				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="cf_sql_bigint" />,
 				lastViewingAt = <cfqueryparam value="#lastViewingAt#" null="#isNotDate( lastViewingAt )#" cfsqltype="cf_sql_timestamp" />,
 				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />

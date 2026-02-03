@@ -35,14 +35,25 @@ component {
 		required struct authContext,
 		required numeric poemID,
 		required string name,
-		required string noteMarkdown
+		required string noteMarkdown,
+		required boolean isSnapshot
 		) {
 
 		var context = shareAccess.getContextForParent( authContext, poemID, "canCreateAny" );
 		var poem = context.poem;
 		var token = secureRandom.getToken( 32 );
 		var noteHtml = parseNoteMarkdown( noteMarkdown );
+		var snapshotName = "";
+		var snapshotContent = "";
 		var createdAt = utcNow();
+
+		// Only capture snapshot if enabled.
+		if ( isSnapshot ) {
+
+			snapshotName = poem.name;
+			snapshotContent = poem.content;
+
+		}
 
 		if ( ! name.len() ) {
 
@@ -56,6 +67,9 @@ component {
 			name = name,
 			noteMarkdown = noteMarkdown,
 			noteHtml = noteHtml,
+			isSnapshot = isSnapshot,
+			snapshotName = snapshotName,
+			snapshotContent = snapshotContent,
 			viewingCount = 0,
 			lastViewingAt = "",
 			createdAt = createdAt,
@@ -192,19 +206,54 @@ component {
 
 
 	/**
+	* I refresh the snapshot with the current poem state.
+	*/
+	public void function refreshSnapshot(
+		required struct authContext,
+		required numeric id
+		) {
+
+		var context = shareAccess.getContext( authContext, id, "canUpdate" );
+		var share = context.share;
+		var poem = context.poem;
+		var updatedAt = utcNow();
+
+		shareModel.update(
+			id = share.id,
+			snapshotName = poem.name,
+			snapshotContent = poem.content,
+			updatedAt = updatedAt
+		);
+
+	}
+
+
+	/**
 	* I update a share.
 	*/
 	public void function update(
 		required struct authContext,
 		required numeric id,
 		required string name,
-		required string noteMarkdown
+		required string noteMarkdown,
+		required boolean isSnapshot
 		) {
 
 		var context = shareAccess.getContext( authContext, id, "canUpdate" );
 		var share = context.share;
+		var poem = context.poem;
 		var noteHtml = parseNoteMarkdown( noteMarkdown );
+		var snapshotName = "";
+		var snapshotContent = "";
 		var updatedAt = utcNow();
+
+		// Only capture snapshot if enabled, otherwise the cached values will be cleared.
+		if ( isSnapshot ) {
+
+			snapshotName = poem.name;
+			snapshotContent = poem.content;
+
+		}
 
 		if ( ! name.len() ) {
 
@@ -217,6 +266,9 @@ component {
 			name = name,
 			noteMarkdown = noteMarkdown,
 			noteHtml = noteHtml,
+			isSnapshot = isSnapshot,
+			snapshotName = snapshotName,
+			snapshotContent = snapshotContent,
 			updatedAt = updatedAt
 		);
 

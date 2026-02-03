@@ -16,6 +16,7 @@
 	param name="url.poemID" type="numeric";
 	param name="form.name" type="string" default="";
 	param name="form.noteMarkdown" type="string" default="";
+	param name="form.isSnapshot" type="boolean" default=false;
 
 	partial = getPartial(
 		authContext = request.authContext,
@@ -38,7 +39,8 @@
 				authContext = request.authContext,
 				poemID = poem.id,
 				name = form.name,
-				noteMarkdown = form.noteMarkdown
+				noteMarkdown = form.noteMarkdown,
+				isSnapshot = form.isSnapshot
 			);
 
 			router.goto([

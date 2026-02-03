@@ -33,6 +33,8 @@ docker compose run --rm client sh  # Shell for npm package management
 - `*Gateway.cfc` - Database CRUD (extends BaseGateway)
 - `*Validation.cfc` - Input validation (extends BaseValidation)
 
+**Validation Method Comments**: All validation methods use the same generic comment: `I validate and return the normalized value.` The method name itself (e.g., `nameFrom`, `contentFrom`) indicates which field is being validated.
+
 ## Key Directories
 
 ```
@@ -184,6 +186,38 @@ If there are Less CSS or JavaScript files associated with these templates, they 
 - `thing.view.less` (Less CSS)
 - `thing.view.js` (JavaScript)
 
+## Form Field Patterns
+
+When creating form fields in `.view.cfm` templates:
+
+- Use `<label for="#ui.nextFieldId()#" class="uiField_label">` (not `<span>`) for field labels
+- Add `id="#ui.fieldId()#"` to the corresponding input element
+- Use `ui.attrChecked()` helper for checkbox/radio checked state instead of inline `<cfif>` conditionals
+- Use `ui.attrSelected()` helper for select option selected state
+
+Example checkbox field:
+
+```cfm
+<div class="uiField">
+	<label for="#ui.nextFieldId()#" class="uiField_label">
+		Field Label:
+	</label>
+	<div class="uiField_content">
+		<label class="uiHstack">
+			<input
+				id="#ui.fieldId()#"
+				type="checkbox"
+				name="fieldName"
+				value="true"
+				#ui.attrChecked( form.fieldName )#
+				class="uiCheckbox"
+			/>
+			<span>Checkbox description</span>
+		</label>
+	</div>
+</div>
+```
+
 ## Associating JavaScript / Less CSS Files With `.cfm` Templates
 
 Each major section of application has a root `.js` file, example:
@@ -214,4 +248,20 @@ Examples:
 - `2026-02-03-001-adding-new-table.sql`
 - `2026-02-03-002-dropping-user-default.sql`
 - `2026-02-03-003-adding-uniqueness-constraint.sql`
+
+## Error and Flash Message Translations
+
+When adding `throw()` statements or flash messages, corresponding translations must be added:
+
+**ErrorTranslator.cfc** (`/cfml/app/core/lib/web/ErrorTranslator.cfc`):
+- Translates `throw( type = "App.Model...." )` error types into user-friendly messages
+- Add a `case` statement for each new error type that may be triggered by user input
+- Cases are organized alphabetically by error type
+- Use helper methods like `asModelStringTooLong()`, `asModelStringSuspiciousEncoding()`, `asModelNotFound()` for common patterns
+
+**FlashTranslator.cfc** (`/cfml/app/core/lib/web/FlashTranslator.cfc`):
+- Translates flash tokens (e.g., `flash: "your.poem.created"`) into user-friendly success messages
+- Add a `case` statement for each new flash token used in `router.goto()` calls
+- Cases are organized alphabetically by flash token
+- Flash tokens follow the pattern `your.{entity}.{action}` (e.g., `your.poem.share.updated`)
 

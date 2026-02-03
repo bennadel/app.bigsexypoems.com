@@ -15,6 +15,11 @@
 				<li>
 					<a #ui.attrHref( "member.poem.share.edit", "shareID", share.id )#>Edit</a>
 				</li>
+				<cfif share.isSnapshot>
+					<li>
+						<a #ui.attrHref( "member.poem.share.refresh", "shareID", share.id )#>Refresh Snapshot</a>
+					</li>
+				</cfif>
 				<li>
 					<a #ui.attrHref( "member.poem.share.delete", "shareID", share.id )#>Delete</a>
 				</li>
@@ -51,6 +56,18 @@
 						#share.noteHtml#
 					<cfelse>
 						<em>None provided</em>
+					</cfif>
+				</dd>
+			</div>
+			<div>
+				<dt>
+					Snapshot:
+				</dt>
+				<dd>
+					<cfif share.isSnapshot>
+						<strong>Enabled</strong> &mdash; This share link displays a frozen version of your poem.
+					<cfelse>
+						<em>Disabled</em> &mdash; This share link displays the live version of your poem.
 					</cfif>
 				</dd>
 			</div>

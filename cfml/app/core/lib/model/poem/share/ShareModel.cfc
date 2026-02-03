@@ -20,6 +20,9 @@ component {
 		required string name,
 		required string noteMarkdown,
 		required string noteHtml,
+		required boolean isSnapshot,
+		required string snapshotName,
+		required string snapshotContent,
 		required numeric viewingCount,
 		required any lastViewingAt,
 		required date createdAt,
@@ -29,6 +32,9 @@ component {
 		name = validation.nameFrom( name );
 		noteMarkdown = validation.noteMarkdownFrom( noteMarkdown );
 		noteHtml = validation.noteHtmlFrom( noteHtml );
+		isSnapshot = validation.isSnapshotFrom( isSnapshot );
+		snapshotName = validation.snapshotNameFrom( snapshotName );
+		snapshotContent = validation.snapshotContentFrom( snapshotContent );
 
 		return gateway.create(
 			poemID = poemID,
@@ -36,6 +42,9 @@ component {
 			name = name,
 			noteMarkdown = noteMarkdown,
 			noteHtml = noteHtml,
+			isSnapshot = isSnapshot,
+			snapshotName = snapshotName,
+			snapshotContent = snapshotContent,
 			viewingCount = viewingCount,
 			lastViewingAt = lastViewingAt,
 			createdAt = createdAt,
@@ -122,6 +131,9 @@ component {
 		string name,
 		string noteMarkdown,
 		string noteHtml,
+		boolean isSnapshot,
+		string snapshotName,
+		string snapshotContent,
 		numeric viewingCount,
 		any lastViewingAt,
 		date updatedAt
@@ -141,6 +153,18 @@ component {
 			? existing.noteHtml
 			: noteHtml
 		;
+		isSnapshot = isNull( isSnapshot )
+			? existing.isSnapshot
+			: validation.isSnapshotFrom( isSnapshot )
+		;
+		snapshotName = isNull( snapshotName )
+			? existing.snapshotName
+			: validation.snapshotNameFrom( snapshotName )
+		;
+		snapshotContent = isNull( snapshotContent )
+			? existing.snapshotContent
+			: validation.snapshotContentFrom( snapshotContent )
+		;
 		viewingCount = isNull( viewingCount )
 			? existing.viewingCount
 			: viewingCount
@@ -159,6 +183,9 @@ component {
 			name = name,
 			noteMarkdown = noteMarkdown,
 			noteHtml = noteHtml,
+			isSnapshot = isSnapshot,
+			snapshotName = snapshotName,
+			snapshotContent = snapshotContent,
 			viewingCount = viewingCount,
 			lastViewingAt = lastViewingAt,
 			updatedAt = updatedAt
