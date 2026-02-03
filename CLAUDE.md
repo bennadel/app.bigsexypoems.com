@@ -201,3 +201,17 @@ This file also explicitly imports the relevant Less/JavaScript files for globall
 ```
 import "../_shared/tag/errorMessage.view.{js,less}";
 ```
+
+## Database Migrations
+
+There's no database migration framework. All of the database migration files need to be run manually. As such, when the database structure needs to be changed, you must write a file to the `/cfml/app/db/` directory and then prompt me to run it manually.
+
+Database migrations must be lexicographically named so that when a new environment spins up, all the `.sql` files are executed in a predictable order. Database migrations scripts are named in the form of:
+
+`YYYY-MM-DD-{counter}-{description}.sql`
+
+Examples:
+- `2026-02-03-001-adding-new-table.sql`
+- `2026-02-03-002-dropping-user-default.sql`
+- `2026-02-03-003-adding-uniqueness-constraint.sql`
+
