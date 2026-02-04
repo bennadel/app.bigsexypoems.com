@@ -12,6 +12,16 @@ component
 	/**
 	* I validate and return the normalized value.
 	*/
+	public boolean function isSnapshotFrom( required boolean input ) {
+
+		return !! input;
+
+	}
+
+
+	/**
+	* I validate and return the normalized value.
+	*/
 	public string function nameFrom( required string input ) {
 
 		return pipeline(
@@ -48,6 +58,38 @@ component
 			[
 				assertMaxLength: [ 500, "App.Model.Poem.Share.NoteMarkdown.TooLong" ],
 				assertUniformEncoding: [ "App.Model.Poem.Share.NoteMarkdown.SuspiciousEncoding" ]
+			]
+		);
+
+	}
+
+
+	/**
+	* I validate and return the normalized value.
+	*/
+	public string function snapshotContentFrom( required string input ) {
+
+		return pipeline(
+			normalizeString( input ),
+			[
+				assertMaxLength: [ 3000, "App.Model.Poem.Share.SnapshotContent.TooLong" ],
+				assertUniformEncoding: [ "App.Model.Poem.Share.SnapshotContent.SuspiciousEncoding" ]
+			]
+		);
+
+	}
+
+
+	/**
+	* I validate and return the normalized value.
+	*/
+	public string function snapshotNameFrom( required string input ) {
+
+		return pipeline(
+			normalizeString( input ),
+			[
+				assertMaxLength: [ 255, "App.Model.Poem.Share.SnapshotName.TooLong" ],
+				assertUniformEncoding: [ "App.Model.Poem.Share.SnapshotName.SuspiciousEncoding" ]
 			]
 		);
 

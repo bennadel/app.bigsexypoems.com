@@ -115,6 +115,18 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.Poem.Share.NoteMarkdown.Unsafe":
 				return asModelMarkdownUnsafe( error, "share note", metadata );
 			break;
+			case "App.Model.Poem.Share.SnapshotContent.SuspiciousEncoding":
+				return asModelStringSuspiciousEncoding( error, "share snapshot content" );
+			break;
+			case "App.Model.Poem.Share.SnapshotContent.TooLong":
+				return asModelStringTooLong( error, "share snapshot content", metadata );
+			break;
+			case "App.Model.Poem.Share.SnapshotName.SuspiciousEncoding":
+				return asModelStringSuspiciousEncoding( error, "share snapshot name" );
+			break;
+			case "App.Model.Poem.Share.SnapshotName.TooLong":
+				return asModelStringTooLong( error, "share snapshot name", metadata );
+			break;
 			case "App.Model.Poem.Share.NotFound":
 				return asModelNotFound( error, "share link" );
 			break;

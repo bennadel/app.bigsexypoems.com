@@ -14,9 +14,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	param name="url.shareID" type="numeric";
-	param name="form.name" type="string" default="";
-	param name="form.noteMarkdown" type="string" default="";
-	param name="form.isSnapshot" type="boolean" default=false;
+	param name="form.isConfirmed" type="boolean" default=false;
 
 	partial = getPartial(
 		authContext = request.authContext,
@@ -24,39 +22,34 @@
 	);
 	poem = partial.poem;
 	share = partial.share;
-	title = "Edit Share";
+	title = "Refresh Snapshot";
 	errorResponse = "";
 
 	request.response.title = title;
 	request.response.breadcrumbs.append( request.breadcrumbForPoem( poem ) );
 	request.response.breadcrumbs.append( request.breadcrumbForShareLinks( poem ) );
 	request.response.breadcrumbs.append( request.breadcrumbForShare( share ) );
-	request.response.breadcrumbs.append( "Edit" );
-
-	if ( request.isGet ) {
-
-		form.name = share.name;
-		form.noteMarkdown = share.noteMarkdown;
-		form.isSnapshot = share.isSnapshot;
-
-	}
+	request.response.breadcrumbs.append( "Refresh" );
 
 	if ( request.isPost ) {
 
 		try {
 
-			shareService.update(
+			if ( ! form.isConfirmed ) {
+
+				throw( type = "App.ConfirmationRequired" );
+
+			}
+
+			shareService.refreshSnapshot(
 				authContext = request.authContext,
-				id = share.id,
-				name = form.name,
-				noteMarkdown = form.noteMarkdown,
-				isSnapshot = form.isSnapshot
+				id = share.id
 			);
 
 			router.goto([
 				event: "member.poem.share.view",
 				shareID: share.id,
-				flash: "your.poem.share.updated"
+				flash: "your.poem.share.snapshotRefreshed"
 			]);
 
 		} catch ( any error ) {
@@ -67,7 +60,7 @@
 
 	}
 
-	include "./edit.view.cfm";
+	include "./refresh.view.cfm";
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //

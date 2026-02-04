@@ -64,6 +64,23 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
+	// If this share contains a snapshot of the poem, overwrite the poem data with the
+	// snapshot data. This allows all downstream rendering of the poem to be transparent
+	// to the snapshot feature.
+	if ( request.share.isSnapshot ) {
+
+		// Store original values in case we need them later.
+		request.poem.liveName = request.poem.name;
+		request.poem.liveContent = request.poem.content;
+		// Override core properties.
+		request.poem.name = request.share.snapshotName;
+		request.poem.content = request.share.snapshotContent;
+
+	}
+
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
 	request.response.template = "default";
 
 	switch ( router.next( "view" ) ) {

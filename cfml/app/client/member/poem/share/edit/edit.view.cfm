@@ -72,6 +72,31 @@
 				</div>
 			</div>
 
+			<div class="uiField">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
+					Capture Snapshot:
+				</label>
+				<div class="uiField_content">
+					<p class="uiField_description">
+						When enabled, this share link will display a frozen version of your poem as it exists right now. Changes you make to the poem later will not appear in this share link (until the snapshot is explicitly refreshed).
+					</p>
+
+					<label class="uiHstack">
+						<input
+							id="#ui.fieldId()#"
+							type="checkbox"
+							name="isSnapshot"
+							value="true"
+							#ui.attrChecked( form.isSnapshot )#
+							class="uiCheckbox"
+						/>
+						<span>
+							Capture poem snapshot.
+						</span>
+					</label>
+				</div>
+			</div>
+
 			<div class="uiFormButtons">
 				<button type="submit" class="uiButton isSubmit">
 					Update Share
