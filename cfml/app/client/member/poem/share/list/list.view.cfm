@@ -40,6 +40,9 @@
 							Public Link
 						</th>
 						<th align="center">
+							Snapshot
+						</th>
+						<th align="center">
 							Views
 						</th>
 						<th class="w-13">
@@ -62,6 +65,11 @@
 							<a href="#e4a( shareUrl )#" target="_blank">Public share link</a>
 							&mdash;
 							<button x-copy-to-clipboard="#e4a( shareUrl )#" class="uiButton isLink">Copy Link</button>
+						</td>
+						<td align="center">
+							<cfif share.isSnapshot>
+								<strong>Yes</strong>
+							</cfif>
 						</td>
 						<td align="center">
 							<a #ui.attrHref( "member.poem.share.view", "shareID", share.id, "viewings" )#>#numberFormat( share.viewingCount )#</a>
