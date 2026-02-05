@@ -43,6 +43,19 @@
 		var poem = context.poem;
 		var shares = shareModel.getByFilter( poemID = poem.id );
 
+		// Inject isOutdated property for snapshot shares.
+		for ( var share in shares ) {
+
+			share.isOutdated = (
+				share.isSnapshot &&
+				(
+					compare( share.snapshotName, poem.name ) ||
+					compare( share.snapshotContent, poem.content )
+				)
+			);
+
+		}
+
 		return {
 			poem,
 			shares

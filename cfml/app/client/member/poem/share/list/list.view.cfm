@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article>
+	<article f7a3b2 class="f7a3b2">
 
 		<h1>
 			Share Links
@@ -69,6 +69,11 @@
 						<td align="center">
 							<cfif share.isSnapshot>
 								<strong>Yes</strong>
+								<cfif share.isOutdated>
+									<span class="snapshotOutdated">
+										Outdated
+									</span>
+								</cfif>
 							</cfif>
 						</td>
 						<td align="center">
