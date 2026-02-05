@@ -1,14 +1,14 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article class="uiReadableWidth">
+	<article d7r4f9 class="uiReadableWidth">
 
 		<h1>
 			#e( title )#
 		</h1>
 
 		<p>
-			This action will <strong>overwrite</strong> the existing snapshot with the current state of your poem. Compare the two versions below before confirming.
+			This action will <strong>overwrite</strong> the existing snapshot with the current state of your poem. Review the changes below before confirming.
 		</p>
 
 		<cfmodule
@@ -21,21 +21,22 @@
 
 			<div class="uiField">
 				<span class="uiField_label">
-					Current Snapshot:
+					Recent Changes:
 				</span>
 				<div class="uiField_content">
-					<strong>#e( share.snapshotName )#</strong>
-					<pre class="uiPre">#e( share.snapshotContent )#</pre>
-				</div>
-			</div>
 
-			<div class="uiField">
-				<span class="uiField_label">
-					Live Poem (New Snapshot):
-				</span>
-				<div class="uiField_content">
-					<strong>#e( poem.name )#</strong>
-					<pre class="uiPre">#e( poem.content )#</pre>
+					<div class="diffView">
+						<cfloop array="#diffOperations#" item="op">
+
+							<span data-index="#e4a( op.index )#" data-type="#e4a( op.type )#" class="diffView_line">
+								<cfloop array="#op.tokens#" item="token">
+									<em data-type="#e4a( token.type )#">#e( token.value )#<br /></em>
+								</cfloop>
+							</span>
+
+						</cfloop>
+					</div>
+
 				</div>
 			</div>
 
