@@ -71,6 +71,22 @@
 					</cfif>
 				</dd>
 			</div>
+			<cfif isSnapshotStale>
+				<div>
+					<dt>
+						Recent Changes:
+					</dt>
+					<dd>
+						<cfmodule
+							template="/client/_shared/tag/poemDiff.cfm"
+							originalName="#share.snapshotName#"
+							originalContent="#share.snapshotContent#"
+							modifiedName="#poem.name#"
+							modifiedContent="#poem.content#">
+						</cfmodule>
+					</dd>
+				</div>
+			</cfif>
 		</dl>
 
 

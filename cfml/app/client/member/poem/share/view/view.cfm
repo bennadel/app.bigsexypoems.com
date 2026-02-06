@@ -2,6 +2,7 @@
 
 	// Define properties for dependency-injection.
 	shareAccess = request.ioc.get( "core.lib.service.poem.share.ShareAccess" );
+	shareService = request.ioc.get( "core.lib.service.poem.share.ShareService" );
 	viewingModel = request.ioc.get( "core.lib.model.poem.share.ViewingModel" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
@@ -20,6 +21,7 @@
 	poem = partial.poem;
 	share = partial.share;
 	viewings = partial.viewings;
+	isSnapshotStale = shareService.isSnapshotStale( share, poem );
 	title = share.name;
 
 	request.response.title = title;

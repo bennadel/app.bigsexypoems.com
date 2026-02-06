@@ -3,6 +3,7 @@
 	// Define properties for dependency-injection.
 	shareAccess = request.ioc.get( "core.lib.service.poem.share.ShareAccess" );
 	shareModel = request.ioc.get( "core.lib.model.poem.share.ShareModel" );
+	shareService = request.ioc.get( "core.lib.service.poem.share.ShareService" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
@@ -46,13 +47,7 @@
 		// Inject isOutdated property for snapshot shares.
 		for ( var share in shares ) {
 
-			share.isOutdated = (
-				share.isSnapshot &&
-				(
-					compare( share.snapshotName, poem.name ) ||
-					compare( share.snapshotContent, poem.content )
-				)
-			);
+			share.isOutdated = shareService.isSnapshotStale( share, poem );
 
 		}
 

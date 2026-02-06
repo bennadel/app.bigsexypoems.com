@@ -142,6 +142,29 @@ component {
 
 
 	/**
+	* I determine if the snapshot share is stale (ie, the poem has changed since the
+	* snapshot was taken).
+	*/
+	public boolean function isSnapshotStale(
+		required struct share,
+		required struct poem
+		) {
+
+		if ( ! share.isSnapshot ) {
+
+			return false;
+
+		}
+
+		return (
+			compare( share.snapshotName, poem.name ) ||
+			compare( share.snapshotContent, poem.content )
+		);
+
+	}
+
+
+	/**
 	* I log the unique viewing of the given share link.
 	*/
 	public void function logShareViewing( required numeric id ) {
