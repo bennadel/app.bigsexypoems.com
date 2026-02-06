@@ -18,6 +18,8 @@ docker compose run --rm client sh  # Shell for npm package management
 # Visit: http://app.local.bigsexypoems.com/index.cfm?init=1
 ```
 
+**Important**: Never run `npm` directly on the host machine. All `npm` commands must be executed inside the Docker client container (e.g., `docker compose up client` for builds, `docker compose run --rm client sh` for package management).
+
 ## Architecture
 
 **Stack**: ColdFusion (CFML) backend + HTMX 2.0 + Alpine.js 3.15 frontend, Parcel for asset bundling, MySQL database, Docker Compose for orchestration.

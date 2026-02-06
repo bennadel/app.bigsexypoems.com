@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article d7r4f9 class="uiReadableWidth">
+	<article class="uiReadableWidth">
 
 		<h1>
 			#e( title )#
@@ -25,17 +25,13 @@
 				</span>
 				<div class="uiField_content">
 
-					<div class="diffView">
-						<cfloop array="#diffOperations#" item="op">
-
-							<span data-index="#e4a( op.index )#" data-type="#e4a( op.type )#" class="diffView_line">
-								<cfloop array="#op.tokens#" item="token">
-									<em data-type="#e4a( token.type )#">#e( token.value )#<br /></em>
-								</cfloop>
-							</span>
-
-						</cfloop>
-					</div>
+					<cfmodule
+						template="/client/_shared/tag/poemDiff.cfm"
+						originalName="#share.snapshotName#"
+						originalContent="#share.snapshotContent#"
+						modifiedName="#poem.name#"
+						modifiedContent="#poem.content#">
+					</cfmodule>
 
 				</div>
 			</div>
