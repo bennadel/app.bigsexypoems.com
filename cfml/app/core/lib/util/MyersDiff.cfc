@@ -216,8 +216,8 @@ component hint="I provide a ColdFusion implementation of the Myers Diffing algor
 		) {
 
 		return diffElements(
-			original = original.reMatch( "\S+|\s+" ),
-			modified = modified.reMatch( "\S+|\s+" ),
+			original = original.reMatch( "\s+|\w+|\W+" ),
+			modified = modified.reMatch( "\s+|\w+|\W+" ),
 			caseSensitive = caseSensitive
 		);
 
@@ -289,6 +289,30 @@ component hint="I provide a ColdFusion implementation of the Myers Diffing algor
 							type: wordOperation.type,
 							value: wordOperation.value
 						});
+
+						// If a white-space token is surrounded by two mutation tokens of
+						// the same type, let's collapsed the three tokens down to one.
+						// This reads better for the user.
+						if ( operation.tokens.len() >= 3 ) {
+
+							var minus2 = operation.tokens[ operation.tokens.len() - 2 ];
+							var minus1 = operation.tokens[ operation.tokens.len() - 1 ];
+							var minus0 = operation.tokens[ operation.tokens.len() ];
+
+							if (
+								( minus0.type == wordOperation.type ) &&
+								( minus0.type == minus2.type ) &&
+								( minus1.type == "equals" ) &&
+								( minus1.value.trim() == "" )
+								) {
+
+								minus2.value &= "#minus1.value##minus0.value#";
+								operation.tokens.pop();
+								operation.tokens.pop();
+
+							}
+
+						}
 
 					}
 				);
