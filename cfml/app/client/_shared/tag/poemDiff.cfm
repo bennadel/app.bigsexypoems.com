@@ -1,8 +1,7 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
-	myersDiff = request.ioc.get( "core.lib.util.MyersDiff" );
-	poemService = request.ioc.get( "core.lib.service.poem.PoemService" );
+	poemDiffService = request.ioc.get( "core.lib.service.poem.PoemDiff" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -17,22 +16,12 @@
 	param name="attributes.xClass" type="string" default="";
 	param name="attributes.xClassToken" type="string" default="";
 
-	// Prepend title as first line so title changes appear in the diff naturally.
-	originalLines = poemService.splitLines( attributes.originalContent );
-	originalLines.prepend( "---" );
-	originalLines.prepend( attributes.originalName );
-
-	modifiedLines = poemService.splitLines( attributes.modifiedContent );
-	modifiedLines.prepend( "---" );
-	modifiedLines.prepend( attributes.modifiedName );
-
-	lineDiff = myersDiff.diffElements(
-		original = originalLines,
-		modified = modifiedLines
+	diffOperations = poemDiffService.getDiffOperations(
+		originalName = attributes.originalName,
+		originalContent = attributes.originalContent,
+		modifiedName = attributes.modifiedName,
+		modifiedContent = attributes.modifiedContent
 	);
-
-	// Add word-level tokens for single-line mutations.
-	diffOperations = myersDiff.tokenizeOperations( lineDiff.operations );
 
 	include "./poemDiff.view.cfm";
 	exit;
