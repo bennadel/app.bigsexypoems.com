@@ -36,8 +36,13 @@ component {
 			modified = modifiedLines
 		);
 
-		// Add word-level tokens for single-line mutations.
-		return tokenizeOperations( diff.operations );
+		// Interleave balanced mutation blocks so that each delete/insert pair sits
+		// adjacent, then add word-level tokens for isolated single-line mutations. This
+		// isn't perfect, but I think it aligns more closely with how poems are edited.
+		interleaveOperations( diff.operations );
+		tokenizeOperations( diff.operations );
+
+		return diff.operations;
 
 	}
 
@@ -55,11 +60,107 @@ component {
 		boolean caseSensitive = true
 		) {
 
+		var pattern = "\s+|[\w""'\-]+|\W+";
+
 		return myersDiff.diffElements(
-			original = original.reMatch( "\s+|\w+|\W+" ),
-			modified = modified.reMatch( "\s+|\w+|\W+" ),
+			original = original.reMatch( pattern ),
+			modified = modified.reMatch( pattern ),
 			caseSensitive = caseSensitive
 		);
+
+	}
+
+
+	/**
+	* I interleave balanced mutation blocks in the given operations array. Myers Diff
+	* groups all deletes before all inserts (D1,D2,D3,I1,I2,I3). When a block has the
+	* same number of deletes and inserts, we rearrange them so each delete is immediately
+	* followed by its corresponding insert (D1,I1,D2,I2,D3,I3). This makes each pair an
+	* isolated single-line mutation that the tokenizer can enhance with word-level detail.
+	*/
+	private void function interleaveOperations( required array operations ) {
+
+		var i = 1;
+		var operationCount = operations.len();
+
+		while ( i <= operationCount ) {
+
+			if ( operations[ i ].type == "equals" ) {
+
+				i++;
+				continue;
+
+			}
+
+			// We've hit a mutation - collect the entire contiguous block of delete and
+			// insert operations.
+			var blockStart = i;
+			var deleteCount = 0;
+			var insertCount = 0;
+
+			while ( i <= operationCount ) {
+
+				var current = operations[ i ];
+
+				// Since Myers Diff always emits deletes before inserts within a given
+				// change, we can only collect delete operations if we have no inserts. If
+				// we see a delete after inserts, it must belong to a new block.
+				if ( current.type == "delete" ) {
+
+					// We've reached the end of the current block.
+					if ( insertCount ) {
+
+						break;
+
+					}
+
+					deleteCount++;
+					i++;
+
+				} else if ( current.type == "insert" ) {
+
+					insertCount++;
+					i++;
+
+				} else {
+
+					break;
+
+				}
+
+			}
+
+			// For balanced blocks, interleave the deletes and inserts so that each
+			// delete/insert pair sits adjacent in the array. This will create two-tuples
+			// that represent isolated single-line changes.
+			// --
+			// Note: if the deleteCount is 1, we're already looking at an isolated line
+			// mutation. As such, we only need to interleave for 2 or more lines.
+			if (
+				( deleteCount == insertCount ) &&
+				( deleteCount >= 2 )
+				) {
+
+				var interleaved = [];
+
+				// Zipper the interleaved collection in isolation.
+				for ( var p = 0 ; p < deleteCount ; p++ ) {
+
+					interleaved.append( operations[ blockStart + p ] );
+					interleaved.append( operations[ blockStart + deleteCount + p ] );
+
+				}
+
+				// Override the original operation indices with the interleaved indices.
+				for ( var p = 1 ; p <= interleaved.len() ; p++ ) {
+
+					operations[ blockStart + p - 1 ] = interleaved[ p ];
+
+				}
+
+			}
+
+		} // Outer while-loop.
 
 	}
 
@@ -170,7 +271,7 @@ component {
 			}
 
 			// Since we're rendering delete/insert lines next to each other, we only want
-			// to include mutation tokes that match the overall line-operation.
+			// to include mutation tokens that match the overall line-operation.
 			for ( var wordOperation in wordDiff.operations ) {
 
 				if (
@@ -187,8 +288,7 @@ component {
 
 			}
 
-			// Now that we've accumulated the tokens for the current operation, let's
-			// collapse adjacent mutation tokens that are separated by a whitespace-only
+			// Collapse adjacent mutation tokens that are separated by a whitespace-only
 			// equals token. This merges [mutation, whitespace, mutation] tuples into a
 			// single token, which reads better for the user.
 			var t = tokens.len();
