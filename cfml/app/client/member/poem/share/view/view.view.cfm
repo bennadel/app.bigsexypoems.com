@@ -78,7 +78,7 @@
 					</dt>
 					<dd>
 						<cfmodule
-							template="/client/_shared/tag/poemDiff.cfm"
+							template="/client/member/_shared/tag/poemDiff.cfm"
 							originalName="#share.snapshotName#"
 							originalContent="#share.snapshotContent#"
 							modifiedName="#poem.name#"
