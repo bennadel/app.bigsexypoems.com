@@ -134,11 +134,11 @@ component {
 		operations.each(
 			( operation, i ) => {
 
-				operation.tokens = [];
+				var tokens = operation.tokens = [];
 
 				if ( ! isSingleLineMutation( operations, i ) ) {
 
-					operation.tokens.append({
+					tokens.append({
 						type: operation.type,
 						value: operation.value
 					});
@@ -166,51 +166,50 @@ component {
 
 				}
 
-				wordDiff.operations.each(
-					( wordOperation, ii, wordOperations ) => {
+				// Since we're rendering delete/insert lines next to each other, we only
+				// want to include mutation tokes that match the overall line-operation.
+				for ( var wordOperation in wordDiff.operations ) {
 
-						// If the type applies to a different line-level operation, omit
-						// it - the token will be rendered by a different line.
-						if (
-							( wordOperation.type != operation.type ) &&
-							( wordOperation.type != "equals" )
-							) {
+					if (
+						( wordOperation.type == operation.type ) ||
+						( wordOperation.type == "equals" )
+						) {
 
-							return;
-
-						}
-
-						operation.tokens.append({
+						tokens.append({
 							type: wordOperation.type,
 							value: wordOperation.value
 						});
 
-						// If a white-space token is surrounded by two mutation tokens of
-						// the same type, let's collapsed the three tokens down to one.
-						// This reads better for the user.
-						if ( operation.tokens.len() >= 3 ) {
+					}
 
-							var minus2 = operation.tokens[ operation.tokens.len() - 2 ];
-							var minus1 = operation.tokens[ operation.tokens.len() - 1 ];
-							var minus0 = operation.tokens[ operation.tokens.len() ];
+				}
 
-							if (
-								( minus0.type == wordOperation.type ) &&
-								( minus0.type == minus2.type ) &&
-								( minus1.type == "equals" ) &&
-								( minus1.value.trim() == "" )
-								) {
+				// Now that we've accumulated the tokens for the current operation, let's
+				// collapse adjacent mutation tokens that are separated by a whitespace-
+				// only equals token. This merges [mutation, whitespace, mutation] tuples
+				// into a single token, which reads better for the user.
+				var t = tokens.len();
 
-								minus2.value &= "#minus1.value##minus0.value#";
-								operation.tokens.pop();
-								operation.tokens.pop();
+				while ( t >= 3 ) {
 
-							}
+					if (
+						( tokens[ t ].type == tokens[ t - 2 ].type ) &&
+						( tokens[ t ].type != "equals" ) &&
+						( tokens[ t - 1 ].type == "equals" ) &&
+						( tokens[ t - 1 ].value.trim() == "" )
+						) {
 
-						}
+						tokens[ t - 2 ].value &= "#tokens[ t - 1 ].value##tokens[ t ].value#";
+						tokens.deleteAt( t-- );
+						tokens.deleteAt( t-- );
+
+					} else {
+
+						t--;
 
 					}
-				);
+
+				}
 
 			}
 		);
