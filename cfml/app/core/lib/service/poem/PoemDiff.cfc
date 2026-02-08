@@ -218,6 +218,28 @@ component {
 
 			}
 
+			// Now that we've collapsed white-space-based tuples, let's further collapse
+			// any sibling tokens that have the same type.
+			var t = tokens.len();
+
+			while ( t >= 2 ) {
+
+				var minus0 = tokens[ t ];
+				var minus1 = tokens[ t - 1 ];
+
+				if ( minus0.type == minus1.type ) {
+
+					minus1.value &= minus0.value;
+					tokens.deleteAt( t-- );
+
+				} else {
+
+					t--;
+
+				}
+
+			}
+
 		});
 
 		return lineOperations;
