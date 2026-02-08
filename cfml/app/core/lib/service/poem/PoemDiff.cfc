@@ -31,13 +31,13 @@ component {
 		modifiedLines.prepend( "---" );
 		modifiedLines.prepend( modifiedName );
 
-		var lineDiff = myersDiff.diffElements(
+		var diff = myersDiff.diffElements(
 			original = originalLines,
 			modified = modifiedLines
 		);
 
 		// Add word-level tokens for single-line mutations.
-		return tokenizeOperations( lineDiff.operations );
+		return tokenizeOperations( diff.operations );
 
 	}
 
@@ -127,94 +127,100 @@ component {
 	* with the full value.
 	*/
 	private array function tokenizeOperations(
-		required array operations,
+		required array lineOperations,
 		boolean caseSensitive = true
 		) {
 
-		operations.each(
-			( operation, i ) => {
+		lineOperations.each( ( lineOperation, i ) => {
 
-				var tokens = operation.tokens = [];
+			var tokens = lineOperation.tokens = [];
 
-				if ( ! isSingleLineMutation( operations, i ) ) {
+			// If the line operation is an equals or is part of a larger multi-line
+			// mutation block, we can represent the entire line as a single token of the
+			// overall line operation. This keeps a unified structure which makes the diff
+			// easier to render.
+			if ( ! isSingleLineMutation( lineOperations, i ) ) {
+
+				tokens.append({
+					type: lineOperation.type,
+					value: lineOperation.value
+				});
+				return;
+
+			}
+
+			if ( lineOperation.type == "delete" ) {
+
+				// Compare to next line (deletes are prioritized in diff order).
+				var wordDiff = diffWords(
+					original = lineOperation.value,
+					modified = lineOperations[ i + 1 ].value,
+					caseSensitive = caseSensitive
+				);
+
+			} else {
+
+				// Compare to previous line (inserts are deprioritized in diff order).
+				var wordDiff = diffWords(
+					original = lineOperations[ i - 1 ].value,
+					modified = lineOperation.value,
+					caseSensitive = caseSensitive
+				);
+
+			}
+
+			// Since we're rendering delete/insert lines next to each other, we only want
+			// to include mutation tokes that match the overall line-operation.
+			for ( var wordOperation in wordDiff.operations ) {
+
+				if (
+					( wordOperation.type == lineOperation.type ) ||
+					( wordOperation.type == "equals" )
+					) {
 
 					tokens.append({
-						type: operation.type,
-						value: operation.value
+						type: wordOperation.type,
+						value: wordOperation.value
 					});
-					return;
-
-				}
-
-				if ( operation.type == "delete" ) {
-
-					// Compare to next line (deletes are prioritized in diff order).
-					var wordDiff = diffWords(
-						original = operation.value,
-						modified = operations[ i + 1 ].value,
-						caseSensitive = caseSensitive
-					);
-
-				} else {
-
-					// Compare to previous line (inserts are deprioritized in diff order).
-					var wordDiff = diffWords(
-						original = operations[ i - 1 ].value,
-						modified = operation.value,
-						caseSensitive = caseSensitive
-					);
-
-				}
-
-				// Since we're rendering delete/insert lines next to each other, we only
-				// want to include mutation tokes that match the overall line-operation.
-				for ( var wordOperation in wordDiff.operations ) {
-
-					if (
-						( wordOperation.type == operation.type ) ||
-						( wordOperation.type == "equals" )
-						) {
-
-						tokens.append({
-							type: wordOperation.type,
-							value: wordOperation.value
-						});
-
-					}
-
-				}
-
-				// Now that we've accumulated the tokens for the current operation, let's
-				// collapse adjacent mutation tokens that are separated by a whitespace-
-				// only equals token. This merges [mutation, whitespace, mutation] tuples
-				// into a single token, which reads better for the user.
-				var t = tokens.len();
-
-				while ( t >= 3 ) {
-
-					if (
-						( tokens[ t ].type == tokens[ t - 2 ].type ) &&
-						( tokens[ t ].type != "equals" ) &&
-						( tokens[ t - 1 ].type == "equals" ) &&
-						( tokens[ t - 1 ].value.trim() == "" )
-						) {
-
-						tokens[ t - 2 ].value &= "#tokens[ t - 1 ].value##tokens[ t ].value#";
-						tokens.deleteAt( t-- );
-						tokens.deleteAt( t-- );
-
-					} else {
-
-						t--;
-
-					}
 
 				}
 
 			}
-		);
 
-		return operations;
+			// Now that we've accumulated the tokens for the current operation, let's
+			// collapse adjacent mutation tokens that are separated by a whitespace-only
+			// equals token. This merges [mutation, whitespace, mutation] tuples into a
+			// single token, which reads better for the user.
+			var t = tokens.len();
+
+			while ( t >= 3 ) {
+
+				var minus0 = tokens[ t ];
+				var minus1 = tokens[ t - 1 ];
+				var minus2 = tokens[ t - 2 ];
+
+				if (
+					( minus0.type != "equals" ) &&
+					( minus1.type == "equals" ) &&
+					( minus0.type == minus2.type ) &&
+					( minus1.value.trim() == "" )
+					) {
+
+					minus2.value &= "#minus1.value##minus0.value#";
+					tokens.deleteAt( t-- );
+					tokens.deleteAt( t-- );
+
+				} else {
+
+					t--;
+
+				}
+
+			}
+
+		});
+
+		return lineOperations;
 
 	}
 
