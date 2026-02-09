@@ -9,12 +9,17 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
+	param name="attributes.originalHeader" type="string" default="";
 	param name="attributes.originalName" type="string";
 	param name="attributes.originalContent" type="string";
+	param name="attributes.modifiedHeader" type="string" default="";
 	param name="attributes.modifiedName" type="string";
 	param name="attributes.modifiedContent" type="string";
 	param name="attributes.xClass" type="string" default="";
 	param name="attributes.xClassToken" type="string" default="";
+
+	originalHeader = attributes.originalHeader;
+	modifiedHeader = attributes.modifiedHeader;
 
 	splitRows = poemDiffService.getSplitRows(
 		originalName = attributes.originalName,

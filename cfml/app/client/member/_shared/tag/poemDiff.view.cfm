@@ -1,6 +1,18 @@
 <cfoutput>
 
 	<table bk7x3p #attributes.xClassToken# class="bk7x3p #attributes.xClass#">
+	<cfif ( originalHeader.len() || modifiedHeader.len() )>
+		<thead>
+			<tr>
+				<th bk7x3p class="header">
+					#e( originalHeader )#
+				</th>
+				<th bk7x3p class="header">
+					#e( modifiedHeader )#
+				</th>
+			</tr>
+		</thead>
+	</cfif>
 	<cfloop array="#splitRows#" item="row">
 		<tr>
 			<td

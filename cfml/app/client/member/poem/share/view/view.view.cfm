@@ -79,8 +79,10 @@
 					<dd>
 						<cfmodule
 							template="/client/member/_shared/tag/poemDiff.cfm"
+							originalHeader="Poem Snapshot"
 							originalName="#share.snapshotName#"
 							originalContent="#share.snapshotContent#"
+							modifiedHeader="Live Poem"
 							modifiedName="#poem.name#"
 							modifiedContent="#poem.content#">
 						</cfmodule>
