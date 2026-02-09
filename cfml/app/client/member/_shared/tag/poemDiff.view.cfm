@@ -1,15 +1,34 @@
 <cfoutput>
 
-	<div vf9k2m #attributes.xClassToken# class="vf9k2m #attributes.xClass#">
-		<cfloop array="#diffOperations#" item="operation">
+	<table bk7x3p #attributes.xClassToken# class="bk7x3p #attributes.xClass#">
+	<cfloop array="#splitRows#" item="row">
+		<tr>
+			<td
+				data-index="#e4a( row.left.index )#"
+				data-type="#e4a( row.left.type )#"
+				bk7x3p class="cell">
 
-			<span data-index="#e4a( operation.index )#" data-type="#e4a( operation.type )#" vf9k2m class="line">
-				<cfloop array="#operation.tokens#" item="token">
-					<em data-type="#e4a( token.type )#">#e( token.value )#<br /></em>
-				</cfloop>
-			</span>
+				<div class="tokens">
+					<cfloop array="#row.left.tokens#" item="token">
+						<em data-type="#e4a( token.type )#">#e( token.value )#<br /></em>
+					</cfloop>
+				</div>
 
-		</cfloop>
-	</div>
+			</td>
+			<td
+				data-index="#e4a( row.right.index )#"
+				data-type="#e4a( row.right.type )#"
+				bk7x3p class="cell">
+
+				<div class="tokens">
+					<cfloop array="#row.right.tokens#" item="token">
+						<em data-type="#e4a( token.type )#">#e( token.value )#<br /></em>
+					</cfloop>
+				</div>
+
+			</td>
+		</tr>
+	</cfloop>
+	</table>
 
 </cfoutput>

@@ -16,7 +16,7 @@
 	param name="attributes.xClass" type="string" default="";
 	param name="attributes.xClassToken" type="string" default="";
 
-	diffOperations = poemDiffService.getDiffOperations(
+	splitRows = poemDiffService.getSplitRows(
 		originalName = attributes.originalName,
 		originalContent = attributes.originalContent,
 		modifiedName = attributes.modifiedName,

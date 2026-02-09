@@ -1,18 +1,27 @@
-[vf9k2m] {
-	&.vf9k2m {
-		.line {
-			display: flex ;
-			// Mismatched pad-vs-space intentionally so that lines butt-up against each other.
+[bk7x3p] {
+	&.bk7x3p {
+		border: 1px solid var( --rule-content ) ;
+		border-collapse: collapse ;
+		table-layout: fixed ;
+		width: 100% ;
+
+		.cell {
 			padding-block: var( --space-inline-xxs ) ;
 			padding-inline: var( --pad-inline-s ) ;
 			text-decoration: none ;
+			vertical-align: top ;
+			width: 50% ;
+
+			.tokens {
+				display: flex ;
+			}
 
 			em {
-				flex: 0 0 auto ;
 				font-style: normal ;
 				white-space: pre ;
 			}
 
+			// Faux title line.
 			&[data-index="1"] {
 				text-decoration: underline wavy ;
 				text-underline-offset: 2px ;
@@ -20,32 +29,32 @@
 
 			&[data-type="delete"] {
 				background-color: var( --red-1 ) ;
-				color: var( --red-9 ) ;
+				color: var( --red-12 ) ;
 
 				em[data-type="delete"] {
 					background-color: var( --red-3 ) ;
-					font-weight: var( --font-weight-bold ) ;
 				}
 
 				em:first-of-type:last-of-type {
 					background-color: transparent ;
-					font-weight: inherit ;
 				}
 			}
 
 			&[data-type="insert"] {
 				background-color: var( --green-1 ) ;
-				color: var( --green-9 ) ;
+				color: var( --green-12 ) ;
 
 				em[data-type="insert"] {
 					background-color: var( --green-3 ) ;
-					font-weight: var( --font-weight-bold ) ;
 				}
 
 				em:first-of-type:last-of-type {
 					background-color: transparent ;
-					font-weight: inherit ;
 				}
+			}
+
+			&[data-type="empty"] {
+				background-color: var( --gray-0 ) ;
 			}
 		}
 	}
