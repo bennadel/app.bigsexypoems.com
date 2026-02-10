@@ -77,9 +77,15 @@ component {
 		// NEW USER rate-limiting.
 		} else {
 
+			// Rate limit new user emails across ALL users in the entire app.
 			rateLimitService.testRequest( "login-request-by-app" );
+			// Rate limit new user emails for the given IP address.
 			rateLimitService.testRequest( "login-request-by-ip", ipAddress );
-			rateLimitService.testRequest( "login-request-by-unknown-email", email );
+			// Rate limit new user emails for the given email address. Note that we're
+			// using a canonicalized version of the email for rate-limiting so that we can
+			// collapse dynamic emails into a single form. This won't affect the email
+			// that's ultimately stored with the user record.
+			rateLimitService.testRequest( "login-request-by-unknown-email", canonicalizeEmail( email ) );
 
 			// Note: since this is just a temporary password, I'm being pretty loose on
 			// the security. Meaning, no bCrypt or salting or anything like that, just
@@ -174,7 +180,7 @@ component {
 
 		// Since this login workflow is the most likely point of attack on the system, we
 		// want to limit a malicious actor from pounding the server with guesses.
-		rateLimitService.testRequest( "login-verify-by-email", email );
+		rateLimitService.testRequest( "login-verify-by-email", canonicalizeEmail( email ) );
 
 		var maybeToken = oneTimeTokens.maybeGetToken( token, email );
 
@@ -202,6 +208,42 @@ component {
 			email = email,
 			offsetInMinutes = offsetInMinutes
 		);
+
+	}
+
+	// ---
+	// PRIVATE METHODS.
+	// ---
+
+	/**
+	* I canonicalize the given email address for SECURITY CHECKS ONLY. The return values
+	* isn't meant to be persisted (it might not even be valid) - it's only meant to
+	* represent the notion of an email address that can be used in course-grain checks
+	* like rate-limiting.
+	*/
+	private string function canonicalizeEmail( required string email ) {
+
+		// Note: the email address has already been validated for basic formatting by the
+		// time this method is called. But we're not assuming that here in order to leave
+		// it open to moving this method elsewhere later on. Plus, it makes the method
+		// easier to reason about when we address it in totality.
+		var parts = email
+			.lcase()
+			.reMatch( "[^@]+" )
+		;
+		var user = trim( parts[ 1 ] ?: "" );
+		var domain = trim( parts[ 2 ] ?: "" );
+
+		user = user
+			// GMail uses "plus style" addressing for dynamic emails.
+			.listFirst( "+" )
+			// Yahoo uses "dash style" addressing for dynamic emails.
+			.listFirst( "-" )
+			// Remove any non-word characters (including dots which GMail ignores).
+			.reReplace( "\W+", "", "all" )
+		;
+
+		return "#user#@#domain#";
 
 	}
 

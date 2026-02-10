@@ -20,9 +20,9 @@ component hint = "I provide methods for rate-limiting around a given property." 
 
 		// Features hold the settings for the workflows being rate-limited.
 		variables.features = {
-			"login-request-by-app": createSettings( 10, ONE_MINUTE ),
+			"login-request-by-app": createSettings( 30, ONE_HOUR ),
 			"login-request-by-known-email": createSettings( 3, ONE_MINUTE ),
-			"login-request-by-unknown-email": createSettings( 3, ONE_MINUTE ),
+			"login-request-by-unknown-email": createSettings( 2, ONE_HOUR ),
 			"login-request-by-ip": createSettings( 3, ONE_MINUTE ),
 			"login-verify-by-email": createSettings( 10, ONE_MINUTE ),
 			"poem-share-by-ip": createSettings( 20, ONE_MINUTE ),
