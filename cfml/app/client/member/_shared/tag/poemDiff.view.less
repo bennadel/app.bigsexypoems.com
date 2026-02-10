@@ -4,66 +4,58 @@
 		border-collapse: collapse ;
 		table-layout: fixed ;
 		width: 100% ;
+	}
 
-		.header {
-			border-bottom: 2px solid var( --rule-content ) ;
-			padding-block: var( --space-inline-xxs ) ;
-			padding-inline: var( --pad-inline-s ) ;
-			text-align: left ;
-			width: 50% ;
+	&.header {
+		border-bottom: 2px solid var( --rule-content ) ;
+		padding-block: var( --space-inline-xxs ) ;
+		padding-inline: var( --pad-inline-s ) ;
+		text-align: left ;
+		width: 50% ;
+	}
+
+	&.cell {
+		padding-block: var( --space-inline-xxs ) ;
+		padding-inline: var( --pad-inline-s ) ;
+		text-decoration: none ;
+		vertical-align: top ;
+		width: 50% ;
+
+		// Faux title line.
+		tr:first-of-type & {
+			text-decoration: underline wavy ;
+			text-underline-offset: 2px ;
 		}
 
-		.cell {
-			padding-block: var( --space-inline-xxs ) ;
-			padding-inline: var( --pad-inline-s ) ;
-			text-decoration: none ;
-			vertical-align: top ;
-			width: 50% ;
+		&[data-type="delete"] {
+			background-color: var( --red-1 ) ;
+			color: var( --red-12 ) ;
 
-			.tokens {
-				display: flex ;
-			}
-
-			em {
-				font-style: normal ;
-				white-space: pre ;
-			}
-
-			// Faux title line.
-			&[data-index="1"] {
-				text-decoration: underline wavy ;
-				text-underline-offset: 2px ;
-			}
-
-			&[data-type="delete"] {
-				background-color: var( --red-1 ) ;
-				color: var( --red-12 ) ;
-
-				em[data-type="delete"] {
-					background-color: var( --red-3 ) ;
-				}
-
-				em:first-of-type:last-of-type {
-					background-color: transparent ;
-				}
-			}
-
-			&[data-type="insert"] {
-				background-color: var( --green-1 ) ;
-				color: var( --green-12 ) ;
-
-				em[data-type="insert"] {
-					background-color: var( --green-3 ) ;
-				}
-
-				em:first-of-type:last-of-type {
-					background-color: transparent ;
-				}
-			}
-
-			&[data-type="empty"] {
-				background-color: var( --gray-0 ) ;
+			.token[data-type="delete"]:not(:first-of-type:last-of-type) {
+				background-color: var( --red-3 ) ;
 			}
 		}
+
+		&[data-type="insert"] {
+			background-color: var( --green-1 ) ;
+			color: var( --green-12 ) ;
+
+			.token[data-type="insert"]:not(:first-of-type:last-of-type) {
+				background-color: var( --green-3 ) ;
+			}
+		}
+
+		&[data-type="empty"] {
+			background-color: var( --gray-0 ) ;
+		}
+	}
+
+	&.tokens {
+		display: flex ;
+	}
+
+	&.token {
+		font-style: normal ;
+		white-space: pre ;
 	}
 }
