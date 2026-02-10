@@ -61,7 +61,7 @@ cfml/app/
 
 ## Global Extensions
 
-`/cfml/app/core/cfmlx.cfm` provides polyfills and shortcuts included in every execution context (component, template, custom tag). Function in this file should be pure and decoupled from the application:
+`/cfml/app/core/cfmlx.cfm` provides polyfills and shortcuts included in every execution context (component, template, custom tag). Functions in this file should be pure and decoupled from the application:
 - Array utilities: `arrayCopy()`, `arrayGroupBy()`, `arrayIndexBy()`, `arrayPluck()`
 - Shorthand: `e()`, `echo()`, `dump()`, `utcNow()`
 
@@ -128,18 +128,18 @@ component {
 }
 ```
 
-All `.cfc` files are script-based. Except for database access components, which are tag-based so that we can use the `cfquery` tags to execute SQL statements against MySQL.
+All `.cfc` files are script-based. Except for database access components (`*Gateway.cfc`), which are tag-based so that we can use the `cfquery` tags to execute SQL statements against MySQL.
 
 ### ColdFusion Templates (`.cfm`)
 
 `.cfm` templates can be either script-based (they don't generate output) or tag-based (they do generate output).
 
-Script-based template generally have 2-3 sections:
+Script-based templates generally have 2-3 sections:
 - IoC / `cfmlx.cfm` inclusion at the top.
 - Processing logic in the middle.
 - Private methods at the bottom (optional).
 
-Each of these three sections is separated by a comment-block:
+Each of these three sections is separated by a comment-hrule:
 
 ```
 <cfscript>
@@ -182,11 +182,151 @@ When script-based and tag-based templates work as a pair (such as with a view-mo
 
 The script-based tag will `include` the tag-based tag; often as the last part of the processing section.
 
-If there are Less CSS or JavaScript files associated with these templates, they use the `.less` and `.js` file extensions:
-- `thing.cfm` (script-based)
-- `thing.view.cfm` (tag-based)
-- `thing.view.less` (Less CSS)
-- `thing.view.js` (JavaScript)
+### View Templates (`.view.cfm` / `.view.less` / `.view.js`)
+
+A view may have a `.view.less` file, a `.view.js` file, both, or neither — they are independent and optional:
+
+- `thing.cfm` (script-based CFML)
+- `thing.view.cfm` (tag-based CFML)
+- `thing.view.less` (Less CSS — optional)
+- `thing.view.js` (JavaScript — optional)
+
+Since the asset build system has no automatic scoping of JavaScript or CSS, we must simulate scoping through the use of a random 6-character lowercase alphanumeric slug that **MUST** begin with a letter (so it can be used as a valid JavaScript identifier). Examples:
+
+- `ijzl5y`
+- `mq9evq`
+
+This slug is used as an HTML attribute, a CSS attribute selector, a class name, and a JavaScript global variable name — all sharing the same value.
+
+#### CSS scoping in `.view.less`
+
+All CSS rules in a `.view.less` file are nested under an attribute selector using the slug:
+
+```less
+[mq9evq] {
+	// ...
+}
+```
+
+Within this block, there are two patterns for targeting elements:
+
+**Direct match (`&.className`)** — targets elements that have both the slug attribute AND the class. Use this when the slug attribute is applied directly to the styled element in the `.view.cfm`:
+
+```less
+[mq9evq] {
+	&.mq9evq {
+		// Root element: compiles to [mq9evq].mq9evq
+	}
+
+	&.title {
+		// Direct element: compiles to [mq9evq].title
+	}
+}
+```
+
+```cfml
+<div mq9evq class="mq9evq">
+	<h2 mq9evq class="title">
+		This is a title with scoped styling
+	</h2>
+</div>
+```
+
+**Descendant match (`.className`)** — targets child elements that are descendants of an element with the slug attribute. Use this when only an ancestor has the slug attribute:
+
+```less
+[mq9evq] {
+	&.mq9evq {
+		// Root element: compiles to [mq9evq].mq9evq
+	}
+
+	.item {
+		// Descendant: compiles to [mq9evq] .item
+	}
+}
+```
+
+```cfml
+<div mq9evq class="mq9evq">
+	<div class="item">
+		No slug attribute needed on this child.
+	</div>
+</div>
+```
+
+Both patterns can be mixed within the same `.view.less` file. The root element typically uses `&.slug` for its own styles.
+
+**Note**: CSS keyframe animations don't nest well inside attribute selectors. Define them outside the top-level `[slug]` block, prefixed with the slug for scoping:
+
+```less
+@keyframes mq9evq-enter-blink {
+	// animations specific to this view.
+}
+```
+
+#### Alpine.js components in `.view.js`
+
+If a `.view.js` file exists, it defines one or more Alpine.js components using the same slug as a global namespace. Components use a revealing module pattern with section comments matching the `.cfc` convention:
+
+```js
+window.mq9evq = {
+	ComponentOne,
+	ComponentTwo,
+};
+
+function ComponentOne() {
+
+	return {
+		// Life-Cycle Methods.
+		init,
+
+		// Public Methods.
+		doSomething,
+	};
+
+	// ---
+	// LIFE-CYCLE METHODS.
+	// ---
+
+	/**
+	* I initialize the component.
+	*/
+	function init() {
+
+		// ...
+
+	}
+
+	// ---
+	// PUBLIC METHODS.
+	// ---
+
+	/**
+	* I do something.
+	*/
+	function doSomething() {
+
+		// ...
+
+	}
+
+}
+
+function ComponentTwo() {
+
+	return {
+		// return public API for Alpine.js component.
+	};
+
+}
+```
+
+These Alpine.js components are then bound to elements in the `.view.cfm` using `x-data` attributes:
+
+```cfml
+<div x-data="mq9evq.ComponentOne"> ... </div>
+<div x-data="mq9evq.ComponentTwo"> ... </div>
+```
 
 ## Form Field Patterns
 
@@ -222,21 +362,22 @@ Example checkbox field:
 
 ## Associating JavaScript / Less CSS Files With `.cfm` Templates
 
-Each major section of application has a root `.js` file, example:
+Each major subsystem has a root `.js` entry point (e.g., `/client/member/member.js`) that auto-discovers all `.view.js` and `.view.less` files within its directory tree via a glob import:
 
-`/client/member/member.js`
-
-This file performs auto-discovery of all view-specific Less/JavaScript files within the section using path globbing:
-
-`import "./**/*.view.{js,less}";`
-
-This means that as we add new leaf-nodes to our router, Less CSS and JavaScript changes will be automatically included in next build.
-
-This file also explicitly imports the relevant Less/JavaScript files for globally-shared modules that cannot be auto-discovered. Many globally-shared modules have both `.js` and `.less` aspects, so minor globbing is used there as well, example:
-
+```js
+import "./**/*.view.{js,less}";
 ```
+
+This means adding a new view with `.view.js` or `.view.less` files requires no manual import — they are automatically included in the next build.
+
+The root entry point also explicitly imports shared modules from `_shared/tag/` (which are outside the subsystem directory and can't be auto-discovered):
+
+```js
 import "../_shared/tag/errorMessage.view.{js,less}";
+import "../_shared/tag/toaster.view.{js,less}";
 ```
+
+When creating a new shared tag in `_shared/tag/`, you must add an explicit import for it in each root entry point that uses it.
 
 ## Database Migrations
 
