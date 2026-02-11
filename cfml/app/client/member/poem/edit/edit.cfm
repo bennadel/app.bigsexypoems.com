@@ -4,6 +4,7 @@
 	collectionModel = request.ioc.get( "core.lib.model.collection.CollectionModel" );
 	poemAccess = request.ioc.get( "core.lib.service.poem.PoemAccess" );
 	poemService = request.ioc.get( "core.lib.service.poem.PoemService" );
+	revisionService = request.ioc.get( "core.lib.service.poem.revision.RevisionService" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	ui = request.ioc.get( "core.lib.web.UI" );
@@ -50,6 +51,12 @@
 				authContext = request.authContext,
 				id = poem.id,
 				collectionID = val( form.collectionID ),
+				name = form.name,
+				content = form.content
+			);
+
+			revisionService.saveRevision(
+				poemID = poem.id,
 				name = form.name,
 				content = form.content
 			);

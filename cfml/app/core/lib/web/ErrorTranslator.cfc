@@ -94,6 +94,9 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.Poem.NotFound":
 				return asModelNotFound( error, "poem" );
 			break;
+			case "App.Model.Poem.Revision.NotFound":
+				return asModelNotFound( error, "poem revision" );
+			break;
 			case "App.Model.Poem.Share.Name.SuspiciousEncoding":
 				return asModelStringSuspiciousEncoding( error, "share name" );
 			break;

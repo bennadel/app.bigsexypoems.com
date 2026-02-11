@@ -3,6 +3,7 @@
 	// Define properties for dependency-injection.
 	collectionModel = request.ioc.get( "core.lib.model.collection.CollectionModel" );
 	poemService = request.ioc.get( "core.lib.service.poem.PoemService" );
+	revisionService = request.ioc.get( "core.lib.service.poem.revision.RevisionService" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	ui = request.ioc.get( "core.lib.web.UI" );
@@ -52,6 +53,12 @@
 				authContext = request.authContext,
 				userID = request.authContext.user.id,
 				collectionID = val( form.collectionID ),
+				name = form.name,
+				content = form.content
+			);
+
+			revisionService.saveRevision(
+				poemID = poemID,
 				name = form.name,
 				content = form.content
 			);

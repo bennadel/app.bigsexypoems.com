@@ -2,6 +2,7 @@
 
 	// Define properties for dependency-injection.
 	poemService = request.ioc.get( "core.lib.service.poem.PoemService" );
+	revisionService = request.ioc.get( "core.lib.service.poem.revision.RevisionService" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	poemAccess = request.ioc.get( "core.lib.service.poem.PoemAccess" );
@@ -41,6 +42,12 @@
 			poemService.update(
 				authContext = request.authContext,
 				id = poem.id,
+				name = form.name,
+				content = form.content
+			);
+
+			revisionService.saveRevision(
+				poemID = poem.id,
 				name = form.name,
 				content = form.content
 			);
