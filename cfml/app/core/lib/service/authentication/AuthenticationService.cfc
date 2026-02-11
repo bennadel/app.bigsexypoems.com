@@ -45,7 +45,6 @@ component {
 	*/
 	public void function requestMagicLink(
 		required string email,
-		required string betaPassword, // Temporary argument.
 		numeric offsetInMinutes = 0,
 		string redirectTo = ""
 		) {
@@ -86,16 +85,6 @@ component {
 			// collapse dynamic emails into a single form. This won't affect the email
 			// that's ultimately stored with the user record.
 			rateLimitService.testRequest( "login-request-by-unknown-email", canonicalizeEmail( email ) );
-
-			// Note: since this is just a temporary password, I'm being pretty loose on
-			// the security. Meaning, no bCrypt or salting or anything like that, just
-			// some simple rate-limiting above which will prevent brute-force guessing of
-			// the password.
-			if ( compare( betaPassword, config.betaPassword ) ) {
-
-				throw( type = "App.Authentication.BetaPassword.Invalid" );
-
-			}
 
 		}
 

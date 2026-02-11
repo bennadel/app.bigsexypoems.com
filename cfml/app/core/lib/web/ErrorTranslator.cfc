@@ -22,12 +22,6 @@ component hint = "I help translate application errors into appropriate response 
 		var metadata = errorUtilities.extractMetadataSafely( error.extendedInfo );
 
 		switch ( error.type ) {
-			case "App.Authentication.BetaPassword.Invalid":
-				return as403({
-					type: error.type,
-					message: "Your invitation code is incorrect. Please contact me for help (either via LinkedIn or my website)."
-				});
-			break;
 			case "App.Authentication.VerifyLogin.Expired":
 				return as403({
 					type: error.type,

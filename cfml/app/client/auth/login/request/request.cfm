@@ -19,7 +19,6 @@
 	param name="url.redirectTo" type="string" default="";
 
 	param name="form.email" type="string" default="";
-	param name="form.betaPassword" type="string" default="";
 	param name="form.timezoneOffsetInMinutes" type="string" default="";
 	param name="form[ 'cf-turnstile-response' ]" type="string" default="";
 
@@ -55,7 +54,6 @@
 
 			authenticationService.requestMagicLink(
 				email = form.email,
-				betaPassword = form.betaPassword,
 				offsetInMinutes = val( form.timezoneOffsetInMinutes ),
 				redirectTo = url.redirectTo
 			);

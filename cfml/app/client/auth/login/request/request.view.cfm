@@ -40,24 +40,6 @@
 					/>
 				</div>
 			</div>
-			<div class="uiField">
-				<label for="#ui.nextFieldId()#" class="uiField_label">
-					Beta Invitation Code:
-				</label>
-				<div class="uiField_content">
-					<p class="uiField_description">
-						During the development phase of this application, <strong><mark>new users</mark></strong> need a special invitation code in order to log in. If you're keen to try BigSexyPoems, just reach out using <a href="https://linkedin.com/in/bennadel" target="_blank">LinkedIn</a> or <a href="https://www.bennadel.com/contact/contact-ben-nadel.htm" target="_blank">my blog</a>.
-					</p>
-
-					<input
-						id="#ui.fieldId()#"
-						type="password"
-						name="betaPassword"
-						maxlength="30"
-						class="uiInput"
-					/>
-				</div>
-			</div>
 
 			<!--- For ease of development, Turnstile only required in production. --->
 			<cfif config.turnstile.isEnabled>
