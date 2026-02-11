@@ -97,6 +97,16 @@
 			xClass="speechTools"
 		/>
 
+		<div
+			x-data="z6s31p.RevisionTracker( '#router.urlForParts( 'member.poem.composer.createRevision', 'poemID', poem.id )#' )"
+			@input.window="
+				if ( $event.target.id === 'form--content' ) {
+					handleContentInput();
+				}
+			"
+			style="display: none;">
+		</div>
+
 	</article>
 
 	<div z6s31p class="wordTools">

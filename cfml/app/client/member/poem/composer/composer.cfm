@@ -10,6 +10,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	switch ( router.next( "editor" ) ) {
+		case "createRevision":
 		case "editor":
 		case "rhymes":
 		case "saveInBackground":

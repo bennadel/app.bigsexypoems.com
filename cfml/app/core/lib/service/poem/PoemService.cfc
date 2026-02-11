@@ -6,6 +6,7 @@ component {
 	property name="poemAccess" ioc:type="core.lib.service.poem.PoemAccess";
 	property name="poemCascade" ioc:type="core.lib.service.poem.PoemCascade";
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
+	property name="poemRevisionService" ioc:type="core.lib.service.poem.PoemRevisionService";
 	property name="poemValidation" ioc:type="core.lib.model.poem.PoemValidation";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
@@ -32,12 +33,20 @@ component {
 
 		testCollectionID( authContext, userID, collectionID );
 
+		var createdAt = utcNow();
+
 		var poemID = poemModel.create(
 			userID = user.id,
 			collectionID = collectionID,
 			name = name,
 			content = content,
-			createdAt = utcNow()
+			createdAt = createdAt
+		);
+
+		poemRevisionService.createInitialRevision(
+			poemID = poemID,
+			content = content,
+			createdAt = createdAt
 		);
 
 		return poemID;
