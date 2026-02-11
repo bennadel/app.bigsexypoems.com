@@ -7,6 +7,7 @@ component {
 	property name="poemCascade" ioc:type="core.lib.service.poem.PoemCascade";
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
 	property name="poemValidation" ioc:type="core.lib.model.poem.PoemValidation";
+	property name="revisionModel" ioc:type="core.lib.model.poem.RevisionModel";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
 	// ColdFusion language extensions (global functions).
@@ -39,6 +40,8 @@ component {
 			content = content,
 			createdAt = utcNow()
 		);
+
+		saveRevision( poemID );
 
 		return poemID;
 
@@ -112,11 +115,54 @@ component {
 			updatedAt = utcNow()
 		);
 
+		saveRevision( poem.id );
+
 	}
 
 	// ---
 	// PRIVATE METHODS.
 	// ---
+
+	/**
+	* I save a revision for the given poem. If the most recent revision was updated within
+	* the windowing period, I update it in place. Otherwise, I create a new revision. The
+	* revision is snapshotted from the persisted poem state.
+	*/
+	private void function saveRevision( required numeric poemID ) {
+
+		var windowInSeconds = 120;
+		var poem = poemModel.get( poemID );
+		var maybeLastRevision = revisionModel.maybeGetMostRecentByPoemID( poemID );
+
+		var shouldCreateNewRevision = (
+			! maybeLastRevision.exists ||
+			( dateDiff( "s", maybeLastRevision.value.updatedAt, poem.updatedAt ) >= windowInSeconds )
+		);
+
+		// If there's no previous revision, or the window has closed, create a new one.
+		if ( shouldCreateNewRevision ) {
+
+			revisionModel.create(
+				poemID = poemID,
+				name = poem.name,
+				content = poem.content,
+				createdAt = poem.updatedAt
+			);
+
+		// Otherwise, update the existing revision within the window.
+		} else {
+
+			revisionModel.update(
+				id = maybeLastRevision.value.id,
+				name = poem.name,
+				content = poem.content,
+				updatedAt = poem.updatedAt
+			);
+
+		}
+
+	}
+
 
 	/**
 	* I test that the collection with the given ID exists and that it can be associated

@@ -2,6 +2,8 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
+	property name="revisionCascade" ioc:type="core.lib.service.poem.RevisionCascade";
+	property name="revisionModel" ioc:type="core.lib.model.poem.RevisionModel";
 	property name="shareCascade" ioc:type="core.lib.service.poem.share.ShareCascade";
 	property name="shareModel" ioc:type="core.lib.model.poem.share.ShareModel";
 
@@ -20,6 +22,7 @@ component {
 		required struct poem
 		) {
 
+		deleteRevisions( poem );
 		deleteShares( user, poem );
 
 		poemModel.deleteByFilter( id = poem.id );
@@ -29,6 +32,22 @@ component {
 	// ---
 	// PRIVATE METHODS.
 	// ---
+
+	/**
+	* I delete the revisions associated with the given poem.
+	*/
+	private void function deleteRevisions( required struct poem ) {
+
+		var revisions = revisionModel.getByFilter( poemID = poem.id );
+
+		for ( var revision in revisions ) {
+
+			revisionCascade.deleteRevision( revision );
+
+		}
+
+	}
+
 
 	/**
 	* I delete the shares associated with the given poem.

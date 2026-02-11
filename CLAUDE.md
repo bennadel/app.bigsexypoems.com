@@ -385,12 +385,53 @@ There's no database migration framework. All of the database migration files nee
 
 Database migrations must be lexicographically named so that when a new environment spins up, all the `.sql` files are executed in a predictable order. Database migrations scripts are named in the form of:
 
+SQL files use tabs for indentation (consistent with the rest of the codebase).
+
 `YYYY-MM-DD-{counter}-{description}.sql`
 
 Examples:
 - `2026-02-03-001-adding-new-table.sql`
 - `2026-02-03-002-dropping-user-default.sql`
 - `2026-02-03-003-adding-uniqueness-constraint.sql`
+
+## Architecture Preferences
+
+**Consistency across patterns matters more than local optimization**: When the codebase has an established pattern (cascade style, optional-return convention, etc.), follow it uniformly — even if a shortcut would work in a specific case. Consistent patterns make the codebase easier to reason about and reduce cognitive load.
+
+**Flat entity organization**: Tightly coupled entities (e.g., poem and revision) live as siblings in the same directory, not in nested subfolders. Only use subfolders when entities have genuine independence.
+
+**Side-effects in the service layer, not controllers**: If an operation (like creating a revision) should happen every time an entity is created/updated, put it in the service method — not in each controller that calls the service. Controllers should not orchestrate cross-cutting concerns.
+
+**Services are ingress points**: Services exist as entry points from the controller layer into business logic. Services should not call other services laterally. A service can directly use sibling models (e.g., `PoemService` using `revisionModel`) when the entities are tightly coupled.
+
+**Cascade delete pattern**: The parent entity owns the collection relationship and iterates over children. Each child's cascade component handles deleting a single record (and any of its own children). The cascade component should never bulk-delete siblings — that's the parent's job.
+
+```cfc
+// Parent cascade iterates:
+var revisions = revisionModel.getByFilter( poemID = poem.id );
+for ( var revision in revisions ) {
+	revisionCascade.deleteRevision( revision );
+}
+
+// Child cascade deletes one:
+public void function deleteRevision( required struct revision ) {
+	revisionModel.deleteByFilter( id = revision.id );
+}
+```
+
+**Use the `maybe` pattern for optional lookups**: When a query might return zero results, use `maybeGet*` methods that return `{ exists, value }` via `maybeArrayFirst()`. Never return empty structs `{}` as a "not found" sentinel.
+
+**Snapshot from persisted state**: When creating a snapshot or revision of an entity, re-read the entity from the database rather than passing through the submitted input values. This ensures the snapshot reflects the actual persisted state (after any validation/normalization).
+
+**Use the entity's own timestamps**: When an operation is semantically tied to an entity mutation (like a revision snapshot), use the entity's own `updatedAt`/`createdAt` timestamp rather than generating a new `utcNow()`.
+
+**Prefer simplicity over conditional optimization**: Don't add guards or conditionals to skip work that's cheap and harmless. Prefer always executing a simple path over branching to avoid redundant-but-safe operations.
+
+**Keep constants local when single-use**: If a value (like a timeout or threshold) is only used in one method, declare it as a local variable in that method. Don't promote it to an instance property with `ioc:skip` and an `init()` method.
+
+**Order by `id` instead of date columns**: Auto-increment IDs are inserted in chronological order, and every index implicitly contains the primary key. Prefer `ORDER BY id DESC` over `ORDER BY updatedAt DESC` (or similar date columns) to leverage existing indexes and avoid needing composite indexes on date columns.
+
+**Don't build for future use**: Don't pre-build service methods, components, or APIs for anticipated future needs. Build them when they're actually needed. Delete dead code rather than keeping it around "for later."
 
 ## Error and Flash Message Translations
 
@@ -407,4 +448,8 @@ When adding `throw()` statements or flash messages, corresponding translations m
 - Add a `case` statement for each new flash token used in `router.goto()` calls
 - Cases are organized alphabetically by flash token
 - Flash tokens follow the pattern `your.{entity}.{action}` (e.g., `your.poem.share.updated`)
+
+## Git Commits
+
+Never include a `Co-Authored-By` line in commit messages. Ben is the sole author and owner of all code in this repository.
 
