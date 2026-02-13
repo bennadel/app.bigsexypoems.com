@@ -72,6 +72,7 @@ component {
 		if ( maybeUser.exists ) {
 
 			rateLimitService.testRequest( "login-request-by-known-email", email );
+			rateLimitService.testRequest( "login-request-by-known-email-hourly", email );
 
 		// NEW USER rate-limiting.
 		} else {

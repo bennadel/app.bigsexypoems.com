@@ -453,3 +453,5 @@ When adding `throw()` statements or flash messages, corresponding translations m
 
 Never include a `Co-Authored-By` line in commit messages. Ben is the sole author and owner of all code in this repository.
 
+Don't add arbitrary line breaks within a paragraph in commit messages. Let a single-paragraph body remain on one line. Only use line breaks to separate distinct paragraphs.
+

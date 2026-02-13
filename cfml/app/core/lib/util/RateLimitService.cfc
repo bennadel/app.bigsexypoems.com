@@ -22,6 +22,7 @@ component hint = "I provide methods for rate-limiting around a given property." 
 		variables.features = {
 			"login-request-by-app": createSettings( 30, ONE_HOUR ),
 			"login-request-by-known-email": createSettings( 3, ONE_MINUTE ),
+			"login-request-by-known-email-hourly": createSettings( 5, ONE_HOUR ),
 			"login-request-by-unknown-email": createSettings( 2, ONE_HOUR ),
 			"login-request-by-ip": createSettings( 3, ONE_MINUTE ),
 			"login-verify-by-email": createSettings( 10, ONE_MINUTE ),
