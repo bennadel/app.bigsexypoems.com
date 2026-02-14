@@ -580,7 +580,9 @@ pre code {
 
 // Note: the [tabindex] selector is being used to conditionally add "hard" focus.
 *[tabindex="0"]:focus,
-*:focus-visible {
+*:focus-visible,
+.uiFocusForcer:focus,
+.uiFocusForcer:focus-visible {
 	:where( & ) {
 		animation-duration: var( --duration-s ) ;
 		animation-name: focus-visible-ring-enter ;
