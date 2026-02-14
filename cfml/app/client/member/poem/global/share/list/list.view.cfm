@@ -7,66 +7,58 @@
 			#e( title )#
 		</h1>
 
-		<cfif poems.len()>
+		<cfif shares.len()>
 
 			<div class="uiTable_scroller">
 
 				<table x-table-row-linker class="uiTable">
 				<thead>
 					<tr>
-						<th>
-							Poem
-						</th>
-						<th>
-							Share Name
-						</th>
-						<th>
-							Share Note
-						</th>
-						<th align="center">
-							Views
-						</th>
 						<th class="w-1">
 							Last Viewed
 						</th>
+						<th class="w-30">
+							Share
+						</th>
+						<th>
+							Poem
+						</th>
 					</tr>
 				</thead>
-				<cfloop array="#poems#" item="poem">
-					<tbody>
-					<cfloop array="#poem.shares#" item="share" index="shareIndex">
-						<tr>
-							<cfif ( shareIndex eq 1 )>
-								<td valign="top" rowspan="#poem.shares.len()#">
-									<a #ui.attrHref( "member.poem.view", "poemID", poem.id )# class="isRowLinker"><strong>#e( poem.name )#</strong></a>
-								</td>
+				<tbody>
+				<cfloop array="#shares#" item="share">
+					<tr>
+						<td class="isNoWrap">
+							<cfif isDate( share.lastViewingAt )>
+								#ui.elemFromNow( share.lastViewingAt )#
 							</cfif>
-							<td>
-								<a #ui.attrHref( "member.poem.share.view", "shareID", share.id )#>#e( share.name )#</a>
-							</td>
-							<td>
-								#e( truncate( share.noteMarkdown, 30 ) )#
-							</td>
-							<td align="center">
-								<cfif share.viewingCount>
-									<a #ui.attrHref( "member.poem.share.view", "shareID", share.id, "viewings" )#>#numberFormat( share.viewingCount )#</a>
-								</cfif>
-							</td>
-							<td class="isNoWrap">
-								<cfif isDate( share.lastViewingAt )>
-									#ui.elemFromNow( share.lastViewingAt )#
-								</cfif>
-							</td>
-						</tr>
-					</cfloop>
-					</tbody>
+							<cfif share.viewingCount>
+								<span class="uiSubtext">
+									<a #ui.attrHref( "member.poem.share.view", "shareID", share.id, "viewings" )#>Total views: #numberFormat( share.viewingCount )#</a>
+								</span>
+							</cfif>
+						</td>
+						<td>
+							<a #ui.attrHref( "member.poem.share.view", "shareID", share.id )# class="isRowLinker">#e( share.name )#</a>
+							<cfif share.noteMarkdown.len()>
+								<span class="uiSubtext">
+									#e( truncate( share.noteMarkdown, 30 ) )#
+								</span>
+							</cfif>
+						</td>
+						<td>
+							<a #ui.attrHref( "member.poem.view", "poemID", share.poem.id )#>#e( share.poem.name )#</a>
+						</td>
+					</tr>
 				</cfloop>
+				</tbody>
 				</table>
 
 			</div>
 
 		</cfif>
 
-		<cfif ! poems.len()>
+		<cfif ! shares.len()>
 
 			<p>
 				You have no shares yet.

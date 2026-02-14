@@ -11,7 +11,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	partial = getPartial( authContext = request.authContext );
-	poems = partial.poems;
+	shares = partial.shares;
 
 	request.response.title = title = "All Shares Across All Poems";
 	request.response.breadcrumbs.append( "Share Links" );
@@ -26,26 +26,10 @@
 	*/
 	private struct function getPartial( required struct authContext ) {
 
-		var results = listGateway.getShares( authContext.user.id );
-		var poems = [];
-		var poem = { id: 0 };
-
-		for ( var result in results ) {
-
-			if ( result.poem.id != poem.id ) {
-
-				poem = result.poem;
-				poem.shares = [];
-				poems.append( poem );
-
-			}
-
-			poem.shares.append( result.share );
-
-		}
+		var shares = listGateway.getShares( authContext.user.id );
 
 		return {
-			poems
+			shares
 		};
 
 	}

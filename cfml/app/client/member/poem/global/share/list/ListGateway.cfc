@@ -7,18 +7,18 @@
 		<cfquery name="local.results" result="local.metaResults" returnType="array">
 			#DEBUGGING_COMMENT#
 			SELECT
+				<!--- Share data. --->
+				s.id,
+				s.token,
+				s.name,
+				s.noteMarkdown,
+				s.viewingCount,
+				s.lastViewingAt,
+				s.createdAt,
+
 				<!--- Poem data. --->
 				p.id AS poem_id,
-				p.name AS poem_name,
-
-				<!--- Share data. --->
-				s.id AS share_id,
-				s.token AS share_token,
-				s.name AS share_name,
-				s.noteMarkdown AS share_noteMarkdown,
-				s.viewingCount AS share_viewingCount,
-				s.lastViewingAt AS share_lastViewingAt,
-				s.createdAt AS share_createdAt
+				p.name AS poem_name
 			FROM
 				poem p
 			INNER JOIN
@@ -30,9 +30,8 @@
 						s.poemID = p.id
 				)
 			ORDER BY
-				poem_name ASC,
-				poem_id ASC,
-				share_id ASC
+				s.lastViewingAt DESC,
+				s.id DESC
 		</cfquery>
 
 		<cfreturn normalizeCrossJoin( results ) />
