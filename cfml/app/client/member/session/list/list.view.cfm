@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article c6hzv7 class="c6hzv7">
+	<article>
 
 		<h1>
 			#e( title )#
@@ -46,9 +46,15 @@
 				<tr>
 					<td>
 						#ui.userDate( element.lastRequestAt, "mmm d, yyyy" )#
+						<span class="uiSubtext">
+							#ui.fromNow( element.lastRequestAt )#
+						</span>
 					</td>
 					<td>
 						#ui.userDate( element.createdAt, "mmm d, yyyy" )#
+						<span class="uiSubtext">
+							#ui.fromNow( element.createdAt )#
+						</span>
 					</td>
 					<td align="center">
 						#numberFormat( element.requestCount )#
@@ -57,7 +63,7 @@
 						<a href="https://ipinfo.io/#e4u( element.ipAddress )#" target="_blank">#e( element.ipAddress )#</a>
 
 						<cfif element.ipLocation.len()>
-							<span class="ipLocation">
+							<span class="uiSubtext">
 								#e( element.ipLocation )#
 							</span>
 						</cfif>

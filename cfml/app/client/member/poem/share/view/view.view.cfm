@@ -122,6 +122,9 @@
 					<tr>
 						<td>
 							#ui.userDateTime( viewing.createdAt )#
+							<span class="uiSubtext">
+								#ui.fromNow( viewing.createdAt )#
+							</span>
 						</td>
 						<td>
 							<cfif viewing.ipCity.len()>

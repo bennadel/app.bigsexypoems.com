@@ -70,7 +70,7 @@
 							<cfif share.isSnapshot>
 								<strong>Yes</strong>
 								<cfif share.isOutdated>
-									<span class="snapshotOutdated">
+									<span class="uiSubtext snapshotOutdated">
 										Outdated
 									</span>
 								</cfif>
@@ -81,7 +81,7 @@
 						</td>
 						<td class="isNoWrap">
 							<cfif isDate( share.lastViewingAt )>
-								#ui.userDate( share.lastViewingAt )#
+								#ui.elemFromNow( share.lastViewingAt )#
 							</cfif>
 						</td>
 					</tr>

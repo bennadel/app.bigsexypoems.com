@@ -53,7 +53,7 @@
 							</td>
 							<td class="isNoWrap">
 								<cfif isDate( share.lastViewingAt )>
-									#ui.userDate( share.lastViewingAt )#
+									#ui.elemFromNow( share.lastViewingAt )#
 								</cfif>
 							</td>
 						</tr>
