@@ -1,6 +1,7 @@
 component {
 
 	// Define properties for dependency-injection.
+	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="router" ioc:type="core.lib.web.Router";
 
 	// ColdFusion language extensions (global functions).
@@ -126,6 +127,19 @@ component {
 
 
 	/**
+	* I return the relative time element for the given input. 
+	*/
+	public string function elemFromNow( required date input ) {
+
+		var datetime = input.dateTimeFormat( "iso" );
+		var title = userDateTime( input );
+
+		return "<time title=""#title#"" datetime=""#datetime#"">#clock.fromNow( input )#</time>";
+
+	}
+
+
+	/**
 	* I return an external (ie, fully qualified) URL for the given segments. This is
 	* convenient short-cut to the Router method of the same name.
 	*/
@@ -161,6 +175,17 @@ component {
 			.map( ( suffix ) => "#token##suffix#" )
 			.toList( " " )
 		;
+
+	}
+
+
+	/**
+	* I format the given date relative to now - all dates are assumed to be in UTC. This
+	* is convenient short-cut to the Clock method of the same name.
+	*/
+	public string function fromNow( required date input ) {
+
+		return clock.fromNow( input );
 
 	}
 
