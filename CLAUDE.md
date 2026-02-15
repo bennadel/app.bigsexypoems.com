@@ -336,6 +336,7 @@ When creating form fields in `.view.cfm` templates:
 - Add `id="#ui.fieldId()#"` to the corresponding input element
 - Use `ui.attrChecked()` helper for checkbox/radio checked state instead of inline `<cfif>` conditionals
 - Use `ui.attrSelected()` helper for select option selected state
+- Add the `x-keyed-focus` directive to the first visible form element within a form so it receives focus on page load
 
 Example checkbox field:
 
@@ -403,6 +404,10 @@ Examples:
 **Side-effects in the service layer, not controllers**: If an operation (like creating a revision) should happen every time an entity is created/updated, put it in the service method — not in each controller that calls the service. Controllers should not orchestrate cross-cutting concerns.
 
 **Services are ingress points**: Services exist as entry points from the controller layer into business logic. Services should not call other services laterally. A service can directly use sibling models (e.g., `PoemService` using `revisionModel`) when the entities are tightly coupled.
+
+**Access components are self-contained**: Each Access component owns all authorization checks for its entity. Access components should never call other Access components laterally. If a cross-entity permission check is needed (e.g., "can make this revision current" requires poem-update permission), implement the check inline within the owning Access component rather than delegating to a sibling Access component. Name assertion methods after the action (`canMakeCurrent`, `canDelete`) so the logic is localized and can evolve independently.
+
+**Pass context structs with `argumentCollection`**: Access components return context structs with keys like `authContext`, `user`, `poem`, etc. These structs are designed to flow directly into assertion methods via `argumentCollection` rather than explicitly destructuring arguments. For example, use `poemAccess.canUpdate( argumentCollection = context )` instead of `poemAccess.canUpdate( authContext = context.authContext, user = context.user )`. The context struct may contain extra keys beyond what the method requires — ColdFusion ignores them.
 
 **Cascade delete pattern**: The parent entity owns the collection relationship and iterates over children. Each child's cascade component handles deleting a single record (and any of its own children). The cascade component should never bulk-delete siblings — that's the parent's job.
 

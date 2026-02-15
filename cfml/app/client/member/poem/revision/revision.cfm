@@ -2,6 +2,7 @@
 
 	// Define properties for dependency-injection.
 	router = request.ioc.get( "core.lib.web.Router" );
+	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -9,21 +10,14 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	request.response.activeNav = "poems";
-	request.response.breadcrumbs.append([ "Home", "member.home" ]);
-	request.response.breadcrumbs.append([ "Poems", "member.poem" ]);
-	// Shared breadcrumb logic for poem entity.
-	request.breadcrumbForPoem = breadcrumbForPoem;
+	// Shared breadcrumb logic for revision entity.
+	request.breadcrumbForRevision = breadcrumbForRevision;
+	request.breadcrumbForRevisions = breadcrumbForRevisions;
 
 	switch ( router.next( "list" ) ) {
-		case "add":
-		case "composer":
 		case "delete":
-		case "edit":
-		case "global":
 		case "list":
-		case "revision":
-		case "share":
+		case "makeCurrent":
 		case "view":
 			cfmodule( template = router.nextTemplate() );
 		break;
@@ -38,9 +32,22 @@
 	/**
 	* I provide reusable breadcrumb logic for nested views.
 	*/
-	private array function breadcrumbForPoem( required struct poem ) {
+	private array function breadcrumbForRevision(
+		required struct revision,
+		required struct position
+		) {
 
-		return [ poem.name, "member.poem.view", "poemID", poem.id ];
+		return [ "Revision #position.revisionNumber# of #position.revisionCount#", "member.poem.revision.view", "revisionID", revision.id ];
+
+	}
+
+
+	/**
+	* I provide reusable breadcrumb logic for nested views.
+	*/
+	private array function breadcrumbForRevisions( required struct poem ) {
+
+		return [ "Revisions", "member.poem.revision", "poemID", poem.id ];
 
 	}
 
