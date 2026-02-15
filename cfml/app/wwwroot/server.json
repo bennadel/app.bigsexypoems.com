@@ -1,7 +1,7 @@
 {
 	"name": "bigsexypoems-dev",
 	"app": {
-		"cfengine": "adobe@2025.0.4"
+		"cfengine": "adobe@2025.0.6 "
 	},
 	"profile": "prod",
 	"web": {
