@@ -31,6 +31,9 @@
 				<li>
 					<a #ui.attrHref( "member.poem.share", "poemID", poem.id )#>Share Links</a>
 				</li>
+				<li>
+					<a #ui.attrHref( "member.poem.revision", "poemID", poem.id )#>Revisions</a>
+				</li>
 			</ul>
 		</nav>
 
