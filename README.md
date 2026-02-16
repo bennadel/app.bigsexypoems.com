@@ -6,203 +6,187 @@ by [Ben Nadel][ben-nadel]
 
 ## Overview
 
-This is a codification of my [**BigSexyPoems**][app] concept. Historically, the poem editor was a static, Angular-based proof-of-concept (PoC) application hosted on Netlify. I'm trying to transition that to a **ColdFusion**, **HTMX**, and **AlpineJS** application in which the poems can be saved and shared using persisted data.
+[**BigSexyPoems**][app] is a poem editor built with **ColdFusion**, **HTMX**, and **Alpine.js**. It evolved from a static, Angular-based proof-of-concept hosted on Netlify into a full-stack application with persisted data, user accounts, and shareable poems.
 
 Mostly, I just want a real-world application in which I can experiment with ideas and try out new paradigms for organizing my code.
 
-Try it out for yourself: [https://app.bigsexypoems.com/][app]
+Try it out: [app.bigsexypoems.com][app]
 
 
-## File And Folder Organization
+## Getting Started
 
-The bulk of the application is stored in `cfml/app`. This folder is then subdivided into the following folders:
+### Prerequisites
 
-* **`build`**: Contains client-side (JavaScript + LessCSS) compilation mechanics. This folder is mounted by the `client` and `client-dev` Docker containers.
+* [Docker][docker] and Docker Compose
+* A local hosts entry:
 
-  Each "entry point" in the Parcel.js build process corresponds to a "subsystem" `.js` file within the `client` folder. Essentially, each subsystem (ex, `member`, `auth`), has a `.js` file which **glob-imports** all of the `**/*.js` and `**/*.less` files contained within that subsystem.
+  ```hosts
+  127.0.0.1	app.local.bigsexypoems.com
+  ```
 
-* **`client`**: The controller layer of the application. Contains all of the routing and view-related rendering logic.
+### Running the Application
 
-  **Note**: Unlike your traditional MVC (Model-View-Controller) applications, the `client` folder contains _both_ the Controller and the View files. The biggest point-of-frustration that I've historically felt with MVC is the distance between the `C` and `V` files, despite the fact that these two layers are tightly coupled. My `client` folder **collocates** these two concerns, literally putting the "Controller" and "View" files side-by-side in the file-system.
+```bash
+docker compose up
+```
 
-* **`config`**: Contains the environment variables and settings. The `config.template.json` documents the structure of the configuration object. The `config.json` (which is ignored by `git`) defines the concrete settings.
+The first startup can take 2-3 minutes while the [CommandBox image][commandbox-image] downloads ColdFusion. Subsequent startups are faster.
 
-* **`core`**: Contains all of the business logic for the application.
+Once running, visit `https://app.local.bigsexypoems.com`. You'll need to accept the untrusted SSL certificate on your first visit.
 
-  * **`lib`**: Contains model and service components.
+To re-initialize the application, visit: `http://app.local.bigsexypoems.com/index.cfm?init=1`
 
-    * **`classLoader`**: Contains components for loading vendor JAR files.
 
-    * **`integration`**: Contains components related to external service integration (ex, Cloudflare Turnstile, Postmark, Bugsnag).
+## File and Folder Organization
 
-    * **`model`**: Contains `*Model`, `*Gateway`, and `*Validation` components for entities. These are the low-level, CRUD (Create, Read, Update, Delete) data abstractions.
+The bulk of the application is stored in `cfml/app`, which is subdivided into the following folders:
 
-      I'm also including Markdown parser and sanitization logic along side the CRUD components since it feels like it's tightly coupled to the "what it means to be" an entity. But, they could have just as easily been in the `service` folder as well.
+* **`build`**: Client-side (JavaScript + LessCSS) compilation mechanics. This folder is mounted by the `client` and `client-dev` Docker containers.
 
-    * **`service`**: Contains "orchestration" components that model the high-level business processes of the application.
+  Each "entry point" in the Parcel.js build process corresponds to a "subsystem" `.js` file within the `client` folder. Each subsystem (e.g., `member`, `auth`) has a `.js` file that **glob-imports** all of the `**/*.js` and `**/*.less` files contained within that subsystem.
 
-    * **`util`**: Contains non-application-specific components that don't neatly fit into the other folders.
+* **`client`**: The controller and view layer of the application. Contains all routing and view-related rendering logic.
 
-    * **`web`**: Contains components for browser-facing features that help with things like routing, request metadata, and error message translation.
+  Unlike traditional MVC applications, the `client` folder **collocates** both Controller and View files side-by-side in the file-system. The biggest frustration I've historically felt with MVC is the distance between the `C` and `V` files, despite those layers being tightly coupled. Collocation eliminates that problem.
 
-  * **`vendor`**: Contains 3rd-party JAR files and other dependencies.
+* **`config`**: Environment variables and settings. `config.template.json` documents the required structure; `config.json` (git-ignored) contains the concrete, secret-bearing settings.
 
-  * **`cfmlx.cfm` (File)**: Contains **global e(X)tensions for CFML**. This is a `.cfm` file that I `include` into _every execution context_. It contains user defined functions that I want to be able to access without the ceremony of Inversion of Control (IoC) and componentization. It contains mostly polyfills (ex, `dump()` and `echo()`), short-hands (ex, `e()` and `utcNow()`), and data-manipulation functions (ex, `arrayCopy()` and `arrayPluck()`). I am very discerning about what I put in here.
+* **`core`**: All business logic for the application.
 
-* **`db`**: Contains the database migration `.sql` files.
+  * **`lib`**: Model and service components.
 
-  This folder is mounted by the `mysql` container as the `/docker-entrypoint-initdb.d` file, which executes the files in lexicographic order when the MySql database is created for the first time. Beyond that, I run these scripts manually as needed to keep the database up-to-date.
+    * **`classLoader`**: Components for loading vendor JAR files.
 
-* **`email`**: Contains the email templates.
+    * **`integration`**: External service integrations (Cloudflare Turnstile, Postmark, Bugsnag).
 
-* **`log`**: Contains `CFDump`s of development errors. In the local environment, all `logger` calls are also output to `.txt` files to make sure I don't miss any behind-the-scenes bugs.
+    * **`model`**: `*Model`, `*Gateway`, and `*Validation` components for entities. These are the low-level CRUD (Create, Read, Update, Delete) data abstractions. Also includes Markdown parsing and sanitization logic since it's tightly coupled to what it means to be an entity.
+
+    * **`service`**: Orchestration components that model high-level business processes.
+
+    * **`util`**: Non-application-specific components (e.g., the IoC `Injector`).
+
+    * **`web`**: Browser-facing features like routing, request metadata, and error message translation.
+
+  * **`vendor`**: 3rd-party JAR files and other dependencies.
+
+  * **`cfmlx.cfm` (File)**: **Global e(X)tensions for CFML** &mdash; a `.cfm` file included in _every execution context_. Contains user-defined functions accessible without IoC ceremony: polyfills (`dump()`, `echo()`), shorthands (`e()`, `utcNow()`), and data-manipulation functions (`arrayCopy()`, `arrayPluck()`). I am very discerning about what goes in here.
+
+* **`db`**: Database migration `.sql` files. Mounted by the `mysql` container as `/docker-entrypoint-initdb.d`, which executes them in lexicographic order on first database creation. After that, scripts are run manually as needed.
+
+* **`email`**: Email templates.
+
+* **`log`**: `CFDump`s of development errors. In the local environment, all `logger` calls are also output to `.txt` files so I don't miss behind-the-scenes bugs.
 
 * **`upload`**: Not used, placeholder.
 
-* **`wwwroot`**: Contains the publicly accessible CFML files. The `index.cfm` file does nothing but include `/client/index.cfm`.
+* **`wwwroot`**: Publicly accessible CFML files. The `index.cfm` file simply includes `/client/index.cfm`.
 
-  **`internal`**: Contains some utility files for development purposes (generating `HmacSha256` keys, for example).
+  * **`internal`**: Utility files for development (e.g., generating `HmacSha256` keys).
 
-  **`public/main`**: Contains files generated by the `build` system. These files are consumed by the ColdFusion layout templates via `cfinclude`.
-
-
-## Docker Setup
-
-The application runs locally using Docker. To run BigSexyPoems, simply run `docker compose up` from this directory. The application expects you to have an entry in your `etc/hosts` file for the local domain:
-
-```hosts
-127.0.0.1	app.local.bigsexypoems.com
-```
-
-Under the hood, I'm using the base [CommandBox image][commandbox-image], which will download the desired version of ColdFusion at start-up. As such, the start-up time can take 2-3 minutes for the `cfml` container.
-
-> **Aside**: there's a way to optimize / finalize this, but I'm still very much a beginner when it comes to CommandBox.
-
-The CommandBox image provides an "untrusted" SSL certificate in order to enable `https` locally. The first time you access `https://app.local.bigsexypoems.com`, you will need to _accept_ the SSL certificate - in the browser UI - in order to proceed to the site.
-
-
-## Local SMTP Server
-
-I'm using the [MailHog image][mailhog-image].
-
-Web interface: http://app.local.bigsexypoems.com:8025/
-
-
-## Local MySQL Database
-
-I'm using the [MySql image][mysql-image].
+  * **`public/main`**: Files generated by the build system, consumed by ColdFusion layout templates via `cfinclude`.
 
 
 ## Client-Side Development
 
-I'm using the following vendors for my client-side interactivity and styling:
+The client-side stack:
 
-* [Alpine.js][alpinejs] - light-weight JavaScript framework.
-* [htmx][htmx] - AJAX-based extensions for HTML.
-* [LessCSS][lesscss] - CSS pre-processor.
-* [Parcel][parcel] - build tool for client assets.
+* [Alpine.js][alpinejs] &mdash; light-weight JavaScript framework
+* [htmx][htmx] &mdash; AJAX-based extensions for HTML
+* [LessCSS][lesscss] &mdash; CSS pre-processor
+* [Parcel][parcel] &mdash; build tool for client assets
+
+### Build Commands
+
+All `npm` commands must be run inside the Docker `client` container &mdash; never directly on the host machine.
+
+```bash
+# One-time build
+docker compose up client
+
+# Watch mode with live rebuild
+docker compose --profile dev up
+```
+
+### Installing Node Modules
+
+Since Docker manages the `node_modules` folder, installing new dependencies requires shelling into the container:
+
+1. Make sure neither `client` nor `client-dev` containers are running.
+2. Run `docker compose run --rm client sh`.
+3. Execute `npm` commands to modify the `package*.json` files.
+4. Run `exit` to quit and remove the temporary container.
+
+The `package.json` and `package-lock.json` files are mounted via Docker volumes, so changes made inside the container propagate back to the host.
 
 
-## Installing `node` Modules
+## Local Services
 
-This is, by far, the jankiest part of this whole experiment. Since I'm using Docker to manage the `node_modules` folder, I can't "just" `npm install` new dependencies. Instead, I have to "bash into" a running `client` container and then invoke the `npm install --save-dev` from within the container context.
+### SMTP (MailHog)
 
-To do this:
+Email is captured locally by [MailHog][mailhog-image].
 
-* Make sure neither `client` nor `client-dev` container are running.
-* Execute `docker compose run --rm client sh`.
-* Execute `npm` commands to modify the `package*.json` files.
-* Execute `exit` to quit and remove the temporary container.
+Web interface: http://app.local.bigsexypoems.com:8025/
 
-Since the `package.json` and `package-lock.json` files are mounted via Docker volumes, the `npm install` commands, executed from within the running container, should propagate changes back to the host files.
+### MySQL
+
+The database runs via the [MySQL Docker image][mysql-image]. Migration `.sql` files in `cfml/app/db/` are executed automatically on first container creation.
+
+
+## Cloudflare Origin Server Certificates
+
+> **Note**: This section is a personal ops runbook. I will almost certainly forget how all of this works by the next time I need it.
+
+In production, this site is **proxied behind Cloudflare**. That means there are two TLS hops:
+
+1. Browser &rarr; Cloudflare CDN (automatic, short-lived certificate)
+2. Cloudflare CDN &rarr; Origin server (requires manual setup)
+
+By default, the second hop is unencrypted. To enable end-to-end encryption, I use Cloudflare's **15-year origin server certificate**.
+
+### Generating the Certificate
+
+1. In the Cloudflare domain panel, go to **SSL/TLS** > **Origin Server**.
+2. Click **Create Certificate**.
+3. Use **RSA (2048)**.
+4. Verify the hostnames include `bigsexypoems.com` and `*.bigsexypoems.com`.
+5. Choose **15 years** expiration and click **Create**.
+6. Save the certificate as `bigsexypoems.pem` and the private key as `bigsexypoems.key` (use **PEM** format).
+
+### Converting for Windows IIS
+
+Since the origin server runs Windows IIS, the PEM certificate needs to be converted to `.pfx`:
+
+```sh
+openssl pkcs12 -export \
+  -out bigsexypoems.pfx \
+  -inkey bigsexypoems.key \
+  -in bigsexypoems.pem \
+  -password pass:password
+```
+
+### Installing in IIS
+
+1. Upload `bigsexypoems.pfx` to the Windows server.
+2. In IIS, go to the root site and open **Server Certificates**.
+3. Right-click > **Import**, select the `.pfx` file, and enter the password.
+4. _(Optional)_ Use `mmc` with the Certificates snap-in to give the certificate a friendly name under **Local Computer / Personal / Certificates**.
+5. In IIS, go to the ColdFusion site (e.g., `app.bigsexypoems.com`) and open **Edit Site Bindings**.
+6. Add a binding:
+   * Type: `https`
+   * Host name: `app.bigsexypoems.com`
+   * Enable: **Require server name indication**
+   * SSL Certificate: the imported certificate
+
+And that's all there is to it &mdash; just _6 easy steps_ after _6 other easy steps_ (lolol). But at least it lasts 15 years.
 
 
 [alpinejs]: https://alpinejs.dev/
-
 [app]: https://app.bigsexypoems.com/
-
 [ben-nadel]: https://www.bennadel.com/
-
 [commandbox-image]: https://hub.docker.com/r/ortussolutions/commandbox/
-
+[docker]: https://www.docker.com/get-started/
 [htmx]: https://htmx.org/
-
 [lesscss]: https://lesscss.org/
-
 [mailhog-image]: https://hub.docker.com/r/mailhog/mailhog/
-
 [mysql-image]: https://hub.docker.com/_/mysql
-
 [parcel]: https://parceljs.org/
-
-
-## Using Cloudflare's Origin Server Certificates
-
-> **Note** This section is mostly for me as I will almost certainly forget how all of this works by the next time I have to run it.
-
-For local development, I'm using the SSL certificate provided by the CommandBox server. In production, I'm not using anything quite as sophisticated. But, I'm **proxying** this site behind Cloudflare. Which means that I can use Cloudflare's **long-lived** origin server SSL certificates.
-
-When proxying through Cloudflare, there are two connections to consider:
-
-1. Browser &rarr; Cloudflare CDN
-
-2. Cloudflare CDN &rarr; Origin server (ColdFusion)
-
-Cloudflare automatically generates short-lived SSL certificates that the browser will trust. These allow your site to be accessed via `https://`. But, this connection is only securing the hop between the browser and the Cloudflare CDN. By default, the connection between Cloudflare and the origin server is unencrypted.
-
-In order to create end-to-end encryption through to the origin server, I'm using Cloudflare's 15-year TTL certificate. Setting this up took some trial and error:
-
-1. Within the Cloudflare domain panel, expand the `SSL/TLS` menu and choose `Origin Server`.
-
-2. Click the `Create Certificate` button.
-
-3. Use the `RSA (2048)` option.
-
-4. Enter the root domain (ex, `bigsexypoems.com`) and the wildcard domain (ex, `*.bigsexypoems.com`) - these will likely be pre-populated already.
-
-5. Choose the `15 years` expiration.
-
-6. Click the `Create` button to submit the form.
-
-7. When the certificate is generated, you'll see a certificate and private key textarea. Use the `PEM` format.
-
-8. Copy the certificate text into a file called `bigsexypoems.pem`.
-
-9. Copy the private key text into a file called `bigsexypoems.key`.
-
-10. Since I'm hosting this ColdFusion site on a Windows server, I have to convert the certificate into a format that Windows IIS will understand (`.pfx`). I can do this using `openssl`.
-
-    Create a file called `convert.sh`, and paste-in:
-
-    ```sh
-    openssl pkcs12 -export \
-      -out bigsexypoems.pfx \
-      -inkey bigsexypoems.key \
-      -in bigsexypoems.pem \
-      -password pass:password
-    ```
-
-    Use `chmod +x convert.sh` to make this file an executable and then execute it. It should produce `bigsexypoems.pfx` with a temporary password (`password`).
-
-11. Upload the `bigsexypoems.pfx` file to the Window server.
-
-12. Go to the root site in IIS and click on `Server Certificates`.
-
-13. Right-click and select `Import...`. Select the `.pfx` file and enter the temporary password, `password`.
-
-14. The import process doesn't give the certificate a friendly name. To do that, you can use `mmc` ("Microsoft Management Console"). You have to install the Certificates add-on (which I don't totally remember how to do). Use the `Certificates (Local Computer) / Personal / Certificates` listing to find the imported certificate. Using the context menu, you can edit the "Properties" of the certificate and give it a friendly name.
-
-15. Go back to IIS and go to the ColdFusion site (ex, `app.bigsexypoems.com`).
-
-16. Go to the `Edit Site Bindings`.
-
-17. Add a binding and choose:
-
-    * Type: `https`
-    * Host name: `app.bigsexypoems.com`
-    * Enable: `Require server name authentication` - this ensures that IIS uses the host name when figuring out which SSL certificate to use.
-    * SSL Certificate: Choose the imported certificate.
-
-    Click `Ok`.
-
-And that's all there is to it - just _17 easy steps_ (lolol). But at least this will last for 15-years.
