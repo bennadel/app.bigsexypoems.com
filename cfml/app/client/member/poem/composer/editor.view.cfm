@@ -112,6 +112,7 @@
 					input from:.isHtmxRhymesTrigger
 				"
 				hx-target="next .results_content"
+				hx-swap="show:.wordTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
 				class="uiVstack">
@@ -187,6 +188,7 @@
 					input from:.isHtmxSynonymsTrigger
 				"
 				hx-target="next .results_content"
+				hx-swap="show:.wordTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
 				class="uiVstack">

@@ -77,11 +77,11 @@
 			<form
 				hx-get="#router.urlForParts( 'playground.composer.rhymes' )#"
 				hx-trigger="
-					load,
 					submit,
 					input from:.isHtmxRhymesTrigger
 				"
 				hx-target="next .results_content"
+				hx-swap="show:.wordTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
 				class="uiVstack">
@@ -94,7 +94,6 @@
 						id="#ui.fieldId()#"
 						type="text"
 						name="word"
-						value="Big"
 						class="uiInput"
 					/>
 					<select name="limit" class="uiSelect isAuto isHtmxRhymesTrigger">
@@ -155,11 +154,11 @@
 			<form
 				hx-get="#router.urlForParts( 'playground.composer.synonyms' )#"
 				hx-trigger="
-					load,
 					submit,
 					input from:.isHtmxSynonymsTrigger
 				"
 				hx-target="next .results_content"
+				hx-swap="show:.wordTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
 				class="uiVstack">
@@ -172,7 +171,6 @@
 						id="#ui.fieldId()#"
 						type="text"
 						name="word"
-						value="Sexy"
 						class="uiInput"
 					/>
 					<select name="limit" class="uiSelect isAuto isHtmxSynonymsTrigger">
