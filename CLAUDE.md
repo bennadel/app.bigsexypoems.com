@@ -30,10 +30,15 @@ docker compose run --rm client sh  # Shell for npm package management
 
 **IoC Container**: Custom `Injector` component provides lazy-loaded dependencies. Components use `ioc:type` attribute for property injection. Application scope caches instances; request scope holds request-specific data.
 
-**Model/Gateway/Validation Pattern**: Each entity has three components:
+**Model/Gateway/Validation Pattern**: Each entity has three model-layer components:
 - `*Model.cfc` - Public API
 - `*Gateway.cfc` - Database CRUD (extends BaseGateway)
 - `*Validation.cfc` - Input validation (extends BaseValidation)
+
+**Service-Layer Components**: Entities with business logic typically also have service-layer components:
+- `*Service.cfc` - Orchestration layer invoked by controllers; the internal public API for business logic
+- `*Access.cfc` - Gathers data with permission checks, throwing access errors on unauthorized use
+- `*Cascade.cfc` - Coordinates deletion of an entity and its nested children
 
 **Validation Method Comments**: All validation methods use the same generic comment: `I validate and return the normalized value.` The method name itself (e.g., `nameFrom`, `contentFrom`) indicates which field is being validated.
 
@@ -41,9 +46,13 @@ docker compose run --rm client sh  # Shell for npm package management
 
 ```
 cfml/app/
-├── client/           # Controllers & Views by subsystem (auth, member, playground, share, system)
+├── client/           # Controllers & Views by subsystem
+│   │                 #   Feature: auth, member, playground, share
+│   │                 #   Infrastructure: error, go, system
 │   └── _shared/      # Shared layouts & components
 ├── core/lib/
+│   ├── classLoader/  # Java library bootstrapping
+│   ├── integration/  # External service integrations
 │   ├── model/        # Entity models, gateways, validation
 │   ├── service/      # Business logic orchestration
 │   ├── util/         # Utilities (Injector, etc.)
@@ -62,8 +71,13 @@ cfml/app/
 ## Global Extensions
 
 `/cfml/app/core/cfmlx.cfm` provides polyfills and shortcuts included in every execution context (component, template, custom tag). Functions in this file should be pure and decoupled from the application:
-- Array utilities: `arrayCopy()`, `arrayGroupBy()`, `arrayIndexBy()`, `arrayPluck()`
-- Shorthand: `e()`, `echo()`, `dump()`, `utcNow()`
+- Array: `arrayCopy()`, `arrayGroupBy()`, `arrayIndexBy()`, `arrayPluck()`, `arrayPluckUnique()`, `arrayReflect()`, `arraySortByOperators()`
+- Encoding: `e()` (HTML), `e4a()` (HTML attribute), `e4j()` (JavaScript), `e4json()` (JSON-in-JS), `e4u()` (URL)
+- Maybe: `maybeNew()`, `maybeArrayFirst()` — returns `{ exists, value }` structs
+- Type checks: `isFalsy()`, `isTruthy()`, `isString()`, `isComponent()`, `isNotDate()`
+- Coalesce: `coalesce()` (first non-null), `coalesceTruthy()` (first truthy)
+- Misc: `clamp()`, `nullValue()`, `rangeNew()`, `structPick()`, `toEntries()`, `truncate()`, `ucFirst()`
+- Polyfills: `echo()`, `dump()`, `systemOutput()`, `utcNow()`
 
 ## CFML Settings
 
@@ -453,6 +467,10 @@ When adding `throw()` statements or flash messages, corresponding translations m
 - Add a `case` statement for each new flash token used in `router.goto()` calls
 - Cases are organized alphabetically by flash token
 - Flash tokens follow the pattern `your.{entity}.{action}` (e.g., `your.poem.share.updated`)
+
+## Claude Code Skills
+
+When creating a new skill, always ask the user whether it should be a **project-level skill** (`.claude/skills/<skill-name>/SKILL.md` — committed to the repo, shared with all developers) or a **global user skill** (`~/.claude/skills/<skill-name>/SKILL.md` — personal, available across all projects). Don't assume either location.
 
 ## Git Commits
 
