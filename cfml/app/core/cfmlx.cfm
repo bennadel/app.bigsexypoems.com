@@ -183,7 +183,7 @@
 	* I perform an in-place sort of the given array using the provided operators. Each
 	* subsequent operator is only consumed when the previous operator returns 0.
 	*/
-	public array function arraySortByOperators(
+	private array function arraySortByOperators(
 		required array collection,
 		required function operator
 		/* , operator-2 */
