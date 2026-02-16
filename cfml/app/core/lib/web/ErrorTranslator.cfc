@@ -46,6 +46,9 @@ component hint = "I help translate application errors into appropriate response 
 					message: "Sorry, you've attempted to use a feature that is currently in private beta. I'm hoping to start opening this up to a wider audience soon."
 				});
 			break;
+			case "App.LocalHtmxTest":
+				return as500();
+			break;
 			case "App.MethodNotAllowed":
 				return as405();
 			break;
@@ -73,11 +76,20 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.Collection.NotFound":
 				return asModelNotFound( error, "collection" );
 			break;
-			case "App.Model.Poem.Content.TooLong":
-				return asModelStringTooLong( error, "poem", metadata );
+			case "App.Model.Language.Word.NotFound":
+				return as500();
+			break;
+			case "App.Model.OneTimeToken.NotFound":
+				return as400({
+					type: error.type,
+					message: "Your request has expired, please try again."
+				});
 			break;
 			case "App.Model.Poem.Content.SuspiciousEncoding":
 				return asModelStringSuspiciousEncoding( error, "poem" );
+			break;
+			case "App.Model.Poem.Content.TooLong":
+				return asModelStringTooLong( error, "poem", metadata );
 			break;
 			case "App.Model.Poem.Forbidden":
 				return as403();
@@ -115,6 +127,9 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.Poem.Share.NoteMarkdown.Unsafe":
 				return asModelMarkdownUnsafe( error, "share note", metadata );
 			break;
+			case "App.Model.Poem.Share.NotFound":
+				return asModelNotFound( error, "share link" );
+			break;
 			case "App.Model.Poem.Share.SnapshotContent.SuspiciousEncoding":
 				return asModelStringSuspiciousEncoding( error, "share snapshot content" );
 			break;
@@ -127,17 +142,23 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.Poem.Share.SnapshotName.TooLong":
 				return asModelStringTooLong( error, "share snapshot name", metadata );
 			break;
-			case "App.Model.Poem.Share.NotFound":
-				return asModelNotFound( error, "share link" );
+			case "App.Model.Poem.Share.Viewing.Forbidden":
+				return as500();
 			break;
-			case "App.Model.OneTimeToken.NotFound":
-				return as400({
-					type: error.type,
-					message: "Your request has expired, please try again."
-				});
+			case "App.Model.Poem.Share.Viewing.NotFound":
+				return as500();
 			break;
 			case "App.Model.Session.NotFound":
 				return asModelNotFound( error, "session" );
+			break;
+			case "App.Model.Session.Presence.AlreadyExists":
+				return as500();
+			break;
+			case "App.Model.Session.Presence.NotFound":
+				return as500();
+			break;
+			case "App.Model.System.Task.NotFound":
+				return as500();
 			break;
 			case "App.Model.Tag.FillHex.Invalid":
 				return as422({
@@ -172,8 +193,14 @@ component hint = "I help translate application errors into appropriate response 
 					message: "Your text color must be a 6-digit hexadecimal value (e.g ""ffffff"")."
 				});
 			break;
+			case "App.Model.User.Account.AlreadyExists":
+				return as500();
+			break;
 			case "App.Model.User.Account.NotFound":
 				return asModelNotFound( error, "account" );
+			break;
+			case "App.Model.User.AlreadyExists":
+				return as500();
 			break;
 			case "App.Model.User.Email.Empty":
 				return asModelStringEmpty( error, "email address" );
@@ -208,8 +235,14 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.Model.User.NotFound":
 				return asModelNotFound( error, "user" );
 			break;
+			case "App.Model.User.Timezone.AlreadyExists":
+				return as500();
+			break;
 			case "App.Model.User.Timezone.NotFound":
 				return asModelNotFound( error, "timezone" );
+			break;
+			case "App.NoParentContext":
+				return as500();
 			break;
 			case "App.NotFound":
 				return as404();
@@ -223,6 +256,9 @@ component hint = "I help translate application errors into appropriate response 
 				return as404({
 					type: error.type
 				});
+			break;
+			case "App.Routing.InvalidTemplate":
+				return as500();
 			break;
 			case "App.ServerError":
 				return as500();

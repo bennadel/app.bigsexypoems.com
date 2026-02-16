@@ -261,7 +261,7 @@ public numeric function idFrom( required numeric input ) {
 }
 ```
 
-### Safe — *Html validators (do NOT flag)
+### Safe — \*Html validators (do NOT flag)
 
 ```cfml
 public string function noteHtmlFrom( required string input ) {
@@ -352,7 +352,7 @@ var noteHtml = sanitizedResults.safeHtml;
 gateway.update( noteHtml = noteHtml );
 ```
 
-### What to verify for each *Markdown field
+### What to verify for each \*Markdown field
 
 1. A `*Sanitizer.cfc` component exists (e.g., `ShareNoteSanitizer.cfc`, `CollectionDescriptionSanitizer.cfc`)
 2. The service layer calls the sanitizer during markdown-to-HTML conversion
