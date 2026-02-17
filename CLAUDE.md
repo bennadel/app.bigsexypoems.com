@@ -89,7 +89,7 @@ cfml/app/
 
 ### ColdFusion Components (`.cfc`)
 
-`.cfc` are structures in sections. Each section is delimited by a comment-block (`LIFE-CYCLE METHODS`, `PUBLIC METHODS`, `PRIVATE METHODS`). Within the `LIFE-CYCLE METHODS` section, methods are listed in order of life-cycle execution. Within the `PUBLIC METHODS` and `PRIVATE METHODS` section, methods are listed alphabetically.
+`.cfc` are structured in sections delimited by comment-blocks (`LIFE-CYCLE METHODS`, `PUBLIC METHODS`, `PRIVATE METHODS`). Life-cycle methods are listed in execution order; public and private methods are listed alphabetically. All `.cfc` files are script-based except `*Gateway.cfc` (tag-based for `cfquery`).
 
 ```cfc
 component {
@@ -131,29 +131,12 @@ component {
 
 	}
 
-
-	/**
-	* I ....
-	*/
-	private struct function buildThisOtherThing() {
-
-	}
-
 }
 ```
 
-All `.cfc` files are script-based. Except for database access components (`*Gateway.cfc`), which are tag-based so that we can use the `cfquery` tags to execute SQL statements against MySQL.
-
 ### ColdFusion Templates (`.cfm`)
 
-`.cfm` templates can be either script-based (they don't generate output) or tag-based (they do generate output).
-
-Script-based templates generally have 2-3 sections:
-- IoC / `cfmlx.cfm` inclusion at the top.
-- Processing logic in the middle.
-- Private methods at the bottom (optional).
-
-Each of these three sections is separated by a comment-hrule:
+`.cfm` templates are either script-based (no output) or tag-based (generates output). Script-based templates have 2-3 sections separated by comment-hrules:
 
 ```
 <cfscript>
@@ -190,41 +173,20 @@ Each of these three sections is separated by a comment-hrule:
 </cfscript>
 ```
 
-When script-based and tag-based templates work as a pair (such as with a view-module or a layout-module), the file naming convention is:
-- `thing.cfm` (script-based)
-- `thing.view.cfm` (tag-based)
-
-The script-based tag will `include` the tag-based tag; often as the last part of the processing section.
+When script-based and tag-based templates work as a pair, the naming convention is `thing.cfm` (script) + `thing.view.cfm` (tags). The script template `include`s the tag template as the last part of its processing section.
 
 ### View Templates (`.view.cfm` / `.view.less` / `.view.js`)
 
-A view may have a `.view.less` file, a `.view.js` file, both, or neither — they are independent and optional:
+A view may optionally include `.view.less` (Less CSS) and/or `.view.js` (Alpine.js) alongside the `.cfm` / `.view.cfm` pair.
 
-- `thing.cfm` (script-based CFML)
-- `thing.view.cfm` (tag-based CFML)
-- `thing.view.less` (Less CSS — optional)
-- `thing.view.js` (JavaScript — optional)
-
-Since the asset build system has no automatic scoping of JavaScript or CSS, we must simulate scoping through the use of a random 6-character lowercase alphanumeric slug that **MUST** begin with a letter (so it can be used as a valid JavaScript identifier). Examples:
-
-- `ijzl5y`
-- `mq9evq`
-
-This slug is used as an HTML attribute, a CSS attribute selector, a class name, and a JavaScript global variable name — all sharing the same value.
+Since the asset build system has no automatic scoping, we simulate it with a random 6-character lowercase alphanumeric slug that **MUST** begin with a letter (e.g., `mq9evq`). This slug is used as an HTML attribute, CSS attribute selector, class name, and JavaScript global variable — all sharing the same value.
 
 #### CSS scoping in `.view.less`
 
-All CSS rules in a `.view.less` file are nested under an attribute selector using the slug:
+All CSS rules are nested under an attribute selector using the slug. Two patterns target elements:
 
-```less
-[mq9evq] {
-	// ...
-}
-```
-
-Within this block, there are two patterns for targeting elements:
-
-**Direct match (`&.className`)** — targets elements that have both the slug attribute AND the class. Use this when the slug attribute is applied directly to the styled element in the `.view.cfm`:
+- **Direct match (`&.className`)** — element has both the slug attribute AND the class. Compiles to `[slug].className`.
+- **Descendant match (`.className`)** — element is a descendant of a slug-attributed ancestor. Compiles to `[slug] .className`.
 
 ```less
 [mq9evq] {
@@ -233,25 +195,7 @@ Within this block, there are two patterns for targeting elements:
 	}
 
 	&.title {
-		// Direct element: compiles to [mq9evq].title
-	}
-}
-```
-
-```cfml
-<div mq9evq class="mq9evq">
-	<h2 mq9evq class="title">
-		This is a title with scoped styling
-	</h2>
-</div>
-```
-
-**Descendant match (`.className`)** — targets child elements that are descendants of an element with the slug attribute. Use this when only an ancestor has the slug attribute:
-
-```less
-[mq9evq] {
-	&.mq9evq {
-		// Root element: compiles to [mq9evq].mq9evq
+		// Direct match: compiles to [mq9evq].title
 	}
 
 	.item {
@@ -262,15 +206,16 @@ Within this block, there are two patterns for targeting elements:
 
 ```cfml
 <div mq9evq class="mq9evq">
+	<h2 mq9evq class="title">
+		Direct-matched element (has slug attribute)
+	</h2>
 	<div class="item">
-		No slug attribute needed on this child.
+		Descendant-matched element (no slug attribute needed)
 	</div>
 </div>
 ```
 
-Both patterns can be mixed within the same `.view.less` file. The root element typically uses `&.slug` for its own styles.
-
-**Note**: CSS keyframe animations don't nest well inside attribute selectors. Define them outside the top-level `[slug]` block, prefixed with the slug for scoping:
+Both patterns can be mixed. The root element typically uses `&.slug` for its own styles. Define CSS keyframe animations outside the `[slug]` block, prefixed with the slug:
 
 ```less
 @keyframes mq9evq-enter-blink {
@@ -280,15 +225,14 @@ Both patterns can be mixed within the same `.view.less` file. The root element t
 
 #### Alpine.js components in `.view.js`
 
-If a `.view.js` file exists, it defines one or more Alpine.js components using the same slug as a global namespace. Components use a revealing module pattern with section comments matching the `.cfc` convention:
+If a `.view.js` file exists, it defines one or more Alpine.js components using the slug as a global namespace. Components use a revealing module pattern with section comments matching the `.cfc` convention:
 
 ```js
 window.mq9evq = {
-	ComponentOne,
-	ComponentTwo,
+	MyComponent,
 };
 
-function ComponentOne() {
+function MyComponent() {
 
 	return {
 		// Life-Cycle Methods.
@@ -325,22 +269,9 @@ function ComponentOne() {
 	}
 
 }
-
-function ComponentTwo() {
-
-	return {
-		// return public API for Alpine.js component.
-	};
-
-}
 ```
 
-These Alpine.js components are then bound to elements in the `.view.cfm` using `x-data` attributes:
-
-```cfml
-<div x-data="mq9evq.ComponentOne"> ... </div>
-<div x-data="mq9evq.ComponentTwo"> ... </div>
-```
+Components are bound in `.view.cfm` via `x-data` attributes: `<div x-data="mq9evq.MyComponent">`.
 
 ## Form Field Patterns
 
@@ -396,11 +327,9 @@ When creating a new shared tag in `_shared/tag/`, you must add an explicit impor
 
 ## Database Migrations
 
-There's no database migration framework. All of the database migration files need to be run manually. As such, when the database structure needs to be changed, you must write a file to the `/cfml/app/db/` directory and then prompt me to run it manually.
+There's no database migration framework. All migration files need to be run manually. When the database structure needs to change, write a file to `/cfml/app/db/` and prompt me to run it manually.
 
-Database migrations must be lexicographically named so that when a new environment spins up, all the `.sql` files are executed in a predictable order. Database migrations scripts are named in the form of:
-
-SQL files use tabs for indentation (consistent with the rest of the codebase).
+Migrations are lexicographically named. SQL files use tabs for indentation.
 
 `YYYY-MM-DD-{counter}-{description}.sql`
 
@@ -411,19 +340,19 @@ Examples:
 
 ## Architecture Preferences
 
-**Consistency across patterns matters more than local optimization**: When the codebase has an established pattern (cascade style, optional-return convention, etc.), follow it uniformly — even if a shortcut would work in a specific case. Consistent patterns make the codebase easier to reason about and reduce cognitive load.
+**Consistency across patterns matters more than local optimization**: When the codebase has an established pattern, follow it uniformly — even if a shortcut would work in a specific case.
 
 **Flat entity organization**: Tightly coupled entities (e.g., poem and revision) live as siblings in the same directory, not in nested subfolders. Only use subfolders when entities have genuine independence.
 
-**Side-effects in the service layer, not controllers**: If an operation (like creating a revision) should happen every time an entity is created/updated, put it in the service method — not in each controller that calls the service. Controllers should not orchestrate cross-cutting concerns.
+**Side-effects in the service layer, not controllers**: If an operation (like creating a revision) should happen every time an entity is created/updated, put it in the service method — not in each controller that calls the service.
 
 **Services are ingress points**: Services exist as entry points from the controller layer into business logic. Services should not call other services laterally. A service can directly use sibling models (e.g., `PoemService` using `revisionModel`) when the entities are tightly coupled.
 
-**Access components are self-contained**: Each Access component owns all authorization checks for its entity. Access components should never call other Access components laterally. If a cross-entity permission check is needed (e.g., "can make this revision current" requires poem-update permission), implement the check inline within the owning Access component rather than delegating to a sibling Access component. Name assertion methods after the action (`canMakeCurrent`, `canDelete`) so the logic is localized and can evolve independently.
+**Access components are self-contained**: Each Access component owns all authorization checks for its entity and should never call other Access components laterally. Implement cross-entity permission checks inline. Name assertion methods after the action (`canMakeCurrent`, `canDelete`).
 
-**Pass context structs with `argumentCollection`**: Access components return context structs with keys like `authContext`, `user`, `poem`, etc. These structs are designed to flow directly into assertion methods via `argumentCollection` rather than explicitly destructuring arguments. For example, use `poemAccess.canUpdate( argumentCollection = context )` instead of `poemAccess.canUpdate( authContext = context.authContext, user = context.user )`. The context struct may contain extra keys beyond what the method requires — ColdFusion ignores them.
+**Pass context structs with `argumentCollection`**: Access context structs flow directly into assertion methods via `argumentCollection` (e.g., `poemAccess.canUpdate( argumentCollection = context )`) rather than destructuring arguments. Extra keys are ignored by ColdFusion.
 
-**Cascade delete pattern**: The parent entity owns the collection relationship and iterates over children. Each child's cascade component handles deleting a single record (and any of its own children). The cascade component should never bulk-delete siblings — that's the parent's job.
+**Cascade delete pattern**: The parent entity owns the collection relationship and iterates over children. Each child's cascade component handles deleting a single record. The cascade should never bulk-delete siblings.
 
 ```cfc
 // Parent cascade iterates:
@@ -440,17 +369,16 @@ public void function deleteRevision( required struct revision ) {
 
 **Use the `maybe` pattern for optional lookups**: When a query might return zero results, use `maybeGet*` methods that return `{ exists, value }` via `maybeArrayFirst()`. Never return empty structs `{}` as a "not found" sentinel.
 
-**Snapshot from persisted state**: When creating a snapshot or revision of an entity, re-read the entity from the database rather than passing through the submitted input values. This ensures the snapshot reflects the actual persisted state (after any validation/normalization).
+**Snapshot from persisted state**: When creating a snapshot or revision, re-read the entity from the database rather than passing through submitted input values.
 
-**Use the entity's own timestamps**: When an operation is semantically tied to an entity mutation (like a revision snapshot), use the entity's own `updatedAt`/`createdAt` timestamp rather than generating a new `utcNow()`.
+**Use the entity's own timestamps**: When an operation is semantically tied to an entity mutation (like a revision snapshot), use the entity's own `updatedAt`/`createdAt` rather than generating a new `utcNow()`.
 
-**Prefer simplicity over conditional optimization**: Don't add guards or conditionals to skip work that's cheap and harmless. Prefer always executing a simple path over branching to avoid redundant-but-safe operations.
+**Simplicity over abstraction**:
+- Don't add guards or conditionals to skip work that's cheap and harmless.
+- Keep single-use constants as local variables rather than promoting to instance properties with `ioc:skip`.
+- Don't pre-build service methods or APIs for anticipated future needs. Delete dead code.
 
-**Keep constants local when single-use**: If a value (like a timeout or threshold) is only used in one method, declare it as a local variable in that method. Don't promote it to an instance property with `ioc:skip` and an `init()` method.
-
-**Order by `id` instead of date columns**: Auto-increment IDs are inserted in chronological order, and every index implicitly contains the primary key. Prefer `ORDER BY id DESC` over `ORDER BY updatedAt DESC` (or similar date columns) to leverage existing indexes and avoid needing composite indexes on date columns.
-
-**Don't build for future use**: Don't pre-build service methods, components, or APIs for anticipated future needs. Build them when they're actually needed. Delete dead code rather than keeping it around "for later."
+**Order by `id` instead of date columns**: Auto-increment IDs are inserted chronologically. Prefer `ORDER BY id DESC` over date columns to leverage existing indexes.
 
 ## Error and Flash Message Translations
 
@@ -477,4 +405,3 @@ When creating a new skill, always ask the user whether it should be a **project-
 Never include a `Co-Authored-By` line in commit messages. Ben is the sole author and owner of all code in this repository.
 
 Don't add arbitrary line breaks within a paragraph in commit messages. Let a single-paragraph body remain on one line. Only use line breaks to separate distinct paragraphs.
-
