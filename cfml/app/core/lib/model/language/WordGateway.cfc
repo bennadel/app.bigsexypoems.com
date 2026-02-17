@@ -62,6 +62,7 @@
 	<cffunction name="getByFilter" returnType="array">
 
 		<cfargument name="token" type="string" required="false" />
+		<cfargument name="withSort" type="string" required="false" default="token" />
 
 		<cfset assertIndexPrefix( arguments ) />
 
@@ -85,7 +86,11 @@
 			</cfif>
 
 			ORDER BY
-				token ASC
+				<cfswitch expression="#withSort#">
+					<cfdefaultcase>
+						token ASC
+					</cfdefaultcase>
+				</cfswitch>
 		</cfquery>
 
 		<cfreturn results />

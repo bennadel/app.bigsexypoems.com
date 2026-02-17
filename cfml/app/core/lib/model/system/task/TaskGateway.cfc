@@ -18,6 +18,7 @@
 
 		<cfargument name="id" type="string" required="false" />
 		<cfargument name="overdueAt" type="date" required="false" />
+		<cfargument name="withSort" type="string" required="false" default="id" />
 
 		<cfquery name="local.results" result="local.metaResults" returnType="array">
 			SELECT
@@ -45,7 +46,11 @@
 			</cfif>
 
 			ORDER BY
-				id ASC
+				<cfswitch expression="#withSort#">
+					<cfdefaultcase>
+						id ASC
+					</cfdefaultcase>
+				</cfswitch>
 		</cfquery>
 
 		<cfreturn decodeColumns( results ) />

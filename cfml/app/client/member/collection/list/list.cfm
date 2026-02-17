@@ -26,10 +26,10 @@
 	*/
 	private struct function getPartial( required struct authContext ) {
 
-		var collections = CollectionModel
-			.getByFilter( userID = authContext.user.id )
-			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
-		;
+		var collections = CollectionModel.getByFilter(
+			userID = authContext.user.id,
+			withSort = "name"
+		);
 
 		return {
 			collections

@@ -81,7 +81,8 @@ component {
 		numeric id,
 		numeric poemID,
 		numeric shareID,
-		string ipAddress
+		string ipAddress,
+		string withSort
 		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );

@@ -41,10 +41,10 @@
 
 		var context = revisionAccess.getContextForParent( authContext, poemID, "canViewAny" );
 		var poem = context.poem;
-		var revisions = revisionModel
-			.getByFilter( poemID = poem.id )
-			.sort( ( a, b ) => sgn( b.id - a.id ) )
-		;
+		var revisions = revisionModel.getByFilter(
+			poemID = poem.id,
+			withSort = "newest"
+		);
 
 		return {
 			poem,

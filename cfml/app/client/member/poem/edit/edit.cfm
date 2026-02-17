@@ -93,10 +93,10 @@
 		var context = poemAccess.getContext( authContext, poemID, "canUpdate" );
 		var poem = context.poem;
 
-		var collections = collectionModel
-			.getByFilter( userID = authContext.user.id )
-			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
-		;
+		var collections = collectionModel.getByFilter(
+			userID = authContext.user.id,
+			withSort = "name"
+		);
 
 		return {
 			poem,

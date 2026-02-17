@@ -68,6 +68,7 @@
 
 		<cfargument name="id" type="numeric" required="false" />
 		<cfargument name="poemID" type="numeric" required="false" />
+		<cfargument name="withSort" type="string" required="false" default="id" />
 
 		<cfset assertIndexPrefix( arguments ) />
 
@@ -95,7 +96,14 @@
 			</cfif>
 
 			ORDER BY
-				updatedAt DESC
+				<cfswitch expression="#withSort#">
+					<cfcase value="newest">
+						id DESC
+					</cfcase>
+					<cfdefaultcase>
+						id ASC
+					</cfdefaultcase>
+				</cfswitch>
 		</cfquery>
 
 		<cfreturn results />
