@@ -16,7 +16,7 @@ Read `rubric.md` (in this skill directory) before analyzing. It defines what mak
 3. Read all auto-memory files in the `.claude/projects/` memory directory (if any exist).
 4. Read all `.claude/wip/*.md` files (if any exist).
 5. Read all `.claude/skills/*/SKILL.md` and companion files (e.g., `patterns.md`).
-6. Check for a last-reflect marker at `.claude/last-reflect`. If it exists, read the commit hash and scope the git history: `git log --oneline <hash>..HEAD`. If it doesn't exist, fall back to `git log --oneline -30`.
+6. Run `git log --oneline -30` to see recent commits.
 7. For commits that match the signals below, run `git show --stat <hash>` to understand what files were touched.
 
 ### Signals that indicate context-relevant changes
@@ -176,5 +176,4 @@ Group related findings under the same category header when they affect the same 
 
 - Do NOT make any edits automatically. Present findings and let the user decide which changes to make.
 - The user may want to discuss, adjust, or reject individual suggestions before anything is changed.
-- After presenting findings, offer to update the last-reflect marker at `.claude/last-reflect` with the current HEAD commit hash so the next `/reflect` run can scope its analysis to only new commits.
 - Keep the tone collaborative — this is a maintenance review, not a critique.

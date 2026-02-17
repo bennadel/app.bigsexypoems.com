@@ -71,13 +71,16 @@ cfml/app/
 ## Global Extensions
 
 `/cfml/app/core/cfmlx.cfm` provides polyfills and shortcuts included in every execution context (component, template, custom tag). Functions in this file should be pure and decoupled from the application:
-- Array: `arrayCopy()`, `arrayGroupBy()`, `arrayIndexBy()`, `arrayPluck()`, `arrayPluckUnique()`, `arrayReflect()`, `arraySortByOperators()`
+- Array: `arrayCopy()`, `arrayGroupBy()`, `arrayIndexBy()`, `arrayPluck()`, `arrayPluckPath()`, `arrayPluckUnique()`, `arrayReflect()`, `arraySortByOperators()`
 - Encoding: `e()` (HTML), `e4a()` (HTML attribute), `e4j()` (JavaScript), `e4json()` (JSON-in-JS), `e4u()` (URL)
-- Maybe: `maybeNew()`, `maybeArrayFirst()` — returns `{ exists, value }` structs
-- Type checks: `isFalsy()`, `isTruthy()`, `isString()`, `isComponent()`, `isNotDate()`
+- Maybe: `maybeNew()`, `maybeArrayFirst()`, `maybeSet()` — returns `{ exists, value }` structs
+- Type checks: `isFalsy()`, `isTruthy()`, `isString()`, `isComponent()`, `isNotDate()`, `isInThread()`
 - Coalesce: `coalesce()` (first non-null), `coalesceTruthy()` (first truthy)
-- Misc: `clamp()`, `nullValue()`, `rangeNew()`, `structPick()`, `toEntries()`, `truncate()`, `ucFirst()`
-- Polyfills: `echo()`, `dump()`, `systemOutput()`, `utcNow()`
+- Date: `dateGetTime()`
+- String: `stringAppendIf()`
+- Safe ops: `safeDirectoryCreate()`, `safeFileDelete()`, `safeInsertAt()`
+- Misc: `clamp()`, `methodBind()`, `nullValue()`, `rangeNew()`, `structPick()`, `toEntries()`, `truncate()`, `ucFirst()`
+- Polyfills: `echo()`, `dump()`, `dumpN()`, `systemOutput()`, `utcNow()`
 
 ## CFML Settings
 
