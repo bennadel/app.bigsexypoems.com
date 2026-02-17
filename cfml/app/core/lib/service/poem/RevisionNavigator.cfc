@@ -16,10 +16,10 @@ component {
 	*/
 	public struct function getPosition( required struct revision ) {
 
-		var siblings = revisionModel
-			.getByFilter( poemID = revision.poemID )
-			.sort( ( a, b ) => sgn( b.id - a.id ) )
-		;
+		var siblings = revisionModel.getByFilter(
+			poemID = revision.poemID,
+			withSort = "newest"
+		);
 
 		var i = siblings.find( ( element ) => ( element.id == revision.id ) );
 		// The siblings are sorted newest-first. As such, the revision number is the

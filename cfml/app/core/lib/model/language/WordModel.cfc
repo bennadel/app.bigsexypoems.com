@@ -70,7 +70,10 @@ component {
 	/**
 	* I get the model that match the given filters.
 	*/
-	public array function getByFilter( string token ) {
+	public array function getByFilter(
+		string token,
+		string withSort
+		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );
 

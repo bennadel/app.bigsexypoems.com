@@ -46,13 +46,11 @@
 		var share = context.share;
 		var poem = context.poem;
 
-		var viewings = viewingModel
-			.getByFilter(
-				poemID = poem.id,
-				shareID = share.id
-			)
-			.sort( ( a, b ) => sgn( b.id - a.id ) )
-		;
+		var viewings = viewingModel.getByFilter(
+			poemID = poem.id,
+			shareID = share.id,
+			withSort = "newest"
+		);
 
 		return {
 			poem,

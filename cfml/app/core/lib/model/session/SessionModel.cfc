@@ -85,7 +85,8 @@ component {
 	public array function getByFilter(
 		numeric id,
 		string token,
-		numeric userID
+		numeric userID,
+		string withSort
 		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );

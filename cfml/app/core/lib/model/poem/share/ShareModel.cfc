@@ -91,7 +91,8 @@ component {
 	public array function getByFilter(
 		numeric id,
 		numeric poemID,
-		string token
+		string token,
+		string withSort
 		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );

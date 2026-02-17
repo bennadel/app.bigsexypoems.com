@@ -34,7 +34,8 @@ component {
 	*/
 	public array function getByFilter(
 		string id,
-		date overdueAt
+		date overdueAt,
+		string withSort
 		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );

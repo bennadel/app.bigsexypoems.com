@@ -48,7 +48,8 @@ component {
 	*/
 	public array function getByFilter(
 		numeric id,
-		date expiresAtBefore
+		date expiresAtBefore,
+		string withSort
 		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );

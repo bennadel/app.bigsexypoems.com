@@ -66,6 +66,7 @@
 
 		<cfargument name="id" type="numeric" required="false" />
 		<cfargument name="email" type="string" required="false" />
+		<cfargument name="withSort" type="string" required="false" default="id" />
 
 		<cfset assertIndexPrefix( arguments ) />
 
@@ -91,7 +92,11 @@
 			</cfif>
 
 			ORDER BY
-				id ASC
+				<cfswitch expression="#withSort#">
+					<cfdefaultcase>
+						id ASC
+					</cfdefaultcase>
+				</cfswitch>
 		</cfquery>
 
 		<cfreturn results />

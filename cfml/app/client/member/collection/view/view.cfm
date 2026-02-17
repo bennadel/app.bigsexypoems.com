@@ -42,10 +42,10 @@
 		var context = collectionAccess.getContext( authContext, collectionID, "canView" );
 		var collection = context.collection;
 
-		var poems = poemModel
-			.getByFilter( collectionID = collection.id )
-			.sort( ( a, b ) => compareNoCase( a.name, b.name ) )
-		;
+		var poems = poemModel.getByFilter(
+			collectionID = collection.id,
+			withSort = "name"
+		);
 
 		return {
 			collection,

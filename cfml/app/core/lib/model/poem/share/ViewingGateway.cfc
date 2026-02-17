@@ -122,6 +122,7 @@
 		<cfargument name="poemID" type="numeric" required="false" />
 		<cfargument name="shareID" type="numeric" required="false" />
 		<cfargument name="ipAddress" type="string" required="false" />
+		<cfargument name="withSort" type="string" required="false" default="id" />
 
 		<cfset assertIndexPrefix( arguments ) />
 
@@ -161,7 +162,14 @@
 			</cfif>
 
 			ORDER BY
-				id ASC
+				<cfswitch expression="#withSort#">
+					<cfcase value="newest">
+						id DESC
+					</cfcase>
+					<cfdefaultcase>
+						id ASC
+					</cfdefaultcase>
+				</cfswitch>
 		</cfquery>
 
 		<cfreturn results />
