@@ -12,6 +12,14 @@ You are performing a security-focused code review of this ColdFusion (CFML) appl
 
 Read `patterns.md` (in this skill directory) before scanning. It contains concrete good/bad code examples for each check category that will help you distinguish true findings from false positives.
 
+## Scanning Strategy
+
+Use the available tools efficiently:
+
+- **Grep first, Read second.** For most checks, use Grep to find candidate violations, then Read the surrounding context to confirm or dismiss. Don't read entire files unless necessary.
+- **Glob to discover files.** Use Glob patterns to find all files matching a check's scope (e.g., `*Gateway.cfc`, `*.view.cfm`) before scanning.
+- **Cross-reference checks.** For checks that compare two sources (Check 6: thrown errors vs. translator cases), collect both lists first, then diff them.
+
 ## Scan Procedure
 
 Execute these 9 checks in order. For each check, scan the specified files, apply the criteria, and record findings.
@@ -113,14 +121,15 @@ Also check `<form>` elements (or any element) that use `hx-post` — if the `hx-
 
 Scan controller `.cfm` files (NOT `.view.cfm`) in `cfml/app/client/member/`.
 
-When a controller accepts entity IDs via URL parameters (`param name="url.poemID"`, `param name="url.collectionID"`, `param name="url.shareID"`), it must verify access using a `*Access.getContext()` or `*Access.getContextForParent()` call before operating on the entity.
+When a controller accepts entity IDs via URL parameters (`param name="url.poemID"`, `param name="url.collectionID"`, `param name="url.shareID"`, `param name="url.revisionID"`), it must verify access using a `*Access.getContext()` or `*Access.getContextForParent()` call before operating on the entity.
 
 **What to flag:**
 - A controller that has `param name="url.*ID"` but never calls an Access component's `getContext()` or `getContextForParent()` method
 
 **What is safe (do NOT flag):**
-- Controllers that call `poemAccess.getContext(...)`, `collectionAccess.getContext(...)`, `shareAccess.getContext(...)`, or similar
+- Controllers that call `poemAccess.getContext(...)`, `collectionAccess.getContext(...)`, `shareAccess.getContext(...)`, `revisionAccess.getContext(...)`, or similar
 - Controllers that don't accept entity IDs via URL params
+- Controllers in `cfml/app/client/share/` — this subsystem uses token-based access (shareID + shareToken) instead of `*Access.getContext()`, which is the correct pattern for public share links
 
 ---
 
@@ -150,7 +159,7 @@ Every public validation method that processes **string** input should include `a
 
 **Error types:** Grep for `throw( type = "App.` across the entire `cfml/app/` directory. Then read `cfml/app/core/lib/web/ErrorTranslator.cfc` and check that every thrown error type has a corresponding `case` statement.
 
-**Flash tokens:** Grep for `flash:` or `flash =` in router.goto() calls across `cfml/app/`. Then read `cfml/app/core/lib/web/FlashTranslator.cfc` and check that every flash token has a corresponding `case` statement.
+**Flash tokens:** Grep for `flash: "` across `cfml/app/client/` to find flash tokens in `router.goto()` struct arguments. Then read `cfml/app/core/lib/web/FlashTranslator.cfc` and check that every flash token has a corresponding `case` statement.
 
 **What to flag:**
 - Any `throw( type = "App.*" )` type that has no case in ErrorTranslator
@@ -166,11 +175,13 @@ Every public validation method that processes **string** input should include `a
 
 **Severity: HIGH**
 
-For fields that store Markdown (column names ending in `Markdown`), verify:
+**Step 1 — Discover Markdown fields:** Grep for `Markdown` in `*Gateway.cfc` files under `cfml/app/core/lib/model/` to find column names ending in `Markdown` (e.g., `noteMarkdown`, `descriptionMarkdown`).
 
-1. A corresponding `*Sanitizer.cfc` component exists that processes the markdown-to-HTML conversion
-2. The service layer calls the sanitizer when converting markdown to HTML
-3. Views output the `*Html` version (pre-sanitized), NOT the raw `*Markdown` version, when rendering unescaped HTML
+**Step 2 — Verify the sanitization chain** for each Markdown field:
+
+1. A corresponding `*Sanitizer.cfc` component exists under `cfml/app/core/lib/model/` that processes the markdown-to-HTML conversion
+2. The service layer (under `cfml/app/core/lib/service/`) calls the sanitizer when converting markdown to HTML
+3. Views (`.view.cfm` files) output the `*Html` version (pre-sanitized), NOT the raw `*Markdown` version, when rendering unescaped HTML
 
 **What to flag:**
 - A `*Markdown` field that has no corresponding sanitizer

@@ -217,6 +217,30 @@ param name="url.poemID" type="numeric";
 var context = shareAccess.getContextForParent( authContext, url.poemID, "canViewAny" );
 ```
 
+### Good — revision access check
+
+```cfml
+param name="url.revisionID" type="numeric";
+
+var context = revisionAccess.getContext( authContext, url.revisionID, "canView" );
+```
+
+### Safe — token-based access in share subsystem (do NOT flag)
+
+```cfml
+<!--- cfml/app/client/share/poem/poem.cfm --->
+param name="url.shareID" type="numeric" default=0;
+param name="url.shareToken" type="string" default="";
+
+request.share = shareModel.get( val( url.shareID ) );
+
+if ( compare( request.share.token, url.shareToken ) ) {
+    shareValidation.throwNotFoundError();
+}
+```
+
+The share subsystem uses token-based validation instead of `*Access.getContext()`. This is the correct pattern for public share links — the token acts as the authorization credential.
+
 ---
 
 ## 5. Input Validation — assertUniformEncoding
@@ -296,7 +320,11 @@ break;
 
 In a controller:
 ```cfml
-router.goto( url = "...", flash = "your.thing.created" );
+router.goto([
+    event: "member.thing.view",
+    thingID: thing.id,
+    flash: "your.thing.created"
+]);
 ```
 
 But `FlashTranslator.cfc` has no `case "your.thing.created":` — the success message won't display.
