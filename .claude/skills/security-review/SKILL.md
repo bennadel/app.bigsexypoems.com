@@ -32,7 +32,7 @@ Execute these 9 checks in order. For each check, scan the specified files, apply
 
 Scan all `*Gateway.cfc` files under `cfml/app/core/lib/model/`.
 
-These files are tag-based CFML and use `<cfquery>` blocks for database access. Look for any `#variable#` interpolation inside `<cfquery>` that is **not** wrapped in a `<cfqueryparam>` tag.
+These files are tag-based CFML and use `<cfquery>` blocks for database access. Look for any `#variable#` interpolation inside the **SQL body text** of a `<cfquery>` that is **not** wrapped in a `<cfqueryparam>` tag.
 
 **What to flag:**
 - Any `#variable#` directly in SQL text (e.g., `WHERE id = #userID#`)
@@ -41,6 +41,7 @@ These files are tag-based CFML and use `<cfquery>` blocks for database access. L
 **What is safe (do NOT flag):**
 - `<cfqueryparam value="#variable#" cfsqltype="..." />` — this is the correct pattern
 - `#tableName#` or `#columnName#` where the value comes from a hardcoded constant, not user input
+- `#variable#` in `<cfquery>` tag attributes (e.g., `datasource="#variables.datasource#"`) — these are CFML tag attributes, not SQL text
 
 ---
 
@@ -69,14 +70,7 @@ These produce internally-generated or pre-encoded output:
 
 | Pattern | Reason |
 |---------|--------|
-| `ui.fieldId()`, `ui.nextFieldId()` | Internally generated sequential IDs |
-| `ui.attrHref(...)` | Produces complete pre-encoded `href="..."` attribute |
-| `ui.attrAction(...)` | Produces complete pre-encoded `action="..."` attribute |
-| `ui.attrSrc(...)` | Produces complete pre-encoded `src="..."` attribute |
-| `ui.attrChecked(...)` | Outputs literal `checked` or empty string |
-| `ui.attrSelected(...)` | Outputs literal `selected` or empty string |
-| `ui.attrClass(...)` | Produces complete `class="..."` attribute |
-| `ui.userDate(...)`, `ui.userTime(...)`, `ui.userDateTime(...)` | Formatted date/time values (no user content) |
+| Any `ui.*()` method call | The `UI.cfc` component produces pre-encoded or internally-generated output. This includes `ui.fieldId()`, `ui.nextFieldId()`, `ui.attrHref()`, `ui.attrAction()`, `ui.attrSrc()`, `ui.attrChecked()`, `ui.attrSelected()`, `ui.attrClass()`, `ui.attrForUrlParts()`, `ui.userDate()`, `ui.userTime()`, `ui.userDateTime()`, `ui.fromNow()`, `ui.elemFromNow()`, `ui.externalUrlForParts()`, and any future `ui.*` methods |
 | `request.postBackAction` | Built by `Router.buildPostBackAction()`, URL-safe |
 | `router.urlForParts(...)` | URL builder, produces safe URLs |
 | Numeric IDs (`*.id`, `poemID`, `collectionID`, `shareID`, `userID`) | Integer values |
@@ -166,7 +160,7 @@ Every public validation method that processes **string** input should include `a
 - Any flash token that has no case in FlashTranslator
 
 **What is safe (do NOT flag):**
-- Error types that are caught and handled locally (try/catch in the same file) without propagating to the error translator
+- Error types that are caught and handled locally — verify by reading the surrounding context of the `throw()` to confirm it's inside a `try/catch` block in the same file that catches the specific error type without re-throwing
 - `App.Xsrf.*` errors (these are handled as a group in the translator)
 
 ---
@@ -252,7 +246,12 @@ For each check that has findings:
 ## [Check Name] ([Severity])
 
 - **[DEFINITE/POSSIBLE]** `file/path.cfm` ~line [N]: [Brief description of the issue]
+  ```
+  [offending code snippet, 1-3 lines]
+  ```
 ```
+
+Include the offending code so findings are verifiable at a glance without re-reading the source file.
 
 For checks with no findings:
 

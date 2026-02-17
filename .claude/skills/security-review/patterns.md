@@ -42,6 +42,14 @@ Every dynamic value is wrapped in `<cfqueryparam>` with an explicit `cfsqltype`.
 
 If `variables.tableName` is a hardcoded property set in the component's init (not from user input), this is safe. Check the data source before flagging.
 
+### Edge case — tag attributes are NOT SQL (do NOT flag)
+
+```cfml
+<cfquery name="local.results" datasource="#variables.datasource#">
+```
+
+The `#variables.datasource#` here is a CFML tag attribute, not SQL text. Only interpolation inside the SQL body (between the opening and closing `<cfquery>` tags) is relevant for SQL injection.
+
 ---
 
 ## 2. XSS Output Encoding
@@ -76,19 +84,25 @@ If `title` or `poem.content` contain user input, this allows XSS.
 
 ### Safe — UI helper methods (do NOT flag)
 
+Any `#ui.*()#` call is safe. The `UI.cfc` component produces pre-encoded or internally-generated output. This includes all current methods and any future additions.
+
 ```cfml
-<!--- These produce pre-encoded or internally-generated output --->
+<!--- Field IDs — internally generated sequential values --->
 <label for="#ui.nextFieldId()#">Name:</label>
 <input id="#ui.fieldId()#" type="text" />
 
+<!--- Attribute helpers — produce complete pre-encoded attributes --->
 <a #ui.attrHref( "member.poem.view", "poemID", poem.id )#>View</a>
 <form action="#request.postBackAction#">
 <img #ui.attrSrc( "/static/logo.png" )# />
 
+<!--- Boolean attribute helpers — output literal attribute or empty string --->
 <input type="checkbox" #ui.attrChecked( form.isPublic )# />
 <option #ui.attrSelected( form.sortBy == "name" )#>Name</option>
 
+<!--- Date/time helpers — formatted values, no user content --->
 <span>#ui.userDate( poem.createdAt )#</span>
+<span>#ui.fromNow( poem.updatedAt )#</span>
 ```
 
 ### Safe — pre-sanitized HTML (do NOT flag)
