@@ -1,7 +1,6 @@
 ---
 name: security-review
-description: Security-focused code review of the CFML codebase that checks for SQL injection, XSS, XSRF, access control, input validation, error translation, and HTML sanitization issues.
-disable-model-invocation: true
+description: Security-focused code review of the CFML codebase that checks for SQL injection, XSS, XSRF, access control, input validation, error translation, HTML sanitization, debug output, and unsafe evaluation issues.
 context: fork
 agent: Explore
 allowed-tools: Read, Grep, Glob
@@ -15,7 +14,7 @@ Read `patterns.md` (in this skill directory) before scanning. It contains concre
 
 ## Scan Procedure
 
-Execute these 7 checks in order. For each check, scan the specified files, apply the criteria, and record findings.
+Execute these 9 checks in order. For each check, scan the specified files, apply the criteria, and record findings.
 
 ---
 
@@ -180,9 +179,49 @@ For fields that store Markdown (column names ending in `Markdown`), verify:
 
 ---
 
+### Check 8: Debug Output in Production Code
+
+**Severity: MEDIUM**
+
+Scan all `.cfm` and `.cfc` files under `cfml/app/client/` and `cfml/app/core/lib/model/` and `cfml/app/core/lib/service/`.
+
+Look for calls to `dump()`, `writeDump()`, `<cfdump>`, or `systemOutput()` that appear in controllers, views, models, or services. These functions expose internal state and should not appear in production code paths.
+
+**What to flag:**
+- `dump(...)` or `writeDump(...)` in any controller `.cfm`, view `.view.cfm`, model `.cfc`, or service `.cfc`
+- `<cfdump var="...">` in any view or controller template
+- `systemOutput(...)` in any model or service component (outside of dedicated logging/diagnostic utilities)
+
+**What is safe (do NOT flag):**
+- `cfmlx.cfm` — polyfill definitions for `dump()` and `systemOutput()`
+- `Application.cfc` — error handler infrastructure
+- `Logger.cfc`, `MemoryLeakDetector.cfc` — dedicated diagnostic utilities
+- `localDevelopment.view.cfm` — explicitly scoped to local development
+- Any file under `cfml/app/core/lib/util/` — utility/infrastructure layer
+
+---
+
+### Check 9: Unsafe Dynamic Evaluation
+
+**Severity: HIGH**
+
+Scan all `.cfm` and `.cfc` files under `cfml/app/`.
+
+Look for uses of `evaluate()` or `iif()`, which execute arbitrary CFML expressions at runtime. These are classic injection vectors when any part of the evaluated expression originates from user input.
+
+**What to flag:**
+- Any call to `evaluate(...)` anywhere in application code
+- Any call to `iif(...)` anywhere in application code
+
+**What is safe (do NOT flag):**
+- `deserializeJson()` on trusted internal data (config files, HTTP API responses, internal error metadata, gateway column hydration) — these do not execute code
+- Standard CFML expressions and conditionals (these are not dynamic evaluation)
+
+---
+
 ## Report Format
 
-After completing all 7 checks, produce a report with this structure:
+After completing all 9 checks, produce a report with this structure:
 
 ### Summary
 
@@ -212,4 +251,4 @@ For checks with no findings:
 No issues found.
 ```
 
-If there are zero findings across all categories, state: "All 7 security checks passed with no findings."
+If there are zero findings across all categories, state: "All 9 security checks passed with no findings."

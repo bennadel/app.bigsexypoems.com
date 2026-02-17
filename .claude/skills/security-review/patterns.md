@@ -357,3 +357,118 @@ gateway.update( noteHtml = noteHtml );
 1. A `*Sanitizer.cfc` component exists (e.g., `ShareNoteSanitizer.cfc`, `CollectionDescriptionSanitizer.cfc`)
 2. The service layer calls the sanitizer during markdown-to-HTML conversion
 3. Views render `*Html` (not `*Markdown`) when outputting unescaped content
+
+---
+
+## 8. Debug Output in Production Code
+
+### Bad — dump in a controller
+
+```cfml
+param name="url.poemID" type="numeric";
+
+var context = poemAccess.getContext( authContext, url.poemID, "canView" );
+dump( context ); // Exposes internal state to the browser
+include "./view.view.cfm";
+```
+
+### Bad — writeDump in a service
+
+```cfc
+public void function updatePoem( required struct authContext, required numeric poemID ) {
+
+    var poem = poemModel.getByID( poemID );
+    writeDump( var = poem, abort = true ); // Debug output left in production code
+
+}
+```
+
+### Bad — cfdump in a view
+
+```cfml
+<cfdump var="#poems#" />
+<cfloop array="#poems#" item="poem">
+    <div>#e( poem.title )#</div>
+</cfloop>
+```
+
+### Bad — systemOutput in a model
+
+```cfc
+public struct function getByID( required numeric id ) {
+
+    systemOutput( "getByID called with: #id#" ); // Debug logging in model code
+    // ...
+
+}
+```
+
+### Safe — infrastructure files (do NOT flag)
+
+```cfml
+<!--- cfmlx.cfm: polyfill definition --->
+private void function dump( required any data ) {
+    writeDump( argumentCollection = arguments );
+}
+
+<!--- Application.cfc: error handler --->
+dump( label = "Unhandled Error", var = error );
+
+<!--- Logger.cfc: dedicated logging utility --->
+writeDump( var = message, output = logFile );
+
+<!--- localDevelopment.view.cfm: local dev only --->
+<cfset dump( error ) />
+```
+
+These are all infrastructure/utility files that legitimately use debug output. The check should only flag debug calls in controllers, views, models, and services.
+
+---
+
+## 9. Unsafe Dynamic Evaluation
+
+### Bad — evaluate with user input
+
+```cfc
+var result = evaluate( "form.#fieldName#" );
+```
+
+If `fieldName` comes from user input, this executes arbitrary CFML expressions.
+
+### Bad — evaluate for dynamic method dispatch
+
+```cfc
+var value = evaluate( "model.get#arguments.property#()" );
+```
+
+Even if `arguments.property` is constrained, `evaluate()` should never be used. Use bracket notation or a switch statement instead.
+
+### Bad — iif for conditional output
+
+```cfml
+var label = iif( isActive, de( "Active" ), de( "Inactive" ) );
+```
+
+`iif()` calls `evaluate()` internally. Use a standard ternary or `if/else` instead:
+
+```cfml
+var label = ( isActive ) ? "Active" : "Inactive";
+```
+
+### Safe — deserializeJson on trusted data (do NOT flag)
+
+```cfc
+// Config file — trusted, not user input
+var config = deserializeJson( fileRead( "#this.appRoot#/config/config.json" ) );
+
+// HTTP API response — trusted external service
+return deserializeJson( fileContent );
+
+// Internal error metadata — framework-generated
+return deserializeJson( extendedInfo.right( -causePrefix.len() ) );
+
+// Gateway column hydration — database values
+row[ key ] = deserializeJson( row[ key ] );
+```
+
+`deserializeJson()` parses JSON into CFML data structures — it does not execute code and is safe on trusted data sources.
