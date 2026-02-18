@@ -68,7 +68,7 @@
 
 	</article>
 
-	<div r2mwmx class="wordTools">
+	<div x-data="r2mwmx.WordTools" r2mwmx class="wordTools">
 		<section>
 			<h2>
 				<span class="bigSexy">BigSexy</span>Rhymes
@@ -84,6 +84,7 @@
 				hx-swap="show:.wordTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
+				x-ref="rhymeForm"
 				class="uiVstack">
 
 				<div class="uiHstack">
@@ -147,7 +148,7 @@
 			</div>
 		</section>
 
-		<section>
+		<section @app:word="handleSynonym( $event )">
 			<h2>
 				<span class="bigSexy">BigSexy</span>Synonyms
 			</h2>

@@ -99,7 +99,7 @@
 
 	</article>
 
-	<div z6s31p class="wordTools">
+	<div x-data="z6s31p.WordTools" z6s31p class="wordTools">
 		<section>
 			<h2>
 				<span class="bigSexy">BigSexy</span>Rhymes
@@ -115,6 +115,7 @@
 				hx-swap="show:.wordTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
+				x-ref="rhymeForm"
 				class="uiVstack">
 
 				<div class="uiHstack">
@@ -177,7 +178,7 @@
 			</div>
 		</section>
 
-		<section>
+		<section @app:word="handleSynonym( $event )">
 			<h2>
 				<span class="bigSexy">BigSexy</span>Synonyms
 			</h2>

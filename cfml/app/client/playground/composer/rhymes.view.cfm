@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<div fd1t18>
+	<div ht6w2p class="ht6w2p">
 
 		<cfif groups.len()>
 
@@ -26,7 +26,7 @@
 		<cfif ! groups.len()>
 
 			<p>
-				No matching #e( thing )#.
+				No matching rhymes.
 			</p>
 
 		</cfif>
