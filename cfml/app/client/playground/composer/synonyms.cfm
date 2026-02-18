@@ -21,11 +21,6 @@
 
 	request.response.template = "blank";
 
-	// Shared view with rhymes.
-	cfmodule(
-		template = "./wordGroups.cfm",
-		thing = "synonyms",
-		groups = groups
-	);
+	include "./synonyms.view.cfm";
 
 </cfscript>
