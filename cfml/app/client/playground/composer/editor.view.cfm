@@ -241,7 +241,8 @@
 		</p>
 
 		<p>
-			Hosting provided by <a href="https://www.xbytecloud.com/cloud" target="_blank">xByte Cloud</a>.
+			Managed <a href="https://www.xbytecloud.com/coldfusion/hosting/coldfusion-cloud-hosting?source=bennadel.com" target="_blank">ColdFusion hosting</a> services provided by:
+			<a href="https://www.xbytecloud.com/?source=bennadel.com" target="_blank">xByte Cloud</a>.
 		</p>
 
 		<p>
