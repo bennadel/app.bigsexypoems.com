@@ -36,7 +36,7 @@ function TableRowLinkerDirective( element, metadata, framework ) {
 		}
 
 		framework.cleanup( destroy );
-		element.addEventListener( "mousedown", handleMousedown );
+		element.addEventListener( "click", handleClick );
 
 	}
 
@@ -46,7 +46,7 @@ function TableRowLinkerDirective( element, metadata, framework ) {
 	*/
 	function destroy() {
 
-		element.removeEventListener( "mousedown", handleMousedown );
+		element.removeEventListener( "click", handleClick );
 
 	}
 
@@ -55,9 +55,23 @@ function TableRowLinkerDirective( element, metadata, framework ) {
 	// ---
 
 	/**
-	* I handle the mousedown event on the table.
+	* I handle the mouse event on the table.
 	*/
-	function handleMousedown( event ) {
+	function handleClick( event ) {
+
+		// If the event was fired programmatically, ignore it.
+		if ( ! event.isTrusted ) {
+
+			return;
+
+		}
+
+		// Only process the main mouse button (ie, not if right-clicking).
+		if ( event.button !== 0 ) {
+
+			return;
+
+		}
 
 		// Since we're using event delegation in this directive, it's possible that
 		// another directive or event binding will have already been applied (and should
@@ -87,8 +101,18 @@ function TableRowLinkerDirective( element, metadata, framework ) {
 
 		}
 
-		var linkNodes = ( cell.querySelectorAll( "a" ) || [] );
-		var actionableNodes = ( cell.querySelectorAll( "a, button" ) || [] );
+		var selection = window.getSelection();
+
+		// If the user highlighted text in the table row, it will often trigger a click
+		// event. As such, let's ignore events in which a non-empty selection exists.
+		if ( selection && ! selection.isCollapsed ) {
+
+			return;
+
+		}
+
+		var linkNodes = cell.querySelectorAll( "a" );
+		var actionableNodes = cell.querySelectorAll( "a, button" );
 
 		// If there's only a single LINK in the cell and NO OTHER actionable elements,
 		// let's activate the link regardless of whether or not it's the row-linker.
