@@ -55,7 +55,7 @@
 						</td>
 						<td>
 							<cfmodule
-								template="/client/_shared/tag/poemPreviewInTable.cfm"
+								template="/client/member/_shared/tag/poemPreviewInTable.cfm"
 								content="#poem.content#"
 							/>
 						</td>
