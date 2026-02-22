@@ -381,6 +381,8 @@ public void function deleteRevision( required struct revision ) {
 - Keep single-use constants as local variables rather than promoting to instance properties with `ioc:skip`.
 - Don't pre-build service methods or APIs for anticipated future needs. Delete dead code.
 
+**Let errors bubble up**: Never add try/catch blocks unless there is explicit recovery logic for a specific, anticipated failure. Errors should propagate to the application boundary where they are logged and translated for the user. Swallowing or wrapping exceptions "just in case" hides bugs and makes debugging harder. The only valid reasons for a try/catch are: performing a rollback or cleanup side-effect, retrying with a fallback strategy, or converting a thrown type into a different domain-specific error with added context. If the catch block would just rethrow, log, or return a generic default — don't catch.
+
 **Order by `id` instead of date columns**: Auto-increment IDs are inserted chronologically. Prefer `ORDER BY id DESC` over date columns to leverage existing indexes.
 
 **`withSort` preset for `getByFilter`**: Gateways that return multi-row result sets accept a `withSort` argument with domain-level preset names (e.g., `"name"`, `"newest"`). The gateway maps presets to SQL `ORDER BY` clauses via `cfswitch`, keeping sort logic in the data-access layer instead of re-sorting arrays in controllers. The default is `"id"` (or the table's natural key). Skip `withSort` for gateways that only ever return a single row (e.g., AccountGateway, TimezoneGateway, PresenceGateway).
