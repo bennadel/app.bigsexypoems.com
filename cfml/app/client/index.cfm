@@ -50,6 +50,7 @@
 		switch ( router.next( "member" ) ) {
 			case "account":
 			case "auth":
+			case "dev":
 			case "go":
 			case "member":
 			case "playground":
