@@ -85,7 +85,7 @@
 		var fileList = directoryList(
 			path = expandPath( "/log" ),
 			listInfo = "name",
-			filter = "*.txt"
+			filter = "*.json"
 		);
 
 		return fileList.len();
