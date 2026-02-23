@@ -9,7 +9,7 @@
 
 			#e( slug )#
 
-			<a href="/internal/scribble/scribble.cfm" target="_blank">
+			<a href="/scribble/index.cfm" target="_blank">
 				Scribble
 			</a>
 
