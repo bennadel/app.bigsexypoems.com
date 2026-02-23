@@ -1,19 +1,16 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
-	config = request.ioc.get( "config" );
+	ui = request.ioc.get( "core.lib.web.UI" );
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	if ( config.isLive ) {
+	title = request.response.title = "Emails Test";
 
-		abort;
-
-	}
-
-	include "/email/team/invitation/invitation.test.cfm";
-	include "/email/conceptBoardComment.test.cfm";
-	include "/email/loginRequest.test.cfm";
+	include "./list.view.cfm";
 
 </cfscript>
