@@ -101,6 +101,22 @@ component {
 
 
 	/**
+	* I return the open attribute based on the given condition.
+	*/
+	public string function attrOpen( required boolean input ) {
+
+		if ( input ) {
+
+			return "open";
+
+		}
+
+		return "";
+
+	}
+
+
+	/**
 	* I return the selected attribute based on the given condition.
 	*/
 	public string function attrSelected( required boolean input ) {

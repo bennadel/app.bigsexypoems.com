@@ -3,6 +3,7 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 	// Define properties for dependency-injection.
 	property name="bugSnagLogger" ioc:type="core.lib.integration.bugsnag.BugSnagLogger";
 	property name="config" ioc:type="config";
+	property name="devLogs" ioc:type="core.lib.util.DevLogs";
 	property name="patternsToRedact" ioc:skip;
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 
@@ -105,7 +106,7 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 
 		if ( ! config.isLive ) {
 
-			sendToDevLog([
+			devLogs.create([
 				level: level,
 				message: message,
 				data: data
@@ -145,7 +146,7 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 
 		if ( ! config.isLive ) {
 
-			sendToDevLog([
+			devLogs.create([
 				error: structCopy( error ),
 				message: message,
 				data: data,
@@ -320,23 +321,6 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 				}
 			)
 		;
-
-	}
-
-
-	/**
-	* I log the given payload to the local log directory for developer debugging.
-	*/
-	private void function sendToDevLog( required struct payload ) {
-
-		var stub = now().dateTimeFormat( "yyyy-mm-dd-HH-nn-ss" );
-		var suffix = lcase( payload.error.type ?: payload.level ?: "unknown" );
-
-		fileWrite(
-			file = expandPath( "/log/#stub#-#suffix#.json" ),
-			data = serializeJson( payload ),
-			charset = "utf-8"
-		);
 
 	}
 

@@ -14,9 +14,11 @@
 			</a>
 
 			<cfif logCount>
-				<strong style="color: red ;">
-					#numberFormat( logCount )# Logs
-				</strong>
+				<a #ui.attrHref( "dev.log" )# target="_blank" style="color: red ;">
+					<strong>
+						#numberFormat( logCount )# Logs
+					</strong>
+				</a>
 			</cfif>
 		</div>
 

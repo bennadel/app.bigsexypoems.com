@@ -2,6 +2,7 @@
 
 	// Define properties for dependency-injection.
 	config = request.ioc.get( "config" );
+	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 
 	// ColdFusion language extensions (global functions).
@@ -17,6 +18,8 @@
 
 	}
 
+	requestHelper.ensureXsrfToken();
+
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
@@ -24,6 +27,7 @@
 
 	switch ( router.next() ) {
 		case "keys":
+		case "log":
 		case "test":
 			cfmodule( template = router.nextTemplate() );
 		break;

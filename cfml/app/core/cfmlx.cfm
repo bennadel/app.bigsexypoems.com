@@ -316,14 +316,6 @@
 			abort = abort
 		);
 
-		// If we're outputting to the browser (the default behavior), inject custom styles
-		// for better readability for my aging eyes.
-		if ( output == "browser" ) {
-
-			dumpStyles();
-
-		}
-
 	}
 
 
@@ -336,51 +328,6 @@
 		) {
 
 		dump( argumentCollection = arguments );
-
-	}
-
-
-	/**
-	* I inject style tags that make the CFDump output easier to read.
-	*/
-	private void function dumpStyles() {
-
-		// For better debugging on how these styles are being injected, we're going to
-		// include the call-stack in the style tag content (as a comment).
-		var stacktrace = callStackGet()
-			.map( ( frame ) => "- #frame.template#:#frame.lineNumber#" )
-			.toList( chr( 10 ) & repeatString( chr( 9 ), 4 ) & "* " )
-		;
-
-		// CAUTION: Normally, the use of cfhtmlhead() is considered an ANTI-PATTERN due to
-		// its total lack of accountability. But, in this case, we're fighting fire with
-		// fire. Meaning, the writeDump() tag is already injecting styles magically; and
-		// now, we're also injecting styles magically to counteract their magical styles.
-		cfhtmlhead( text = "
-			<style type='text/css' data-source='Added by the dumpStyles().'>
-				/**
-				* ColdFusion Stacktrace:
-				* #stacktrace#
-				**/
-
-				html body table[class^='cfdump_'] {
-					border-collapse: separate ;
-					border-spacing: 2px ;
-					font-family: verdana, arial, helvetica, sans-serif ;
-					margin-bottom: 1.5rem ;
-
-					& table[class^='cfdump_'] {
-						margin-bottom: 0 ;
-					}
-
-					& th,
-					& td {
-						font-size: 1rem ;
-						padding: 0.4em 0.55em ;
-					}
-				}
-			</style>
-		");
 
 	}
 
