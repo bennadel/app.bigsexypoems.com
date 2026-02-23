@@ -332,10 +332,10 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 		var stub = now().dateTimeFormat( "yyyy-mm-dd-HH-nn-ss" );
 		var suffix = lcase( payload.error.type ?: payload.level ?: "unknown" );
 
-		writeDump(
-			var = payload,
-			format = "text",
-			output = expandPath( "/log/#stub#-#suffix#.txt" )
+		fileWrite(
+			file = expandPath( "/log/#stub#-#suffix#.json" ),
+			data = serializeJson( payload ),
+			charset = "utf-8"
 		);
 
 	}
