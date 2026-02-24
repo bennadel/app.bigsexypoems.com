@@ -1329,6 +1329,30 @@ pre code {
 }
 
 // ---
+// CFDUMP STYLES.
+// 
+// These are here for development purposes only, to make the output of the CFDump / dump()
+// easier to read. For some reason, that output is hella tiny.
+// ---
+
+html body table[class^='cfdump_'] {
+	border-collapse: separate ;
+	border-spacing: 2px ;
+	font-family: var( --font-family-control ) ;
+	margin-bottom: 0 ;
+
+	&:not(:last-child) {
+		margin-bottom: var( --space-block ) ;
+	}
+
+	th,
+	td {
+		font-size: 1rem ;
+		padding: 0.4em 0.55em ;
+	}
+}
+
+// ---
 // UTILITY CLASSES.
 //
 // Note: these are here as a last resort. I think I might use these during the exploratory

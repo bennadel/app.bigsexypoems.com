@@ -3,6 +3,7 @@
 	// Define properties for dependency-injection.
 	config = request.ioc.get( "config" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
+	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
