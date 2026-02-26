@@ -100,7 +100,7 @@
 	</article>
 
 	<div x-data="z6s31p.WordTools" z6s31p class="wordTools">
-		<section>
+		<section z6s31p class="wordTool rhymeTools">
 			<h2>
 				<span class="bigSexy">BigSexy</span>Rhymes
 			</h2>
@@ -112,7 +112,7 @@
 					input from:.isHtmxRhymesTrigger
 				"
 				hx-target="next .results_content"
-				hx-swap="show:.wordTools:top"
+				hx-swap="show:.rhymeTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
 				x-ref="rhymeForm"
@@ -178,7 +178,7 @@
 			</div>
 		</section>
 
-		<section @app:word="handleSynonym( $event )">
+		<section z6s31p class="wordTool synonymTools" @app:word="handleSynonym( $event )">
 			<h2>
 				<span class="bigSexy">BigSexy</span>Synonyms
 			</h2>
@@ -189,7 +189,7 @@
 					input from:.isHtmxSynonymsTrigger
 				"
 				hx-target="next .results_content"
-				hx-swap="show:.wordTools:top"
+				hx-swap="show:.synonymTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
 				class="uiVstack">
