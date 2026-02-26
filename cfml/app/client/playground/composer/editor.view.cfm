@@ -69,7 +69,7 @@
 	</article>
 
 	<div x-data="r2mwmx.WordTools" r2mwmx class="wordTools">
-		<section>
+		<section r2mwmx class="wordTool rhymeTools">
 			<h2>
 				<span class="bigSexy">BigSexy</span>Rhymes
 			</h2>
@@ -81,7 +81,7 @@
 					input from:.isHtmxRhymesTrigger
 				"
 				hx-target="next .results_content"
-				hx-swap="show:.wordTools:top"
+				hx-swap="show:.rhymeTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
 				x-ref="rhymeForm"
@@ -148,7 +148,7 @@
 			</div>
 		</section>
 
-		<section @app:word="handleSynonym( $event )">
+		<section r2mwmx class="wordTool synonymTools" @app:word="handleSynonym( $event )">
 			<h2>
 				<span class="bigSexy">BigSexy</span>Synonyms
 			</h2>
@@ -159,7 +159,7 @@
 					input from:.isHtmxSynonymsTrigger
 				"
 				hx-target="next .results_content"
-				hx-swap="show:.wordTools:top"
+				hx-swap="show:.synonymTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
 				class="uiVstack">
