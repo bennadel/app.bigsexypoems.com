@@ -4,7 +4,6 @@
 	devLogs = request.ioc.get( "core.lib.util.DevLogs" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
-	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";

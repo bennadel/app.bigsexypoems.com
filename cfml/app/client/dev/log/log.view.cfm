@@ -19,7 +19,7 @@
 
 				<cfloop array="#entries#" item="entry" index="i">
 
-					<details #ui.attrOpen( i == 1 )# r2m8kt class="disclosure">
+					<details r2m8kt class="disclosure">
 						<summary r2m8kt class="summary">
 							#e( entry.summary )#
 						</summary>
