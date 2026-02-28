@@ -53,8 +53,13 @@
 				</label>
 				<div class="uiField_content">
 					<select id="#ui.fieldId()#" name="theme" class="uiSelect">
-						<option value="light" #ui.attrSelected( form.theme == "light" )#>Light</option>
-						<option value="dark" #ui.attrSelected( form.theme == "dark" )#>Dark</option>
+						<cfloop array="#themes#" item="option">
+							<option
+								value="#e4a( option.id )#"
+								#ui.attrSelected( form.theme == option.id )#>
+								#e( option.name )#
+							</option>
+						</cfloop>
 					</select>
 				</div>
 			</div>

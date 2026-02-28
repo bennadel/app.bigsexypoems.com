@@ -22,42 +22,24 @@ component hint = "I provide methods for managing the theme cookies for the curre
 	// ---
 
 	/**
-	* I get the current theme preference. Returns "light" or "dark".
+	* I get the current theme cookie value.
 	*/
-	public string function getTheme() {
+	public string function getCookie() {
 
-		var value = ( cookie[ cookieName ] ?: "" );
-
-		if ( value == "dark" ) {
-
-			return "dark";
-
-		}
-
-		return "light";
+		return ( cookie[ cookieName ] ?: "" );
 
 	}
 
 
 	/**
-	* I set / store the current theme preference.
+	* I set / store the current theme cookie value.
 	*
 	* Note: this will cause a SET-COOKIE header to be sent in the HTTP response.
 	*/
-	public void function setTheme( required string theme ) {
-
-		switch ( theme ) {
-			case "dark":
-			case "light":
-				// Theme is valid.
-			break;
-			default:
-				theme = "light";
-			break;
-		}
+	public void function setCookie( required string value ) {
 
 		cookie[ cookieName ] = buildCookieSettings({
-			value: theme,
+			value: value,
 			expires: "never"
 		});
 

@@ -3,7 +3,7 @@
 	// Define properties for dependency-injection.
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
-	themeCookies = request.ioc.get( "core.lib.service.user.ThemeCookies" );
+	themeService = request.ioc.get( "core.lib.service.user.ThemeService" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 	userModel = request.ioc.get( "core.lib.model.user.UserModel" );
 	userService = request.ioc.get( "core.lib.service.user.UserService" );
@@ -19,6 +19,8 @@
 
 	partial = getPartial( request.authContext );
 	user = partial.user;
+	theme = partial.theme;
+	themes = partial.themes;
 	title = "Profile";
 	errorResponse = "";
 
@@ -30,7 +32,7 @@
 	if ( request.isGet ) {
 
 		form.name = user.name;
-		form.theme = themeCookies.getTheme();
+		form.theme = theme.id;
 
 	}
 
@@ -38,7 +40,7 @@
 
 		try {
 
-			themeCookies.setTheme( form.theme );
+			themeService.setTheme( form.theme );
 
 			userService.update(
 				authContext = request.authContext,
@@ -69,8 +71,14 @@
 	*/
 	private struct function getPartial( required struct authContext ) {
 
+		var user = authContext.user;
+		var theme = themeService.getTheme();
+		var themes = themeService.getThemes();
+
 		return {
-			user: authContext.user
+			user,
+			theme,
+			themes,
 		};
 
 	}
