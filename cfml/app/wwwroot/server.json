@@ -3,7 +3,7 @@
 	"app": {
 		"cfengine": "adobe@2025.0.6 "
 	},
-	"profile": "prod",
+	"profile": "development",
 	"web": {
 		"host": "127.0.0.1",
 		"bindings": {
