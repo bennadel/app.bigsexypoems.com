@@ -228,71 +228,146 @@
 
 	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
 	// There appears to be a race condition with Parcel > Less > Url().
-	--select-carrot-image: ~"url( 'data:image/svg+xml;utf8,%3Csvg%20width=%2213%22%20height=%227%22%20viewBox=%220%200%2013%207%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpolygon%20stroke=%22none%22%20fill=%22%25230d0f12%22%20fill-rule=%22evenodd%22%20points=%220%200%206.5%207%2013%200%22%3E%3C/polygon%3E%3C/svg%3E' )" ;
+	--select-carrot-image: ~"url( 'data:image/svg+xml;utf8,%3Csvg%20width=%2213%22%20height=%227%22%20viewBox=%220%200%2013%207%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpolygon%20stroke=%22none%22%20fill=%22%230d0f12%22%20fill-rule=%22evenodd%22%20points=%220%200%206.5%207%2013%200%22%3E%3C/polygon%3E%3C/svg%3E' )" ;
 
 }
 
 .less-theme-dark() {
-	/*
-	--text: #93b8dc ;
-	--fill: #0d1117 ;
 
-	--accent: #e64980 ;
+	// Base body.
+	--text: var( --stone-3 ) ;
+	--text-muted: var( --stone-6 ) ;
+	--fill: var( --gray-10 ) ;
 
-	--mark-text: #121210 ;
-	--mark-fill: #ffe066 ;
+	// Muted surface.
+	--surface-muted-fill: var( --gray-9 ) ;
 
-	--error-fill: #441010 ;
-	--error-stroke: #8b2424 ;
-	--error-text: #f98484 ;
+	// Links.
+	--link-text: var( --indigo-4 ) ;
+	--link-hover-text: var( --indigo-3 ) ;
 
-	--success-fill: #2f4407 ;
-	--success-stroke: #749a42 ;
-	--success-text: #d7fe92 ;
+	// Base / auxiliary buttons.
+	--button-text: var( --gray-3 ) ;
+	--button-fill: var( --gray-9 ) ;
+	--button-stroke: var( --gray-6 ) ;
+	--button-hover-text: var( --gray-1 ) ;
+	--button-hover-fill: var( --gray-8 ) ;
+	--button-hover-stroke: var( --gray-5 ) ;
 
-	--code-fill: #011e3b ;
-	--code-text: #3780EF ;
+	// Submit buttons.
+	--button-submit-text: #ffffff ;
+	--button-submit-fill: var( --indigo-8 ) ;
+	--button-submit-stroke: var( --indigo-10 ) ;
+	--button-submit-hover-text: #ffffff ;
+	--button-submit-hover-fill: var( --indigo-7 ) ;
+	--button-submit-hover-stroke: var( --indigo-9 ) ;
 
-	--control-fill: #0d1117 ;
-	--control-stroke: #253b56 ;
-	--control-stroke-error: #8b2424 ;
-	--control-text: #979562 ;
-	--control-inset-shadow: inset 1px 1px 2px #dadada22 ;
+	// Cancel buttons.
+	--button-cancel-text: var( --stone-5 ) ;
+	--button-cancel-fill: transparent ;
+	--button-cancel-stroke: var( --stone-8 ) ;
+	--button-cancel-hover-text: var( --stone-4 ) ;
+	--button-cancel-hover-fill: transparent ;
+	--button-cancel-hover-stroke: var( --stone-6 ) ;
 
-	--button-tertiary-text: #0d0f12 ;
-	--button-tertiary-fill: #f1f3f5 ;
-	--button-tertiary-stroke: #7e8282 ;
+	// Destructive buttons.
+	--button-danger-text: #ffffff ;
+	--button-danger-fill: var( --red-9 ) ;
+	--button-danger-stroke: var( --red-11 ) ;
+	--button-danger-hover-text: #ffffff ;
+	--button-danger-hover-fill: var( --red-8 ) ;
+	--button-danger-hover-stroke: var( --red-10 ) ;
+	// Specialized link-only version.
+	--button-danger-link-text: var( --red-5 ) ;
+	--button-danger-link-hover-text: var( --red-4 ) ;
 
-	--button-primary-text: #f2f4f6 ;
-	--button-primary-fill: #004396 ;
-	--button-primary-stroke: #0052b8 ;
+	// Visually contrasted buttons (no special semantics).
+	--button-inverted-text: var( --stone-11 ) ;
+	--button-inverted-fill: var( --stone-3 ) ;
+	--button-inverted-stroke: var( --stone-3 ) ;
+	--button-inverted-hover-text: var( --stone-12 ) ;
+	--button-inverted-hover-fill: var( --stone-4 ) ;
+	--button-inverted-hover-stroke: var( --stone-4 ) ;
 
-	--button-danger-text: #fff5f5 ;
-	--button-danger-fill: #b21a1a ;
-	--button-danger-stroke: #e03131 ;
+	// Form inputs.
+	--input-text: inherit ;
+	--input-fill: var( --gray-9 ) ;
+	--input-stroke: var( --stone-8 ) ;
+	--input-focus-stroke: var( --pink-6 ) ;
+	--input-error-text: var( --red-5 ) ;
+	--input-error-stroke: var( --red-7 ) ;
+	--input-placeholder-text: var( --stone-7 ) ;
+	--input-inset-shadow: inset 1px 1px 2px #00000033 ;
 
-	--button-secondary-text: #93b8dc ;
-	--button-secondary-fill: transparent ;
-	--button-secondary-stroke: #383838 ;
-	--button-secondary-stroke-hover: #93b8dc ;
+	// Accent / focus.
+	--accent: var( --pink-5 ) ;
+	--focus-ring-stroke: var( --pink-6 ) ;
+	--focus-ring-stroke-muted: var( --pink-11 ) ;
 
+	// Required indicator.
+	--star-text: var( --purple-5 ) ;
+
+	// Nav links.
 	--nav-text: var( --text ) ;
 	--nav-fill: var( --fill ) ;
-	--nav-text-on: var( --text ) ;
-	--nav-fill-on: #472240 ;
+	--nav-text-hover: var( --text ) ;
+	--nav-fill-hover: var( --gray-9 ) ;
+	--nav-text-active: var( --text ) ;
+	--nav-fill-active: var( --gray-8 ) ;
+
+	// Feedback.
+	--success-fill: var( --lime-12 ) ;
+	--success-stroke: var( --lime-9 ) ;
+	--success-text: var( --lime-3 ) ;
+
+	--warning-fill: var( --yellow-11 ) ;
+	--warning-stroke: var( --yellow-8 ) ;
+	--warning-text: var( --yellow-3 ) ;
+
+	--error-fill: var( --red-12 ) ;
+	--error-stroke: var( --red-8 ) ;
+	--error-text: var( --red-3 ) ;
+
+	--info-fill: var( --gray-9 ) ;
+	--info-stroke: var( --stone-7 ) ;
+	--info-text: var( --stone-4 ) ;
+
+	// Tables.
+	--table-stroke: var( --stone-8 ) ;
+	--table-fill-hover: var( --yellow-12 ) ;
+
+	// Rules / dividers.
+	--rule-nav: var( --stone-8 ) ;
+	--rule-content: var( --stone-9 ) ;
+	--rule-accent: var( --cyan-7 ) ;
+
+	// Highlighted text.
+	--mark-text: var( --stone-12 ) ;
+	--mark-fill: var( --yellow-4 ) ;
+
+	// Status indicator.
+	--indicator-stroke: var( --purple-5 ) ;
+
+	// Code blocks.
+	--code-fill: var( --gray-9 ) ;
+	--code-text: var( --indigo-4 ) ;
+
+	// Diff visualization.
+	--diff-delete-fill: var( --red-12 ) ;
+	--diff-delete-text: var( --red-3 ) ;
+	--diff-delete-token-fill: var( --red-10 ) ;
+	--diff-insert-fill: var( --green-12 ) ;
+	--diff-insert-text: var( --green-3 ) ;
+	--diff-insert-token-fill: var( --green-10 ) ;
+	--diff-empty-fill: var( --gray-9 ) ;
+
+	// Shadow.
+	--shadow-color: #00000066 ;
 
 	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
 	// There appears to be a race condition with Parcel > Less > Url().
-	--select-carrot-image: ~"url( 'data:image/svg+xml;utf8,%3Csvg%20width=%2213%22%20height=%227%22%20viewBox=%220%200%2013%207%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpolygon%20stroke=%22none%22%20fill=%22%2523979562%22%20fill-rule=%22evenodd%22%20points=%220%200%206.5%207%2013%200%22%3E%3C/polygon%3E%3C/svg%3E' )" ;
+	--select-carrot-image: ~"url( 'data:image/svg+xml;utf8,%3Csvg%20width=%2213%22%20height=%227%22%20viewBox=%220%200%2013%207%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpolygon%20stroke=%22none%22%20fill=%22%23666968%22%20fill-rule=%22evenodd%22%20points=%220%200%206.5%207%2013%200%22%3E%3C/polygon%3E%3C/svg%3E' )" ;
 
-	:where( img ) {
-		opacity: 0.5 ;
-		transition: opacity 500ms ease-in ;
-	}
-	:where( img:hover ) {
-		opacity: 1.0 ;
-	}
-	*/
 }
 
 html {
