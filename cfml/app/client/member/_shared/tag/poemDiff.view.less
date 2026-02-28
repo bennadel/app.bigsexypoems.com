@@ -28,25 +28,25 @@
 		}
 
 		&[data-type="delete"] {
-			background-color: var( --red-1 ) ;
-			color: var( --red-12 ) ;
+			background-color: var( --diff-delete-fill ) ;
+			color: var( --diff-delete-text ) ;
 
 			.token[data-type="delete"]:not(:first-of-type:last-of-type) {
-				background-color: var( --red-3 ) ;
+				background-color: var( --diff-delete-token-fill ) ;
 			}
 		}
 
 		&[data-type="insert"] {
-			background-color: var( --green-1 ) ;
-			color: var( --green-12 ) ;
+			background-color: var( --diff-insert-fill ) ;
+			color: var( --diff-insert-text ) ;
 
 			.token[data-type="insert"]:not(:first-of-type:last-of-type) {
-				background-color: var( --green-3 ) ;
+				background-color: var( --diff-insert-token-fill ) ;
 			}
 		}
 
 		&[data-type="empty"] {
-			background-color: var( --gray-0 ) ;
+			background-color: var( --diff-empty-fill ) ;
 		}
 	}
 

@@ -101,6 +101,9 @@
 	--text-muted: var( --stone-8 ) ;
 	--fill: #ffffff ;
 
+	// Muted surface (subtle backgrounds for panels, sidebars, results areas).
+	--surface-muted-fill: var( --stone-1 ) ;
+
 	// Links.
 	--link-text: var( --indigo-7 ) ;
 	--link-hover-text: var( --indigo-9 ) ;
@@ -206,6 +209,22 @@
 
 	// Status indicator.
 	--indicator-stroke: var( --purple-8 ) ;
+
+	// Code blocks.
+	--code-fill: var( --stone-1 ) ;
+	--code-text: var( --indigo-9 ) ;
+
+	// Diff visualization.
+	--diff-delete-fill: var( --red-1 ) ;
+	--diff-delete-text: var( --red-12 ) ;
+	--diff-delete-token-fill: var( --red-3 ) ;
+	--diff-insert-fill: var( --green-1 ) ;
+	--diff-insert-text: var( --green-12 ) ;
+	--diff-insert-token-fill: var( --green-3 ) ;
+	--diff-empty-fill: var( --stone-1 ) ;
+
+	// Shadow.
+	--shadow-color: #cccccc99 ;
 
 	// Note: I have to escape this URL using ~"{code}" or Parcel breaks 90% of the time.
 	// There appears to be a race condition with Parcel > Less > Url().
