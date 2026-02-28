@@ -3,6 +3,7 @@ component {
 	// Define properties for dependency-injection.
 	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="router" ioc:type="core.lib.web.Router";
+	property name="themeCookies" ioc:type="core.lib.service.user.ThemeCookies";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -143,7 +144,23 @@ component {
 
 
 	/**
-	* I return the relative time element for the given input. 
+	* I return the data-theme attribute based on the current theme cookie.
+	*/
+	public string function attrTheme() {
+
+		if ( themeCookies.getTheme() == "dark" ) {
+
+			return 'data-theme="dark"';
+
+		}
+
+		return "";
+
+	}
+
+
+	/**
+	* I return the relative time element for the given input.
 	*/
 	public string function elemFromNow( required date input ) {
 

@@ -380,7 +380,7 @@ html {
 	}
 
 	@media ( prefers-color-scheme: dark ) {
-		:where( & ) {
+		:where( &:not([data-theme]) ) {
 			.less-theme-dark() ;
 		}
 	}

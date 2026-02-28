@@ -3,6 +3,7 @@
 	// Define properties for dependency-injection.
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
+	themeCookies = request.ioc.get( "core.lib.service.user.ThemeCookies" );
 	ui = request.ioc.get( "core.lib.web.UI" );
 	userModel = request.ioc.get( "core.lib.model.user.UserModel" );
 	userService = request.ioc.get( "core.lib.service.user.UserService" );
@@ -14,6 +15,7 @@
 	// ------------------------------------------------------------------------------- //
 
 	param name="form.name" type="string" default="";
+	param name="form.theme" type="string" default="";
 
 	partial = getPartial( request.authContext );
 	user = partial.user;
@@ -28,12 +30,15 @@
 	if ( request.isGet ) {
 
 		form.name = user.name;
+		form.theme = themeCookies.getTheme();
 
 	}
 
 	if ( request.isPost ) {
 
 		try {
+
+			themeCookies.setTheme( form.theme );
 
 			userService.update(
 				authContext = request.authContext,

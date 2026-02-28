@@ -47,6 +47,18 @@
 				</div>
 			</div>
 
+			<div class="uiField">
+				<label for="#ui.nextFieldId()#" class="uiField_label">
+					Theme:
+				</label>
+				<div class="uiField_content">
+					<select id="#ui.fieldId()#" name="theme" class="uiSelect">
+						<option value="light" #ui.attrSelected( form.theme == "light" )#>Light</option>
+						<option value="dark" #ui.attrSelected( form.theme == "dark" )#>Dark</option>
+					</select>
+				</div>
+			</div>
+
 			<div class="uiFormButtons">
 				<button type="submit" class="uiButton isSubmit">
 					Save

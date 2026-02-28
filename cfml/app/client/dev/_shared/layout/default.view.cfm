@@ -1,7 +1,7 @@
 <cfoutput>
 
 	<!doctype html>
-	<html lang="en">
+	<html lang="en" #ui.attrTheme()#>
 	<head>
 		<cfmodule template="/client/_shared/tag/meta.cfm" />
 		<cfmodule template="/client/_shared/tag/title.cfm" />
