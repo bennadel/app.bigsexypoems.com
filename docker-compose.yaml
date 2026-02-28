@@ -10,8 +10,8 @@ services:
     image: "appbigsexypoems-cfml:dev"
     pull_policy: "never"
     build:
-      context: "./cfml/docker/"
-      dockerfile: "Dockerfile"
+      context: "./cfml/"
+      dockerfile: "docker/Dockerfile"
     ports:
       - "80:8080"
       - "443:8443" # SSL certificate provided via server.json
@@ -20,8 +20,6 @@ services:
       - "./cfml/app:/app"
     networks:
       - app_network
-    environment:
-      APP_DIR: "/app/wwwroot"
     healthcheck:
       test: "echo hello"
     depends_on:

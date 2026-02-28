@@ -21,6 +21,6 @@
 		"blockFlashRemoting": true
 	},
 	"scripts": {
-		"onServerInitialInstall":"cfpm install debugger,graphqlclient,image,mail,scheduler"
+		"onServerInitialInstall": "cfpm install debugger,graphqlclient,image,mail,scheduler"
 	}
 }
