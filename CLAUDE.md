@@ -48,7 +48,7 @@ docker compose run --rm client sh  # Shell for npm package management
 cfml/app/
 ├── client/           # Controllers & Views by subsystem
 │   │                 #   Feature: auth, member, playground, share
-│   │                 #   Infrastructure: error, go, system
+│   │                 #   Infrastructure: dev, error, go, system
 │   └── _shared/      # Shared layouts & components
 ├── core/lib/
 │   ├── classLoader/  # Java library bootstrapping

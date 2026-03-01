@@ -70,7 +70,7 @@ These produce internally-generated or pre-encoded output:
 
 | Pattern | Reason |
 |---------|--------|
-| Any `ui.*()` method call | The `UI.cfc` component produces pre-encoded or internally-generated output. This includes `ui.fieldId()`, `ui.nextFieldId()`, `ui.attrHref()`, `ui.attrAction()`, `ui.attrSrc()`, `ui.attrChecked()`, `ui.attrSelected()`, `ui.attrClass()`, `ui.attrForUrlParts()`, `ui.userDate()`, `ui.userTime()`, `ui.userDateTime()`, `ui.fromNow()`, `ui.elemFromNow()`, `ui.externalUrlForParts()`, and any future `ui.*` methods |
+| Any `ui.*()` method call | The `UI.cfc` component produces pre-encoded or internally-generated output. This includes `ui.fieldId()`, `ui.nextFieldId()`, `ui.attrHref()`, `ui.attrAction()`, `ui.attrSrc()`, `ui.attrChecked()`, `ui.attrSelected()`, `ui.attrClass()`, `ui.attrForUrlParts()`, `ui.userDate()`, `ui.userTime()`, `ui.userDateTime()`, `ui.fromNow()`, `ui.elemFromNow()`, `ui.externalUrlForParts()`, `ui.urlForParts()`, `ui.attrTheme()`, `ui.attrOpen()`, and any future `ui.*` methods |
 | `request.postBackAction` | Built by `Router.buildPostBackAction()`, URL-safe |
 | `router.urlForParts(...)` | URL builder, produces safe URLs |
 | Numeric IDs (`*.id`, `poemID`, `collectionID`, `shareID`, `userID`) | Integer values |
