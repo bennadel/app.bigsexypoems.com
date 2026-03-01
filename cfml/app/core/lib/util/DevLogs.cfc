@@ -52,7 +52,7 @@ component hint = "I provide access to file-based logs in the development environ
 		return getFiles().map(
 			( filepath ) => {
 
-				var data = simplifyData( deserializeJson( fileRead( filepath, "utf-8" ) ) );
+				var data = simplifyData( parseJsonFile( filepath ) );
 				var summary = coalesceTruthy(
 					data.error?.message,
 					data.error?.type,
@@ -90,6 +90,36 @@ component hint = "I provide access to file-based logs in the development environ
 		// coupled to DEBUGGING, let's return then in descending order since the developer
 		// will almost certainly want to see the newest logs first.
 		return filepaths.sort( "textnocase", "desc" );
+
+	}
+
+
+	/**
+	* There's a bug in Adobe ColdFusion in which some JSON payloads are malformed. As
+	* such, we need to wrap the JSON parsing in a try-catch so that we don't let these
+	* outliers become "poisoned pills" in the log viewer. If the parsing fails, the return
+	* will fall-back to using something that is log-viewer-friendly.
+	* 
+	* Read more:
+	* https://www.bennadel.com/blog/4878-java-lang-character-json-bug-in-adobe-coldfusion-2025.htm
+	*/
+	private struct function parseJsonFile( required string filepath ) {
+
+		var fileContent = fileRead( filepath, "utf-8" );
+
+		try {
+
+			return deserializeJson( fileContent );
+
+		} catch ( any error ) {
+
+			return [
+				message: "Could not parse JSON file.",
+				filename: getFileFromPath( filepath ),
+				json: fileContent
+			];
+
+		}
 
 	}
 
