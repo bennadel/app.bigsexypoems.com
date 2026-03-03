@@ -7,6 +7,7 @@ component {
 	property name="poemCascade" ioc:type="core.lib.service.poem.PoemCascade";
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
 	property name="poemValidation" ioc:type="core.lib.model.poem.PoemValidation";
+	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="revisionModel" ioc:type="core.lib.model.poem.RevisionModel";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
@@ -68,13 +69,17 @@ component {
 		// Note: logging PII (personally identifiable information) is frowned upon. But,
 		// I think the amount of information is sufficiently safe; and is out-weighed by
 		// the possible happiness this might bring the user (after an accidental delete).
-		logger.info(
-			"Poem deleted (logged for recovery purposes).",
-			{
-				user: structPick( user, [ "id", "email" ] ),
-				poem: structPick( poem, [ "name", "content" ] )
-			}
-		);
+		if ( ! requestMetadata.isTestRun() ) {
+
+			logger.info(
+				"Poem deleted (logged for recovery purposes).",
+				{
+					user: structPick( user, [ "id", "email" ] ),
+					poem: structPick( poem, [ "name", "content" ] )
+				}
+			);
+
+		}
 
 		poemCascade.delete( user, poem );
 

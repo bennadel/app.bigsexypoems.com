@@ -1,0 +1,41 @@
+[tp3k8w] {
+	&.tp3k8w {}
+
+	&.summary {
+		border-radius: var( --radius ) ;
+		display: flex ;
+		font-weight: var( --font-weight-bold ) ;
+		gap: var( --space-inline ) ;
+		margin-bottom: var( --space-block ) ;
+		padding: var( --pad-block ) var( --pad-inline ) ;
+
+		&.isPassing {
+			background: var( --success-fill ) ;
+			color: var( --success-text ) ;
+		}
+
+		&.isFailing {
+			background: var( --error-fill ) ;
+			color: var( --error-text ) ;
+		}
+	}
+
+	&.badge {
+		border-radius: var( --radius ) ;
+		display: inline-block ;
+		font-size: var( --font-size-s ) ;
+		font-weight: var( --font-weight-bold ) ;
+		padding: var( --pad-block-xs ) var( --pad-inline-xs ) ;
+		text-transform: uppercase ;
+
+		&.isFailure {
+			background: var( --error-fill ) ;
+			color: var( --error-text ) ;
+		}
+
+		&.isError {
+			background: var( --warning-fill ) ;
+			color: var( --warning-text ) ;
+		}
+	}
+}

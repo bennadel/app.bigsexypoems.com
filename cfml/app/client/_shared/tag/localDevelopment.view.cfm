@@ -13,6 +13,10 @@
 				Scribble
 			</a>
 
+			<a #ui.attrHref( "dev.test.spec", "init", initPassword )# target="_blank">
+				Tests
+			</a>
+
 			<cfif logCount>
 				<a #ui.attrHref( "dev.log" )# target="_blank" style="color: red ;">
 					<strong>

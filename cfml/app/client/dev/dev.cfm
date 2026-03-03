@@ -37,6 +37,9 @@
 	}
 
 	switch ( request.response.template ) {
+		case "binary":
+			cfmodule( template = "/client/_shared/layout/binary.cfm" );
+		break;
 		case "blank":
 			cfmodule( template = "/client/_shared/layout/blank.cfm" );
 		break;

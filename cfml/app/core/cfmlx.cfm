@@ -180,6 +180,20 @@
 
 
 	/**
+	* I perform an in-place shuffle on the given array using Java's Collection class.
+	*/
+	private array function arrayShuffle( required array input ) {
+
+		createObject( "java", "java.util.Collections" )
+			.shuffle( input )
+		;
+
+		return input;
+
+	}
+
+
+	/**
 	* I perform an in-place sort of the given array using the provided operators. Each
 	* subsequent operator is only consumed when the previous operator returns 0.
 	*/

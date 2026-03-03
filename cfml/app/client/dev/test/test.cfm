@@ -11,6 +11,7 @@
 
 	switch ( router.next() ) {
 		case "email":
+		case "spec":
 			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
