@@ -1,7 +1,5 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Build & Development Commands
 
 ```bash
@@ -414,3 +412,15 @@ When creating a new skill, always ask the user whether it should be a **project-
 Never include a `Co-Authored-By` line in commit messages. Ben is the sole author and owner of all code in this repository.
 
 Don't add arbitrary line breaks within a paragraph in commit messages. Let a single-paragraph body remain on one line. Only use line breaks to separate distinct paragraphs.
+
+## Agent Behavior
+
+- Be concise in your responses (favor bullet points over prose).
+- Never flatter me.
+- Push back on decisions when it's warranted.
+- Never make up an answer — say you don't know when you don't know.
+
+### Plans & Plan Mode
+
+- Keep plans as concise as possible without losing fidelity. Sacrifice grammatical correctness for brevity.
+- End each plan with a list of unanswered questions, if any.
