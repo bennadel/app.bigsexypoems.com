@@ -30,6 +30,16 @@ component hint = "I provide utility methods for accessing metadata about the cur
 	// ---
 
 	/**
+	* I determine if the given content type is accepted by the current request.
+	*/
+	public boolean function accepts( required string contentType ) {
+
+		return !! getHeader( "Accept" ).findNoCase( contentType );
+
+	}
+
+
+	/**
 	* I return the ETag for the given request (or the empty string if none exists).
 	*/
 	public string function getETag() {
@@ -52,7 +62,7 @@ component hint = "I provide utility methods for accessing metadata about the cur
 	/**
 	* I safely get the given HTTP header.
 	*/
-	private string function getHeader(
+	public string function getHeader(
 		required string name,
 		string fallbackValue = ""
 		) {
@@ -363,6 +373,16 @@ component hint = "I provide utility methods for accessing metadata about the cur
 	public boolean function isPost() {
 
 		return ( getMethod() == "post" );
+
+	}
+
+
+	/**
+	* I determine if the current HTTP request is part of a test suite execution.
+	*/
+	public boolean function isTestRun() {
+
+		return ( request?.isTestRun == true );
 
 	}
 

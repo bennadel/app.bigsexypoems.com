@@ -328,6 +328,27 @@ import "../_shared/tag/toaster.view.{js,less}";
 
 When creating a new shared tag in `_shared/tag/`, you must add an explicit import for it in each root entry point that uses it.
 
+## Testing
+
+Integration tests live in `/cfml/app/spec/suite/` and run against the live dev database. Each test suite extends `spec.BaseTest`, which provisions a fresh test user via `UserProvisioner.ensureUserAccount()`.
+
+```bash
+# Run all tests (JSON output for Claude Code)
+curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec&init=1" | jq .
+
+# Run a single suite
+curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec&init=1&suite=spec.suite.PoemServiceTest" | jq .
+
+# Run a single test method
+curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec&init=1&suite=spec.suite.PoemServiceTest&test=testDeleteRemovesPoem" | jq .
+```
+
+- **Naming**: Suites are `*Test.cfc`, test methods are public functions starting with `test`.
+- **Runner**: `spec.TestRunner` auto-discovers all `*Test.cfc` files in `/spec/suite/`.
+- **Assertions**: `assertEqual()`, `assertTrue()`, `assertThrows()`, `fail()` — all throw `TestRunner.Assertion`.
+- **Independence**: Every test creates its own data. No shared fixtures, no teardown.
+- **Browser view**: Visit the same URL in a browser (without the `Accept` header) for HTML-formatted results.
+
 ## Database Migrations
 
 There's no database migration framework. All migration files need to be run manually. When the database structure needs to change, write a file to `/cfml/app/db/` and prompt me to run it manually.
@@ -386,6 +407,14 @@ public void function deleteRevision( required struct revision ) {
 **Order by `id` instead of date columns**: Auto-increment IDs are inserted chronologically. Prefer `ORDER BY id DESC` over date columns to leverage existing indexes.
 
 **`withSort` preset for `getByFilter`**: Gateways that return multi-row result sets accept a `withSort` argument with domain-level preset names (e.g., `"name"`, `"newest"`). The gateway maps presets to SQL `ORDER BY` clauses via `cfswitch`, keeping sort logic in the data-access layer instead of re-sorting arrays in controllers. The default is `"id"` (or the table's natural key). Skip `withSort` for gateways that only ever return a single row (e.g., AccountGateway, TimezoneGateway, PresenceGateway).
+
+**Parentheses in compound conditions**: When a condition has multiple operands joined by `&&` or `||`, wrap each operand in parentheses: `if ( (a == b) && (c == d) )`. Not needed for single-operand conditions — `if ( a == b )` is fine as-is.
+
+**Struct shorthand**: When a struct key matches the variable name, use shorthand: `{ passCount, failCount }` instead of `{ passCount: passCount, failCount: failCount }`.
+
+**Named arguments on built-in functions**: Prefer named arguments over positional when a built-in function takes 3+ parameters (e.g., `directoryList( path = ..., recurse = false, listInfo = "name", filter = "*.cfc" )`).
+
+**CSS custom properties over hardcoded colors**: Never hardcode hex colors in Less files. Use the design system's CSS variables (e.g., `var( --error-fill )`, `var( --success-text )`).
 
 ## Error and Flash Message Translations
 

@@ -21,6 +21,7 @@
 	error = getRequestError();
 	urlWithInit = getInitUrl();
 	slug = generateSlug();
+	initPassword = config.initPassword;
 	logCount = getLogCount();
 
 	include "./localDevelopment.view.cfm";
