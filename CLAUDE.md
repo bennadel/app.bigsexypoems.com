@@ -415,6 +415,10 @@ public void function deleteRevision( required struct revision ) {
 
 **Struct shorthand**: When a struct key matches the variable name, use shorthand: `{ passCount, failCount }` instead of `{ passCount: passCount, failCount: failCount }`.
 
+**Truthy length checks**: Use `.len()` as a boolean directly rather than comparing to zero (e.g., `if ( value.len() )` not `if ( value.len() > 0 )`).
+
+**String interpolation over concatenation**: For simple string assembly, prefer interpolation (`"#name# #createUUID()#"`) over concatenation (`name & " " & createUUID()`). Concatenation is fine for complex expressions or multi-line building.
+
 **Named arguments on built-in functions**: Prefer named arguments over positional when a built-in function takes 3+ parameters (e.g., `directoryList( path = ..., recurse = false, listInfo = "name", filter = "*.cfc" )`).
 
 **CSS custom properties over hardcoded colors**: Never hardcode hex colors in Less files. Use the design system's CSS variables (e.g., `var( --error-fill )`, `var( --success-text )`).

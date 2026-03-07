@@ -160,7 +160,7 @@ If the file already exists, update it: preserve checked items, add any new uncov
 After the report and TODO file, output this prompt exactly (the user will copy-paste it into new Claude sessions to work through the list):
 
 ```
-We're working through the test expansion TODO at `.claude/wip/TEST_EXPANSION.md`. Pick the next unchecked service from the list, run `/suggest-tests` against it, then create the test suite based on the output. Follow the testing patterns established in `PoemServiceTest.cfc` — happy/sad path sections, consolidated methods, permissions test using `provisionAuthContext()`. Run the tests to confirm they pass, then commit. Mark the item as done in the TODO file.
+We're working through the test expansion TODO at `.claude/wip/TEST_EXPANSION.md`. Pick the next unchecked service from the list, run `/suggest-tests` against it, then create the test suite based on the output. Follow the testing patterns established in `PoemServiceTest.cfc` — happy/sad path sections, consolidated methods, permissions test using `provisionAuthContext()`. Run the tests to confirm they pass, then commit. Mark the item as done in the TODO file. If you discover a latent bug in the production code while writing tests, fix it and include the fix in the commit.
 ```
 
 ## Rules

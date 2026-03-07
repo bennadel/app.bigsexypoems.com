@@ -10,6 +10,7 @@ component {
 	property name="shareModel" ioc:type="core.lib.model.poem.share.ShareModel";
 	property name="shareNoteParser" ioc:type="core.lib.model.poem.share.ShareNoteParser";
 	property name="shareNoteSanitizer" ioc:type="core.lib.model.poem.share.ShareNoteSanitizer";
+	property name="shareValidation" ioc:type="core.lib.model.poem.share.ShareValidation";
 	property name="viewingModel" ioc:type="core.lib.model.poem.share.ViewingModel";
 
 	// ColdFusion language extensions (global functions).
