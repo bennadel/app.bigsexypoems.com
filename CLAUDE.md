@@ -69,7 +69,7 @@ cfml/app/
 ## Global Extensions
 
 `/cfml/app/core/cfmlx.cfm` provides polyfills and shortcuts included in every execution context (component, template, custom tag). Functions in this file should be pure and decoupled from the application:
-- Array: `arrayCopy()`, `arrayGroupBy()`, `arrayIndexBy()`, `arrayPluck()`, `arrayPluckPath()`, `arrayPluckUnique()`, `arrayReflect()`, `arraySortByOperators()`
+- Array: `arrayCopy()`, `arrayFlatten()`, `arrayGroupBy()`, `arrayIndexBy()`, `arrayPluck()`, `arrayPluckPath()`, `arrayPluckUnique()`, `arrayReflect()`, `arraySortByOperators()`
 - Encoding: `e()` (HTML), `e4a()` (HTML attribute), `e4j()` (JavaScript), `e4json()` (JSON-in-JS), `e4u()` (URL)
 - Maybe: `maybeNew()`, `maybeArrayFirst()`, `maybeSet()` — returns `{ exists, value }` structs
 - Type checks: `isFalsy()`, `isTruthy()`, `isString()`, `isComponent()`, `isNotDate()`, `isInThread()`

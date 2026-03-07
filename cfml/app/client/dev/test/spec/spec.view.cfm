@@ -7,8 +7,8 @@
 
 	<div tp3k8w #ui.attrClass({
 		summary: true,
-		isPassing: results.ok,
-		isFailing: ! results.ok
+		isPassing: results.pass,
+		isFailing: ! results.pass
 		})#>
 		<span>
 			#numberFormat( results.passCount, "," )# passed.
@@ -62,18 +62,18 @@
 				<td>
 					<span tp3k8w #ui.attrClass({
 						badge: true,
-						isError: ( entry.type == "error" ),
-						isFailure: ( entry.type != "error" )
+						isError: ( entry.failure.type == "error" ),
+						isFailure: ( entry.failure.type != "error" )
 						})#>
-						#e( entry.type )#
+						#e( entry.failure.type )#
 					</span>
 				</td>
 				<td>
-					#e( entry.message )#
+					#e( entry.failure.message )#
 
-					<cfif entry.detail.len()>
+					<cfif entry.failure.detail.len()>
 						<div class="uiSubtext">
-							#e( entry.detail )#
+							#e( entry.failure.detail )#
 						</div>
 					</cfif>
 				</td>
@@ -84,13 +84,32 @@
 
 	</cfif>
 
-	<cfif results.ok>
+	<cfif results.pass>
 
 		<p>
 			All tests passed.
 		</p>
 
 	</cfif>
+
+
+	<h2>
+		Test Manifest
+	</h2>
+
+	<ul>
+		<cfloop array="#results.manifest#" item="entry">
+			<li>
+				#e( entry.suite )# :: #e( entry.test )# &rarr;
+
+				<cfif entry.pass>
+					ok
+				<cfelse>
+					<strong>fail</strong>
+				</cfif>
+			</li>
+		</cfloop>
+	</ul>
 
 </cfoutput>
 </cfsavecontent>

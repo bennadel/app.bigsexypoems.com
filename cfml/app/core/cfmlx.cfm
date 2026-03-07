@@ -33,6 +33,23 @@
 
 
 	/**
+	* I return a flattened collection (flattens only the first level of elements).
+	*/
+	private array function arrayFlatten( required array collection ) {
+
+		return collection.reduce(
+			( reduction, element ) => {
+
+				return reduction.append( element, isArray( element ) );
+
+			},
+			[]
+		);
+
+	}
+
+
+	/**
 	* I return a shallow copy / slice of the given array.
 	*/
 	private array function arrayCopy( required array collection ) {

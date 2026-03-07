@@ -28,7 +28,7 @@ component {
 		// iteration in the next updater (7).
 		// --
 		// https://www.bennadel.com/blog/4879-adobe-coldfusion-bug-nested-closures-with-parallel-array-iteration-destroys-arguments.htm
-		var suiteResults = arrayShuffle( suitePaths ).map(
+		var suiteManifests = arrayShuffle( suitePaths ).map(
 			( suitePath ) => {
 
 				return runSuite( suitePath, testFilter );
@@ -37,26 +37,39 @@ component {
 			false // Parallel iteration - disabled until Adobe fixes bug.
 		);
 
+		var manifest = arrayFlatten( suiteManifests );
+		var failures = [];
 		var passCount = 0;
 		var failCount = 0;
 		var errorCount = 0;
-		var failures = [];
 
-		for ( var result in suiteResults ) {
+		for ( var entry in manifest ) {
 
-			passCount += result.passCount;
-			failCount += result.failCount;
-			errorCount += result.errorCount;
-			failures.append( result.failures, true );
+			if ( entry.pass ) {
+
+				passCount++;
+
+			} else if ( entry.failure.type == "failure" ) {
+
+				failCount++;
+				failures.append( entry );
+
+			} else if ( entry.failure.type == "error" ) {
+
+				errorCount++;
+				failures.append( entry );
+
+			}
 
 		}
 
 		return {
-			ok: ( ! failCount && ! errorCount ),
+			pass: ( ! failCount && ! errorCount ),
+			manifest,
+			failures,
 			passCount,
 			failCount,
 			errorCount,
-			failures
 		};
 
 	}
@@ -130,64 +143,62 @@ component {
 
 
 	/**
-	* I run all test methods in the given suite and return per-suite results.
+	* I run all test methods in the given suite and return the testing manifest. The
+	* manifest contains information about each test, including the failure (if exists).
 	*
 	* Note: the suitePath is expected to be a dot-delimited component path.
 	*/
-	private struct function runSuite(
+	private array function runSuite(
 		required string suitePath,
 		string testFilter = ""
 		) {
 
 		var suite = ioc.get( suitePath );
-		var testMethods = discoverTestMethods( suite, testFilter );
-		var passCount = 0;
-		var failCount = 0;
-		var errorCount = 0;
-		var failures = [];
+		var manifest = discoverTestMethods( suite, testFilter ).map(
+			( methodName ) => {
+
+				return {
+					suite: suitePath,
+					test: methodName,
+					pass: true,
+					failure: nullValue(),
+				};
+
+			}
+		);
 
 		suite.beforeAll();
 
-		for ( var methodName in testMethods ) {
+		for ( var entry in manifest ) {
 
 			try {
 
 				suite.beforeEach();
-				invoke( suite, methodName );
-				passCount++;
+				invoke( suite, entry.test );
 
 			} catch ( TestRunner.Assertion error ) {
 
-				failCount++;
-				failures.append({
-					suite: suitePath,
-					test: methodName,
+				entry.pass = false;
+				entry.failure = {
 					type: "failure",
 					message: error.message,
 					detail: ""
-				});
+				};
 
 			} catch ( any error ) {
 
-				errorCount++;
-				failures.append({
-					suite: suitePath,
-					test: methodName,
+				entry.pass = false;
+				entry.failure = {
 					type: "error",
 					message: error.message,
 					detail: error.detail
-				});
+				};
 
 			}
 
 		}
 
-		return {
-			passCount,
-			failCount,
-			errorCount,
-			failures
-		};
+		return manifest;
 
 	}
 
