@@ -2,7 +2,6 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="authContext" ioc:skip;
-	property name="testUser" ioc:skip;
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 	property name="userProvisioner" ioc:type="core.lib.service.user.UserProvisioner";
 
@@ -23,25 +22,7 @@ component {
 		// the application doesn't really inspect the session object (other than to see
 		// that the user is authenticated), we should be able to mock one (until the
 		// complexity of the application increases).
-		var email = "ben+bsp-#createUuid()#@bennadel.com";
-
-		var userID = userProvisioner.ensureUserAccount(
-			email = email,
-			offsetInMinutes = 0
-		);
-
-		variables.testUser = userModel.get( userID );
-		variables.authContext = {
-			session: {
-				id: 0,
-				isIdentified: true,
-				isAuthenticated: true
-			},
-			user: variables.testUser,
-			timezone: {
-				offsetInMinutes: 0
-			}
-		};
+		variables.authContext = provisionAuthContext();
 
 	}
 
@@ -148,6 +129,31 @@ component {
 			type = "TestRunner.Assertion",
 			message = message
 		);
+
+	}
+
+
+	/**
+	* I provision a new test user and return an auth context for it.
+	*/
+	private struct function provisionAuthContext() {
+
+		var userID = userProvisioner.ensureUserAccount(
+			email = "ben+bsp-#createUuid()#@bennadel.com",
+			offsetInMinutes = 0
+		);
+
+		return {
+			session: {
+				id: 0,
+				isIdentified: true,
+				isAuthenticated: true
+			},
+			user: userModel.get( userID ),
+			timezone: {
+				offsetInMinutes: 0
+			}
+		};
 
 	}
 

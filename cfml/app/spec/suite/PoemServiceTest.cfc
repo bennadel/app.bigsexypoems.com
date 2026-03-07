@@ -6,20 +6,20 @@ component extends="spec.BaseTest" {
 	property name="revisionModel" ioc:type="core.lib.model.poem.RevisionModel";
 
 	// ---
-	// PUBLIC METHODS.
+	// HAPPY PATH TESTS.
 	// ---
 
 	/**
-	* I test that creating a poem returns a valid ID and persists the data.
+	* I test that creating a poem persists the data and creates a revision.
 	*/
-	public void function testCreatePersistsPoem() {
+	public void function testCreate() {
 
 		var name = "Test Poem #createUUID()#";
 		var content = "Roses are red.";
 
 		var poemID = poemService.create(
 			authContext = variables.authContext,
-			userID = variables.testUser.id,
+			userID = variables.authContext.user.id,
 			collectionID = 0,
 			name = name,
 			content = content
@@ -28,23 +28,7 @@ component extends="spec.BaseTest" {
 		var poem = poemModel.get( poemID );
 		assertEqual( poem.name, name );
 		assertEqual( poem.content, content );
-		assertEqual( poem.userID, variables.testUser.id );
-
-	}
-
-
-	/**
-	* I test that creating a poem also creates a revision.
-	*/
-	public void function testCreateAlsoCreatesRevision() {
-
-		var poemID = poemService.create(
-			authContext = variables.authContext,
-			userID = variables.testUser.id,
-			collectionID = 0,
-			name = "Revision Test #createUUID()#",
-			content = "Some content."
-		);
+		assertEqual( poem.userID, variables.authContext.user.id );
 
 		var revisions = revisionModel.getByFilter( poemID = poemID );
 		assertTrue( revisions.len(), "Expected at least one revision after poem creation." );
@@ -53,36 +37,13 @@ component extends="spec.BaseTest" {
 
 
 	/**
-	* I test that creating a poem with an empty name throws a validation error.
-	*/
-	public void function testCreateWithEmptyNameThrows() {
-
-		assertThrows(
-			() => {
-
-				poemService.create(
-					authContext = variables.authContext,
-					userID = variables.testUser.id,
-					collectionID = 0,
-					name = "",
-					content = "Some content."
-				);
-
-			},
-			"App.Model.Poem.Name.Empty"
-		);
-
-	}
-
-
-	/**
 	* I test that updating a poem persists the new name.
 	*/
-	public void function testUpdateChangesName() {
+	public void function testUpdate() {
 
 		var poemID = poemService.create(
 			authContext = variables.authContext,
-			userID = variables.testUser.id,
+			userID = variables.authContext.user.id,
 			collectionID = 0,
 			name = "Before #createUUID()#",
 			content = "Content."
@@ -103,13 +64,63 @@ component extends="spec.BaseTest" {
 
 
 	/**
-	* I test that updating with an oversized name throws a validation error.
+	* I test that deleting a poem makes it unfindable.
+	*/
+	public void function testDelete() {
+
+		var poemID = poemService.create(
+			authContext = variables.authContext,
+			userID = variables.authContext.user.id,
+			collectionID = 0,
+			name = "Delete Me #createUUID()#",
+			content = "Content."
+		);
+
+		poemService.delete(
+			authContext = variables.authContext,
+			id = poemID
+		);
+
+		var result = poemModel.maybeGet( poemID );
+		assertTrue( ! result.exists, "Expected poem to be deleted but it still exists." );
+
+	}
+
+	// ---
+	// SAD PATH TESTS.
+	// ---
+
+	/**
+	* I test that creating a poem with an empty name throws a validation error.
+	*/
+	public void function testCreateWithEmptyNameThrows() {
+
+		assertThrows(
+			() => {
+
+				poemService.create(
+					authContext = variables.authContext,
+					userID = variables.authContext.user.id,
+					collectionID = 0,
+					name = "",
+					content = "Some content."
+				);
+
+			},
+			"App.Model.Poem.Name.Empty"
+		);
+
+	}
+
+
+	/**
+	* I test that updating a poem with an oversized name throws a validation error.
 	*/
 	public void function testUpdateWithNameTooLongThrows() {
 
 		var poemID = poemService.create(
 			authContext = variables.authContext,
-			userID = variables.testUser.id,
+			userID = variables.authContext.user.id,
 			collectionID = 0,
 			name = "Valid Name #createUUID()#",
 			content = "Content."
@@ -132,25 +143,44 @@ component extends="spec.BaseTest" {
 
 
 	/**
-	* I test that deleting a poem makes it unfindable.
+	* I test that accessing another user's poem throws a not-found error.
 	*/
-	public void function testDeleteRemovesPoem() {
+	public void function testOtherUserPoemThrowsNotFound() {
+
+		var otherAuthContext = provisionAuthContext();
 
 		var poemID = poemService.create(
-			authContext = variables.authContext,
-			userID = variables.testUser.id,
+			authContext = otherAuthContext,
+			userID = otherAuthContext.user.id,
 			collectionID = 0,
-			name = "Delete Me #createUUID()#",
+			name = "Other User Poem #createUUID()#",
 			content = "Content."
 		);
 
-		poemService.delete(
-			authContext = variables.authContext,
-			id = poemID
+		assertThrows(
+			() => {
+
+				poemService.update(
+					authContext = variables.authContext,
+					id = poemID,
+					name = "Hacked"
+				);
+
+			},
+			"App.Model.Poem.NotFound"
 		);
 
-		var result = poemModel.maybeGet( poemID );
-		assertTrue( ! result.exists, "Expected poem to be deleted but it still exists." );
+		assertThrows(
+			() => {
+
+				poemService.delete(
+					authContext = variables.authContext,
+					id = poemID
+				);
+
+			},
+			"App.Model.Poem.NotFound"
+		);
 
 	}
 
