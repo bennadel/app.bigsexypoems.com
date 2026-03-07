@@ -22,6 +22,56 @@ component {
 	// ---
 
 	/**
+	* I create a magic link for the given email, returning the link data and signed URL.
+	*
+	* Note: this was factored-out into its own method primarily for testing purposes. As
+	* such, it's being marked public even though nothing outside this service needs this
+	* logic. It's also returning way more information than the calling context actually
+	* needs since the extra data is being used by the testing harness. Normally I wouldn't
+	* jump through so many hoops - but authentication is something that needs hardening.
+	*/
+	public struct function createMagicLink(
+		required string email,
+		numeric offsetInMinutes = 0,
+		string redirectTo = ""
+		) {
+
+		// Note: the expiration of the one-time token will IMPLICITLY create an overall
+		// expiration for the login URL itself.
+		var expiresInMinutes = 30;
+		var salt = secureRandom.getToken( 16 );
+		var token = oneTimeTokens.createToken( expiresInMinutes, email, salt );
+		var signature = authenticationUrlSigner.generateSignature(
+			email = email,
+			offsetInMinutes = offsetInMinutes,
+			redirectTo = redirectTo,
+			token = token,
+			salt = salt
+		);
+		var signedUrl = router.externalUrlFor([
+			event: "auth.login.verify",
+			email: email,
+			offsetInMinutes: offsetInMinutes,
+			redirectTo: redirectTo,
+			token: token,
+			signature: signature
+		]);
+
+		return {
+			signedUrl,
+			// The rest of this is here in order to facilitate testing.
+			email,
+			offsetInMinutes,
+			redirectTo,
+			token,
+			signature,
+			expiresInMinutes
+		};
+
+	}
+
+
+	/**
 	* I identify the given email. This will create a new user if the email is not
 	* recognized. The user ID is returned.
 	*/
@@ -59,74 +109,59 @@ component {
 
 		}
 
-		// Since this login workflow is the most likely area of the application to be
-		// misused as a malicious attack vector (it sends out an email to an arbitrary
-		// address), I want to try and lock it down in a variety of ways. But, I don't
-		// want to negatively impact a user that has already signed-up. As such, we're
-		// going to have different rate-limiting characteristics for a known user vs. a
-		// new user.
-		var maybeUser = userModel.maybeGetByFilter( email = email );
-		var ipAddress = requestMetadata.getIpAddress();
+		if ( ! requestMetadata.isTestRun() ) {
 
-		// KNOWN USER rate-limiting.
-		if ( maybeUser.exists ) {
+			// Since this login workflow is the most likely area of the application to be
+			// misused as a malicious attack vector (it sends out an email to an arbitrary
+			// address), I want to try and lock it down in a variety of ways. But, I don't
+			// want to negatively impact a user that has already signed-up. As such, we're
+			// going to have different rate-limiting characteristics for a known user vs.
+			// a new user.
+			var maybeUser = userModel.maybeGetByFilter( email = email );
+			var ipAddress = requestMetadata.getIpAddress();
 
-			rateLimitService.testRequest( "login-request-by-known-email", email );
-			rateLimitService.testRequest( "login-request-by-known-email-hourly", email );
+			// KNOWN USER rate-limiting.
+			if ( maybeUser.exists ) {
 
-		// NEW USER rate-limiting.
-		} else {
+				rateLimitService.testRequest( "login-request-by-known-email", email );
+				rateLimitService.testRequest( "login-request-by-known-email-hourly", email );
 
-			// Rate limit new user emails across ALL users in the entire app.
-			rateLimitService.testRequest( "login-request-by-app" );
-			// Rate limit new user emails for the given IP address.
-			rateLimitService.testRequest( "login-request-by-ip", ipAddress );
-			// Rate limit new user emails for the given email address. Note that we're
-			// using a canonicalized version of the email for rate-limiting so that we can
-			// collapse dynamic emails into a single form. This won't affect the email
-			// that's ultimately stored with the user record.
-			rateLimitService.testRequest( "login-request-by-unknown-email", canonicalizeEmail( email ) );
+			// NEW USER rate-limiting.
+			} else {
+
+				// Rate limit new user emails across ALL users in the entire app.
+				rateLimitService.testRequest( "login-request-by-app" );
+				// Rate limit new user emails for the given IP address.
+				rateLimitService.testRequest( "login-request-by-ip", ipAddress );
+				// Rate limit new user emails for the given email address. Note that we're
+				// using a canonicalized version of the email for rate-limiting so that we
+				// can collapse dynamic emails into a single form. This won't affect the
+				// email that's ultimately stored with the user record.
+				rateLimitService.testRequest( "login-request-by-unknown-email", canonicalizeEmail( email ) );
+
+			}
+
+			// TEMPORARY: Long term, I don't need to be logging this information; however,
+			// while we're still getting things up-and-running, I want to have my finger on
+			// the pulse so I can get a sense of whether or not this feature is being abused.
+			logger.info(
+				"Magic link workflow requested.",
+				{
+					email,
+					ipAddress
+				}
+			);
 
 		}
 
-		// TEMPORARY: Long term, I don't need to be logging this information; however,
-		// while we're still getting things up-and-running, I want to have my finger on
-		// the pulse so I can get a sense of whether or not this feature is being abused.
-		logger.info(
-			"Magic link workflow requested.",
-			{
-				email,
-				ipAddress
-			}
-		);
-
-		// Note: the expiration of the one-time token will IMPLICITLY create an overall
-		// expiration for the login URL itself.
-		var expiresInMinutes = 30;
-		var salt = secureRandom.getToken( 16 );
-		var token = oneTimeTokens.createToken( expiresInMinutes, email, salt );
-		var signature = authenticationUrlSigner.generateSignature(
-			email = email,
-			offsetInMinutes = offsetInMinutes,
-			redirectTo = redirectTo,
-			token = token,
-			salt = salt
-		);
-		var loginUrl = router.externalUrlFor([
-			event: "auth.login.verify",
-			email: email,
-			offsetInMinutes: offsetInMinutes,
-			redirectTo: redirectTo,
-			token: token,
-			signature: signature
-		]);
+		var magicLink = createMagicLink( email, offsetInMinutes, redirectTo );
 
 		// In order to make local development less tedious, I'm going to output the login
 		// URL directly in the "sent" page.
 		if ( ! config.isLive ) {
 
 			cookie.loginUrlForLocalDevelopment = {
-				value: loginUrl,
+				value: magicLink.signedUrl,
 				encodeValue: true,
 				httpOnly: true,
 				secure: false,
@@ -141,16 +176,16 @@ component {
 		// subject. This isn't a fool-proof plan; but, will likely create a unique subject
 		// between two subsequent login requests for the same user.
 		var expiresAt = utcNow()
-			.add( "n", offsetInMinutes )
-			.add( "n", expiresInMinutes )
+			.add( "n", magicLink.offsetInMinutes )
+			.add( "n", magicLink.expiresInMinutes )
 		;
 		var expiresAtString = dateTimeFormat( expiresAt, "h:nn TT '('mmm d')'" );
 
 		authenticationEmailer.sendMagicLink(
-			email = email,
+			email = magicLink.email,
 			subject = "Log into #config.site.name# - Expires at #expiresAtString#",
-			loginUrl = loginUrl,
-			loginExpiration = "#expiresInMinutes# minutes"
+			loginUrl = magicLink.signedUrl,
+			loginExpiration = "#magicLink.expiresInMinutes# minutes"
 		);
 
 	}

@@ -139,7 +139,7 @@ component {
 	private struct function provisionAuthContext() {
 
 		var userID = userProvisioner.ensureUserAccount(
-			email = "ben+bsp-#createUuid()#@bennadel.com",
+			email = uniqueEmail(),
 			offsetInMinutes = 0
 		);
 
@@ -154,6 +154,16 @@ component {
 				offsetInMinutes: 0
 			}
 		};
+
+	}
+
+
+	/**
+	* I generate a unique email address for testing.
+	*/
+	private string function uniqueEmail() {
+
+		return "test-#createUUID()#@bennadel.com";
 
 	}
 
