@@ -62,14 +62,18 @@
 				<td>
 					<span tp3k8w #ui.attrClass({
 						badge: true,
-						isError: ( entry.failure.type == "error" ),
-						isFailure: ( entry.failure.type != "error" )
+						isError: ( entry.failure.code == "error" ),
+						isFailure: ( entry.failure.code != "error" )
 						})#>
-						#e( entry.failure.type )#
+						#e( entry.failure.code )#
 					</span>
 				</td>
 				<td>
-					#e( entry.failure.message )#
+					<cfif entry.failure.message.len()>
+						#e( entry.failure.message )#
+					<cfelse>
+						<em class="uiSubtext">#e( entry.failure.type )#</em>
+					</cfif>
 
 					<cfif entry.failure.detail.len()>
 						<div class="uiSubtext">

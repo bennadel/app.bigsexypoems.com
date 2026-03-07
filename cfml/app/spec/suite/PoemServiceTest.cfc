@@ -1,6 +1,7 @@
 component extends="spec.BaseTest" {
 
 	// Define properties for dependency-injection.
+	property name="collectionService" ioc:type="core.lib.service.collection.CollectionService";
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
 	property name="poemService" ioc:type="core.lib.service.poem.PoemService";
 	property name="revisionModel" ioc:type="core.lib.model.poem.RevisionModel";
@@ -91,10 +92,19 @@ component extends="spec.BaseTest" {
 	// ---
 
 	/**
-	* I test that creating a poem with an empty name throws a validation error.
+	* I test that creating a poem with invalid input throws a validation error.
 	*/
-	public void function testCreateWithEmptyNameThrows() {
+	public void function testCreateWithInvalidInputThrows() {
 
+		var otherAuthContext = provisionAuthContext();
+		var otherCollectionID = collectionService.create(
+			authContext = otherAuthContext,
+			userID = otherAuthContext.user.id,
+			name = "OtherCol #createUUID()#",
+			descriptionMarkdown = ""
+		);
+
+		// Empty name.
 		assertThrows(
 			() => {
 
@@ -110,13 +120,85 @@ component extends="spec.BaseTest" {
 			"App.Model.Poem.Name.Empty"
 		);
 
+		// Name too long.
+		assertThrows(
+			() => {
+
+				poemService.create(
+					authContext = variables.authContext,
+					userID = variables.authContext.user.id,
+					collectionID = 0,
+					name = repeatString( "x", 300 ),
+					content = "Some content."
+				);
+
+			},
+			"App.Model.Poem.Name.TooLong"
+		);
+
+		// Content too long.
+		assertThrows(
+			() => {
+
+				poemService.create(
+					authContext = variables.authContext,
+					userID = variables.authContext.user.id,
+					collectionID = 0,
+					name = "Valid Name #createUUID()#",
+					content = repeatString( "x", 4000 )
+				);
+
+			},
+			"App.Model.Poem.Content.TooLong"
+		);
+
+		// Suspicious encoding in name.
+		assertThrows(
+			() => {
+
+				poemService.create(
+					authContext = variables.authContext,
+					userID = variables.authContext.user.id,
+					collectionID = 0,
+					name = "Test %2525 Encoded",
+					content = "Some content."
+				);
+
+			},
+			"App.Model.Poem.Name.SuspiciousEncoding"
+		);
+
+		// Collection owned by another user.
+		assertThrows(
+			() => {
+
+				poemService.create(
+					authContext = variables.authContext,
+					userID = variables.authContext.user.id,
+					collectionID = otherCollectionID,
+					name = "Valid Name #createUUID()#",
+					content = "Some content."
+				);
+
+			},
+			"App.Model.Collection.NotFound"
+		);
+
 	}
 
 
 	/**
-	* I test that updating a poem with an oversized name throws a validation error.
+	* I test that updating a poem with invalid input throws a validation error.
 	*/
-	public void function testUpdateWithNameTooLongThrows() {
+	public void function testUpdateWithInvalidInputThrows() {
+
+		var otherAuthContext = provisionAuthContext();
+		var otherCollectionID = collectionService.create(
+			authContext = otherAuthContext,
+			userID = otherAuthContext.user.id,
+			name = "OtherCol #createUUID()#",
+			descriptionMarkdown = ""
+		);
 
 		var poemID = poemService.create(
 			authContext = variables.authContext,
@@ -126,6 +208,7 @@ component extends="spec.BaseTest" {
 			content = "Content."
 		);
 
+		// Name too long.
 		assertThrows(
 			() => {
 
@@ -137,6 +220,48 @@ component extends="spec.BaseTest" {
 
 			},
 			"App.Model.Poem.Name.TooLong"
+		);
+
+		// Content too long.
+		assertThrows(
+			() => {
+
+				poemService.update(
+					authContext = variables.authContext,
+					id = poemID,
+					content = repeatString( "x", 4000 )
+				);
+
+			},
+			"App.Model.Poem.Content.TooLong"
+		);
+
+		// Suspicious encoding in content.
+		assertThrows(
+			() => {
+
+				poemService.update(
+					authContext = variables.authContext,
+					id = poemID,
+					content = "Test %2525 Encoded"
+				);
+
+			},
+			"App.Model.Poem.Content.SuspiciousEncoding"
+		);
+
+		// Collection owned by another user.
+		assertThrows(
+			() => {
+
+				poemService.update(
+					authContext = variables.authContext,
+					id = poemID,
+					collectionID = otherCollectionID
+				);
+
+			},
+			"App.Model.Collection.NotFound"
 		);
 
 	}

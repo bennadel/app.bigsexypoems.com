@@ -49,12 +49,12 @@ component {
 
 				passCount++;
 
-			} else if ( entry.failure.type == "failure" ) {
+			} else if ( entry.failure.code == "failure" ) {
 
 				failCount++;
 				failures.append( entry );
 
-			} else if ( entry.failure.type == "error" ) {
+			} else if ( entry.failure.code == "error" ) {
 
 				errorCount++;
 				failures.append( entry );
@@ -180,7 +180,8 @@ component {
 
 				entry.pass = false;
 				entry.failure = {
-					type: "failure",
+					code: "failure",
+					type: error.type,
 					message: error.message,
 					detail: ""
 				};
@@ -189,7 +190,8 @@ component {
 
 				entry.pass = false;
 				entry.failure = {
-					type: "error",
+					code: "error",
+					type: error.type,
 					message: error.message,
 					detail: error.detail
 				};
