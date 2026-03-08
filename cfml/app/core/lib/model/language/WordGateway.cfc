@@ -50,9 +50,9 @@
 			WHERE
 				TRUE
 
-			<cfif ! isNull( word )>
+			<cfif ! isNull( token )>
 				AND
-					word = <cfqueryparam value="#word#" cfsqltype="cf_sql_varchar" />
+					token = <cfqueryparam value="#token#" cfsqltype="cf_sql_varchar" />
 			</cfif>
 		</cfquery>
 
