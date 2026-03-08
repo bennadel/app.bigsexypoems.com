@@ -6,6 +6,7 @@ component {
 	property name="collectionDescriptionParser" ioc:type="core.lib.model.collection.CollectionDescriptionParser";
 	property name="collectionDescriptionSanitizer" ioc:type="core.lib.model.collection.CollectionDescriptionSanitizer";
 	property name="collectionModel" ioc:type="core.lib.model.collection.CollectionModel";
+	property name="collectionValidation" ioc:type="core.lib.model.collection.CollectionValidation";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";

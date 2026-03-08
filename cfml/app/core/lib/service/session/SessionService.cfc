@@ -50,7 +50,7 @@ component hint = "I provide methods for accessing the session associated with th
 	/**
 	* I create a new session for the given user.
 	*/
-	public void function create(
+	public numeric function create(
 		required numeric userID,
 		required boolean isAuthenticated
 		) {
@@ -92,7 +92,13 @@ component hint = "I provide methods for accessing the session associated with th
 			);
 		}
 
-		sessionCookies.setCookie( sessionID, sessionToken );
+		if ( ! requestMetadata.isTestRun() ) {
+
+			sessionCookies.setCookie( sessionID, sessionToken );
+
+		}
+
+		return sessionID;
 
 	}
 
@@ -115,7 +121,11 @@ component hint = "I provide methods for accessing the session associated with th
 
 		}
 
-		sessionCookies.deleteCookie();
+		if ( ! requestMetadata.isTestRun() ) {
+
+			sessionCookies.deleteCookie();
+
+		}
 
 	}
 
@@ -134,10 +144,14 @@ component hint = "I provide methods for accessing the session associated with th
 
 		sessionCascade.delete( user, userSession );
 
-		// If this was the current session, let's also delete the cookies.
-		if ( sessionCookies.getCookie().sessionID == sessionID ) {
+		if ( ! requestMetadata.isTestRun() ) {
 
-			sessionCookies.deleteCookie();
+			// If this was the current session, let's also delete the cookies.
+			if ( sessionCookies.getCookie().sessionID == sessionID ) {
+
+				sessionCookies.deleteCookie();
+
+			}
 
 		}
 

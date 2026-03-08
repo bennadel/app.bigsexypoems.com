@@ -1,9 +1,9 @@
 ---
 name: suggest-tests
-description: Scan recent commits for service-layer changes and report which services and methods lack test coverage.
+description: Scan service-layer files for test coverage gaps. No args = plan + TODO; service name = single analysis; "deep" = full read-only report.
 context: fork
 agent: Explore
-allowed-tools: Read, Grep, Glob, Bash
+allowed-tools: Read, Write, Edit, Grep, Glob, Bash
 ---
 
 # Suggest Tests
@@ -12,29 +12,13 @@ Scan service-layer files and cross-reference against existing test suites. Outpu
 
 ## Modes
 
-- **Default** — Scan the last N commits (default 20) for changed services. Example: `/suggest-tests` or `/suggest-tests last 50 commits`.
-- **Deep dive** — Scan ALL services regardless of git history. Triggered when the user's prompt contains "deep" (e.g., `/suggest-tests deep`, `/suggest-tests deep dive`).
+- **Default (no arguments)** — Full planning mode. Scan ALL services, produce the coverage report, create or update a TODO file at `.claude/wip/TEST_EXPANSION.md`, and output an iteration prompt the user can feed back to Claude to work through the list one service at a time.
+- **Deep dive** — Read-only analysis of ALL services. Same scan as default but does NOT create files or output a prompt. Triggered when the user's prompt contains "deep" (e.g., `/suggest-tests deep`).
 - **Single service** — Analyze one specific service. Triggered when the user names a service (e.g., `/suggest-tests PoemService`, `/suggest-tests CollectionService`). Match by name — the user doesn't need to provide the full path.
 
 ## Step 1: Find Services to Analyze
 
-### Default mode
-
-Run these git commands to identify which service files were touched in the last N commits:
-
-```bash
-# Get the commit range
-git log --oneline -N
-
-# Find changed service files
-git diff HEAD~N --name-only -- '*/service/**/*Service.cfc'
-```
-
-If `HEAD~N` extends beyond the repo's history, use `$(git rev-list --max-parents=0 HEAD)` as the base instead.
-
-Collect the list of changed `*Service.cfc` file paths.
-
-### Deep-dive mode
+### Default mode / Deep-dive mode
 
 Glob for all `*Service.cfc` files under `cfml/app/core/lib/service/`. Every service is in scope.
 
@@ -144,11 +128,51 @@ The key insight: the entity must actually exist (created by user A) so that the 
 
 If all scanned services have full test coverage, state: "All scanned services have test coverage."
 
+## Step 6: Create TODO and Iteration Prompt (Default Mode Only)
+
+Skip this step for deep-dive and single-service modes.
+
+### Create or update `.claude/wip/TEST_EXPANSION.md`
+
+Write a TODO file with checkboxes for each service needing test coverage. Services with full coverage should be pre-checked. Order services by estimated complexity (simplest CRUD services first, services with external dependencies like cookies/sessions last). Include brief notes about each service's scope.
+
+```markdown
+# Test Expansion TODO
+
+Track progress as we add test suites for each service.
+
+## Services
+
+- [ ] ServiceName — brief scope note
+- [ ] ServiceName — brief scope note
+- [x] ServiceName — already covered
+
+## Notes
+
+- Run `/suggest-tests <ServiceName>` before writing each suite for detailed gap analysis
+- Services ordered by estimated complexity (simplest first)
+
+## Prompt
+
+Copy and paste this to process the next unchecked service:
+
+We're working through the test expansion TODO at `.claude/wip/TEST_EXPANSION.md`. Pick the next unchecked service from the list, run `/suggest-tests` against it, then create the test suite based on the output. Follow the testing patterns established in `PoemServiceTest.cfc` — happy/sad path sections, consolidated methods, permissions test using `provisionAuthContext()`. Run the tests to confirm they pass, then commit. Mark the item as done in the TODO file. If you discover a latent bug in the production code while writing tests, fix it and include the fix in the commit.
+```
+
+If the file already exists, update it: preserve checked items, add any new uncovered services, remove services that now have full coverage.
+
+### Output Iteration Prompt
+
+After the report and TODO file, output this prompt exactly (the user will copy-paste it into new Claude sessions to work through the list):
+
+```
+We're working through the test expansion TODO at `.claude/wip/TEST_EXPANSION.md`. Pick the next unchecked service from the list, run `/suggest-tests` against it, then create the test suite based on the output. Follow the testing patterns established in `PoemServiceTest.cfc` — happy/sad path sections, consolidated methods, permissions test using `provisionAuthContext()`. Run the tests to confirm they pass, then commit. Mark the item as done in the TODO file. If you discover a latent bug in the production code while writing tests, fix it and include the fix in the commit.
+```
+
 ## Rules
 
 - Do NOT generate test code — only report gaps and suggest test method names.
-- Do NOT modify any files.
-- In default mode, if no service files were changed in the commit range, state that and exit.
+- Do NOT modify any files except `.claude/wip/TEST_EXPANSION.md` in default mode.
 - When listing methods, include a brief note about what the method does (inferred from its name and body).
 - **Test naming**: Happy-path methods use short names matching the operation: `testCreate`, `testUpdate`, `testDelete`. Sad-path validation methods consolidate by operation: `testCreateWithInvalidInputThrows`, `testUpdateWithInvalidInputThrows`. Sad-path permission methods use: `testOtherUser<Entity>ThrowsNotFound`.
 - **Test sections**: Suggested methods should be grouped into `HAPPY PATH TESTS` and `SAD PATH TESTS` sections (see examples above).

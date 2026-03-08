@@ -415,6 +415,10 @@ public void function deleteRevision( required struct revision ) {
 
 **Struct shorthand**: When a struct key matches the variable name, use shorthand: `{ passCount, failCount }` instead of `{ passCount: passCount, failCount: failCount }`.
 
+**Truthy length checks**: Use `.len()` as a boolean directly rather than comparing to zero (e.g., `if ( value.len() )` not `if ( value.len() > 0 )`).
+
+**String interpolation over concatenation**: For simple string assembly, prefer interpolation (`"#name# #createUUID()#"`) over concatenation (`name & " " & createUUID()`). Concatenation is fine for complex expressions or multi-line building.
+
 **Named arguments on built-in functions**: Prefer named arguments over positional when a built-in function takes 3+ parameters (e.g., `directoryList( path = ..., recurse = false, listInfo = "name", filter = "*.cfc" )`).
 
 **CSS custom properties over hardcoded colors**: Never hardcode hex colors in Less files. Use the design system's CSS variables (e.g., `var( --error-fill )`, `var( --success-text )`).
@@ -441,9 +445,11 @@ When creating a new skill, always ask the user whether it should be a **project-
 
 ## Git Commits
 
-Never include a `Co-Authored-By` line in commit messages. Ben is the sole author and owner of all code in this repository.
+The vast majority of commits should include a subject line (less than 80-characters); and a longer description of the commit contents. If the entire commit can be described in less than 80-character, a subject-line-only commit is ok.
 
 Don't add arbitrary line breaks within a paragraph in commit messages. Let a single-paragraph body remain on one line. Only use line breaks to separate distinct paragraphs.
+
+Never include a `Co-Authored-By` line in commit messages. Ben is the sole author and owner of all code in this repository.
 
 ## Agent Behavior
 
