@@ -28,6 +28,27 @@
 	</cffunction>
 
 
+	<cffunction name="deleteByFilter" returnType="void">
+
+		<cfargument name="userID" type="numeric" required="false" />
+
+		<cfset assertIndexPrefix( arguments ) />
+
+		<cfquery name="local.results" result="local.metaResults">
+			DELETE FROM
+				user_timezone
+			WHERE
+				TRUE
+
+			<cfif ! isNull( userID )>
+				AND
+					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+			</cfif>
+		</cfquery>
+
+	</cffunction>
+
+
 	<cffunction name="getByFilter" returnType="array">
 
 		<cfargument name="userID" type="numeric" required="false" />

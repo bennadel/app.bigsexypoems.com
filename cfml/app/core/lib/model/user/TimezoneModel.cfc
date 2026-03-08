@@ -38,6 +38,16 @@ component {
 
 
 	/**
+	* I delete the model that match the given filters.
+	*/
+	public void function deleteByFilter( numeric userID ) {
+
+		gateway.deleteByFilter( argumentCollection = arguments );
+
+	}
+
+
+	/**
 	* I get a model.
 	*/
 	public struct function get( required numeric userID ) {

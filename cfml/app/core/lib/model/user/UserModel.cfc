@@ -44,6 +44,19 @@ component {
 
 
 	/**
+	* I delete the model that match the given filters.
+	*/
+	public void function deleteByFilter(
+		numeric id,
+		string email
+		) {
+
+		gateway.deleteByFilter( argumentCollection = arguments );
+
+	}
+
+
+	/**
 	* I get a model.
 	*/
 	public struct function get( required numeric id ) {

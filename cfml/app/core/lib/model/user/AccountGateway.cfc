@@ -40,11 +40,6 @@
 			WHERE
 				TRUE
 
-			<cfif ! isNull( id )>
-				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
-			</cfif>
-
 			<cfif ! isNull( email )>
 				AND
 					email = <cfqueryparam value="#email#" cfsqltype="cf_sql_varchar" />
