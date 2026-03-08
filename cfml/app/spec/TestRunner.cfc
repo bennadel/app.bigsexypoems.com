@@ -2,6 +2,8 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="ioc" ioc:type="core.lib.util.Injector";
+	property name="userCascade" ioc:type="core.lib.service.user.UserCascade";
+	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -9,6 +11,52 @@ component {
 	// ---
 	// PUBLIC METHODS.
 	// ---
+
+	/**
+	* I delete all test users and optimize the affected tables.
+	*/
+	public void function cleanup() {
+
+		var users = queryExecute(
+			"
+				SELECT
+					id
+				FROM
+					user
+				WHERE
+					email LIKE 'spec-runner-%'
+			",
+			{},
+			{
+				returnAs: "array"
+			}
+		);
+
+		users.each(
+			( record ) => {
+
+				userCascade.delete( userModel.get( record.id ) );
+
+			},
+			true // Parallel iteration.
+		);
+
+		queryExecute("
+			OPTIMIZE TABLE
+				collection,
+				poem,
+				poem_revision,
+				poem_share,
+				poem_share_viewing,
+				user,
+				user_account,
+				user_session,
+				user_session_presence,
+				user_timezone
+		");
+
+	}
+
 
 	/**
 	* I discover and run test suites, returning aggregated results.

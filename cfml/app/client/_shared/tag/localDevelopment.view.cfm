@@ -13,7 +13,7 @@
 				Scribble
 			</a>
 
-			<a #ui.attrHref( "dev.test.spec", "init", initPassword )# target="_blank">
+			<a #ui.attrHref( "dev.test.spec.run", "init", initPassword )# target="_blank">
 				Tests
 			</a>
 
