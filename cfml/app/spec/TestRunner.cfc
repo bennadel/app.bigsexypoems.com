@@ -17,6 +17,10 @@ component {
 	*/
 	public void function cleanup() {
 
+		// Note: I rather dislike having raw SQL queries in my service layer. But, I'm
+		// allowing it for now while I explore the test mechanics. Once I feel more
+		// confident that things are going in the right direction, I'll refactor for a
+		// better separation of concerns.
 		var users = queryExecute(
 			"
 				SELECT
@@ -28,7 +32,8 @@ component {
 			",
 			{},
 			{
-				returnAs: "array"
+				returnAs: "array",
+				result: "local.metaResults" // Prevent memory leak.
 			}
 		);
 
@@ -41,19 +46,25 @@ component {
 			true // Parallel iteration.
 		);
 
-		queryExecute("
-			OPTIMIZE TABLE
-				collection,
-				poem,
-				poem_revision,
-				poem_share,
-				poem_share_viewing,
-				user,
-				user_account,
-				user_session,
-				user_session_presence,
-				user_timezone
-		");
+		queryExecute(
+			"
+				OPTIMIZE TABLE
+					collection,
+					poem,
+					poem_revision,
+					poem_share,
+					poem_share_viewing,
+					user,
+					user_account,
+					user_session,
+					user_session_presence,
+					user_timezone
+			",
+			{},
+			{
+				result: "local.metaResults" // Prevent memory leak.
+			}
+		);
 
 	}
 
