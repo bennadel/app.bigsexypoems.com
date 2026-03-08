@@ -163,7 +163,7 @@ component {
 	*/
 	private string function uniqueEmail() {
 
-		return "test-#createUUID()#@bennadel.com";
+		return "spec-runner-#createUUID()#@bennadel.com";
 
 	}
 
