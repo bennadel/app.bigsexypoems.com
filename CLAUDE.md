@@ -445,9 +445,11 @@ When creating a new skill, always ask the user whether it should be a **project-
 
 ## Git Commits
 
-Never include a `Co-Authored-By` line in commit messages. Ben is the sole author and owner of all code in this repository.
+The vast majority of commits should include a subject line (less than 80-characters); and a longer description of the commit contents. If the entire commit can be described in less than 80-character, a subject-line-only commit is ok.
 
 Don't add arbitrary line breaks within a paragraph in commit messages. Let a single-paragraph body remain on one line. Only use line breaks to separate distinct paragraphs.
+
+Never include a `Co-Authored-By` line in commit messages. Ben is the sole author and owner of all code in this repository.
 
 ## Agent Behavior
 
