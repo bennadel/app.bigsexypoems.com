@@ -40,9 +40,9 @@
 			WHERE
 				TRUE
 
-			<cfif ! isNull( email )>
+			<cfif ! isNull( userID )>
 				AND
-					email = <cfqueryparam value="#email#" cfsqltype="cf_sql_varchar" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_integer" />
 			</cfif>
 		</cfquery>
 

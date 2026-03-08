@@ -61,7 +61,7 @@ component {
 
 		for ( var share in shares ) {
 
-			shareCascade.deleteShare( user, poem, share );
+			shareCascade.delete( user, poem, share );
 
 		}
 
