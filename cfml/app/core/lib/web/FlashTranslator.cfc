@@ -36,6 +36,9 @@ component {
 			// 	linkText = "View client",
 			// 	linkHref = router.urlForParts( "member.client.view", "clientID", flashID )
 			// );
+			case "dev.test.cleanup.completed":
+				return asResponse( "Test data has been cleaned up and tables have been optimized." );
+			break;
 			case "your.collection.created":
 				return asResponse( "Your collection has been created." );
 			break;

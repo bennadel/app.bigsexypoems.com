@@ -334,13 +334,13 @@ Integration tests live in `/cfml/app/spec/suite/` and run against the live dev d
 
 ```bash
 # Run all tests (JSON output for Claude Code)
-curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec&init=1" | jq .
+curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec.run&init=1" | jq .
 
 # Run a single suite
-curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec&init=1&suite=spec.suite.PoemServiceTest" | jq .
+curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec.run&init=1&suite=spec.suite.PoemServiceTest" | jq .
 
 # Run a single test method
-curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec&init=1&suite=spec.suite.PoemServiceTest&test=testDelete" | jq .
+curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec.run&init=1&suite=spec.suite.PoemServiceTest&test=testDelete" | jq .
 ```
 
 - **Naming**: Suites are `*Test.cfc`, test methods are public functions starting with `test`.
