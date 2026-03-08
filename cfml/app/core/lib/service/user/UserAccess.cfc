@@ -103,7 +103,7 @@ component {
 	// ---
 
 	/**
-	* I throw a not found access error.
+	* I throw an access error.
 	*/
 	private void function throwNotFoundError() {
 
@@ -113,7 +113,7 @@ component {
 
 
 	/**
-	* I throw a forbidden access error.
+	* I throw an access error.
 	*/
 	private void function throwForbiddenError() {
 

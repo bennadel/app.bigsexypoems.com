@@ -75,7 +75,7 @@ component
 	// ---
 
 	/**
-	* I throw a forbidden error.
+	* I throw a model error.
 	*/
 	public void function throwForbiddenError() {
 
@@ -85,7 +85,7 @@ component
 
 
 	/**
-	* I throw a not-found error.
+	* I throw a model error.
 	*/
 	public void function throwNotFoundError() {
 

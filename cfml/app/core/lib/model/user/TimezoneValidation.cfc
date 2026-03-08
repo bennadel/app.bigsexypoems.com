@@ -23,7 +23,7 @@ component
 	// ---
 
 	/**
-	* I throw an already-exists error.
+	* I throw a model error.
 	*/
 	public void function throwAlreadyExistsError() {
 
@@ -33,7 +33,7 @@ component
 
 
 	/**
-	* I throw a not-found error.
+	* I throw a model error.
 	*/
 	public void function throwNotFoundError() {
 
