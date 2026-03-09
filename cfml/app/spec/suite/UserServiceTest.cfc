@@ -26,6 +26,32 @@ component extends="spec.BaseTest" {
 
 	}
 
+
+	/**
+	* I test that deleting a user removes the user record.
+	*/
+	public void function testDelete() {
+
+		// Provision a dedicated auth context for deletion so we don't destroy the
+		// shared test user that the rest of the suite depends on.
+		var deleteAuthContext = provisionAuthContext();
+
+		userService.delete(
+			authContext = deleteAuthContext,
+			id = deleteAuthContext.user.id
+		);
+
+		assertThrows(
+			() => {
+
+				userModel.get( deleteAuthContext.user.id );
+
+			},
+			"App.Model.User.NotFound"
+		);
+
+	}
+
 	// ---
 	// SAD PATH TESTS.
 	// ---
@@ -81,12 +107,13 @@ component extends="spec.BaseTest" {
 
 
 	/**
-	* I test that updating another user's account throws a not-found error.
+	* I test that updating or deleting another user's account throws a not-found error.
 	*/
 	public void function testOtherUserThrowsNotFound() {
 
 		var otherAuthContext = provisionAuthContext();
 
+		// Update.
 		assertThrows(
 			() => {
 
@@ -94,6 +121,19 @@ component extends="spec.BaseTest" {
 					authContext = variables.authContext,
 					id = otherAuthContext.user.id,
 					name = "Hacked"
+				);
+
+			},
+			"App.Model.User.NotFound"
+		);
+
+		// Delete.
+		assertThrows(
+			() => {
+
+				userService.delete(
+					authContext = variables.authContext,
+					id = otherAuthContext.user.id
 				);
 
 			},
