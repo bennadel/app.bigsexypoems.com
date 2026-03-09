@@ -25,10 +25,12 @@
 	// behaviors that we don't need during a test suite execution.
 	request.isTestRun = true;
 
+	startedAt = getTickCount();
 	results = testRunner.runAll(
 		suiteFilter = url.suite,
 		testFilter = url.test
 	);
+	duration = ( getTickCount() - startedAt );
 
 	// Claude code will consume this as a JSON end-point.
 	if ( requestMetadata.accepts( "application/json" ) ) {

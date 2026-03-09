@@ -25,6 +25,10 @@
 				#numberFormat( results.errorCount, "," )# errors.
 			</span>
 		</cfif>
+
+		<span>
+			Duration: #numberFormat( duration, "," )#ms.
+		</span>
 	</div>
 
 	<cfif results.failures.len()>
