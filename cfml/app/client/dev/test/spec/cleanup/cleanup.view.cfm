@@ -21,7 +21,7 @@
 		<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
 		<div class="uiFormButtons">
-			<button type="submit" class="uiButton isSubmit">
+			<button type="submit" class="uiButton isDanger">
 				Clean Up Test Data
 			</button>
 		</div>
