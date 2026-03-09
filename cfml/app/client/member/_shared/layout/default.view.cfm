@@ -122,7 +122,7 @@
 						</li>
 						<li>
 							<a
-								#ui.attrHref( "member.profile" )#
+								#ui.attrHref( "member.profile.edit" )#
 								mpjwb9
 								#ui.attrClass([
 									navLink: true,

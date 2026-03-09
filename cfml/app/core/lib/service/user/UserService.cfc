@@ -2,6 +2,7 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="userAccess" ioc:type="core.lib.service.user.UserAccess";
+	property name="userCascade" ioc:type="core.lib.service.user.UserCascade";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
 	// ColdFusion language extensions (global functions).
@@ -10,6 +11,22 @@ component {
 	// ---
 	// PUBLIC METHODS.
 	// ---
+
+	/**
+	* I delete the given user and all associated data.
+	*/
+	public void function delete(
+		required struct authContext,
+		required numeric id
+		) {
+
+		var context = userAccess.getContext( authContext, id, "canDelete" );
+		var user = context.user;
+
+		userCascade.delete( user );
+
+	}
+
 
 	/**
 	* I update the given user.

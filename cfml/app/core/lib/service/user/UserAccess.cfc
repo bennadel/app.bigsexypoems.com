@@ -62,6 +62,19 @@ component {
 	// ---
 
 	/**
+	* I determine if the delete action can be performed.
+	*/
+	public boolean function canDelete(
+		required struct authContext,
+		required struct user
+		) {
+
+		return canView( argumentCollection = arguments );
+
+	}
+
+
+	/**
 	* I determine if the update action can be performed.
 	*/
 	public boolean function canUpdate(
@@ -69,13 +82,7 @@ component {
 		required struct user
 		) {
 
-		if ( ! authContext.session.isAuthenticated ) {
-
-			return false;
-
-		}
-
-		return ( authContext.user.id == user.id );
+		return canView( argumentCollection = arguments );
 
 	}
 

@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<article>
+	<article fcestv class="fcestv">
 
 		<h1>
 			Profile
@@ -70,6 +70,11 @@
 				</button>
 			</div>
 		</form>
+
+		<p class="deleteAccount">
+			Danger zone:
+			<a #ui.attrHref( "member.profile.delete" )#>delete my account</a>.
+		</p>
 
 	</article>
 

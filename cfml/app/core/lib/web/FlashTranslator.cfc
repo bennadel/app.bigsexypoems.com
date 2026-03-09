@@ -93,6 +93,9 @@ component {
 			case "your.tag.updated":
 				return asResponse( "Your tag has been updated." );
 			break;
+			case "your.user.account.deleted":
+				return asResponse( "Your account has been deleted." );
+			break;
 			case "your.user.account.updated":
 				return asResponse( "Your account has been updated." );
 			break;
