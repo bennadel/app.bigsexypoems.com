@@ -221,6 +221,7 @@ component {
 					test: methodName,
 					pass: true,
 					failure: nullValue(),
+					duration: 0,
 				};
 
 			}
@@ -229,6 +230,8 @@ component {
 		suite.beforeAll();
 
 		for ( var entry in manifest ) {
+
+			var startedAt = getTickCount();
 
 			try {
 
@@ -256,6 +259,8 @@ component {
 				};
 
 			}
+
+			entry.duration = ( getTickCount() - startedAt );
 
 		}
 

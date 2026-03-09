@@ -119,6 +119,8 @@
 				<cfelse>
 					<strong>fail</strong>
 				</cfif>
+
+				(#numberFormat( entry.duration, "," )#ms)
 			</li>
 		</cfloop>
 	</ul>
