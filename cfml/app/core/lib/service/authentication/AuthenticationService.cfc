@@ -203,9 +203,13 @@ component {
 		required string signature
 		) {
 
-		// Since this login workflow is the most likely point of attack on the system, we
-		// want to limit a malicious actor from pounding the server with guesses.
-		rateLimitService.testRequest( "login-verify-by-email", canonicalizeEmail( email ) );
+		if ( ! requestMetadata.isTestRun() ) {
+
+			// Since this login workflow is the most likely point of attack on the system,
+			// we want to limit a malicious actor from pounding the server with guesses.
+			rateLimitService.testRequest( "login-verify-by-email", canonicalizeEmail( email ) );
+
+		}
 
 		var maybeToken = oneTimeTokens.maybeGetToken( token, email );
 
