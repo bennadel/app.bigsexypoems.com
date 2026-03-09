@@ -18,12 +18,12 @@
 		<!--- Locally, provide convenience link to local SMTP server. --->
 		<cfif localDevInbox.len()>
 			<p>
-				<a href="#localDevInbox#"><mark>Access Mailhog Server</mark></a>
+				<a href="#e4a( localDevInbox )#"><mark>Access Mailhog Server</mark></a>
 			</p>
 		</cfif>
 		<cfif localDevLoginUrl.len()>
 			<p>
-				Or, <a href="#localDevLoginUrl#"><mark>use the login link directly</mark></a>
+				Or, <a href="#e4a( localDevLoginUrl )#"><mark>use the login link directly</mark></a>
 			</p>
 		</cfif>
 

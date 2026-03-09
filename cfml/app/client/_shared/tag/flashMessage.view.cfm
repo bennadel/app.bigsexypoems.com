@@ -5,8 +5,8 @@
 		tabindex="-1"
 		role="alert"
 		aria-live="polite"
-		izm317 #attributes.xClassToken#
-		class="izm317 #attributes.xClass#">
+		izm317 #e4a( attributes.xClassToken )#
+		class="izm317 #e4a( attributes.xClass )#">
 
 		#e( flashResponse.message )#
 

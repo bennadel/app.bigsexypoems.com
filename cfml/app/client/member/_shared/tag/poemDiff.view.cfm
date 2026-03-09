@@ -1,6 +1,6 @@
 <cfoutput>
 
-	<table bk7x3p #attributes.xClassToken# class="bk7x3p #attributes.xClass#">
+	<table bk7x3p #e4a( attributes.xClassToken )# class="bk7x3p #e4a( attributes.xClass )#">
 	<cfif ( originalHeader.len() || modifiedHeader.len() )>
 		<thead>
 			<tr>

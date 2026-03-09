@@ -19,6 +19,7 @@ Use the available tools efficiently:
 - **Grep first, Read second.** For most checks, use Grep to find candidate violations, then Read the surrounding context to confirm or dismiss. Don't read entire files unless necessary.
 - **Glob to discover files.** Use Glob patterns to find all files matching a check's scope (e.g., `*Gateway.cfc`, `*.view.cfm`) before scanning.
 - **Cross-reference checks.** For checks that compare two sources (Check 6: thrown errors vs. translator cases), collect both lists first, then diff them.
+- **CFML interpolation regex.** When searching for `#variable#` interpolation patterns, use `#[\w.]+(\(.*?\))?#` (not `#\w+#`). CFML variables use dotted paths (e.g., `#user.name#`, `#poem.content#`, `#arguments.poemID#`) and may include function calls (e.g., `#arrayLen( items )#`). The simpler `#\w+#` pattern will miss dotted paths entirely.
 
 ## Scan Procedure
 

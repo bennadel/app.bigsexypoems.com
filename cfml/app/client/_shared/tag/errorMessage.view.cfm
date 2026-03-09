@@ -6,8 +6,8 @@
 		role="alert"
 		aria-live="assertive"
 		aria-atomic="true"
-		pm14ud #attributes.xClassToken#
-		class="pm14ud #attributes.xClass#">
+		pm14ud #e4a( attributes.xClassToken )#
+		class="pm14ud #e4a( attributes.xClass )#">
 
 		#e( message )#
 

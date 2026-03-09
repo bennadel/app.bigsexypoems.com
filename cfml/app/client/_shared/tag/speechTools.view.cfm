@@ -2,7 +2,7 @@
 
 	<details
 		x-data="rifvd5.SpeechTools( '#e4j( inputID )#' )"
-		rifvd5 #xClassToken# class="rifvd5 #xClass#">
+		rifvd5 #e4a( xClassToken )# class="rifvd5 #e4a( xClass )#">
 
 		<summary rifvd5 class="summary">
 			Speech Tools (Beta)

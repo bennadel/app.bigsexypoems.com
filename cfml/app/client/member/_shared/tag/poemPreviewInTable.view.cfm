@@ -1,6 +1,6 @@
 <cfoutput>
 
-	<div cggnns #xClassToken# class="container #xClass#">
+	<div cggnns #e4a( xClassToken )# class="container #e4a( xClass )#">
 		<!--- All devices can "see" the static, truncated version (with no opacity). --->
 		<span cggnns class="static">
 			#e( truncate( content, maxLength ) )#

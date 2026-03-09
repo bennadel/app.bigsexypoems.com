@@ -1,7 +1,7 @@
 <cfoutput>
 
-	<svg aria-hidden="true" role="graphics-symbol" #attributes.xClassToken# class="#attributes.xClass#">
-		<use href="###href#"></use>
+	<svg aria-hidden="true" role="graphics-symbol" #e4a( attributes.xClassToken )# class="#e4a( attributes.xClass )#">
+		<use href="###e4a( href )#"></use>
 	</svg>
 
 </cfoutput>

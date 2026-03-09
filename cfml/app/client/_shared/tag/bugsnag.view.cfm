@@ -7,6 +7,6 @@
 	try {
 		Bugsnag.start( JSON.parse( "<cfoutput>#e4json( startConfig )#</cfoutput>" ) );
 	} catch ( error ) {
-		Bugsnag.start( "<cfoutput>#startConfig.apiKey#</cfoutput>" );
+		Bugsnag.start( "<cfoutput>#e4j( startConfig.apiKey )#</cfoutput>" );
 	}
 </script>
