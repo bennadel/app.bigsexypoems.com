@@ -102,7 +102,7 @@
 	<div x-data="z6s31p.WordTools" z6s31p class="wordTools">
 		<section z6s31p class="wordTool rhymeTools">
 			<h2>
-				<span class="bigSexy">BigSexy</span>Rhymes
+				Rhymes
 			</h2>
 
 			<form
@@ -180,7 +180,7 @@
 
 		<section z6s31p class="wordTool synonymTools" @app:word="handleSynonym( $event )">
 			<h2>
-				<span class="bigSexy">BigSexy</span>Synonyms
+				Synonyms
 			</h2>
 			<form
 				hx-get="#router.urlForParts( 'member.poem.composer.synonyms' )#"

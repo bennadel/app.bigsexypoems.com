@@ -71,7 +71,7 @@
 	<div x-data="r2mwmx.WordTools" r2mwmx class="wordTools">
 		<section r2mwmx class="wordTool rhymeTools">
 			<h2>
-				<span class="bigSexy">BigSexy</span>Rhymes
+				Rhymes
 			</h2>
 
 			<form
@@ -150,7 +150,7 @@
 
 		<section r2mwmx class="wordTool synonymTools" @app:word="handleSynonym( $event )">
 			<h2>
-				<span class="bigSexy">BigSexy</span>Synonyms
+				Synonyms
 			</h2>
 			<form
 				hx-get="#router.urlForParts( 'playground.composer.synonyms' )#"
