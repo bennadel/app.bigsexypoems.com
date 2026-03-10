@@ -31,9 +31,6 @@
 						<th class="w-1">
 							Created
 						</th>
-						<th class="w-1">
-							<br />
-						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,16 +41,6 @@
 						</td>
 						<td class="isNoWrap">
 							#ui.userDate( collection.createdAt )#
-						</td>
-						<td>
-							<div class="uiHstack">
-								<a #ui.attrHref( "member.collection.edit", "collectionID", collection.id )#>
-									Edit
-								</a>
-								<a #ui.attrHref( "member.collection.delete", "collectionID", collection.id )#>
-									Delete
-								</a>
-							</div>
 						</td>
 					</tr>
 				</cfloop>
