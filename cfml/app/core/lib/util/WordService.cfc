@@ -23,6 +23,26 @@ component hint = "I provide methods for getting words related to other words." {
 	// ---
 
 	/**
+	* I get definitions for the given word.
+	*/
+	public array function getDefinition( required string word ) {
+
+		word = word.lcase().trim();
+
+		if ( ! word.len() ) {
+
+			return [];
+
+		}
+
+		var results = datamuseClient.getDefinition( word );
+
+		return groupByTypeOfSpeech( results );
+
+	}
+
+
+	/**
 	* I get the words that loosely relate to the given word.
 	*/
 	public array function getMeansLike(

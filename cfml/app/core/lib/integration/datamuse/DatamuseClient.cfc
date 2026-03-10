@@ -26,6 +26,108 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	// ---
 
 	/**
+	* I get definitions for the given word.
+	*/
+	public array function getDefinition( required string word ) {
+
+		var results = gateway.makeRequestWithRetry(
+			resource = "words",
+			searchParams = {
+				sp: wordFrom( word ),
+				qe: "sp",
+				md: "d",
+				max: 1 // Otherwise alternate words will be included.
+			},
+			timeoutInSeconds = timeoutInSeconds
+		);
+
+		// Note: if the word is misspelled, it will be returned with tags that are
+		// prefixed with "spellcor:". This would allow me to return suggestions for fixing
+		// the word. But for now, I'm just going to treat misspellings as a non-results.
+		// Dealing with misspellings can be a future improvement.
+
+		if ( ! results.len() ) {
+
+			return [];
+
+		}
+
+		var result = results.first();
+
+		if ( isNull( result.defs ) ) {
+
+			return [];
+
+		}
+
+		return result.defs.map(
+			( entry ) => {
+
+				// The type of speech (v, adj, n) is embedded in the definition itself, as
+				// a tab-delimited prefix.
+				var type = entry.listFirst( chr( 9 ) );
+				var content = entry.listRest( chr( 9 ) );
+
+				var element = {};
+				element.type = type;
+				element.content = content;
+
+				element.typeOfSpeech = "Unknown";
+				element.isUnknown = true;
+				element.isAdjective = false;
+				element.isAdverb = false;
+				element.isNoun = false;
+				element.isVerb = false;
+
+				element.isProperNoun = false;
+				element.isAntonym = false;
+				element.isSynonym = false;
+
+				switch ( type ) {
+					case "adj":
+						element.typeOfSpeech = "Adjective";
+						element.isAdjective = true;
+						element.isUnknown = false;
+					break;
+					case "adv":
+						element.typeOfSpeech = "Adverb";
+						element.isAdverb = true;
+						element.isUnknown = false;
+					break;
+					case "ant":
+						element.isAntonym = true;
+					break;
+					case "n":
+						element.typeOfSpeech = "Noun";
+						element.isNoun = true;
+						element.isUnknown = false;
+					break;
+					case "prop":
+						element.isProperNoun = true;
+					break;
+					case "syn":
+						element.isSynonym = true;
+					break;
+					case "u":
+						element.typeOfSpeech = "Unknown";
+						element.isUnknown = true;
+					break;
+					case "v":
+						element.typeOfSpeech = "Verb";
+						element.isVerb = true;
+						element.isUnknown = false;
+					break;
+				}
+
+				return element;
+
+			}
+		);
+
+	}
+
+
+	/**
 	* I get words that generally mean the same thing as the given word.
 	*/
 	public array function getMeansLike(

@@ -109,6 +109,29 @@
 		}
 	}
 
+	&.definitionTools {
+		margin-top: var( --space-block-l ) ;
+
+		.results {
+			background-color: var( --surface-muted-fill ) ;
+			border-radius: var( --radius ) ;
+			margin-top: var( --space-block ) ;
+			padding: var( --pad-block ) var( --pad-inline ) ;
+			position: relative ;
+
+			.uiIndicator {
+				position: absolute ;
+				right: 12px ;
+				top: 12px ;
+			}
+
+			p {
+				margin: 0 ;
+				font-style: italic ;
+			}
+		}
+	}
+
 	@media ( max-width: 1024px ) {
 		&.autosaver {
 			display: none ;
