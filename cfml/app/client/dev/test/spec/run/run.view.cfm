@@ -106,7 +106,7 @@
 	</h2>
 
 	<p>
-		<a #ui.attrHref( "dev.test.spec.cleanup" )#">Clean up test data</a> and optimize tables.
+		<a #ui.attrHref( "dev.test.spec.cleanup" )#>Clean up test data</a> and optimize tables.
 	</p>
 
 	<ul>
