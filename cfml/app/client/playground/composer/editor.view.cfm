@@ -69,7 +69,7 @@
 	</article>
 
 	<div x-data="r2mwmx.WordTools" r2mwmx class="wordTools">
-		<section r2mwmx class="wordTool rhymeTools">
+		<section r2mwmx class="wordTool rhymeTools" @app:word="handleRhyme( $event )">
 			<h2>
 				Rhymes
 			</h2>
@@ -226,6 +226,47 @@
 		</section>
 	</div>
 
+	<div r2mwmx class="definitionTools">
+		<section r2mwmx class="definitionTool">
+			<h2>
+				Definitions
+			</h2>
+
+			<form
+				hx-get="#router.urlForParts( 'playground.composer.definitions' )#"
+				hx-target="next .results_content"
+				hx-swap="show:.definitionTool:top"
+				hx-sync="this:replace"
+				hx-indicator="next .uiIndicator"
+				x-ref="definitionForm"
+				class="uiHstack">
+
+				<label for="#ui.nextFieldId()#" class="uiScreenReader">
+					Word to search:
+				</label>
+				<input
+					id="#ui.fieldId()#"
+					type="text"
+					name="word"
+					class="uiInput"
+				/>
+				<button type="submit" class="uiButton">
+					Search
+				</button>
+			</form>
+			<div class="results">
+				<span
+					class="uiIndicator isDelayed">
+				</span>
+				<div class="results_content">
+					<p>
+						Find definitions for a word...
+					</p>
+				</div>
+			</div>
+		</section>
+	</div>
+
 	<hr class="uiRule" />
 
 	<section r2mwmx class="footerText">
@@ -237,7 +278,7 @@
 		</p>
 
 		<p>
-			Rhymes, synonyms, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
+			Rhymes, synonyms, definitions, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
 		</p>
 
 		<p>

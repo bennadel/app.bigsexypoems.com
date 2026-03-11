@@ -20,6 +20,7 @@
 	request.response.template = "default";
 
 	switch ( router.next( "editor" ) ) {
+		case "definitions":
 		case "editor":
 		case "rhymes":
 		case "syllables":

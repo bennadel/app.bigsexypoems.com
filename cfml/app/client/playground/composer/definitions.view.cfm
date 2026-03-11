@@ -1,7 +1,7 @@
 <cfsavecontent variable="request.response.body">
 <cfoutput>
 
-	<div x-data="ht6w2p.Rhymes" ht6w2p class="ht6w2p">
+	<div wbo1mw class="wbo1mw">
 
 		<cfif groups.len()>
 
@@ -11,10 +11,10 @@
 					#e( group.label )#
 				</h3>
 
-				<ul class="uiUnlist">
+				<ul>
 					<cfloop array="#group.results#" item="result">
 						<li>
-							<a role="button" @click="handleClick( $event )">#e( result.word )#</a>.
+							#e( result.content )#
 						</li>
 					</cfloop>
 				</ul>
@@ -26,7 +26,7 @@
 		<cfif ! groups.len()>
 
 			<p>
-				No matching rhymes.
+				No matching definitions.
 			</p>
 
 		</cfif>
