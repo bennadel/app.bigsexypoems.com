@@ -78,7 +78,8 @@
 				hx-get="#router.urlForParts( 'playground.composer.rhymes' )#"
 				hx-trigger="
 					submit,
-					input from:.isHtmxRhymesTrigger
+					input from:.isHtmxRhymesTrigger,
+					load
 				"
 				hx-target="next .results_content"
 				hx-swap="show:.rhymeTools:top"
@@ -95,6 +96,7 @@
 						id="#ui.fieldId()#"
 						type="text"
 						name="word"
+						value="Big"
 						class="uiInput"
 					/>
 					<select name="limit" class="uiSelect isAuto isHtmxRhymesTrigger">
@@ -140,7 +142,7 @@
 				<span
 					class="uiIndicator isDelayed">
 				</span>
-				<div class="results_content">
+				<div class="results_content" @htmx:before-swap="handleBeforeResults( $event )">
 					<p>
 						Find words that rhyme well with each other...
 					</p>
@@ -156,12 +158,14 @@
 				hx-get="#router.urlForParts( 'playground.composer.synonyms' )#"
 				hx-trigger="
 					submit,
-					input from:.isHtmxSynonymsTrigger
+					input from:.isHtmxSynonymsTrigger,
+					load
 				"
 				hx-target="next .results_content"
 				hx-swap="show:.synonymTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
+				x-ref="synonymForm"
 				class="uiVstack">
 
 				<div class="uiHstack">
@@ -172,6 +176,7 @@
 						id="#ui.fieldId()#"
 						type="text"
 						name="word"
+						value="Sexy"
 						class="uiInput"
 					/>
 					<select name="limit" class="uiSelect isAuto isHtmxSynonymsTrigger">
@@ -217,7 +222,7 @@
 				<span
 					class="uiIndicator isDelayed">
 				</span>
-				<div class="results_content">
+				<div class="results_content" @htmx:before-swap="handleBeforeResults( $event )">
 					<p>
 						Find words that mean roughly the same thing...
 					</p>
@@ -231,6 +236,10 @@
 			</h2>
 			<form
 				hx-get="#router.urlForParts( 'playground.composer.definitions' )#"
+				hx-trigger="
+					submit,
+					load
+				"
 				hx-target="next .results_content"
 				hx-swap="show:.definitionTool:top"
 				hx-sync="this:replace"
@@ -245,6 +254,7 @@
 					id="#ui.fieldId()#"
 					type="text"
 					name="word"
+					value="Muse"
 					class="uiInput"
 				/>
 				<button type="submit" class="uiButton">
@@ -255,7 +265,7 @@
 				<span
 					class="uiIndicator isDelayed">
 				</span>
-				<div class="results_content">
+				<div class="results_content" @htmx:before-swap="handleBeforeResults( $event )">
 					<p>
 						Find definitions for a word...
 					</p>

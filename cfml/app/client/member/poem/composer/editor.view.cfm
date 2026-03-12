@@ -170,7 +170,7 @@
 				<span
 					class="uiIndicator isDelayed">
 				</span>
-				<div class="results_content">
+				<div class="results_content" @htmx:before-swap="handleBeforeResults( $event )">
 					<p>
 						Find words that rhyme well with each other...
 					</p>
@@ -192,6 +192,7 @@
 				hx-swap="show:.synonymTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
+				x-ref="synonymForm"
 				class="uiVstack">
 
 				<div class="uiHstack">
@@ -246,7 +247,7 @@
 				<span
 					class="uiIndicator isDelayed">
 				</span>
-				<div class="results_content">
+				<div class="results_content" @htmx:before-swap="handleBeforeResults( $event )">
 					<p>
 						Find words that mean roughly the same thing...
 					</p>
@@ -284,7 +285,7 @@
 				<span
 					class="uiIndicator isDelayed">
 				</span>
-				<div class="results_content">
+				<div class="results_content" @htmx:before-swap="handleBeforeResults( $event )">
 					<p>
 						Find definitions for a word...
 					</p>
