@@ -64,37 +64,14 @@
 	}
 
 	&.wordTools {
-		align-items: flex-start ;
-		display: flex ;
-		gap: var( --space-inline-xl ) ;
+		display: grid ;
+		gap: var( --space-block-l ) var( --space-inline-xl ) ;
+		grid-template-columns: 1fr 1fr ;
 		margin-top: var( --space-block ) ;
 
-		.wordTool {
-			flex: 1 1 50% ;
+		.definitionTools {
+			grid-column: 1 / -1 ;
 		}
-
-		.results {
-			background-color: var( --surface-muted-fill ) ;
-			border-radius: var( --radius ) ;
-			margin-top: var( --space-block ) ;
-			padding: var( --pad-block ) var( --pad-inline ) ;
-			position: relative ;
-
-			.uiIndicator {
-				position: absolute ;
-				right: 12px ;
-				top: 12px ;
-			}
-
-			p {
-				margin: 0 ;
-				font-style: italic ;
-			}
-		}
-	}
-
-	&.definitionTools {
-		margin-top: var( --space-block-l ) ;
 
 		.results {
 			background-color: var( --surface-muted-fill ) ;
@@ -134,9 +111,7 @@
 		}
 
 		&.wordTools {
-			align-items: stretch ;
-			flex-direction: column ;
-			gap: var( --space-block-l ) ;
+			grid-template-columns: 1fr ;
 		}
 	}
 

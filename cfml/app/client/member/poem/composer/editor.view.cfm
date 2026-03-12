@@ -100,7 +100,7 @@
 	</article>
 
 	<div x-data="z6s31p.WordTools" z6s31p class="wordTools">
-		<section z6s31p class="wordTool rhymeTools" @app:word="handleRhyme( $event )">
+		<section z6s31p class="rhymeTools" @app:word="handleRhyme( $event )">
 			<h2>
 				Rhymes
 			</h2>
@@ -178,7 +178,7 @@
 			</div>
 		</section>
 
-		<section z6s31p class="wordTool synonymTools" @app:word="handleSynonym( $event )">
+		<section z6s31p class="synonymTools" @app:word="handleSynonym( $event )">
 			<h2>
 				Synonyms
 			</h2>
@@ -253,18 +253,15 @@
 				</div>
 			</div>
 		</section>
-	</div>
 
-	<div z6s31p class="definitionTools">
-		<section z6s31p class="definitionTool">
+		<section z6s31p class="definitionTools">
 			<h2>
 				Definitions
 			</h2>
-
 			<form
 				hx-get="#router.urlForParts( 'member.poem.composer.definitions' )#"
 				hx-target="next .results_content"
-				hx-swap="show:.definitionTool:top"
+				hx-swap="show:.definitionTools:top"
 				hx-sync="this:replace"
 				hx-indicator="next .uiIndicator"
 				x-ref="definitionForm"

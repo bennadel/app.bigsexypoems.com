@@ -69,7 +69,7 @@
 	</article>
 
 	<div x-data="r2mwmx.WordTools" r2mwmx class="wordTools">
-		<section r2mwmx class="wordTool rhymeTools" @app:word="handleRhyme( $event )">
+		<section r2mwmx class="rhymeTools" @app:word="handleRhyme( $event )">
 			<h2>
 				Rhymes
 			</h2>
@@ -148,7 +148,7 @@
 			</div>
 		</section>
 
-		<section r2mwmx class="wordTool synonymTools" @app:word="handleSynonym( $event )">
+		<section r2mwmx class="synonymTools" @app:word="handleSynonym( $event )">
 			<h2>
 				Synonyms
 			</h2>
@@ -224,14 +224,11 @@
 				</div>
 			</div>
 		</section>
-	</div>
 
-	<div r2mwmx class="definitionTools">
-		<section r2mwmx class="definitionTool">
+		<section r2mwmx class="definitionTools">
 			<h2>
 				Definitions
 			</h2>
-
 			<form
 				hx-get="#router.urlForParts( 'playground.composer.definitions' )#"
 				hx-target="next .results_content"
