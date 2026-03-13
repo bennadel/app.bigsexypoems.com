@@ -14,7 +14,7 @@
 				<ul>
 					<cfloop array="#group.results#" item="result">
 						<li>
-							#e( result.content )#
+							#e( result.definition )#
 						</li>
 					</cfloop>
 				</ul>

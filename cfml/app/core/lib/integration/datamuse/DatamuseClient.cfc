@@ -35,16 +35,11 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 			searchParams = {
 				sp: wordFrom( word ),
 				qe: "sp",
-				md: "d",
+				md: "d", // Definition.
 				max: 1 // Otherwise alternate words will be included.
 			},
 			timeoutInSeconds = timeoutInSeconds
 		);
-
-		// Note: if the word is misspelled, it will be returned with tags that are
-		// prefixed with "spellcor:". This would allow me to return suggestions for fixing
-		// the word. But for now, I'm just going to treat misspellings as a non-results.
-		// Dealing with misspellings can be a future improvement.
 
 		if ( ! results.len() ) {
 
@@ -54,75 +49,93 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 
 		var result = results.first();
 
+		// Note: if the word is misspelled, it will be returned without definitions; and
+		// possibly with tags that are prefixed with "spellcor:". This would allow me to
+		// return suggestions for fixing the word. But for now, I'm just going to treat
+		// misspellings as a non-results. Dealing with misspellings can be a future-facing
+		// improvement.
 		if ( isNull( result.defs ) ) {
 
 			return [];
 
 		}
 
-		return result.defs.map(
-			( entry ) => {
+		var TAB = chr( 9 );
+		var definitionResults = [];
 
-				// The type of speech (v, adj, n) is embedded in the definition itself, as
-				// a tab-delimited prefix.
-				var type = entry.listFirst( chr( 9 ) );
-				var content = entry.listRest( chr( 9 ) );
+		// Convert each simple definition string into a robust result.
+		for ( var def in result.defs ) {
 
-				var element = {};
-				element.type = type;
-				element.content = content;
+			var definitionResult = {
+				score: result.score,
+				word: result.word,
+				definition: def,
 
-				element.typeOfSpeech = "Unknown";
-				element.isUnknown = true;
-				element.isAdjective = false;
-				element.isAdverb = false;
-				element.isNoun = false;
-				element.isVerb = false;
+				// Note: starts off in the unknown state for type of speech.
+				typeOfSpeech: "Unknown",
+				isUnknown: true,
+				isAdjective: false,
+				isAdverb: false,
+				isNoun: false,
+				isVerb: false,
+				isProperNoun: false,
+				isAntonym: false,
+				isSynonym: false,
+			};
 
-				element.isProperNoun = false;
-				element.isAntonym = false;
-				element.isSynonym = false;
+			// The type of speech (v, adj, n) is embedded in the definition itself, as a
+			// tab-delimited prefix. I'm not sure if this is wholly consistent, so I'm
+			// checking for it after the fact.
+			if ( def.find( TAB ) ) {
 
-				switch ( type ) {
+				definitionResult.definition = def.listRest( TAB );
+
+				switch ( def.listFirst( TAB ) ) {
 					case "adj":
-						element.typeOfSpeech = "Adjective";
-						element.isAdjective = true;
-						element.isUnknown = false;
+						definitionResult.typeOfSpeech = "Adjective";
+						definitionResult.isAdjective = true;
+						definitionResult.isUnknown = false;
 					break;
 					case "adv":
-						element.typeOfSpeech = "Adverb";
-						element.isAdverb = true;
-						element.isUnknown = false;
+						definitionResult.typeOfSpeech = "Adverb";
+						definitionResult.isAdverb = true;
+						definitionResult.isUnknown = false;
 					break;
 					case "ant":
-						element.isAntonym = true;
+						definitionResult.isAntonym = true;
 					break;
 					case "n":
-						element.typeOfSpeech = "Noun";
-						element.isNoun = true;
-						element.isUnknown = false;
+						definitionResult.typeOfSpeech = "Noun";
+						definitionResult.isNoun = true;
+						definitionResult.isUnknown = false;
 					break;
 					case "prop":
-						element.isProperNoun = true;
+						definitionResult.isProperNoun = true;
 					break;
 					case "syn":
-						element.isSynonym = true;
+						definitionResult.isSynonym = true;
 					break;
 					case "u":
-						element.typeOfSpeech = "Unknown";
-						element.isUnknown = true;
+						// Note: this is the default state; but I'm keeping it here so
+						// that we never fall-through to the default case.
+						// --
+						// definitionResult.typeOfSpeech = "Unknown";
+						// definitionResult.isUnknown = true;
 					break;
 					case "v":
-						element.typeOfSpeech = "Verb";
-						element.isVerb = true;
-						element.isUnknown = false;
+						definitionResult.typeOfSpeech = "Verb";
+						definitionResult.isVerb = true;
+						definitionResult.isUnknown = false;
 					break;
 				}
 
-				return element;
-
 			}
-		);
+
+			definitionResults.append( definitionResult );
+
+		}
+
+		return definitionResults;
 
 	}
 
@@ -135,7 +148,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		required numeric limit
 		) {
 
-		return makeRequestAndNormalizeResults(
+		return makeWordRequest(
 			resource = "words",
 			searchParams = {
 				ml: wordFrom( word ),
@@ -155,7 +168,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		required numeric limit
 		) {
 
-		return makeRequestAndNormalizeResults(
+		return makeWordRequest(
 			resource = "words",
 			searchParams = {
 				rel_rhy: wordFrom( word ),
@@ -172,7 +185,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	*/
 	public array function getSyllableCount( required string word ) {
 
-		var results = makeRequestAndNormalizeResults(
+		var wordResults = makeWordRequest(
 			resource = "words",
 			searchParams = {
 				"sp": wordFrom( word ),
@@ -183,9 +196,9 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		);
 
 		// If the given word is misspelled or unknown, the "sp" (spelled like) resource
-		// may end up returning a different word. But, we only want top return the results
+		// may end up returning a different word. But, we only want to return the results
 		// if the Datamuse could make sense of it.
-		return results.filter( ( result ) => result.word == word );
+		return wordResults.filter( ( wordResult ) => wordResult.word == word );
 
 	}
 
@@ -199,7 +212,7 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		required numeric limit
 		) {
 
-		return makeRequestAndNormalizeResults(
+		return makeWordRequest(
 			resource = "words",
 			searchParams = {
 				rel_syn: wordFrom( word ),
@@ -215,13 +228,19 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 	// ---
 
 	/**
-	* I make the request to the given resource and then filter and normalize the results
-	* into a common format.
+	* I make the word request to the given resource and then filter and normalize the
+	* results into a common format.
 	*/
-	private array function makeRequestAndNormalizeResults(
+	private array function makeWordRequest(
 		required string resource,
 		required struct searchParams
 		) {
+
+		var results = gateway.makeRequestWithRetry(
+			resource = resource,
+			searchParams = searchParams,
+			timeoutInSeconds = timeoutInSeconds
+		);
 
 		// Caution: we're not using .filter() here because there's a bug in ColdFusion
 		// that causes nested filters, starting with a root async-filter, to destroy
@@ -229,114 +248,97 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 		// "fixed". So it will hopefully be resolved in the next updater (7).
 		// --
 		// https://www.bennadel.com/blog/4831-adobe-coldfusion-bug-nested-array-iteration-breaks-closure-variables.htm
-
-		// return gateway
-		// 	.makeRequest( resource, searchParams )
-		// 	.filter( ( result ) => normalizeResult( result ) )
-		// ;
-
-		var results = gateway.makeRequestWithRetry(
-			resource = resource,
-			searchParams = searchParams,
-			timeoutInSeconds = timeoutInSeconds
-		);
-		var filteredResults = [];
+		var wordResults = [];
 
 		for ( var result in results ) {
 
-			if ( normalizeResult( result ) ) {
+			// Sometimes the data coming back from Datamuse is incomplete. Or, at least,
+			// that's what my old experimental code says - I'm not sure if this is still
+			// true.
+			if ( isNull( result.tags ) || isNull( result.score ) ) {
 
-				filteredResults.append( result );
+				continue;
 
 			}
 
-		}
+			var wordResult = {
+				score: result.score,
+				word: result.word,
+				syllableCount: ( result.numSyllables ?: 0 ),
+				partsPerMillion: 0,
 
-		return filteredResults;
+				// Note: starts off in the unknown state for type of speech.
+				typeOfSpeech: "Unknown",
+				isUnknown: true,
+				isAdjective: false,
+				isAdverb: false,
+				isNoun: false,
+				isVerb: false,
+				isProperNoun: false,
+				isAntonym: false,
+				isSynonym: false,
+			};
 
-	}
+			for ( var tag in result.tags ) {
 
+				switch ( tag ) {
+					case "adj":
+						wordResult.typeOfSpeech = "Adjective";
+						wordResult.isAdjective = true;
+						wordResult.isUnknown = false;
+					break;
+					case "adv":
+						wordResult.typeOfSpeech = "Adverb";
+						wordResult.isAdverb = true;
+						wordResult.isUnknown = false;
+					break;
+					case "ant":
+						wordResult.isAntonym = true;
+					break;
+					case "n":
+						wordResult.typeOfSpeech = "Noun";
+						wordResult.isNoun = true;
+						wordResult.isUnknown = false;
+					break;
+					case "prop":
+						wordResult.isProperNoun = true;
+					break;
+					case "syn":
+						wordResult.isSynonym = true;
+					break;
+					case "u":
+						// Note: this is the default state; but I'm keeping it here so
+						// that we never fall-through to the default case.
+						// --
+						// wordResult.typeOfSpeech = "Unknown";
+						// wordResult.isUnknown = true;
+					break;
+					case "v":
+						wordResult.typeOfSpeech = "Verb";
+						wordResult.isVerb = true;
+						wordResult.isUnknown = false;
+					break;
+					// Some of the injected tags are prefixed-based and need to be parsed.
+					default:
 
-	/**
-	* I normalize the given result, making easier-to-consume data.
-	*/
-	private boolean function normalizeResult( required struct result ) {
+						var prefix = tag.listFirst( ":" );
 
-		// Sometimes the data coming back from Datamuse is incomplete. Or, at least,
-		// that's what my old experimental code says - I'm not sure if this is still true.
-		if ( isNull( result.tags ) || isNull( result.score ) ) {
+						switch ( prefix ) {
+							case "f":
+								wordResult.partsPerMillion = val( tag.listRest( ":" ) )
+							break;
+						}
 
-			return false;
+					break;
+				}
 
-		}
-
-		result.syllableCount = ( result.numSyllables ?: 0 );
-
-		// Note: starts off in the unknown state for type of speech.
-		result.typeOfSpeech = "Unknown";
-		result.isUnknown = true;
-		result.isAdjective = false;
-		result.isAdverb = false;
-		result.isNoun = false;
-		result.isVerb = false;
-
-		result.isProperNoun = false;
-		result.isAntonym = false;
-		result.isSynonym = false;
-
-		for ( var tag in result.tags ) {
-
-			switch ( tag ) {
-				case "adj":
-					result.typeOfSpeech = "Adjective";
-					result.isAdjective = true;
-					result.isUnknown = false;
-				break;
-				case "adv":
-					result.typeOfSpeech = "Adverb";
-					result.isAdverb = true;
-					result.isUnknown = false;
-				break;
-				case "ant":
-					result.isAntonym = true;
-				break;
-				case "n":
-					result.typeOfSpeech = "Noun";
-					result.isNoun = true;
-					result.isUnknown = false;
-				break;
-				case "prop":
-					result.isProperNoun = true;
-				break;
-				case "syn":
-					result.isSynonym = true;
-				break;
-				case "u":
-					result.typeOfSpeech = "Unknown";
-					result.isUnknown = true;
-				break;
-				case "v":
-					result.typeOfSpeech = "Verb";
-					result.isVerb = true;
-					result.isUnknown = false;
-				break;
-				// Some of the injected tags are prefixed-based and need to be parsed.
-				default:
-
-					var prefix = tag.listFirst( ":" );
-
-					switch ( prefix ) {
-						case "f":
-							result.partsPerMillion = val( tag.listRest( ":" ) )
-						break;
-					}
-
-				break;
 			}
 
+			wordResults.append( wordResult );
+
 		}
 
-		return true;
+		return wordResults;
 
 	}
 
