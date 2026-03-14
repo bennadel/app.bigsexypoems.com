@@ -37,13 +37,25 @@
 			</ul>
 		</nav>
 
-		<ul vyxlrv class="lines">
-			<cfloop array="#lines#" item="line">
-				<li>
-					#e( line )#<br />
-				</li>
-			</cfloop>
-		</ul>
+		<cfif lines.len()>
+
+			<ul vyxlrv class="lines">
+				<cfloop array="#lines#" item="line">
+					<li>
+						#e( line )#<br />
+					</li>
+				</cfloop>
+			</ul>
+
+		</cfif>
+
+		<cfif ! lines.len()>
+
+			<p>
+				Your poem is empty. <a #ui.attrHref( "member.poem.composer", "poemID", poem.id )#>Start composing</a> &rarr;
+			</p>
+
+		</cfif>
 
 	</article>
 

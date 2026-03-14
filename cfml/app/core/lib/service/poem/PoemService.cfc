@@ -91,6 +91,12 @@ component {
 	*/
 	public array function splitLines( required string content ) {
 
+		if ( ! content.len() ) {
+
+			return [];
+
+		}
+
 		return content.reMatch( "[^\n]*" );
 
 	}
