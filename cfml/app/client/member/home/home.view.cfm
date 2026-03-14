@@ -8,7 +8,7 @@
 		</h1>
 
 		<p>
-			Welcome, #e( user.name )# &lt;#e( user.email )#&gt;
+			Welcome, <a #ui.attrHref( "member.profile.edit" )#>#e( user.name )#</a> &lt;#e( user.email )#&gt;
 		</p>
 
 		<p>
