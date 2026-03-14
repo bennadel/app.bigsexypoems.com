@@ -47,13 +47,13 @@
 
 	try {
 
-		switch ( router.next( "member" ) ) {
+		switch ( router.next( "marketing" ) ) {
 			case "account":
 			case "auth":
 			case "dev":
 			case "go":
+			case "marketing":
 			case "member":
-			case "playground":
 			case "share":
 			case "system":
 				cfmodule( template = router.nextTemplate() );

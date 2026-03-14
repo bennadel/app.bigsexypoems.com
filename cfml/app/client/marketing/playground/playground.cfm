@@ -1,7 +1,6 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
-	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 
 	// ColdFusion language extensions (global functions).
@@ -10,14 +9,13 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
-	requestHelper.ensureXsrfToken();
-
-	// ------------------------------------------------------------------------------- //
-	// ------------------------------------------------------------------------------- //
-
-	switch ( router.next( "composer" ) ) {
-		case "composer":
-			cfmodule( template = router.nextTemplate() );
+	switch ( router.next( "editor" ) ) {
+		case "definitions":
+		case "editor":
+		case "rhymes":
+		case "syllables":
+		case "synonyms":
+			cfmodule( template = router.nextTemplate( false ) );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

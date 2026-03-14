@@ -69,7 +69,7 @@
 					Log In or Sign Up
 				</button>
 				<span r9fbqd class="playground-cta">
-					Or, <a #ui.attrHref( "playground" )#>try the composer</a> without an account &rarr;
+					Or, <a #ui.attrHref( "marketing.playground" )#>try the composer</a> without an account &rarr;
 				</span>
 			</div>
 		</form>

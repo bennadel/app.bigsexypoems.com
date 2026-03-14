@@ -9,6 +9,17 @@
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
 
+	// CAUTION: This provides an explicit pathway in which I can test the global htmx
+	// error handling locally.
+	if ( request.isLocal && ( url?.word == "test" ) ) {
+
+		throw( type = "App.LocalHtmxTest" );
+
+	}
+
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
 	param name="url.word" type="string";
 	param name="url.limit" type="numeric";
 	param name="url.groupBy" type="string";

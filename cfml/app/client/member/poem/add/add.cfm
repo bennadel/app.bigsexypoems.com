@@ -27,7 +27,7 @@
 		: "Create New Poem"
 	;
 	cancelToEvent = url.importFrom.len()
-		? "playground"
+		? "marketing.playground"
 		: "member.poem"
 	;
 	errorResponse = "";
