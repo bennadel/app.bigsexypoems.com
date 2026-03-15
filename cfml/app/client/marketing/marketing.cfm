@@ -1,6 +1,7 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
+	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	sessionService = request.ioc.get( "core.lib.service.session.SessionService" );
 
@@ -9,6 +10,8 @@
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
+
+	requestHelper.ensureXsrfToken();
 
 	// This section doesn't require authentication, but it will be helpful to know if a
 	// user is logged-in for some UI prompting.
@@ -19,13 +22,10 @@
 
 	request.response.template = "default";
 
-	switch ( router.next( "editor" ) ) {
-		case "definitions":
-		case "editor":
-		case "rhymes":
-		case "syllables":
-		case "synonyms":
-			cfmodule( template = router.nextTemplate( false ) );
+	switch ( router.next( "home" ) ) {
+		case "home":
+		case "playground":
+			cfmodule( template = router.nextTemplate() );
 		break;
 		default:
 			throw( type = "App.Routing.InvalidEvent" );

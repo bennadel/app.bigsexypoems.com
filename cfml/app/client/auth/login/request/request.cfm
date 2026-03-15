@@ -27,10 +27,13 @@
 	// If the user is already logged-in, redirect them to the app.
 	if ( authContext.session.isAuthenticated ) {
 
-		nextUrl = router.isInternalUrl( url.redirectTo )
-			? url.redirectTo
-			: "/"
-		;
+		nextUrl = router.urlFor([ event: "member" ]);
+
+		if ( router.isInternalUrl( url.redirectTo ) ) {
+
+			nextUrl = url.redirectTo;
+
+		}
 
 		router.gotoUrl( nextUrl );
 

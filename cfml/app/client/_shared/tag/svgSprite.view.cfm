@@ -77,4 +77,21 @@
 		</g>
 	</symbol>
 
+	<!--- https://www.streamlinehq.com/icons/download/developer-community-github-1--18800 --->
+	<symbol id="svg-sprite--developer-community-github-1--18800" viewBox="0 0 24 24">
+		<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+			<path d="M14.41 22.35a0.5 0.5 0 0 0 0.64 0.48 11.25 11.25 0 1 0 -6.24 0 0.5 0.5 0 0 0 0.64 -0.48V20A2.81 2.81 0 0 1 6 18.28 6.07 6.07 0 0 0 4.64 16c2.85 0.69 2.9 2.54 4.84 1.67a4 4 0 0 1 0.63 -1.82c-2.2 -0.25 -4.52 -0.6 -4.52 -4.4a3.84 3.84 0 0 1 1 -2.66 3.56 3.56 0 0 1 0.1 -2.62s0.83 -0.27 2.73 1a9.39 9.39 0 0 1 5 0c1.89 -1.28 2.72 -1 2.72 -1a3.56 3.56 0 0 1 0.1 2.62 3.83 3.83 0 0 1 1 2.66c0 3.81 -2.32 4.15 -4.53 4.39a3.83 3.83 0 0 1 0.68 2.33Z"></path>
+		</g>
+	</symbol>
+
+	<!--- https://www.streamlinehq.com/icons/download/user-logout--18167 --->
+	<symbol id="svg-sprite--user-logout--18167" viewBox="0 0 24 24">
+		<g stroke-width="1.5" stroke-linejoin="round" stroke="currentColor" fill="none" stroke-linecap="round">
+			<path d="m20.999 2.254 2.25 3 -7.5 0"></path>
+			<path d="m21 8.254 2.25 -3"></path>
+			<path d="M3.75 3.754a3 3 0 1 0 6 0 3 3 0 1 0 -6 0"></path>
+			<path d="M6.75 7.5a6 6 0 0 0 -6 6v2.25a1.5 1.5 0 0 0 1.5 1.5h1.5v4.5a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5 -1.5v-4.5h1.5a1.5 1.5 0 0 0 1.5 -1.5V13.5a6 6 0 0 0 -6 -6Z"></path>
+		</g>
+	</symbol>
+
 </svg>

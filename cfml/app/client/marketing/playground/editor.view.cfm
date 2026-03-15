@@ -3,14 +3,9 @@
 
 	<article r2mwmx>
 
-		<div r2mwmx class="title">
-			<h1>
-				<a href="/" class="uiLink isSurprise"><span class="bigSexy">BigSexy</span>Poems</a>
-			</h1>
-			<p>
-				<a href="/">Log in or Sign up</a>
-			</p>
-		</div>
+		<p>
+			You can try the poem composer without an account. To save the poem, track revisions, and create share-links, you must log-in.
+		</p>
 
 		<form method="post" action="#request.postBackAction#">
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
@@ -37,7 +32,7 @@
 					the localStorage if it exists.
 				--->
 				<div
-					hx-post="#router.urlForParts( 'playground.composer.syllables' )#"
+					hx-post="#router.urlForParts( 'marketing.playground.syllables' )#"
 					hx-trigger="
 						load delay:50ms,
 						input delay:1s from:previous textarea
@@ -75,11 +70,10 @@
 			</h2>
 
 			<form
-				hx-get="#router.urlForParts( 'playground.composer.rhymes' )#"
+				hx-get="#router.urlForParts( 'marketing.playground.rhymes' )#"
 				hx-trigger="
 					submit,
-					input from:.isHtmxRhymesTrigger,
-					load
+					input from:.isHtmxRhymesTrigger
 				"
 				hx-target="next .results_content"
 				hx-swap="show:.rhymeTools:top"
@@ -96,7 +90,6 @@
 						id="#ui.fieldId()#"
 						type="text"
 						name="word"
-						value="Big"
 						class="uiInput"
 					/>
 					<select name="limit" class="uiSelect isAuto isHtmxRhymesTrigger">
@@ -155,11 +148,10 @@
 				Synonyms
 			</h2>
 			<form
-				hx-get="#router.urlForParts( 'playground.composer.synonyms' )#"
+				hx-get="#router.urlForParts( 'marketing.playground.synonyms' )#"
 				hx-trigger="
 					submit,
-					input from:.isHtmxSynonymsTrigger,
-					load
+					input from:.isHtmxSynonymsTrigger
 				"
 				hx-target="next .results_content"
 				hx-swap="show:.synonymTools:top"
@@ -176,7 +168,6 @@
 						id="#ui.fieldId()#"
 						type="text"
 						name="word"
-						value="Sexy"
 						class="uiInput"
 					/>
 					<select name="limit" class="uiSelect isAuto isHtmxSynonymsTrigger">
@@ -235,11 +226,7 @@
 				Definitions
 			</h2>
 			<form
-				hx-get="#router.urlForParts( 'playground.composer.definitions' )#"
-				hx-trigger="
-					submit,
-					load
-				"
+				hx-get="#router.urlForParts( 'marketing.playground.definitions' )#"
 				hx-target="next .results_content"
 				hx-swap="show:.definitionTool:top"
 				hx-sync="this:replace"
@@ -254,7 +241,6 @@
 					id="#ui.fieldId()#"
 					type="text"
 					name="word"
-					value="Muse"
 					class="uiInput"
 				/>
 				<button type="submit" class="uiButton">
@@ -273,31 +259,6 @@
 			</div>
 		</section>
 	</div>
-
-	<hr class="uiRule" />
-
-	<section r2mwmx class="footerText">
-		<p>
-			<strong>BigSexy</strong>:
-			<em>( /biɡ &##712;seks&##275;/ ) noun</em>.
-			&mdash;
-			Your muse. Your inspiration. The part of your soul that feels deeply, lives with abandon, and loves without limits.
-		</p>
-
-		<p>
-			Rhymes, synonyms, definitions, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
-		</p>
-
-		<p>
-			Managed <a href="https://www.xbytecloud.com/coldfusion/hosting/coldfusion-cloud-hosting?source=bennadel.com" target="_blank">ColdFusion hosting</a> services provided by:
-			<a href="https://www.xbytecloud.com/?source=bennadel.com" target="_blank">xByte Cloud</a>.
-		</p>
-
-		<p>
-			Created by <a href="https://www.bennadel.com/" target="_blank">Ben Nadel</a>
-			&copy; #year( now() )#
-		</p>
-	</section>
 
 </cfoutput>
 </cfsavecontent>

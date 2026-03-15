@@ -11,6 +11,7 @@
 
 	param name="request.response.title" type="string";
 	param name="request.response.body" type="string";
+	param name="request.response.activeNav" type="string" default="";
 
 	// Include common HTTP response headers.
 	cfmodule( template = "/client/_shared/layout/http/headers.cfm" );

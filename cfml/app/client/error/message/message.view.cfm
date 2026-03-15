@@ -14,7 +14,7 @@
 		<hr class="uiRule" />
 
 		<p>
-			In the meantime, you can <a #ui.attrHref( "member" )#>return to the homepage</a>.
+			In the meantime, you can <a href="/">return to the homepage</a>.
 		</p>
 
 	</article>

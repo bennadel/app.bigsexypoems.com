@@ -301,7 +301,7 @@
 	</p>
 
 	<p>
-		Enjoying the poem composer? <a #ui.attrHref( "playground" )# target="_blank">Share the public playground version</a> with a friend (no sign up required). &##x1F970;
+		Enjoying the poem composer? <a #ui.attrHref( "marketing.playground" )# target="_blank">Share the public playground version</a> with a friend (no sign up required). &##x1F970;
 	</p>
 
 </cfoutput>

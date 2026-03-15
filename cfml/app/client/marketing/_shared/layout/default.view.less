@@ -1,0 +1,182 @@
+[kv4r2p] {
+	// The width at about which the current nav won't fit on the horizontal axis.
+	@mobile-breakpoint: 1024px ;
+
+	&.shell {
+		background-color: var( --fill ) ;
+		margin: 0 auto ;
+		max-width: 1200px ;
+		min-height: 100vh ;
+		padding: var( --pad-block ) var( --pad-inline ) ;
+
+		&_header {
+			border-bottom: 1px solid var( --rule-nav ) ;
+			margin-bottom: var( --space-block-xl ) ;
+			padding-bottom: var( --pad-block ) ;
+		}
+
+		&_main {
+			&:focus-visible {
+				outline-width: 3px ;
+				outline-offset: 6px ;
+			}
+		}
+
+		&_footer {
+			border-top: 1px solid var( --rule-nav ) ;
+			margin-top: var( --space-block-xl ) ;
+			padding-top: var( --pad-block-xl ) ;
+		}
+	}
+
+	&.header {
+		align-items: center ;
+		display: flex ;
+		flex-wrap: wrap ;
+		gap: var( --space-inline ) ;
+
+		&_logo {
+			flex: 1 1 auto ;
+		}
+
+		&_toggleNav {
+			flex: 0 0 auto ;
+		}
+
+		&_nav {
+			left: -10000px ;
+			position: fixed ;
+			top: -10000px ;
+			width: 100% ; // To force flex-wrap to kick-in.
+		}
+
+		&_nav:focus-within,
+		&_toggleNav.isOpen + &_nav {
+			position: static ;
+		}
+	}
+
+	&.toggleNav {
+		padding: var( --pad-block ) var( --pad-inline-l ) ;
+
+		svg {
+			height: 24px ;
+			width: 24px ;
+		}
+
+		&_hamburger,
+		&.isOpen &_close {
+			display: block ;
+		}
+
+		&.isOpen &_hamburger,
+		&_close {
+			display: none ;
+		}
+	}
+
+	&.navLink {
+		// Note: I'm using the BORDER to put "visual space" between the buttons while
+		// still having the buttons butt-up against each other.
+		border: 2px solid var( --nav-fill ) ;
+		border-inline-width: 0 ;
+		border-radius: var( --radius ) ;
+		color: var( --text ) ;
+		display: block ;
+		text-decoration: none ;
+		white-space: nowrap ;
+
+		&.isLogo {
+			border-width: 0 ;
+		}
+
+		// Note: I'm using the pill so that I can have border-radius on the background
+		// color. If we remove the pill wrapper, then the radius gets distorted by the
+		// transparent border on the parent.
+		&_pill {
+			align-items: center ;
+			border-radius: var( --radius ) ;
+			color: var( --nav-text ) ;
+			display: flex ;
+			gap: var( --space-inline ) ;
+			padding: var( --pad-block ) var( --pad-inline ) ;
+		}
+
+		&_icon {
+			height: 24px ;
+			width: 24px ; 
+		}
+
+		&_label {
+			&.bigSexy {
+				display: flex ;
+				gap: var( --space-inline-xxs ) ;
+			}
+		}
+
+		&:not(.isOn):hover &_label {
+			text-decoration: underline ;
+		}
+
+		&:hover &_pill {
+			background-color: var( --nav-fill-hover ) ;
+			color: var( --nav-text-hover ) ;
+		}
+
+		&.isOn &_pill {
+			background-color: var( --nav-fill-active ) ;
+			color: var( --nav-text-active ) ;
+		}
+
+		// Since these elements butt-up against each other, the focus ring might get
+		// clipped by the neighboring element. As such, we're going to inset the focus on
+		// the element.
+		&:focus-visible {
+			outline-offset: 0 ;
+			position: relative ;
+			z-index: calc( var( --layer-base ) + 1 ) ;
+		}
+	}
+
+	&.footer {
+		color: var( --text-muted ) ;
+
+		p {
+			margin-bottom: var( --space-block-xs ) ;
+
+			&:last-child {
+				margin-bottom: 0 ;
+			}
+		}
+	}
+
+	@media screen and ( min-width: @mobile-breakpoint ) {
+		&.header {
+			flex-wrap: nowrap ;
+			gap: 25px ;
+
+			&_logo {
+				flex: 0 0 auto ;
+			}
+
+			&_toggleNav {
+				display: none ;
+			}
+
+			&_nav {
+				margin-inline-start: auto ;
+				position: static ;
+				width: auto ;
+			}
+		}
+
+		&.nav {
+			display: flex ;
+		}
+
+		&.navLink {
+			border-block-width: 0 ;
+			border-inline-width: 4px ;
+		}
+	}
+}
