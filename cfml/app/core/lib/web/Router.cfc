@@ -137,6 +137,16 @@ component {
 
 
 	/**
+	* I get the root internal URL for the logged-in, non-marketing experience.
+	*/
+	public string function getRootInternalUrl() {
+
+		return urlFor([ event: "member" ]);
+
+	}
+
+
+	/**
 	* I goto the application URL defined by the given parameters.
 	*/
 	public void function goto( required struct searchParams ) {

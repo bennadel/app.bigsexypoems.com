@@ -105,7 +105,7 @@ component {
 		// sure that we don't accidentally redirect them to an external / malicious site.
 		if ( ! router.isInternalUrl( redirectTo ) ) {
 
-			redirectTo = "/";
+			redirectTo = router.getRootInternalUrl();
 
 		}
 

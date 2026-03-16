@@ -24,16 +24,13 @@
 
 	authContext = sessionService.getAuthenticationContext();
 
+	nextUrl = router.isInternalUrl( url.redirectTo )
+		? url.redirectTo
+		: router.getRootInternalUrl()
+	;
+
 	// If the user is already logged-in, redirect them to the app.
 	if ( authContext.session.isAuthenticated ) {
-
-		nextUrl = router.urlFor([ event: "member" ]);
-
-		if ( router.isInternalUrl( url.redirectTo ) ) {
-
-			nextUrl = url.redirectTo;
-
-		}
 
 		router.gotoUrl( nextUrl );
 
@@ -58,7 +55,7 @@
 			authenticationService.requestMagicLink(
 				email = form.email,
 				offsetInMinutes = val( form.timezoneOffsetInMinutes ),
-				redirectTo = url.redirectTo
+				redirectTo = nextUrl
 			);
 
 			router.goto([
