@@ -11,7 +11,7 @@ component {
 	/**
 	* I initialize the theme service.
 	*/
-	public void function $init() {
+	public void function init() {
 
 		// Note: the "id" value is what gets stored in the cookie.
 		variables.themes = [

@@ -150,9 +150,8 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 			var service = createObject( "component", componentPath );
 
 			// Caution: The native init() function is called BEFORE any of the component's
-			// dependencies are injected. There is a special "$init()" method that can be
-			// used to provide a post-injection setup hook. The "$init()" method should be
-			// preferred for a component that is wired-up via dependency-injection.
+			// dependencies are injected. There is a special "initAfterInjection()" method
+			// that can be used to provide a post-injection setup hook.
 			if ( structKeyExists( service, "init" ) ) {
 
 				service.init();
@@ -492,11 +491,11 @@ component hint = "I provide an Inversion of Control (IoC) container." {
 		}
 
 		// Since the native init() method is invoked prior to the injection of its
-		// dependencies, see if there is an "$init()" hook to allow for post-injection
-		// setup / initialization of the service component.
-		if ( structKeyExists( service, "$init" ) ) {
+		// dependencies, see if there is an "initAfterInjection()" hook to allow for post-
+		//injection setup / initialization of the service component.
+		if ( structKeyExists( service, "initAfterInjection" ) ) {
 
-			service.$init();
+			service.initAfterInjection();
 
 		}
 

@@ -11,7 +11,7 @@ component {
 	/**
 	* I initialize the url signer.
 	*/
-	public void function $init() {
+	public void function initAfterInjection() {
 
 		variables.loginRequestKeyBinary = binaryDecode( loginRequestKey, "base64" );
 		variables.pepper = "x78xt8";

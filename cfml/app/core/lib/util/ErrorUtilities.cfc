@@ -10,7 +10,7 @@ component hint = "I provide utility methods for generating and consuming errors 
 	/**
 	* I initialize the error utilities.
 	*/
-	public void function $init() {
+	public void function init() {
 
 		variables.causePrefix = "data:cause/json,";
 		variables.metadataPrefix = "data:metadata/json,";

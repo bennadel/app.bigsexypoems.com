@@ -12,7 +12,7 @@ component hint = "I help detect memory leaks in ColdFusion components." {
 	/**
 	* I initialize the memory leak detector.
 	*/
-	public void function $init() {
+	public void function init() {
 
 		variables.magicTokenName = "$$MemoryLeakDetector$$Version$$";
 		variables.magicFunctionName = "$$MemoryLeakDetector$$Inspect$$";

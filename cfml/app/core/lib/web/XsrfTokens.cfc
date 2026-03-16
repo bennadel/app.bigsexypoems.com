@@ -15,7 +15,7 @@ component hint = "I provide functionality around the XSRF cookies and request va
 	/**
 	* I initialize the XSRF cookies service.
 	*/
-	public void function $init() {
+	public void function init() {
 
 		variables.cookieName = "XSRF-TOKEN";
 		variables.challengeName = "X-XSRF-TOKEN";

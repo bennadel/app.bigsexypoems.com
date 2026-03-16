@@ -11,7 +11,7 @@ component hint = "I provide methods for parsing markdown into block HTML." {
 	/**
 	* I initialize the parser.
 	*/
-	public void function $init() {
+	public void function initAfterInjection() {
 
 		var AutolinkExtensionClass = classLoader.create( "com.vladsch.flexmark.ext.autolink.AutolinkExtension" );
 		var StrikethroughExtensionClass = classLoader.create( "com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension" );

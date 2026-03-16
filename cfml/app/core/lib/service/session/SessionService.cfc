@@ -20,7 +20,7 @@ component hint = "I provide methods for accessing the session associated with th
 	/**
 	* I initialize the session helper.
 	*/
-	public void function $init() {
+	public void function init() {
 
 		// This will be shared across all unauthorized / unidentified request access.
 		// --

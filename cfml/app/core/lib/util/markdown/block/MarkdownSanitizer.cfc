@@ -14,7 +14,7 @@ component
 	/**
 	* I initialize the HTML sanitizer.
 	*/
-	public void function $init() {
+	public void function initAfterInjection() {
 
 		variables.safelist = classLoader.create( "org.jsoup.safety.Safelist" )
 			.init()

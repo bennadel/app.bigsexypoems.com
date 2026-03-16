@@ -11,7 +11,7 @@ component hint = "I provide methods for managing the theme cookies for the curre
 	/**
 	* I initialize the theme cookies service.
 	*/
-	public void function $init() {
+	public void function init() {
 
 		variables.cookieName = "bigsexy_theme";
 

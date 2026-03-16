@@ -11,7 +11,7 @@ component hint = "I provide methods for managing the session cookies for the cur
 	/**
 	* I initialize the session cookies service.
 	*/
-	public void function $init() {
+	public void function init() {
 
 		variables.cookieName = "bigsexy";
 

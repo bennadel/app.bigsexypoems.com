@@ -14,7 +14,7 @@ component hint = "I report server-side errors to the BugSnag API." {
 	/**
 	* I initialize the BugSnag API client.
 	*/
-	public void function $init() {
+	public void function initAfterInjection() {
 
 		variables.payloadVersion = 5;
 		variables.notifier = {
