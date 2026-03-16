@@ -2,50 +2,43 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
+	property name="scopedProxyKey" ioc:skip;
 	property name="site" ioc:get="config.site";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
+
+	/**
+	* I initialize the router service.
+	*/
+	public void function init() {
+
+		// Even though this component is cached for the lifetime of the application, it
+		// acts as a scoped proxy to each individual request. Request-specific state is
+		// stored on the given request key.
+		variables.scopedProxyKey = "$router$variables";
+
+	}
 
 	// ---
 	// LIFE-CYCLE METHODS.
 	// ---
 
 	/**
-	* I set up the core request structure used internally by the router.
+	* I set up the request-specific state for the scoped proxy. This method is intended to
+	* be called once at the top of every request.
 	*/
-	public any function setupRequest( string scriptName = "/index.cfm" ) {
+	public void function setupRequest( string scriptName = "/index.cfm" ) {
 
-		lock
-			type = "exclusive"
-			scope = "request"
-			timeout = 1
-			{
+		var event = listToArray( url?.event, "." );
 
-			// If the request has already been configured, throw an error since this is
-			// likely a developer mistake that needs to be corrected.
-			if ( request.keyExists( "$$routerVariables" ) ) {
-
-				throw(
-					type = "App.Conflict",
-					message = "You cannot call setupRequest() more than once per request."
-				);
-
-			}
-
-			var event = listToArray( url?.event, "." );
-
-			request.$$routerVariables = {
-				scriptName: scriptName,
-				event: event,
-				queue: duplicate( event ),
-				currentSegment: "",
-				persistedSearchParams: []
-			};
-
-			return this;
-
-		}
+		request[ scopedProxyKey ] = {
+			scriptName: scriptName,
+			event: event,
+			queue: duplicate( event ),
+			currentSegment: "",
+			persistedSearchParams: []
+		};
 
 	}
 
@@ -361,11 +354,11 @@ component {
 	// ---
 
 	/**
-	* I am a convenience method to access internal variables scoped to the request.
+	* I return the scoped proxy variables (request-specific state).
 	*/
 	private struct function $variables() {
 
-		return request.$$routerVariables;
+		return request[ scopedProxyKey ];
 
 	}
 

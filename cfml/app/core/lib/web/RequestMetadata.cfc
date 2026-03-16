@@ -1,14 +1,31 @@
 component hint = "I provide utility methods for accessing metadata about the current request." {
 
+	// Define properties for dependency-injection.
+	property name="logger" ioc:type="core.lib.util.Logger";
+	property name="scopedProxyKey" ioc:skip;
+
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
+
+	/**
+	* I initialize the router service.
+	*/
+	public void function init() {
+
+		// Even though this component is cached for the lifetime of the application, it
+		// acts as a scoped proxy to each individual request. Request-specific state is
+		// stored on the given request key.
+		variables.scopedProxyKey = "$requestMetadata$variables";
+
+	}
 
 	// ---
 	// LIFE-CYCLE METHODS.
 	// ---
 
 	/**
-	* Runs any request-based setup logic, as needed.
+	* I set up the request-specific state for the scoped proxy. This method is intended to
+	* be called once at the top of every request.
 	*/
 	public void function setupRequest() {
 
@@ -19,7 +36,7 @@ component hint = "I provide utility methods for accessing metadata about the cur
 		// needs them later.
 		var metadata = getHttpRequestData( false );
 
-		request.$$requestMetadataVariables = {
+		request[ scopedProxyKey ] = {
 			headers: metadata.headers
 		};
 
@@ -67,9 +84,7 @@ component hint = "I provide utility methods for accessing metadata about the cur
 		string fallbackValue = ""
 		) {
 
-		// Caution: using structNew() instead of an implicit struct notation in order to
-		// avoid memory leak caused by implicit syntax bug within an Elvis expression.
-		var headers = ( request.$$requestMetadataVariables.headers ?: structNew() );
+		var headers = $variables().headers;
 
 		return ( headers[ name ] ?: fallbackValue );
 
@@ -81,9 +96,7 @@ component hint = "I provide utility methods for accessing metadata about the cur
 	*/
 	public struct function getHeaders( array includeOnly = [] ) {
 
-		// Caution: using structNew() instead of an implicit struct notation in order to
-		// avoid memory leak caused by implicit syntax bug within an Elvis expression.
-		var headers = ( request.$$requestMetadataVariables.headers ?: structNew() );
+		var headers = $variables().headers;
 
 		if ( ! includeOnly.len() ) {
 
@@ -338,7 +351,7 @@ component hint = "I provide utility methods for accessing metadata about the cur
 
 		if ( cgi.query_string.len() ) {
 
-			return ( resource & "?" & cgi.query_string );
+			return "#resource#?#cgi.query_string#";
 
 		}
 
@@ -391,6 +404,16 @@ component hint = "I provide utility methods for accessing metadata about the cur
 	// ---
 
 	/**
+	* I return the scoped proxy variables (request-specific state).
+	*/
+	private struct function $variables() {
+
+		return request[ scopedProxyKey ];
+
+	}
+
+
+	/**
 	* I convert the given string between two encodings. This is intended to convert HTTP
 	* headers as needed.
 	*/
@@ -414,6 +437,7 @@ component hint = "I provide utility methods for accessing metadata about the cur
 
 			// ... I'm not sure if there's ever an error due to charset conversions. To
 			// be safe, I'm just going to swallow any errors for now.
+			logger.logException( error );
 			return input;
 
 		}

@@ -3,10 +3,39 @@ component {
 	// Define properties for dependency-injection.
 	property name="clock" ioc:type="core.lib.util.Clock";
 	property name="router" ioc:type="core.lib.web.Router";
+	property name="scopedProxyKey" ioc:skip;
 	property name="themeService" ioc:type="core.lib.service.user.ThemeService";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
+
+	/**
+	* I initialize the router service.
+	*/
+	public void function init() {
+
+		// Even though this component is cached for the lifetime of the application, it
+		// acts as a scoped proxy to each individual request. Request-specific state is
+		// stored on the given request key.
+		variables.scopedProxyKey = "$ui$variables";
+
+	}
+
+	// ---
+	// LIFE-CYCLE METHODS.
+	// ---
+
+	/**
+	* I set up the request-specific state for the scoped proxy. This method is intended to
+	* be called once at the top of every request.
+	*/
+	public void function setupRequest() {
+
+		request[ scopedProxyKey ] = {
+			fieldIdCounter: 0
+		};
+
+	}
 
 	// ---
 	// PUBLIC METHODS.
@@ -189,7 +218,7 @@ component {
 	*/
 	public string function fieldId( string after = "" ) {
 
-		var token = "fid$#request?.$$fieldIdCounter#";
+		var token = "fid$#$variables().fieldIdCounter#";
 
 		if ( ! after.len() ) {
 
@@ -222,10 +251,7 @@ component {
 	*/
 	public string function nextFieldId() {
 
-		// Ensure that the counter exists and is incremented on every call. This is
-		// intended to be used within the context of a single request thread and is NOT
-		// meant to be thread-safe or globally unique.
-		request.$$fieldIdCounter = ( ( request.$$fieldIdCounter ?: 0 ) + 1 );
+		$variables().fieldIdCounter += 1;
 
 		return fieldId();
 
@@ -287,6 +313,20 @@ component {
 		return timeFormat( dateAdd( "n", request.authContext.timezone.offsetInMinutes, input ), mask )
 			.lcase()
 		;
+
+	}
+
+
+	// ---
+	// PRIVATE METHODS.
+	// ---
+
+	/**
+	* I return the scoped proxy variables (request-specific state).
+	*/
+	private struct function $variables() {
+
+		return request[ scopedProxyKey ];
 
 	}
 

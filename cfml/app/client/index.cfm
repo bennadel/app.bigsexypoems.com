@@ -5,6 +5,7 @@
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
+	ui = request.ioc.get( "core.lib.web.UI" );
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -18,6 +19,7 @@
 	requestMetadata.setupRequest();
 	requestHelper.setupRequest();
 	router.setupRequest();
+	ui.setupRequest();
 
 	// ------------------------------------------------------------------------------- //
 	// ------------------------------------------------------------------------------- //
