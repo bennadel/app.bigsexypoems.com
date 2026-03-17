@@ -60,6 +60,12 @@
 			case "system":
 				cfmodule( template = router.nextTemplate() );
 			break;
+			// OLD LINK that we're handling gracefully.
+			case "playground":
+				router.goto([
+					event: "marketing.playground"
+				]);
+			break;
 			default:
 				throw( type = "App.Routing.InvalidEvent" );
 			break;
