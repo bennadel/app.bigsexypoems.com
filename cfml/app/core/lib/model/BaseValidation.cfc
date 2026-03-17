@@ -2,7 +2,6 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="errorUtilities" ioc:type="core.lib.util.ErrorUtilities";
-	property name="utilities" ioc:type="core.lib.util.ValidationUtilities";
 
 	// ---
 	// PUBLIC METHODS.
@@ -150,7 +149,7 @@ component {
 		required string errorType
 		) {
 
-		if ( input != utilities.canonicalizeInput( input ) ) {
+		if ( input != canonicalizeInput( input ) ) {
 
 			throw( type = errorType );
 
@@ -230,6 +229,28 @@ component {
 		}
 
 		return input;
+
+	}
+
+	// ---
+	// PRIVATE METHODS.
+	// ---
+
+	/**
+	* I return the canonicalized version of the given input. Double-encoding errors are
+	* suppressed and result in an empty string.
+	*/
+	private string function canonicalizeInput( required string input ) {
+
+		try {
+
+			return canonicalize( input, true, true );
+
+		} catch ( any error ) {
+
+			return "";
+
+		}
 
 	}
 

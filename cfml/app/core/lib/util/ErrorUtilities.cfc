@@ -115,7 +115,7 @@ component hint = "I provide utility methods for generating and consuming errors 
 	*/
 	public boolean function isCause( required string extendedInfo ) {
 
-		return !! ( extendedInfo.left( causePrefix.len() ) == causePrefix );
+		return ( extendedInfo.left( causePrefix.len() ) == causePrefix );
 
 	}
 
@@ -126,7 +126,7 @@ component hint = "I provide utility methods for generating and consuming errors 
 	*/
 	public boolean function isMetadata( required string extendedInfo ) {
 
-		return !! ( extendedInfo.left( metadataPrefix.len() ) == metadataPrefix );
+		return ( extendedInfo.left( metadataPrefix.len() ) == metadataPrefix );
 
 	}
 
