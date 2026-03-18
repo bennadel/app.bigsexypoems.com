@@ -1,6 +1,7 @@
 <cfscript>
 
 	// Define properties for dependency-injection.
+	externalLinkInterceptor = request.ioc.get( "core.lib.web.ExternalLinkInterceptor" );
 	shareAccess = request.ioc.get( "core.lib.service.poem.share.ShareAccess" );
 	shareService = request.ioc.get( "core.lib.service.poem.share.ShareService" );
 	viewingModel = request.ioc.get( "core.lib.model.poem.share.ViewingModel" );
@@ -44,6 +45,7 @@
 
 		var context = shareAccess.getContext( authContext, shareID, "canView" );
 		var share = context.share;
+		share.noteHtml = externalLinkInterceptor.intercept( share.noteHtml );
 		var poem = context.poem;
 
 		var viewings = viewingModel.getByFilter(

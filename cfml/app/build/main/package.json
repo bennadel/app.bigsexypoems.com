@@ -25,10 +25,10 @@
 			"distDir": "./dist/error",
 			"publicUrl": "/static/main/error"
 		},
-		"go.overview": {
-			"source": "./src/go/overview.html",
-			"distDir": "./dist/go/overview",
-			"publicUrl": "/static/main/go/overview"
+		"go": {
+			"source": "./src/go.html",
+			"distDir": "./dist/go",
+			"publicUrl": "/static/main/go"
 		},
 		"marketing": {
 			"source": "./src/marketing.html",

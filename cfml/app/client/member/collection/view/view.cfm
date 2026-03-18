@@ -2,6 +2,7 @@
 
 	// Define properties for dependency-injection.
 	collectionAccess = request.ioc.get( "core.lib.service.collection.CollectionAccess" );
+	externalLinkInterceptor = request.ioc.get( "core.lib.web.ExternalLinkInterceptor" );
 	poemModel = request.ioc.get( "core.lib.model.poem.PoemModel" );
 	router = request.ioc.get( "core.lib.web.Router" );
 	ui = request.ioc.get( "core.lib.web.UI" );
@@ -41,6 +42,10 @@
 
 		var context = collectionAccess.getContext( authContext, collectionID, "canView" );
 		var collection = context.collection;
+
+		// Proxy any external links through an interstitial page where we can alert the
+		// user that they are about to leave the site.
+		collection.descriptionHtml = externalLinkInterceptor.intercept( collection.descriptionHtml );
 
 		var poems = poemModel.getByFilter(
 			collectionID = collection.id,

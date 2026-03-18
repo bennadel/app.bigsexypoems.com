@@ -20,6 +20,4 @@
 
 	include "./overview.view.cfm";
 
-	cfmodule( template = "/client/_shared/layout/blank.cfm" );
-
 </cfscript>
