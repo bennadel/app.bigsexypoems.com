@@ -11,7 +11,7 @@
 		<cfinclude template="/wwwroot/static/main/vendor/vendor.html">
 		<cfinclude template="/wwwroot/static/main/go/go.html">
 	</head>
-	<body zj98do class="zj98do">
+	<body x-data zj98do class="zj98do">
 
 		<main zj98do class="content">
 			#request.response.body#

@@ -25,6 +25,7 @@
 					readonly
 					value="#e4a( externalUrl )#"
 					class="uiInput"
+					@focus="$el.select()"
 				/>
 				<a
 					href="#e4a( externalUrl )#"

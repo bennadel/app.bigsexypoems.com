@@ -4,9 +4,9 @@ component
 	{
 
 	// Define properties for dependency-injection.
-	property name="classLoader" ioc:type="core.lib.classLoader.JSoupClassLoader";
-	property name="cleaner" ioc:skip memoryLeakDetection:skip;
-	property name="safelist" ioc:skip memoryLeakDetection:skip;
+	property name="cleaner" ioc:skip;
+	property name="jsoup" ioc:type="core.lib.util.JSoupParser";
+	property name="safelist" ioc:skip;
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -16,8 +16,7 @@ component
 	*/
 	public void function initAfterInjection() {
 
-		variables.safelist = classLoader.create( "org.jsoup.safety.Safelist" )
-			.init()
+		variables.safelist = jsoup.createSafelist()
 			// Basic formatting.
 			.addTags([ "b", "del", "em", "i", "mark", "strike", "strong", "u" ])
 			// Headers.
@@ -35,13 +34,13 @@ component
 			.addTags([ "a" ])
 			.addAttributes( "a", [ "href" ] )
 			.addProtocols( "a", "href", [ "http", "https" ] )
-			.addEnforcedAttribute( "a", "rel", "noopener noreferrer" )
-			.addEnforcedAttribute( "a", "target", "_blank" )
+			// Note: I'm moving these anchor attributes enforcement to the external link
+			// interceptor.
+			// .addEnforcedAttribute( "a", "rel", "noopener noreferrer" )
+			// .addEnforcedAttribute( "a", "target", "_blank" )
 		;
 
-		variables.cleaner = classLoader.create( "org.jsoup.safety.Cleaner" )
-			.init( safelist )
-		;
+		variables.cleaner = jsoup.createCleaner( safelist );
 
 	}
 
@@ -56,9 +55,7 @@ component
 	*/
 	public struct function sanitize( required string unsafeHtml ) {
 
-		var unsafeDom = classLoader.create( "org.jsoup.Jsoup" )
-			.parse( unsafeHtml )
-		;
+		var unsafeDom = jsoup.parseHtml( unsafeHtml );
 		var unsafeMarkup = getUnsafeMarkup( safelist, unsafeDom );
 		var safeDom = cleaner.clean( unsafeDom );
 		var safeHtml = safeDom.body().html();
