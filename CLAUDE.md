@@ -38,6 +38,8 @@ docker compose run --rm client sh  # Shell for npm package management
 - `*Access.cfc` - Gathers data with permission checks, throwing access errors on unauthorized use
 - `*Cascade.cfc` - Coordinates deletion of an entity and its nested children
 
+**Validation Method Comments**: All validation methods use the same generic comment: `I validate and return the normalized value.` The method name itself (e.g., `nameFrom`, `contentFrom`) indicates which field is being validated.
+
 ## Key Directories
 
 ```
@@ -84,11 +86,319 @@ cfml/app/
 - Arrays passed by reference
 - Case-preserving struct keys and query columns
 
+## Code Formatting Examples
+
+### ColdFusion Components (`.cfc`)
+
+`.cfc` are structured in sections delimited by comment-blocks (`LIFE-CYCLE METHODS`, `PUBLIC METHODS`, `PRIVATE METHODS`). Life-cycle methods are listed in execution order; public and private methods are listed alphabetically. All `.cfc` files are script-based except `*Gateway.cfc` (tag-based for `cfquery`).
+
+```cfc
+component {
+
+	// Define properties for dependency-injection.
+	property name="..." ioc:type="...";
+	property name="..." ioc:type="...";
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
+	// ---
+	// PUBLIC METHODS.
+	// ---
+
+	/**
+	* I ....
+	*/
+	public numeric function findByKey() {
+
+	}
+
+
+	/**
+	* I ....
+	*/
+	public numeric function getSomething() {
+
+	}
+
+	// ---
+	// PRIVATE METHODS.
+	// ---
+
+	/**
+	* I ....
+	*/
+	private struct function buildThat() {
+
+	}
+
+}
+```
+
+### ColdFusion Templates (`.cfm`)
+
+`.cfm` templates are either script-based (no output) or tag-based (generates output). Script-based templates have 2-3 sections separated by comment-hrules:
+
+```
+<cfscript>
+
+	// Define properties for dependency-injection.
+	collectionModel = request.ioc.get( "core.lib.model.collection.CollectionModel" );
+
+	// ColdFusion language extensions (global functions).
+	include "/core/cfmlx.cfm";
+
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
+	param name="url...." type="string" default="";
+	param name="form...." type="string" default="";
+	param name="form...." type="string" default="";
+
+	// ... processing logic here ....
+
+	include "./add.view.cfm";
+
+	// ------------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------------------- //
+
+	/**
+	* I get the partial data for the view.
+	*/
+	private struct function getPartial( required struct authContext ) {
+
+		return {};
+
+	}
+
+</cfscript>
+```
+
+When a controller has a `getPartial()` method, all data-fetching for the view should be centralized there rather than scattered in the main control flow section. The control flow section should only handle param declarations, request metadata, GET/POST branching, and the view include.
+
+When script-based and tag-based templates work as a pair, the naming convention is `thing.cfm` (script) + `thing.view.cfm` (tags). The script template `include`s the tag template as the last part of its processing section.
+
+### View Templates (`.view.cfm` / `.view.less` / `.view.js`)
+
+A view may optionally include `.view.less` (Less CSS) and/or `.view.js` (Alpine.js) alongside the `.cfm` / `.view.cfm` pair.
+
+Since the asset build system has no automatic scoping, we simulate it with a random 6-character lowercase alphanumeric slug that **MUST** begin with a letter (e.g., `mq9evq`). This slug is used as an HTML attribute, CSS attribute selector, class name, and JavaScript global variable — all sharing the same value.
+
+#### CSS scoping in `.view.less`
+
+All CSS rules are nested under an attribute selector using the slug. Two patterns target elements:
+
+- **Direct match (`&.className`)** — element has both the slug attribute AND the class. Compiles to `[slug].className`.
+- **Descendant match (`.className`)** — element is a descendant of a slug-attributed ancestor. Compiles to `[slug] .className`.
+
+```less
+[mq9evq] {
+	&.mq9evq {
+		// Root element: compiles to [mq9evq].mq9evq
+	}
+
+	&.title {
+		// Direct match: compiles to [mq9evq].title
+	}
+
+	.item {
+		// Descendant: compiles to [mq9evq] .item
+	}
+}
+```
+
+```cfml
+<div mq9evq class="mq9evq">
+	<h2 mq9evq class="title">
+		Direct-matched element (has slug attribute)
+	</h2>
+	<div class="item">
+		Descendant-matched element (no slug attribute needed)
+	</div>
+</div>
+```
+
+Both patterns can be mixed. The root element typically uses `&.slug` for its own styles. Define CSS keyframe animations outside the `[slug]` block, prefixed with the slug:
+
+```less
+@keyframes mq9evq-enter-blink {
+	// animations specific to this view.
+}
+```
+
+#### Alpine.js components in `.view.js`
+
+If a `.view.js` file exists, it defines one or more Alpine.js components using the slug as a global namespace. Components use a revealing module pattern with section comments matching the `.cfc` convention:
+
+```js
+window.mq9evq = {
+	MyComponent,
+};
+
+function MyComponent() {
+
+	return {
+		// Life-Cycle Methods.
+		init,
+
+		// Public Methods.
+		doSomething,
+	};
+
+	// ---
+	// LIFE-CYCLE METHODS.
+	// ---
+
+	/**
+	* I initialize the component.
+	*/
+	function init() {
+
+		// ...
+
+	}
+
+	// ---
+	// PUBLIC METHODS.
+	// ---
+
+	/**
+	* I do something.
+	*/
+	function doSomething() {
+
+		// ...
+
+	}
+
+}
+```
+
+Components are bound in `.view.cfm` via `x-data` attributes: `<div x-data="mq9evq.MyComponent">`.
+
+## Form Field Patterns
+
+When creating form fields in `.view.cfm` templates:
+
+- Use `<label for="#ui.nextFieldId()#" class="uiField_label">` (not `<span>`) for field labels
+- Add `id="#ui.fieldId()#"` to the corresponding input element
+- Use `ui.attrChecked()` helper for checkbox/radio checked state instead of inline `<cfif>` conditionals
+- Use `ui.attrSelected()` helper for select option selected state
+- Add the `x-keyed-focus` directive to the first visible form element within a form so it receives focus on page load
+
+Example checkbox field:
+
+```cfm
+<div class="uiField">
+	<label for="#ui.nextFieldId()#" class="uiField_label">
+		Field Label:
+	</label>
+	<div class="uiField_content">
+		<label class="uiHstack">
+			<input
+				id="#ui.fieldId()#"
+				type="checkbox"
+				name="fieldName"
+				value="true"
+				#ui.attrChecked( form.fieldName )#
+				class="uiCheckbox"
+			/>
+			<span>Checkbox description</span>
+		</label>
+	</div>
+</div>
+```
+
+## Associating JavaScript / Less CSS Files With `.cfm` Templates
+
+Each major subsystem has a root `.js` entry point (e.g., `/client/member/member.js`) that auto-discovers all `.view.js` and `.view.less` files within its directory tree via a glob import:
+
+```js
+import "./**/*.view.{js,less}";
+```
+
+This means adding a new view with `.view.js` or `.view.less` files requires no manual import — they are automatically included in the next build.
+
+The root entry point also explicitly imports shared modules from `_shared/tag/` (which are outside the subsystem directory and can't be auto-discovered):
+
+```js
+import "../_shared/tag/errorMessage.view.{js,less}";
+import "../_shared/tag/toaster.view.{js,less}";
+```
+
+When creating a new shared tag in `_shared/tag/`, you must add an explicit import for it in each root entry point that uses it.
+
+## Testing
+
+Integration tests live in `/cfml/app/spec/suite/` and run against the live dev database. Each test suite extends `spec.BaseTest`, which provisions a fresh auth context (including a test user) via `provisionAuthContext()`. The auth context is stored in `variables.authContext`; the test user is accessed as `variables.authContext.user`.
+
+```bash
+# Run all tests (JSON output for Claude Code)
+curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec.run&init=1" | jq .
+
+# Run a single suite
+curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec.run&init=1&suite=spec.suite.PoemServiceTest" | jq .
+
+# Run a single test method
+curl -s -H "Accept: application/json" "http://app.local.bigsexypoems.com/index.cfm?event=dev.test.spec.run&init=1&suite=spec.suite.PoemServiceTest&test=testDelete" | jq .
+```
+
+- **Naming**: Suites are `*Test.cfc`, test methods are public functions starting with `test`.
+- **Runner**: `spec.TestRunner` auto-discovers all `*Test.cfc` files in `/spec/suite/`.
+- **Assertions**: `assertEqual()`, `assertTrue()`, `assertThrows()`, `fail()` — all throw `TestRunner.Assertion`.
+- **Independence**: Every test creates its own data. No shared fixtures, no teardown.
+- **Browser view**: Visit the same URL in a browser (without the `Accept` header) for HTML-formatted results.
+- **Sections**: Test methods are organized into comment-delimited sections: `HAPPY PATH TESTS` (normal operations succeed) and `SAD PATH TESTS` (validation errors, not-found errors, permission errors).
+- **Condensing**: Minimize the number of test methods. If two assertions share the same setup, combine them into one test (e.g., test create + verify revision in a single method). Don't create separate tests for things that can be checked together.
+- **Permissions**: Every service test suite should include a sad-path test that provisions a second auth context via `provisionAuthContext()`, creates an entity owned by that other user, and asserts that update and delete throw a not-found error when accessed by the primary test user.
+
+## Database Migrations
+
+There's no database migration framework. All migration files need to be run manually. When the database structure needs to change, write a file to `/cfml/app/db/` and prompt me to run it manually.
+
+Migrations are lexicographically named. SQL files use tabs for indentation.
+
+`YYYY-MM-DD-{counter}-{description}.sql`
+
+Examples:
+- `2026-02-03-001-adding-new-table.sql`
+- `2026-02-03-002-dropping-user-default.sql`
+- `2026-02-03-003-adding-uniqueness-constraint.sql`
+
 ## Architecture Preferences
 
 **Consistency across patterns matters more than local optimization**: When the codebase has an established pattern, follow it uniformly — even if a shortcut would work in a specific case.
 
 **Flat entity organization**: Tightly coupled entities (e.g., poem and revision) live as siblings in the same directory, not in nested subfolders. Only use subfolders when entities have genuine independence.
+
+**Side-effects in the service layer, not controllers**: If an operation (like creating a revision) should happen every time an entity is created/updated, put it in the service method — not in each controller that calls the service.
+
+**Services are ingress points**: Services exist as entry points from the controller layer into business logic. Services should not call other services laterally. A service can directly use sibling models (e.g., `PoemService` using `revisionModel`) when the entities are tightly coupled.
+
+**Access components are self-contained**: Each Access component owns all authorization checks for its entity and should never call other Access components laterally. Implement cross-entity permission checks inline. Name assertion methods after the action (`canMakeCurrent`, `canDelete`).
+
+**Pass context structs with `argumentCollection`**: Access context structs flow directly into assertion methods via `argumentCollection` (e.g., `poemAccess.canUpdate( argumentCollection = context )`) rather than destructuring arguments. Extra keys are ignored by ColdFusion.
+
+**Cascade delete pattern**: The parent entity owns the collection relationship and iterates over children. Each child's cascade component handles deleting a single record. The cascade should never bulk-delete siblings.
+
+```cfc
+// Parent cascade iterates:
+var revisions = revisionModel.getByFilter( poemID = poem.id );
+for ( var revision in revisions ) {
+	revisionCascade.deleteRevision( revision );
+}
+
+// Child cascade deletes one:
+public void function deleteRevision( required struct revision ) {
+	revisionModel.deleteByFilter( id = revision.id );
+}
+```
+
+**Use the `maybe` pattern for optional lookups**: When a query might return zero results, use `maybeGet*` methods that return `{ exists, value }` via `maybeArrayFirst()`. Never return empty structs `{}` as a "not found" sentinel.
+
+**Snapshot from persisted state**: When creating a snapshot or revision, re-read the entity from the database rather than passing through submitted input values.
+
+**Use the entity's own timestamps**: When an operation is semantically tied to an entity mutation (like a revision snapshot), use the entity's own `updatedAt`/`createdAt` rather than generating a new `utcNow()`.
 
 **Simplicity over abstraction**:
 - Don't add guards or conditionals to skip work that's cheap and harmless.
@@ -96,6 +406,38 @@ cfml/app/
 - Don't pre-build service methods or APIs for anticipated future needs. Delete dead code.
 
 **Let errors bubble up**: Never add try/catch blocks unless there is explicit recovery logic for a specific, anticipated failure. Errors should propagate to the application boundary where they are logged and translated for the user. Swallowing or wrapping exceptions "just in case" hides bugs and makes debugging harder. The only valid reasons for a try/catch are: performing a rollback or cleanup side-effect, retrying with a fallback strategy, or converting a thrown type into a different domain-specific error with added context. If the catch block would just rethrow, log, or return a generic default — don't catch.
+
+**Order by `id` instead of date columns**: Auto-increment IDs are inserted chronologically. Prefer `ORDER BY id DESC` over date columns to leverage existing indexes.
+
+**`withSort` preset for `getByFilter`**: Gateways that return multi-row result sets accept a `withSort` argument with domain-level preset names (e.g., `"name"`, `"newest"`). The gateway maps presets to SQL `ORDER BY` clauses via `cfswitch`, keeping sort logic in the data-access layer instead of re-sorting arrays in controllers. The default is `"id"` (or the table's natural key). Skip `withSort` for gateways that only ever return a single row (e.g., AccountGateway, TimezoneGateway, PresenceGateway).
+
+**Parentheses in compound conditions**: When a condition has multiple operands joined by `&&` or `||`, wrap each operand in parentheses: `if ( (a == b) && (c == d) )`. Not needed for single-operand conditions — `if ( a == b )` is fine as-is.
+
+**Struct shorthand**: When a struct key matches the variable name, use shorthand: `{ passCount, failCount }` instead of `{ passCount: passCount, failCount: failCount }`.
+
+**Truthy length checks**: Use `.len()` as a boolean directly rather than comparing to zero (e.g., `if ( value.len() )` not `if ( value.len() > 0 )`).
+
+**String interpolation over concatenation**: For simple string assembly, prefer interpolation (`"#name# #createUUID()#"`) over concatenation (`name & " " & createUUID()`). Concatenation is fine for complex expressions or multi-line building.
+
+**Named arguments on built-in functions**: Prefer named arguments over positional when a built-in function takes 3+ parameters (e.g., `directoryList( path = ..., recurse = false, listInfo = "name", filter = "*.cfc" )`).
+
+**CSS custom properties over hardcoded colors**: Never hardcode hex colors in Less files. Use the design system's CSS variables (e.g., `var( --error-fill )`, `var( --success-text )`).
+
+## Error and Flash Message Translations
+
+When adding `throw()` statements or flash messages, corresponding translations must be added:
+
+**ErrorTranslator.cfc** (`/cfml/app/core/lib/web/ErrorTranslator.cfc`):
+- Translates `throw( type = "App.Model...." )` error types into user-friendly messages
+- Add a `case` statement for each new error type that may be triggered by user input
+- Cases are organized alphabetically by error type
+- Use helper methods like `asModelStringTooLong()`, `asModelStringSuspiciousEncoding()`, `asModelNotFound()` for common patterns
+
+**FlashTranslator.cfc** (`/cfml/app/core/lib/web/FlashTranslator.cfc`):
+- Translates flash tokens (e.g., `flash: "your.poem.created"`) into user-friendly success messages
+- Add a `case` statement for each new flash token used in `router.goto()` calls
+- Cases are organized alphabetically by flash token
+- Flash tokens follow the pattern `your.{entity}.{action}` (e.g., `your.poem.share.updated`)
 
 ## Claude Code Skills
 
