@@ -25,11 +25,11 @@
 			INSERT INTO
 				poem_revision
 			SET
-				poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />,
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				content = <cfqueryparam value="#content#" cfsqltype="cf_sql_varchar" />,
-				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
-				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+				poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />,
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				content = <cfqueryparam value="#content#" cfsqltype="varchar" />,
+				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="timestamp" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -52,12 +52,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( poemID )>
 				AND
-					poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />
+					poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -87,12 +87,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( poemID )>
 				AND
-					poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />
+					poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />
 			</cfif>
 
 			ORDER BY
@@ -126,7 +126,7 @@
 			FROM
 				poem_revision
 			WHERE
-				poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />
+				poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />
 			ORDER BY
 				id DESC
 			LIMIT
@@ -149,11 +149,11 @@
 			UPDATE
 				poem_revision
 			SET
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				content = <cfqueryparam value="#content#" cfsqltype="cf_sql_varchar" />,
-				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				content = <cfqueryparam value="#content#" cfsqltype="varchar" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="timestamp" />
 			WHERE
-				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+				id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 		</cfquery>
 
 	</cffunction>

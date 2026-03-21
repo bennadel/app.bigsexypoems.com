@@ -21,8 +21,8 @@
 			INSERT INTO
 				user_account
 			SET
-				userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />,
-				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />
+				userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />,
+				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 	</cffunction>
@@ -42,7 +42,7 @@
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_integer" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="integer" />
 			</cfif>
 		</cfquery>
 
@@ -66,7 +66,7 @@
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 

@@ -32,18 +32,18 @@
 			INSERT INTO
 				poem_share
 			SET
-				poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />,
-				token = <cfqueryparam value="#token#" cfsqltype="cf_sql_varchar" />,
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
-				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
-				isSnapshot = <cfqueryparam value="#isSnapshot#" cfsqltype="cf_sql_tinyint" />,
-				snapshotName = <cfqueryparam value="#snapshotName#" cfsqltype="cf_sql_varchar" />,
-				snapshotContent = <cfqueryparam value="#snapshotContent#" cfsqltype="cf_sql_varchar" />,
-				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="cf_sql_bigint" />,
-				lastViewingAt = <cfqueryparam value="#lastViewingAt#" null="#isNotDate( lastViewingAt )#" cfsqltype="cf_sql_timestamp" />,
-				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
-				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+				poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />,
+				token = <cfqueryparam value="#token#" cfsqltype="varchar" />,
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="longvarchar" />,
+				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="longvarchar" />,
+				isSnapshot = <cfqueryparam value="#isSnapshot#" cfsqltype="tinyint" />,
+				snapshotName = <cfqueryparam value="#snapshotName#" cfsqltype="varchar" />,
+				snapshotContent = <cfqueryparam value="#snapshotContent#" cfsqltype="varchar" />,
+				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="bigint" />,
+				lastViewingAt = <cfqueryparam value="#lastViewingAt#" null="#isNotDate( lastViewingAt )#" cfsqltype="timestamp" />,
+				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="timestamp" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -66,12 +66,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( poemID )>
 				AND
-					poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />
+					poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -109,17 +109,17 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( poemID )>
 				AND
-					poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />
+					poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( token )>
 				AND
-					token = <cfqueryparam value="#token#" cfsqltype="cf_sql_string" /> COLLATE utf8mb4_bin
+					token = <cfqueryparam value="#token#" cfsqltype="string" /> COLLATE utf8mb4_bin
 			</cfif>
 
 			ORDER BY
@@ -152,17 +152,17 @@
 			UPDATE
 				poem_share
 			SET
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="cf_sql_longvarchar" />,
-				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="cf_sql_longvarchar" />,
-				isSnapshot = <cfqueryparam value="#isSnapshot#" cfsqltype="cf_sql_tinyint" />,
-				snapshotName = <cfqueryparam value="#snapshotName#" cfsqltype="cf_sql_varchar" />,
-				snapshotContent = <cfqueryparam value="#snapshotContent#" cfsqltype="cf_sql_varchar" />,
-				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="cf_sql_bigint" />,
-				lastViewingAt = <cfqueryparam value="#lastViewingAt#" null="#isNotDate( lastViewingAt )#" cfsqltype="cf_sql_timestamp" />,
-				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				noteMarkdown = <cfqueryparam value="#noteMarkdown#" cfsqltype="longvarchar" />,
+				noteHtml = <cfqueryparam value="#noteHtml#" cfsqltype="longvarchar" />,
+				isSnapshot = <cfqueryparam value="#isSnapshot#" cfsqltype="tinyint" />,
+				snapshotName = <cfqueryparam value="#snapshotName#" cfsqltype="varchar" />,
+				snapshotContent = <cfqueryparam value="#snapshotContent#" cfsqltype="varchar" />,
+				viewingCount = <cfqueryparam value="#viewingCount#" cfsqltype="bigint" />,
+				lastViewingAt = <cfqueryparam value="#lastViewingAt#" null="#isNotDate( lastViewingAt )#" cfsqltype="timestamp" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="timestamp" />
 			WHERE
-				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+				id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 		</cfquery>
 
 	</cffunction>

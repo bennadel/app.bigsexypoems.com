@@ -24,10 +24,10 @@
 			INSERT INTO
 				one_time_token
 			SET
-				slug = <cfqueryparam value="#slug#" cfsqltype="cf_sql_varchar" />,
-				passcode = <cfqueryparam value="#passcode#" cfsqltype="cf_sql_varchar" />,
-				value = <cfqueryparam value="#value#" cfsqltype="cf_sql_varchar" />,
-				expiresAt = <cfqueryparam value="#expiresAt#" cfsqltype="cf_sql_timestamp" />
+				slug = <cfqueryparam value="#slug#" cfsqltype="varchar" />,
+				passcode = <cfqueryparam value="#passcode#" cfsqltype="varchar" />,
+				value = <cfqueryparam value="#value#" cfsqltype="varchar" />,
+				expiresAt = <cfqueryparam value="#expiresAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -49,7 +49,7 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -78,12 +78,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( expiresAtBefore )>
 				AND
-					expiresAt <= <cfqueryparam value="#expiresAtBefore#" cfsqltype="cf_sql_timestamp" />
+					expiresAt <= <cfqueryparam value="#expiresAtBefore#" cfsqltype="timestamp" />
 			</cfif>
 
 			ORDER BY

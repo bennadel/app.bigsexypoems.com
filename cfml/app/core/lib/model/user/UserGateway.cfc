@@ -24,10 +24,10 @@
 			INSERT INTO
 				user
 			SET
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				email = <cfqueryparam value="#email#" cfsqltype="cf_sql_varchar" />,
-				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
-				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				email = <cfqueryparam value="#email#" cfsqltype="varchar" />,
+				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="timestamp" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -50,12 +50,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( email )>
 				AND
-					email = <cfqueryparam value="#email#" cfsqltype="cf_sql_varchar" />
+					email = <cfqueryparam value="#email#" cfsqltype="varchar" />
 			</cfif>
 		</cfquery>
 
@@ -83,12 +83,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( email )>
 				AND
-					email = <cfqueryparam value="#email#" cfsqltype="cf_sql_varchar" />
+					email = <cfqueryparam value="#email#" cfsqltype="varchar" />
 			</cfif>
 
 			ORDER BY
@@ -114,10 +114,10 @@
 			UPDATE
 				user
 			SET
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				email = <cfqueryparam value="#email#" cfsqltype="cf_sql_varchar" />
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				email = <cfqueryparam value="#email#" cfsqltype="varchar" />
 			WHERE
-				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+				id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 		</cfquery>
 
 	</cffunction>

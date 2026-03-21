@@ -27,13 +27,13 @@
 			INSERT INTO
 				poem_share_viewing
 			SET
-				poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />,
-				shareID = <cfqueryparam value="#shareID#" cfsqltype="cf_sql_bigint" />,
-				ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="cf_sql_varchar" />,
-				ipCity = <cfqueryparam value="#ipCity#" cfsqltype="cf_sql_varchar" />,
-				ipRegion = <cfqueryparam value="#ipRegion#" cfsqltype="cf_sql_varchar" />,
-				ipCountry = <cfqueryparam value="#ipCountry#" cfsqltype="cf_sql_varchar" />,
-				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />
+				poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />,
+				shareID = <cfqueryparam value="#shareID#" cfsqltype="bigint" />,
+				ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="varchar" />,
+				ipCity = <cfqueryparam value="#ipCity#" cfsqltype="varchar" />,
+				ipRegion = <cfqueryparam value="#ipRegion#" cfsqltype="varchar" />,
+				ipCountry = <cfqueryparam value="#ipCountry#" cfsqltype="varchar" />,
+				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -57,17 +57,17 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( poemID )>
 				AND
-					poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />
+					poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( shareID )>
 				AND
-					shareID = <cfqueryparam value="#shareID#" cfsqltype="cf_sql_bigint" />
+					shareID = <cfqueryparam value="#shareID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -96,17 +96,17 @@
 
 			<cfif ! isNull( poemID )>
 				AND
-					poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />
+					poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( shareID )>
 				AND
-					shareID = <cfqueryparam value="#shareID#" cfsqltype="cf_sql_bigint" />
+					shareID = <cfqueryparam value="#shareID#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( ipAddress )>
 				AND
-					ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="cf_sql_string" />
+					ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="string" />
 			</cfif>
 
 		</cfquery>
@@ -143,22 +143,22 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( poemID )>
 				AND
-					poemID = <cfqueryparam value="#poemID#" cfsqltype="cf_sql_bigint" />
+					poemID = <cfqueryparam value="#poemID#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( shareID )>
 				AND
-					shareID = <cfqueryparam value="#shareID#" cfsqltype="cf_sql_bigint" />
+					shareID = <cfqueryparam value="#shareID#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( ipAddress )>
 				AND
-					ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="cf_sql_string" />
+					ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="string" />
 			</cfif>
 
 			ORDER BY

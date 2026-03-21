@@ -22,9 +22,9 @@
 			INSERT INTO
 				user_session_presence
 			SET
-				sessionID = <cfqueryparam value="#sessionID#" cfsqltype="cf_sql_bigint" />,
-				requestCount = <cfqueryparam value="#requestCount#" cfsqltype="cf_sql_integer" />,
-				lastRequestAt = <cfqueryparam value="#lastRequestAt#" cfsqltype="cf_sql_timestamp" />
+				sessionID = <cfqueryparam value="#sessionID#" cfsqltype="bigint" />,
+				requestCount = <cfqueryparam value="#requestCount#" cfsqltype="integer" />,
+				lastRequestAt = <cfqueryparam value="#lastRequestAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 	</cffunction>
@@ -44,7 +44,7 @@
 
 			<cfif ! isNull( sessionID )>
 				AND
-					sessionID = <cfqueryparam value="#sessionID#" cfsqltype="cf_sql_bigint" />
+					sessionID = <cfqueryparam value="#sessionID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -69,7 +69,7 @@
 
 			<cfif ! isNull( sessionID )>
 				AND
-					sessionID = <cfqueryparam value="#sessionID#" cfsqltype="cf_sql_bigint" />
+					sessionID = <cfqueryparam value="#sessionID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -89,7 +89,7 @@
 				requestCount = ( requestCount + 1 ),
 				lastRequestAt = GREATEST( lastRequestAt, UTC_TIMESTAMP() )
 			WHERE
-				sessionID = <cfqueryparam value="#sessionID#" cfsqltype="cf_sql_bigint" />
+				sessionID = <cfqueryparam value="#sessionID#" cfsqltype="bigint" />
 		</cfquery>
 
 	</cffunction>
@@ -105,10 +105,10 @@
 			UPDATE
 				user_session_presence
 			SET
-				requestCount = <cfqueryparam value="#requestCount#" cfsqltype="cf_sql_integer" />,
-				lastRequestAt = <cfqueryparam value="#lastRequestAt#" cfsqltype="cf_sql_timestamp" />
+				requestCount = <cfqueryparam value="#requestCount#" cfsqltype="integer" />,
+				lastRequestAt = <cfqueryparam value="#lastRequestAt#" cfsqltype="timestamp" />
 			WHERE
-				sessionID = <cfqueryparam value="#sessionID#" cfsqltype="cf_sql_bigint" />
+				sessionID = <cfqueryparam value="#sessionID#" cfsqltype="bigint" />
 		</cfquery>
 
 	</cffunction>

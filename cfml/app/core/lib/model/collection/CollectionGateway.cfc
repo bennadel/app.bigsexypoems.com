@@ -26,12 +26,12 @@
 			INSERT INTO
 				collection
 			SET
-				userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />,
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				descriptionMarkdown = <cfqueryparam value="#descriptionMarkdown#" cfsqltype="cf_sql_longvarchar" />,
-				descriptionHtml = <cfqueryparam value="#descriptionHtml#" cfsqltype="cf_sql_longvarchar" />,
-				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
-				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+				userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />,
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				descriptionMarkdown = <cfqueryparam value="#descriptionMarkdown#" cfsqltype="longvarchar" />,
+				descriptionHtml = <cfqueryparam value="#descriptionHtml#" cfsqltype="longvarchar" />,
+				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="timestamp" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -54,12 +54,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -90,12 +90,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
 
 			ORDER BY
@@ -127,12 +127,12 @@
 			UPDATE
 				collection
 			SET
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				descriptionMarkdown = <cfqueryparam value="#descriptionMarkdown#" cfsqltype="cf_sql_longvarchar" />,
-				descriptionHtml = <cfqueryparam value="#descriptionHtml#" cfsqltype="cf_sql_longvarchar" />,
-				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				descriptionMarkdown = <cfqueryparam value="#descriptionMarkdown#" cfsqltype="longvarchar" />,
+				descriptionHtml = <cfqueryparam value="#descriptionHtml#" cfsqltype="longvarchar" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="timestamp" />
 			WHERE
-				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+				id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 		</cfquery>
 
 	</cffunction>

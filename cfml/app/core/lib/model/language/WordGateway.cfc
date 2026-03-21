@@ -26,13 +26,13 @@
 			INSERT IGNORE INTO
 				word
 			SET
-				token = <cfqueryparam value="#token#" cfsqltype="cf_sql_varchar" />,
-				syllableCount = <cfqueryparam value="#syllableCount#" cfsqltype="cf_sql_tinyint" />,
-				partsPerMillion = <cfqueryparam value="#partsPerMillion#" scale="6" cfsqltype="cf_sql_decimal" />,
-				isAdjective = <cfqueryparam value="#isAdjective#" cfsqltype="cf_sql_tinyint" />,
-				isAdverb = <cfqueryparam value="#isAdverb#" cfsqltype="cf_sql_tinyint" />,
-				isNoun = <cfqueryparam value="#isNoun#" cfsqltype="cf_sql_tinyint" />,
-				isVerb = <cfqueryparam value="#isVerb#" cfsqltype="cf_sql_tinyint" />
+				token = <cfqueryparam value="#token#" cfsqltype="varchar" />,
+				syllableCount = <cfqueryparam value="#syllableCount#" cfsqltype="tinyint" />,
+				partsPerMillion = <cfqueryparam value="#partsPerMillion#" scale="6" cfsqltype="decimal" />,
+				isAdjective = <cfqueryparam value="#isAdjective#" cfsqltype="tinyint" />,
+				isAdverb = <cfqueryparam value="#isAdverb#" cfsqltype="tinyint" />,
+				isNoun = <cfqueryparam value="#isNoun#" cfsqltype="tinyint" />,
+				isVerb = <cfqueryparam value="#isVerb#" cfsqltype="tinyint" />
 		</cfquery>
 
 	</cffunction>
@@ -52,7 +52,7 @@
 
 			<cfif ! isNull( token )>
 				AND
-					token = <cfqueryparam value="#token#" cfsqltype="cf_sql_varchar" />
+					token = <cfqueryparam value="#token#" cfsqltype="varchar" />
 			</cfif>
 		</cfquery>
 
@@ -82,7 +82,7 @@
 
 			<cfif ! isNull( token )>
 				AND
-					token = <cfqueryparam value="#token#" cfsqltype="cf_sql_varchar" />
+					token = <cfqueryparam value="#token#" cfsqltype="varchar" />
 			</cfif>
 
 			ORDER BY

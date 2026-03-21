@@ -21,8 +21,8 @@
 			INSERT INTO
 				user_timezone
 			SET
-				userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />,
-				offsetInMinutes = <cfqueryparam value="#offsetInMinutes#" cfsqltype="cf_sql_integer" />
+				userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />,
+				offsetInMinutes = <cfqueryparam value="#offsetInMinutes#" cfsqltype="integer" />
 		</cfquery>
 
 	</cffunction>
@@ -42,7 +42,7 @@
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -66,7 +66,7 @@
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -84,9 +84,9 @@
 			UPDATE
 				user_timezone
 			SET
-				offsetInMinutes = <cfqueryparam value="#offsetInMinutes#" cfsqltype="cf_sql_integer" />
+				offsetInMinutes = <cfqueryparam value="#offsetInMinutes#" cfsqltype="integer" />
 			WHERE
-				userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+				userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 		</cfquery>
 
 	</cffunction>

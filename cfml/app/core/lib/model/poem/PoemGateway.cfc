@@ -27,12 +27,12 @@
 			INSERT INTO
 				poem
 			SET
-				userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />,
-				collectionID = <cfqueryparam value="#collectionID#" cfsqltype="cf_sql_bigint" />,
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				content = <cfqueryparam value="#content#" cfsqltype="cf_sql_varchar" />,
-				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />,
-				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+				userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />,
+				collectionID = <cfqueryparam value="#collectionID#" cfsqltype="bigint" />,
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				content = <cfqueryparam value="#content#" cfsqltype="varchar" />,
+				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="timestamp" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -56,12 +56,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -93,17 +93,17 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( collectionID )>
 				AND
-					collectionID = <cfqueryparam value="#collectionID#" cfsqltype="cf_sql_bigint" />
+					collectionID = <cfqueryparam value="#collectionID#" cfsqltype="bigint" />
 			</cfif>
 
 			ORDER BY
@@ -135,12 +135,12 @@
 			UPDATE
 				poem
 			SET
-				collectionID = <cfqueryparam value="#collectionID#" cfsqltype="cf_sql_bigint" />,
-				name = <cfqueryparam value="#name#" cfsqltype="cf_sql_varchar" />,
-				content = <cfqueryparam value="#content#" cfsqltype="cf_sql_varchar" />,
-				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="cf_sql_timestamp" />
+				collectionID = <cfqueryparam value="#collectionID#" cfsqltype="bigint" />,
+				name = <cfqueryparam value="#name#" cfsqltype="varchar" />,
+				content = <cfqueryparam value="#content#" cfsqltype="varchar" />,
+				updatedAt = <cfqueryparam value="#updatedAt#" cfsqltype="timestamp" />
 			WHERE
-				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+				id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 		</cfquery>
 
 	</cffunction>

@@ -37,12 +37,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_varchar" />
+					id = <cfqueryparam value="#id#" cfsqltype="varchar" />
 			</cfif>
 
 			<cfif ! isNull( overdueAt )>
 				AND
-					nextExecutedAt <= <cfqueryparam value="#overdueAt#" cfsqltype="cf_sql_timestamp" />
+					nextExecutedAt <= <cfqueryparam value="#overdueAt#" cfsqltype="timestamp" />
 			</cfif>
 
 			ORDER BY
@@ -69,11 +69,11 @@
 			UPDATE
 				scheduled_task
 			SET
-				state = <cfqueryparam value="#serializeJson( state )#" cfsqltype="cf_sql_varchar" />,
-				lastExecutedAt = <cfqueryparam value="#lastExecutedAt#" cfsqltype="cf_sql_timestamp" />,
-				nextExecutedAt = <cfqueryparam value="#nextExecutedAt#" cfsqltype="cf_sql_timestamp" />
+				state = <cfqueryparam value="#serializeJson( state )#" cfsqltype="varchar" />,
+				lastExecutedAt = <cfqueryparam value="#lastExecutedAt#" cfsqltype="timestamp" />,
+				nextExecutedAt = <cfqueryparam value="#nextExecutedAt#" cfsqltype="timestamp" />
 			WHERE
-				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_varchar" />
+				id = <cfqueryparam value="#id#" cfsqltype="varchar" />
 		</cfquery>
 
 	</cffunction>

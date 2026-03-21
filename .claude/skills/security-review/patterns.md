@@ -24,7 +24,7 @@ The `#arguments.poemID#` is interpolated directly into the SQL string. An attack
 <cfquery name="local.results" datasource="#variables.datasource#">
     SELECT *
     FROM poem
-    WHERE id = <cfqueryparam value="#arguments.poemID#" cfsqltype="cf_sql_bigint" />
+    WHERE id = <cfqueryparam value="#arguments.poemID#" cfsqltype="bigint" />
 </cfquery>
 ```
 
@@ -36,7 +36,7 @@ Every dynamic value is wrapped in `<cfqueryparam>` with an explicit `cfsqltype`.
 <cfquery name="local.results" datasource="#variables.datasource#">
     SELECT *
     FROM #variables.tableName#
-    WHERE id = <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_bigint" />
+    WHERE id = <cfqueryparam value="#arguments.id#" cfsqltype="bigint" />
 </cfquery>
 ```
 

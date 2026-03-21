@@ -31,14 +31,14 @@
 			INSERT INTO
 				user_session
 			SET
-				token = <cfqueryparam value="#token#" cfsqltype="cf_sql_varchar" />,
-				userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />,
-				isAuthenticated = <cfqueryparam value="#isAuthenticated#" cfsqltype="cf_sql_tinyint" />,
-				ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="cf_sql_varchar" />,
-				ipCity = <cfqueryparam value="#ipCity#" cfsqltype="cf_sql_varchar" />,
-				ipRegion = <cfqueryparam value="#ipRegion#" cfsqltype="cf_sql_varchar" />,
-				ipCountry = <cfqueryparam value="#ipCountry#" cfsqltype="cf_sql_varchar" />,
-				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="cf_sql_timestamp" />
+				token = <cfqueryparam value="#token#" cfsqltype="varchar" />,
+				userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />,
+				isAuthenticated = <cfqueryparam value="#isAuthenticated#" cfsqltype="tinyint" />,
+				ipAddress = <cfqueryparam value="#ipAddress#" cfsqltype="varchar" />,
+				ipCity = <cfqueryparam value="#ipCity#" cfsqltype="varchar" />,
+				ipRegion = <cfqueryparam value="#ipRegion#" cfsqltype="varchar" />,
+				ipCountry = <cfqueryparam value="#ipCountry#" cfsqltype="varchar" />,
+				createdAt = <cfqueryparam value="#createdAt#" cfsqltype="timestamp" />
 		</cfquery>
 
 		<cfreturn val( metaResults.generatedKey ) />
@@ -61,12 +61,12 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
 		</cfquery>
 
@@ -100,17 +100,17 @@
 
 			<cfif ! isNull( id )>
 				AND
-					id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+					id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( userID )>
 				AND
-					userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
 
 			<cfif ! isNull( token )>
 				AND
-					token = <cfqueryparam value="#token#" cfsqltype="cf_sql_varchar" /> COLLATE utf8mb4_bin
+					token = <cfqueryparam value="#token#" cfsqltype="varchar" /> COLLATE utf8mb4_bin
 			</cfif>
 
 			ORDER BY
@@ -135,9 +135,9 @@
 			UPDATE
 				user_session
 			SET
-				isAuthenticated = <cfqueryparam value="#isAuthenticated#" cfsqltype="cf_sql_tinyint" />
+				isAuthenticated = <cfqueryparam value="#isAuthenticated#" cfsqltype="tinyint" />
 			WHERE
-				id = <cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" />
+				id = <cfqueryparam value="#id#" cfsqltype="bigint" />
 		</cfquery>
 
 	</cffunction>

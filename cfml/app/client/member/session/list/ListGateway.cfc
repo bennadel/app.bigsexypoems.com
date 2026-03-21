@@ -22,7 +22,7 @@
 				user_session_presence p
 			ON
 				(
-						s.userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+						s.userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 					AND
 						p.sessionID = s.id
 				)

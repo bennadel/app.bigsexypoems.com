@@ -20,7 +20,7 @@
 			ON
 				c.id = p.collectionID
 			WHERE
-				p.userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+				p.userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			ORDER BY
 				p.name ASC,
 				p.id ASC

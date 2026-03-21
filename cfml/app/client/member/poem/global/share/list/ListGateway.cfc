@@ -25,7 +25,7 @@
 				poem_share s
 			ON
 				(
-						p.userID = <cfqueryparam value="#userID#" cfsqltype="cf_sql_bigint" />
+						p.userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 					AND
 						s.poemID = p.id
 				)
