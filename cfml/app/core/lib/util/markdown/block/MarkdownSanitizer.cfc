@@ -25,7 +25,7 @@ component
 			// configuration instead?
 			.addTags([ "h1", "h2", "h3", "h4", "h5", "h6" ])
 			// Basic structuring.
-			.addTags([ "p", "blockquote", "ul", "ol", "li", "br" ])
+			.addTags([ "p", "blockquote", "ul", "ol", "li", "br", "hr" ])
 			// Code blocks.
 			.addTags([ "pre", "code" ])
 			.addAttributes( "pre", [ "class" ] )
