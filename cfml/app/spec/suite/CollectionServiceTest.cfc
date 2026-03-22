@@ -166,21 +166,6 @@ component extends="spec.BaseTest" {
 			"App.Model.Collection.DescriptionMarkdown.TooLong"
 		);
 
-		// Suspicious encoding in description markdown.
-		assertThrows(
-			() => {
-
-				collectionService.create(
-					authContext = variables.authContext,
-					userID = variables.authContext.user.id,
-					name = "Valid #left( createUUID(), 8 )#",
-					descriptionMarkdown = "Test %2525 Encoded"
-				);
-
-			},
-			"App.Model.Collection.DescriptionMarkdown.SuspiciousEncoding"
-		);
-
 	}
 
 
@@ -236,20 +221,6 @@ component extends="spec.BaseTest" {
 
 			},
 			"App.Model.Collection.Name.SuspiciousEncoding"
-		);
-
-		// Suspicious encoding in description markdown.
-		assertThrows(
-			() => {
-
-				collectionService.update(
-					authContext = variables.authContext,
-					id = collectionID,
-					descriptionMarkdown = "Test %2525 Encoded"
-				);
-
-			},
-			"App.Model.Collection.DescriptionMarkdown.SuspiciousEncoding"
 		);
 
 	}

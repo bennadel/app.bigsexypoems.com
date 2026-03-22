@@ -27,11 +27,14 @@ component
 	*/
 	public string function descriptionMarkdownFrom( required string input ) {
 
+		// Note: The uniform encoding validation is intentionally omitted for markdown
+		// content. Encoded characters (such as those used in URL params, HTML entities,
+		// etc.) are legitimate in markdown. Security is enforced downstream in the jSoup
+		// DOM sanitization (see CollectionDescriptionSanitizer.cfc).
 		return pipeline(
 			normalizeString( input ),
 			[
-				assertMaxLength: [ 500, "App.Model.Collection.DescriptionMarkdown.TooLong" ],
-				assertUniformEncoding: [ "App.Model.Collection.DescriptionMarkdown.SuspiciousEncoding" ]
+				assertMaxLength: [ 500, "App.Model.Collection.DescriptionMarkdown.TooLong" ]
 			]
 		);
 

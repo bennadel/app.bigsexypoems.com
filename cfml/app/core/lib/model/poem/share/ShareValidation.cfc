@@ -53,11 +53,14 @@ component
 	*/
 	public string function noteMarkdownFrom( required string input ) {
 
+		// Note: The uniform encoding validation is intentionally omitted for markdown
+		// content. Encoded characters (such as those used in URL params, HTML entities,
+		// etc.) are legitimate in markdown. Security is enforced downstream in the jSoup
+		// DOM sanitization (see ShareNoteSanitizer.cfc).
 		return pipeline(
 			normalizeString( input ),
 			[
-				assertMaxLength: [ 500, "App.Model.Poem.Share.NoteMarkdown.TooLong" ],
-				assertUniformEncoding: [ "App.Model.Poem.Share.NoteMarkdown.SuspiciousEncoding" ]
+				assertMaxLength: [ 500, "App.Model.Poem.Share.NoteMarkdown.TooLong" ]
 			]
 		);
 

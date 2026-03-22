@@ -340,22 +340,6 @@ component extends="spec.BaseTest" {
 			"App.Model.Poem.Share.NoteMarkdown.TooLong"
 		);
 
-		// Suspicious encoding in note markdown.
-		assertThrows(
-			() => {
-
-				shareService.create(
-					authContext = variables.authContext,
-					poemID = poemID,
-					name = "Valid",
-					noteMarkdown = "Test %2525 Encoded",
-					isSnapshot = false
-				);
-
-			},
-			"App.Model.Poem.Share.NoteMarkdown.SuspiciousEncoding"
-		);
-
 	}
 
 

@@ -52,9 +52,6 @@ component hint = "I help translate application errors into appropriate response 
 			case "App.MethodNotAllowed":
 				return as405();
 			break;
-			case "App.Model.Collection.DescriptionMarkdown.SuspiciousEncoding":
-				return asModelStringSuspiciousEncoding( error, "collection description" );
-			break;
 			case "App.Model.Collection.DescriptionMarkdown.TooLong":
 				return asModelStringTooLong( error, "collection description", metadata );
 			break;
@@ -117,9 +114,6 @@ component hint = "I help translate application errors into appropriate response 
 			break;
 			case "App.Model.Poem.Share.Name.TooLong":
 				return asModelStringTooLong( error, "share name", metadata );
-			break;
-			case "App.Model.Poem.Share.NoteMarkdown.SuspiciousEncoding":
-				return asModelStringSuspiciousEncoding( error, "share note" );
 			break;
 			case "App.Model.Poem.Share.NoteMarkdown.TooLong":
 				return asModelStringTooLong( error, "share note", metadata );
