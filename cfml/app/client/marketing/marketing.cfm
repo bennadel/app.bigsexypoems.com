@@ -24,6 +24,7 @@
 
 	switch ( router.next( "home" ) ) {
 		case "home":
+		case "legal":
 		case "playground":
 			cfmodule( template = router.nextTemplate() );
 		break;

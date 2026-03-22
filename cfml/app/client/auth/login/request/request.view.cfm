@@ -8,7 +8,7 @@
 		</h1>
 
 		<p>
-			You can use your email address to log in or sign up. A verification link will be sent to your email address so we can verify your account. This verification link will be sent from <mark>#e( fromEmail )#</mark> (during the beta).
+			You can use your email address to log in or sign up. A verification link will be sent to your email address so we can verify your account. This verification link will be sent from <mark>#e( fromEmail )#</mark>.
 		</p>
 
 		<cfmodule
@@ -72,6 +72,12 @@
 					Or, <a #ui.attrHref( "marketing.playground" )#>try the composer</a> without an account &rarr;
 				</span>
 			</div>
+
+			<p r9fbqd class="consent">
+				By continuing, you agree to our
+				<a #ui.attrHref( "marketing.legal.termsOfService" )#>Terms of Service</a> and
+				<a #ui.attrHref( "marketing.legal.privacyPolicy" )#>Privacy Policy</a>.
+			</p>
 		</form>
 
 	</article>
