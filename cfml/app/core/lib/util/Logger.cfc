@@ -109,7 +109,9 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 			devLogs.create([
 				level: level,
 				message: message,
-				data: data
+				data: data,
+				stacktrace: buildStacktraceForNonError(),
+				requestContext: buildRequestContext()
 			]);
 			return;
 
@@ -150,11 +152,8 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 				error: structCopy( error ),
 				message: message,
 				data: data,
-				context: {
-					cgi,
-					url,
-					form: buildFormScope()
-				}
+				stacktrace: buildStacktraceForNonError(),
+				requestContext: buildRequestContext()
 			]);
 			return;
 
