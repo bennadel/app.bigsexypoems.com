@@ -2,6 +2,7 @@
 
 	// Define properties for dependency-injection.
 	config = request.ioc.get( "config" );
+	legacyRedirects = request.ioc.get( "core.lib.web.LegacyRedirects" );
 	requestHelper = request.ioc.get( "core.lib.web.RequestHelper" );
 	requestMetadata = request.ioc.get( "core.lib.web.RequestMetadata" );
 	router = request.ioc.get( "core.lib.web.Router" );
@@ -60,18 +61,19 @@
 			case "system":
 				cfmodule( template = router.nextTemplate() );
 			break;
-			// OLD LINK that we're handling gracefully.
-			case "playground":
-				router.goto([
-					event: "marketing.playground"
-				]);
-			break;
 			default:
 				throw( type = "App.Routing.InvalidEvent" );
 			break;
 		}
 
 	} catch ( any error ) {
+
+		// Legacy routes have an opportunity to redirect before an error is logged.
+		if ( error.type == "App.Routing.InvalidEvent" ) {
+
+			legacyRedirects.handleInvalidEvent( error );
+
+		}
 
 		request.error = error;
 

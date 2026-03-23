@@ -30,12 +30,14 @@ component {
 	*/
 	public void function setupRequest( string scriptName = "/index.cfm" ) {
 
-		var event = listToArray( url?.event, "." );
+		var event = ( url.event ?: "" );
+		var segments = event.listToArray( "." );
 
 		request[ scopedProxyKey ] = {
 			scriptName: scriptName,
 			event: event,
-			queue: duplicate( event ),
+			segments: segments,
+			queue: duplicate( segments ),
 			currentSegment: "",
 			persistedSearchParams: []
 		};
@@ -116,6 +118,16 @@ component {
 		) {
 
 		return ( site.url & urlForParts( argumentCollection = arguments ) );
+
+	}
+
+
+	/**
+	* I return the request event value used for routing.
+	*/
+	public string function getEvent() {
+
+		return $variables().event;
 
 	}
 

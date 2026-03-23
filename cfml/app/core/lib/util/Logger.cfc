@@ -239,7 +239,7 @@ component hint = "I provide logging methods for errors and arbitrary data." {
 	private struct function buildRequestContext() {
 
 		return {
-			event: ( url?.event ?: "" ),
+			event: ( url.event ?: "" ),
 			http: {
 				method: requestMetadata.getMethod(),
 				url: requestMetadata.getUrl(),

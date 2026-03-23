@@ -41,7 +41,7 @@
 	if ( compare( url.imageVersion, expectedImageVersion ) ) {
 
 		router.goto({
-			event: url.event,
+			event: router.getEvent(),
 			shareID: url.shareID,
 			shareToken: url.shareToken,
 			imageVersion: expectedImageVersion
