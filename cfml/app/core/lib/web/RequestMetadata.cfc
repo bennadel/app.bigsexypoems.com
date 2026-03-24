@@ -10,12 +10,20 @@ component hint = "I provide utility methods for accessing metadata about the cur
 	/**
 	* I initialize the router service.
 	*/
-	public void function init() {
+	public void function initAfterInjection() {
 
 		// Even though this component is cached for the lifetime of the application, it
 		// acts as a scoped proxy to each individual request. Request-specific state is
 		// stored on the given request key.
 		variables.scopedProxyKey = "$requestMetadata$variables";
+
+		// EDGE-CASE: if the request metadata needs to be consumed during the application
+		// boot-strapping process but before the per-request setup has been run (such as
+		// when logging the app-initialization), calling an implicit setup will prevent
+		// errors. This is very tight coupling; which may be a symptom of poor
+		// architectural choices. But, for the moment, I'm just putting in this hacky-fix
+		// while I think more deeply about the problem.
+		setupRequest();
 
 	}
 
