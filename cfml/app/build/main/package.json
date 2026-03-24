@@ -62,6 +62,7 @@
 		"@parcel/transformer-less": "2.16.1",
 		"alpinejs": "3.15.2",
 		"htmx.org": "2.0.8",
-		"parcel": "2.16.1"
+		"parcel": "2.16.1",
+		"parcel-reporter-strip-html": "file:./plugins/parcel-reporter-strip-html"
 	}
 }
