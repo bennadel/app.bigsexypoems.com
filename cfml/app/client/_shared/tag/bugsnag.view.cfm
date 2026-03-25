@@ -4,9 +4,5 @@
 	//# sourceMappingURL=//d2wy8f7a9ursnm.cloudfront.net/v7/bugsnag.min.js.map
 </script>
 <script type="text/javascript">
-	try {
-		Bugsnag.start( JSON.parse( "<cfoutput>#e4json( startConfig )#</cfoutput>" ) );
-	} catch ( error ) {
-		Bugsnag.start( "<cfoutput>#e4j( startConfig.apiKey )#</cfoutput>" );
-	}
+	Bugsnag.start( JSON.parse( "<cfoutput>#e4json( startConfig )#</cfoutput>" ) );
 </script>

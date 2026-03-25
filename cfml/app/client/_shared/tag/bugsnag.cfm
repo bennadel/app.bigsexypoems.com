@@ -11,7 +11,8 @@
 
 	startConfig = [
 		apiKey: config.bugsnag.client.apiKey,
-		releaseStage: config.bugsnag.client.releaseStage
+		releaseStage: config.bugsnag.client.releaseStage,
+		autoTrackSessions: false
 	];
 
 	if ( val( request.authContext?.user?.id ) ) {
