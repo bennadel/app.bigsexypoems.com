@@ -92,7 +92,13 @@
 						name="word"
 						class="uiInput"
 					/>
-					<select name="limit" class="uiSelect isAuto isHtmxRhymesTrigger">
+					<label for="#ui.nextFieldId()#" class="uiScreenReader">
+						Number of results:
+					</label>
+					<select
+						id="#ui.fieldId()#"
+						name="limit"
+						class="uiSelect isAuto isHtmxRhymesTrigger">
 						<option value="50">50 results</option>
 						<option value="100" selected>100 results</option>
 						<option value="150">150 results</option>
@@ -170,7 +176,13 @@
 						name="word"
 						class="uiInput"
 					/>
-					<select name="limit" class="uiSelect isAuto isHtmxSynonymsTrigger">
+					<label for="#ui.nextFieldId()#" class="uiScreenReader">
+						Number of results:
+					</label>
+					<select
+						id="#ui.fieldId()#"
+						name="limit"
+						class="uiSelect isAuto isHtmxSynonymsTrigger">
 						<option value="50">50 results</option>
 						<option value="100" selected>100 results</option>
 						<option value="150">150 results</option>
