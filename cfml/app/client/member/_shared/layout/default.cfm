@@ -21,6 +21,7 @@
 	// Include common HTTP response headers.
 	cfmodule( template = "/client/_shared/layout/http/headers.cfm" );
 	cfmodule( template = "/client/_shared/layout/http/headersForHtmx.cfm" );
+	cfmodule( template = "/client/_shared/layout/http/headersForSecurity.cfm" );
 
 	// Reset the output buffer.
 	cfcontent( type = "text/html; charset=utf-8" );

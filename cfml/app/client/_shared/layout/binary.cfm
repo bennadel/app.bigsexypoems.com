@@ -15,6 +15,7 @@
 
 	// Include common HTTP response headers.
 	cfmodule( template = "./http/headers.cfm" );
+	cfmodule( template = "./http/headersForSecurity.cfm" );
 
 	if ( request.response.etag.len() ) {
 
