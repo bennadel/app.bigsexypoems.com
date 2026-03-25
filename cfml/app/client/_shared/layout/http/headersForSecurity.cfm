@@ -24,4 +24,20 @@
 		value = "strict-origin-when-cross-origin"
 	);
 
+	// Isolates the browsing context so that cross-origin documents opened via pop-ups or
+	// window.open() cannot access this page's window object (and vice versa). This
+	// prevents cross-origin attacks that exploit the window.opener reference.
+	cfheader(
+		name = "Cross-Origin-Opener-Policy",
+		value = "same-origin"
+	);
+
+	// Prevents other origins from loading this site's resources (images, scripts, styles,
+	// etc.) via cross-origin requests. This mitigates side-channel attacks like Spectre
+	// that can leak data from cross-origin resources loaded into an attacker's process.
+	cfheader(
+		name = "Cross-Origin-Resource-Policy",
+		value = "same-origin"
+	);
+
 </cfscript>
