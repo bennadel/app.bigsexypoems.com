@@ -10,13 +10,13 @@
 		<form method="post" action="#request.postBackAction#">
 			<cfmodule template="/client/_shared/tag/xsrf.cfm" />
 
-			<label for="form--content" class="uiScreenReader">
+			<label for="#ui.nextFieldId()#" class="uiScreenReader">
 				Content:
 			</label>
 
 			<div r2mwmx class="proser">
 				<textarea
-					id="form--content"
+					id="#ui.fieldId()#"
 					name="content"
 					data-default-value="#e4a( getDefaultPoem() )#"
 					maxlength="3000"
@@ -53,13 +53,6 @@
 				</div>
 			</div>
 		</form>
-
-		<cfmodule
-			template="/client/_shared/tag/speechTools.cfm"
-			inputID="form--content"
-			xClassToken="r2mwmx"
-			xClass="speechTools"
-		/>
 
 	</article>
 

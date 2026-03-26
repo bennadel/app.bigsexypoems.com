@@ -30,13 +30,13 @@
 				z6s31p class="uiInput name"
 			/>
 
-			<label for="form--content" class="uiScreenReader">
+			<label for="#ui.nextFieldId()#" class="uiScreenReader">
 				Content:
 			</label>
 
 			<div z6s31p class="proser">
 				<textarea
-					id="form--content"
+					id="#ui.fieldId()#"
 					name="content"
 					maxlength="3000"
 					z6s31p class="uiTextarea isLongTermFocus proser_content"
@@ -70,7 +70,7 @@
 							hx-post="#router.urlForParts( 'member.poem.composer.saveInBackground', 'poemID', poem.id )#"
 							hx-trigger="
 								click,
-								input delay:1s from:##form--content
+								input delay:1s from:.proser_content
 							"
 							hx-target=".autosaver_status"
 							hx-sync="this:replace"
@@ -89,13 +89,6 @@
 				</div>
 			</div>
 		</form>
-
-		<cfmodule
-			template="/client/_shared/tag/speechTools.cfm"
-			inputID="form--content"
-			xClassToken="z6s31p"
-			xClass="speechTools"
-		/>
 
 	</article>
 
