@@ -145,17 +145,15 @@
 
 			<footer kv4r2p class="shell_footer footer">
 				<p>
-					Rhymes, synonyms, definitions, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
-				</p>
-
-				<p>
 					Managed <a href="https://www.xbytecloud.com/coldfusion/hosting/coldfusion-cloud-hosting?source=bennadel.com" target="_blank">ColdFusion hosting</a> services provided by:
 					<a href="https://www.xbytecloud.com/?source=bennadel.com" target="_blank">xByte Cloud</a>.
 				</p>
 
 				<p>
 					Created by <a href="https://www.bennadel.com/" target="_blank">Ben Nadel</a>
-					&copy; #year( now() )#
+					&copy; #year( now() )#.
+					<a #ui.attrHref( "marketing.legal.termsOfService" )#>Terms of Service</a>.
+					<a #ui.attrHref( "marketing.legal.privacyPolicy" )#>Privacy Policy</a>.
 				</p>
 			</footer>
 

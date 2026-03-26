@@ -265,5 +265,9 @@
 		</section>
 	</div>
 
+	<p r2mwmx class="datamuseAttribution">
+		Rhymes, synonyms, definitions, and syllable counts are provided by the <a href="https://www.datamuse.com/" target="_blank">Datamuse</a> API.
+	</p>
+
 </cfoutput>
 </cfsavecontent>
