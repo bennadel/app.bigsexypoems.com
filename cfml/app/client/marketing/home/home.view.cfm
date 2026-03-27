@@ -13,7 +13,7 @@
 		</div>
 
 		<div we8bhj class="actions">
-			<a #ui.attrHref( "auth.login.request" )# we8bhj class="actions_cta uiButton">
+			<a #ui.attrHref( "member" )# we8bhj class="actions_cta uiButton">
 				Log In
 			</a>
 			- or -

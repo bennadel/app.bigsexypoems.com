@@ -3,8 +3,12 @@
 
 	<article r2mwmx>
 
+		<h1>
+			Poem Composer Playground
+		</h1>
+
 		<p>
-			You can try the poem composer without an account. To save the poem, track revisions, and create share-links, you must log-in.
+			The composer provides tools to help unblock your creative process. Per-line syllable counts for rhyme schemes; rhyme and synonym look-ups; and a quick definition search. You can try the poem composer without an account. But in order to save the poem, track revisions, and create share-links, you must <a #ui.attrHref( "member" )#>log in</a> &mdash; for free, <em>woot woot</em>!
 		</p>
 
 		<form method="post" action="#request.postBackAction#">
