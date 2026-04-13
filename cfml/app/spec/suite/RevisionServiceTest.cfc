@@ -110,9 +110,57 @@ component extends="spec.BaseTest" {
 		assertEqual( poem.name, oldName );
 		assertEqual( poem.content, oldContent );
 
-		// Verify new revisions were created (snapshot of live state + snapshot of restored state).
+		// Verify new revisions were created (snapshot of live state + snapshot of restored
+		// state = 2 new revisions).
 		var revisionsAfter = revisionModel.getByFilter( poemID = poemID );
-		assertTrue( revisionsAfter.len() > revisionCountBefore, "Expected new revisions to be created during makeCurrent." );
+		assertEqual( revisionsAfter.len(), ( revisionCountBefore + 2 ), "Expected exactly 2 new revisions (live snapshot + restored snapshot)." );
+
+	}
+
+
+	/**
+	* I test that makeCurrent skips the live-state snapshot when the most recent revision
+	* already matches the live poem content.
+	*/
+	public void function testMakeCurrentSkipsRedundantSnapshot() {
+
+		var poemID = poemService.create(
+			authContext = variables.authContext,
+			userID = variables.authContext.user.id,
+			collectionID = 0,
+			name = "Live #createUUID()#",
+			content = "Live content."
+		);
+
+		// The create call produced a revision that matches the live poem. Now create
+		// a second revision with different content to restore from.
+		var oldRevisionID = revisionModel.create(
+			poemID = poemID,
+			name = "Old #createUUID()#",
+			content = "Old content.",
+			createdAt = utcNow()
+		);
+
+		// Restore the old revision — this changes the poem away from the latest revision.
+		revisionService.makeCurrent(
+			authContext = variables.authContext,
+			revisionID = oldRevisionID
+		);
+
+		// Now the most recent revision (created by makeCurrent above) matches the live
+		// poem. Restoring the old revision again should skip the live-state snapshot
+		// because it would be a duplicate of the most recent revision.
+		var revisionCountBefore = revisionModel.getByFilter( poemID = poemID ).len();
+
+		revisionService.makeCurrent(
+			authContext = variables.authContext,
+			revisionID = oldRevisionID
+		);
+
+		// Only 1 new revision (the restored snapshot), not 2 — the live-state snapshot
+		// was correctly skipped because the most recent revision already matched.
+		var revisionsAfter = revisionModel.getByFilter( poemID = poemID );
+		assertEqual( revisionsAfter.len(), ( revisionCountBefore + 1 ), "Expected exactly 1 new revision (no redundant live snapshot)." );
 
 	}
 

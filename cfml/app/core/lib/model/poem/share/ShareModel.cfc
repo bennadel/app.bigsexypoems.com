@@ -70,7 +70,10 @@ component {
 	/**
 	* I get a model.
 	*/
-	public struct function get( required numeric id ) {
+	public struct function get(
+		required numeric id,
+		string withLock
+		) {
 
 		var results = getByFilter( argumentCollection = arguments );
 
@@ -92,7 +95,8 @@ component {
 		numeric id,
 		numeric poemID,
 		string token,
-		string withSort
+		string withSort,
+		string withLock
 		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );

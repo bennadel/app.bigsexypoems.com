@@ -50,7 +50,10 @@ component {
 	/**
 	* I get a model.
 	*/
-	public struct function get( required numeric sessionID ) {
+	public struct function get(
+		required numeric sessionID,
+		string withLock
+		) {
 
 		var results = getByFilter( argumentCollection = arguments );
 
@@ -68,7 +71,10 @@ component {
 	/**
 	* I get the model that match the given filters.
 	*/
-	public array function getByFilter( numeric sessionID ) {
+	public array function getByFilter(
+		numeric sessionID,
+		string withLock
+		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );
 

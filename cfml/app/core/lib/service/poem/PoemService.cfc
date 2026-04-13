@@ -142,35 +142,45 @@ component {
 	private void function saveRevision( required numeric poemID ) {
 
 		var windowInSeconds = 120;
-		var poem = poemModel.get( poemID );
-		var maybeLastRevision = revisionModel.maybeGetMostRecentByPoemID( poemID );
 
-		var shouldCreateNewRevision = (
-			! maybeLastRevision.exists ||
-			( dateDiff( "s", maybeLastRevision.value.updatedAt, poem.updatedAt ) >= windowInSeconds )
-		);
+		// This transaction uses an exclusive lock on the poem model in order to enforce
+		// serialized access to the poem-level revisions.
+		transaction {
 
-		// If there's no previous revision, or the window has closed, create a new one.
-		if ( shouldCreateNewRevision ) {
-
-			revisionModel.create(
-				poemID = poemID,
-				name = poem.name,
-				content = poem.content,
-				createdAt = poem.updatedAt
+			var poem = poemModel.get(
+				id = poemID,
+				withLock = "exclusive"
 			);
 
-		// Otherwise, update the existing revision within the window.
-		} else {
+			var cutoffAt = poem.updatedAt.add( "s", -windowInSeconds );
+			var maybeLastRevision = revisionModel.maybeGetMostRecentByPoemID( poemID );
 
-			revisionModel.update(
-				id = maybeLastRevision.value.id,
-				name = poem.name,
-				content = poem.content,
-				updatedAt = poem.updatedAt
-			);
+			// If there's no previous revision, or the window has closed, create a new one.
+			if (
+				! maybeLastRevision.exists ||
+				( maybeLastRevision.value.updatedAt <= cutoffAt )
+				) {
 
-		}
+				revisionModel.create(
+					poemID = poemID,
+					name = poem.name,
+					content = poem.content,
+					createdAt = poem.updatedAt
+				);
+
+			// Otherwise, update the existing revision within the window.
+			} else {
+
+				revisionModel.update(
+					id = maybeLastRevision.value.id,
+					name = poem.name,
+					content = poem.content,
+					updatedAt = poem.updatedAt
+				);
+
+			}
+
+		} // End: transaction and row-locks.
 
 	}
 

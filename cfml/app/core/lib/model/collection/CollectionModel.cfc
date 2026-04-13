@@ -54,7 +54,10 @@ component {
 	/**
 	* I get a model.
 	*/
-	public struct function get( required numeric id ) {
+	public struct function get(
+		required numeric id,
+		string withLock
+		) {
 
 		var results = getByFilter( argumentCollection = arguments );
 
@@ -75,7 +78,8 @@ component {
 	public array function getByFilter(
 		numeric id,
 		numeric userID,
-		string withSort
+		string withSort,
+		string withLock
 		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );

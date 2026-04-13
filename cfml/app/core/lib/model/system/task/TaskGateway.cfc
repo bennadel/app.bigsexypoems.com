@@ -19,6 +19,7 @@
 		<cfargument name="id" type="string" required="false" />
 		<cfargument name="overdueAt" type="date" required="false" />
 		<cfargument name="withSort" type="string" required="false" default="id" />
+		<cfargument name="withLock" type="string" required="false" default="" />
 
 		<cfquery name="local.results" result="local.metaResults" returnType="array">
 			SELECT
@@ -51,6 +52,15 @@
 						id ASC
 					</cfdefaultcase>
 				</cfswitch>
+
+			<cfswitch expression="#withLock#">
+				<cfcase value="readonly">
+					FOR SHARE
+				</cfcase>
+				<cfcase value="exclusive">
+					FOR UPDATE
+				</cfcase>
+			</cfswitch>
 		</cfquery>
 
 		<cfreturn decodeColumns( results ) />

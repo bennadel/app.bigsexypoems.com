@@ -2,7 +2,6 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="DEFAULT_SHARE_NAME" ioc:skip;
-	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
 	property name="shareAccess" ioc:type="core.lib.service.poem.share.ShareAccess";
@@ -170,8 +169,6 @@ component {
 	*/
 	public void function logShareViewing( required numeric id ) {
 
-		var share = shareModel.get( id );
-		var poem = poemModel.get( share.poemID );
 		var ipAddress = requestMetadata.getIpAddress();
 		// Let's trim the city/region since it doesn't much matter if they get truncated
 		// in the database. I'd rather them get truncated than have a user-provided value
@@ -181,27 +178,38 @@ component {
 		var ipCountry = requestMetadata.getIpCountry();
 		var createdAt = utcNow();
 
-		viewingModel.create(
-			poemID = poem.id,
-			shareID = share.id,
-			ipAddress = ipAddress,
-			ipCity = ipCity,
-			ipRegion = ipRegion,
-			ipCountry = ipCountry,
-			createdAt = createdAt
-		);
+		// This transaction uses an exclusive lock on the share model in order to enforce
+		// serialized access to the share-level view-count aggregate.
+		transaction {
 
-		// Recalculate the viewing aggregate.
-		var viewingCount = viewingModel.getCountByFilter(
-			poemID = poem.id,
-			shareID = share.id
-		);
+			var share = shareModel.get(
+				id = id,
+				withLock = "exclusive"
+			);
 
-		shareModel.update(
-			id = share.id,
-			viewingCount = viewingCount,
-			lastViewingAt = createdAt
-		);
+			viewingModel.create(
+				poemID = share.poemID,
+				shareID = share.id,
+				ipAddress = ipAddress,
+				ipCity = ipCity,
+				ipRegion = ipRegion,
+				ipCountry = ipCountry,
+				createdAt = createdAt
+			);
+
+			// Recalculate the viewing aggregate.
+			var viewingCount = viewingModel.getCountByFilter(
+				poemID = share.poemID,
+				shareID = share.id
+			);
+
+			shareModel.update(
+				id = share.id,
+				viewingCount = viewingCount,
+				lastViewingAt = createdAt
+			);
+
+		} // End: transaction and row-locks.
 
 	}
 

@@ -52,7 +52,10 @@ component {
 	/**
 	* I get a model.
 	*/
-	public struct function get( required string token ) {
+	public struct function get(
+		required string token,
+		string withLock
+		) {
 
 		var results = getByFilter( argumentCollection = arguments );
 
@@ -72,7 +75,8 @@ component {
 	*/
 	public array function getByFilter(
 		string token,
-		string withSort
+		string withSort,
+		string withLock
 		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );
