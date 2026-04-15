@@ -52,6 +52,7 @@
 	<cffunction name="getByFilter" returnType="array">
 
 		<cfargument name="userID" type="numeric" required="false" />
+		<cfargument name="withLock" type="string" required="false" default="" />
 
 		<cfset assertIndexPrefix( arguments ) />
 
@@ -68,6 +69,15 @@
 				AND
 					userID = <cfqueryparam value="#userID#" cfsqltype="bigint" />
 			</cfif>
+
+			<cfswitch expression="#withLock#">
+				<cfcase value="readonly">
+					FOR SHARE
+				</cfcase>
+				<cfcase value="exclusive">
+					FOR UPDATE
+				</cfcase>
+			</cfswitch>
 		</cfquery>
 
 		<cfreturn results />

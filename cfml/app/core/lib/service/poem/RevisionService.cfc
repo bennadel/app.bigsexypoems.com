@@ -56,46 +56,55 @@ component {
 
 		var context = revisionAccess.getContext( authContext, revisionID, "canMakeCurrent" );
 		var revision = context.revision;
-		var poem = context.poem;
 
-		// Before overwriting the poem, snapshot the current live state so the user can
-		// revert back to it. Skip this if the most recent revision already matches the
-		// live poem (no point creating a duplicate).
-		var maybeLastRevision = revisionModel.maybeGetMostRecentByPoemID( poem.id );
+		// This transaction uses an exclusive lock on the poem model in order to enforce
+		// serialized access to the poem-level revisions (which is why we're re-fetching
+		// the poem even though we could get it directly from the context).
+		transaction {
 
-		var isLastRevisionStale = (
-			! maybeLastRevision.exists ||
-			! isRevisionStale( maybeLastRevision.value, poem )
-		);
-
-		if ( isLastRevisionStale ) {
-
-			revisionModel.create(
-				poemID = poem.id,
-				name = poem.name,
-				content = poem.content,
-				createdAt = poem.updatedAt
+			var poem = poemModel.get(
+				id = context.poem.id,
+				withLock = "exclusive"
 			);
 
-		}
+			// Before overwriting the poem, snapshot the current live state so the user
+			// can revert back to it. Skip this if the most recent revision already
+			// matches the live poem (no point creating a duplicate).
+			var maybeLastRevision = revisionModel.maybeGetMostRecentByPoemID( poem.id );
 
-		// Update the poem with the revision's content.
-		poemModel.update(
-			id = poem.id,
-			name = revision.name,
-			content = revision.content,
-			updatedAt = utcNow()
-		);
+			if (
+				! maybeLastRevision.exists ||
+				isRevisionStale( maybeLastRevision.value, poem )
+				) {
 
-		// Create a new revision to snapshot the restored state.
-		var restoredPoem = poemModel.get( poem.id );
+				revisionModel.create(
+					poemID = poem.id,
+					name = poem.name,
+					content = poem.content,
+					createdAt = poem.updatedAt
+				);
 
-		revisionModel.create(
-			poemID = restoredPoem.id,
-			name = restoredPoem.name,
-			content = restoredPoem.content,
-			createdAt = restoredPoem.updatedAt
-		);
+			}
+
+			// Update the poem with the revision's content.
+			poemModel.update(
+				id = poem.id,
+				name = revision.name,
+				content = revision.content,
+				updatedAt = utcNow()
+			);
+
+			// Create a new revision to snapshot the restored state.
+			var restoredPoem = poemModel.get( poem.id );
+
+			revisionModel.create(
+				poemID = restoredPoem.id,
+				name = restoredPoem.name,
+				content = restoredPoem.content,
+				createdAt = restoredPoem.updatedAt
+			);
+
+		} // End: transaction and row-locks.
 
 	}
 

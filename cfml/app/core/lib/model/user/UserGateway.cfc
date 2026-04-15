@@ -67,6 +67,7 @@
 		<cfargument name="id" type="numeric" required="false" />
 		<cfargument name="email" type="string" required="false" />
 		<cfargument name="withSort" type="string" required="false" default="id" />
+		<cfargument name="withLock" type="string" required="false" default="" />
 
 		<cfset assertIndexPrefix( arguments ) />
 
@@ -97,6 +98,15 @@
 						id ASC
 					</cfdefaultcase>
 				</cfswitch>
+
+			<cfswitch expression="#withLock#">
+				<cfcase value="readonly">
+					FOR SHARE
+				</cfcase>
+				<cfcase value="exclusive">
+					FOR UPDATE
+				</cfcase>
+			</cfswitch>
 		</cfquery>
 
 		<cfreturn results />

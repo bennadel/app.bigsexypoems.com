@@ -50,7 +50,10 @@ component {
 	/**
 	* I get a model.
 	*/
-	public struct function get( required numeric userID ) {
+	public struct function get(
+		required numeric userID,
+		string withLock
+		) {
 
 		var results = getByFilter( argumentCollection = arguments );
 
@@ -68,7 +71,10 @@ component {
 	/**
 	* I get the model that match the given filters.
 	*/
-	public array function getByFilter( numeric userID ) {
+	public array function getByFilter(
+		numeric userID,
+		string withLock
+		) {
 
 		return gateway.getByFilter( argumentCollection = arguments );
 
@@ -88,9 +94,7 @@ component {
 	/**
 	* I maybe get the first model that match the given filters.
 	*/
-	public struct function maybeGetByFilter(
-		numeric userID
-		) {
+	public struct function maybeGetByFilter( numeric userID ) {
 
 		return maybeArrayFirst( getByFilter( argumentCollection = arguments ) );
 
