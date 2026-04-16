@@ -2,6 +2,7 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="DEFAULT_SHARE_NAME" ioc:skip;
+	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
 	property name="requestMetadata" ioc:type="core.lib.web.RequestMetadata";
 	property name="secureRandom" ioc:type="core.lib.util.SecureRandom";
 	property name="shareAccess" ioc:type="core.lib.service.poem.share.ShareAccess";
@@ -10,6 +11,7 @@ component {
 	property name="shareNoteParser" ioc:type="core.lib.model.poem.share.ShareNoteParser";
 	property name="shareNoteSanitizer" ioc:type="core.lib.model.poem.share.ShareNoteSanitizer";
 	property name="shareValidation" ioc:type="core.lib.model.poem.share.ShareValidation";
+	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 	property name="viewingModel" ioc:type="core.lib.model.poem.share.ViewingModel";
 
 	// ColdFusion language extensions (global functions).
@@ -94,7 +96,33 @@ component {
 		var poem = context.poem;
 		var share = context.share;
 
-		shareCascade.delete( user, poem, share );
+		// Cascading deletion is initiated by the service layer but is treated as a black
+		// box. Which means that we always execute it inside a transaction and we always
+		// obtain exclusive locks on the rows that we're passing out-of-scope. The
+		// transaction allows for atomic operations (which are very much needed in some
+		// places and completely overkill in other places); and the transaction-based
+		// locking allows for serialized access to rows that other workflows may be
+		// locking concurrently. All locking must be performed from the "parent down" in
+		// order to avoid deadlocks.
+		transaction {
+
+			// Re-fetch data with locks.
+			var userWithLock = userModel.get(
+				id = user.id,
+				withLock = "exclusive"
+			);
+			var poemWithLock = poemModel.get(
+				id = poem.id,
+				withLock = "exclusive"
+			);
+			var shareWithLock = shareModel.get(
+				id = share.id,
+				withLock = "exclusive"
+			);
+
+			shareCascade.delete( userWithLock, poemWithLock, shareWithLock );
+
+		}
 
 	}
 
@@ -110,11 +138,36 @@ component {
 		var context = shareAccess.getContextForParent( authContext, poemID, "canDelete" );
 		var user = context.user;
 		var poem = context.poem;
-		var shares = shareModel.getByFilter( poemID = poem.id );
 
-		for ( var share in shares ) {
+		// Cascading deletion is initiated by the service layer but is treated as a black
+		// box. Which means that we always execute it inside a transaction and we always
+		// obtain exclusive locks on the rows that we're passing out-of-scope. The
+		// transaction allows for atomic operations (which are very much needed in some
+		// places and completely overkill in other places); and the transaction-based
+		// locking allows for serialized access to rows that other workflows may be
+		// locking concurrently. All locking must be performed from the "parent down" in
+		// order to avoid deadlocks.
+		transaction {
 
-			shareCascade.delete( user, poem, share );
+			// Re-fetch data with locks.
+			var userWithLock = userModel.get(
+				id = user.id,
+				withLock = "exclusive"
+			);
+			var poemWithLock = poemModel.get(
+				id = poem.id,
+				withLock = "exclusive"
+			);
+			var sharesWithLock = shareModel.getByFilter(
+				poemID = poem.id,
+				withLock = "exclusive"
+			);
+
+			for ( var shareWithLock in sharesWithLock ) {
+
+				shareCascade.delete( userWithLock, poemWithLock, shareWithLock );
+
+			}
 
 		}
 

@@ -15,14 +15,18 @@ component {
 	// ---
 
 	/**
-	* I delete the given poem and any data contained under it.
+	* I delete the given poem and any data that's logically contained under it.
+	* 
+	* Caution: this method must be called within a transaction block. All withLock usage
+	* contained herein will be scoped to said transaction block and will create mutual
+	* exclusion with other row-locking workflows. All passed-in entities must be locked.
 	*/
 	public void function delete(
 		required struct user,
 		required struct poem
 		) {
 
-		deleteRevisions( poem );
+		deleteRevisions( user, poem );
 		deleteShares( user, poem );
 
 		poemModel.deleteByFilter( id = poem.id );
@@ -36,13 +40,19 @@ component {
 	/**
 	* I delete the revisions associated with the given poem.
 	*/
-	private void function deleteRevisions( required struct poem ) {
+	private void function deleteRevisions(
+		required struct user,
+		required struct poem
+		) {
 
-		var revisions = revisionModel.getByFilter( poemID = poem.id );
+		var revisions = revisionModel.getByFilter(
+			poemID = poem.id,
+			withLock = "exclusive"
+		);
 
 		for ( var revision in revisions ) {
 
-			revisionCascade.deleteRevision( revision );
+			revisionCascade.delete( user, poem, revision );
 
 		}
 
@@ -57,7 +67,10 @@ component {
 		required struct poem
 		) {
 
-		var shares = shareModel.getByFilter( poemID = poem.id );
+		var shares = shareModel.getByFilter(
+			poemID = poem.id,
+			withLock = "exclusive"
+		);
 
 		for ( var share in shares ) {
 

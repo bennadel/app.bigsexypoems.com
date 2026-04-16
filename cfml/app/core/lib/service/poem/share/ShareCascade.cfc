@@ -13,7 +13,11 @@ component {
 	// ---
 
 	/**
-	* I delete the given share and any data contained under it.
+	* I delete the given share and any data that's logically contained under it.
+	* 
+	* Caution: this method must be called within a transaction block. All withLock usage
+	* contained herein will be scoped to said transaction block and will create mutual
+	* exclusion with other row-locking workflows. All passed-in entities must be locked.
 	*/
 	public void function delete(
 		required struct user,
@@ -42,12 +46,13 @@ component {
 
 		var viewings = viewingModel.getByFilter(
 			poemID = poem.id,
-			shareID = share.id
+			shareID = share.id,
+			withLock = "exclusive"
 		);
 
 		for ( var viewing in viewings ) {
 
-			viewingCascade.deleteViewing( user, poem, share, viewing );
+			viewingCascade.delete( user, poem, share, viewing );
 
 		}
 

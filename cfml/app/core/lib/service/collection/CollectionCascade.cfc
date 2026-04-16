@@ -12,7 +12,11 @@ component {
 	// ---
 
 	/**
-	* I cascade delete the given collection.
+	* I delete the given collection and any data that's logically contained under it.
+	* 
+	* Caution: this method must be called within a transaction block. All withLock usage
+	* contained herein will be scoped to said transaction block and will create mutual
+	* exclusion with other row-locking workflows. All passed-in entities must be locked.
 	*/
 	public void function delete(
 		required struct user,
@@ -39,7 +43,8 @@ component {
 
 		var poems = poemModel.getByFilter(
 			userID = user.id,
-			collectionID = collection.id
+			collectionID = collection.id,
+			withLock = "exclusive"
 		);
 
 		for ( var poem in poems ) {

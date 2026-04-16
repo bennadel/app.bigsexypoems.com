@@ -113,11 +113,32 @@ component hint = "I provide methods for accessing the session associated with th
 
 		var context = sessionAccess.getContextForParent( authContext, userID, "canDeleteAny" );
 		var user = context.user;
-		var sessions = sessionModel.getByFilter( userID = user.id );
 
-		for ( var userSession in sessions ) {
+		// Cascading deletion is initiated by the service layer but is treated as a black
+		// box. Which means that we always execute it inside a transaction and we always
+		// obtain exclusive locks on the rows that we're passing out-of-scope. The
+		// transaction allows for atomic operations (which are very much needed in some
+		// places and completely overkill in other places); and the transaction-based
+		// locking allows for serialized access to rows that other workflows may be
+		// locking concurrently. All locking must be performed from the "parent down" in
+		// order to avoid deadlocks.
+		transaction {
 
-			sessionCascade.delete( user, userSession );
+			// Re-fetch data with locks.
+			var userWithLock = userModel.get(
+				id = user.id,
+				withLock = "exclusive"
+			);
+			var sessionsWithLock = sessionModel.getByFilter(
+				userID = user.id,
+				withLock = "exclusive"
+			);
+
+			for ( var sessionWithLock in sessionsWithLock ) {
+
+				sessionCascade.delete( userWithLock, sessionWithLock );
+
+			}
 
 		}
 
@@ -142,7 +163,29 @@ component hint = "I provide methods for accessing the session associated with th
 		var user = context.user;
 		var userSession = context.userSession;
 
-		sessionCascade.delete( user, userSession );
+		// Cascading deletion is initiated by the service layer but is treated as a black
+		// box. Which means that we always execute it inside a transaction and we always
+		// obtain exclusive locks on the rows that we're passing out-of-scope. The
+		// transaction allows for atomic operations (which are very much needed in some
+		// places and completely overkill in other places); and the transaction-based
+		// locking allows for serialized access to rows that other workflows may be
+		// locking concurrently. All locking must be performed from the "parent down" in
+		// order to avoid deadlocks.
+		transaction {
+
+			// Re-fetch data with locks.
+			var userWithLock = userModel.get(
+				id = user.id,
+				withLock = "exclusive"
+			);
+			var sessionWithLock = sessionModel.get(
+				id = userSession.id,
+				withLock = "exclusive"
+			);
+
+			sessionCascade.delete( userWithLock, sessionWithLock );
+
+		}
 
 		if ( ! requestMetadata.isTestRun() ) {
 
@@ -230,13 +273,35 @@ component hint = "I provide methods for accessing the session associated with th
 		// Caution: deleting a session from the database represents a potential attack
 		// vector. As such, we only want to delete the database records if the token is
 		// a match. This way, if a malicious actor attempts to make requests with a valid
-		// session ID but an invalid session TOKEN, we won't let the request affect
-		// another user.
-		if ( maybeSession.value.token == payload.sessionToken ) {
+		// session ID but an invalid session TOKEN, we won't let the request affect the
+		// targeted user.
+		if ( maybeSession.value.token != payload.sessionToken ) {
 
-			var user = userModel.get( maybeSession.value.userID );
+			return;
 
-			sessionCascade.delete( user, maybeSession.value );
+		}
+
+		// Cascading deletion is initiated by the service layer but is treated as a black
+		// box. Which means that we always execute it inside a transaction and we always
+		// obtain exclusive locks on the rows that we're passing out-of-scope. The
+		// transaction allows for atomic operations (which are very much needed in some
+		// places and completely overkill in other places); and the transaction-based
+		// locking allows for serialized access to rows that other workflows may be
+		// locking concurrently. All locking must be performed from the "parent down" in
+		// order to avoid deadlocks.
+		transaction {
+
+			// Re-fetch data with locks.
+			var userWithLock = userModel.get(
+				id = maybeSession.value.userID,
+				withLock = "exclusive"
+			);
+			var sessionWithLock = sessionModel.get(
+				id = maybeSession.value.id,
+				withLock = "exclusive"
+			);
+
+			sessionCascade.delete( userWithLock, sessionWithLock );
 
 		}
 

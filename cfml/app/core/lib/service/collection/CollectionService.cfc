@@ -7,6 +7,7 @@ component {
 	property name="collectionDescriptionSanitizer" ioc:type="core.lib.model.collection.CollectionDescriptionSanitizer";
 	property name="collectionModel" ioc:type="core.lib.model.collection.CollectionModel";
 	property name="collectionValidation" ioc:type="core.lib.model.collection.CollectionValidation";
+	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 
 	// ColdFusion language extensions (global functions).
 	include "/core/cfmlx.cfm";
@@ -55,7 +56,29 @@ component {
 		var user = context.user;
 		var collection = context.collection;
 
-		collectionCascade.delete( user, collection );
+		// Cascading deletion is initiated by the service layer but is treated as a black
+		// box. Which means that we always execute it inside a transaction and we always
+		// obtain exclusive locks on the rows that we're passing out-of-scope. The
+		// transaction allows for atomic operations (which are very much needed in some
+		// places and completely overkill in other places); and the transaction-based
+		// locking allows for serialized access to rows that other workflows may be
+		// locking concurrently. All locking must be performed from the "parent down" in
+		// order to avoid deadlocks.
+		transaction {
+
+			// Re-fetch data with locks.
+			var userWithLock = userModel.get(
+				id = user.id,
+				withLock = "exclusive"
+			);
+			var collectionWithLock = collectionModel.get(
+				id = collection.id,
+				withLock = "exclusive"
+			);
+
+			collectionCascade.delete( userWithLock, collectionWithLock );
+
+		}
 
 	}
 

@@ -19,7 +19,11 @@ component {
 	// ---
 
 	/**
-	* I delete the given user and any data contained under it.
+	* I delete the given user and any data that's logically contained under it.
+	* 
+	* Caution: this method must be called within a transaction block. All withLock usage
+	* contained herein will be scoped to said transaction block and will create mutual
+	* exclusion with other row-locking workflows. All passed-in entities must be locked.
 	*/
 	public void function delete( required struct user ) {
 
@@ -27,11 +31,9 @@ component {
 		deleteCollections( user );
 		deleteSessions( user );
 
-		transaction {
-			timezoneModel.deleteByFilter( userID = user.id );
-			accountModel.deleteByFilter( userID = user.id );
-			userModel.deleteByFilter( id = user.id );
-		}
+		timezoneModel.deleteByFilter( userID = user.id );
+		accountModel.deleteByFilter( userID = user.id );
+		userModel.deleteByFilter( id = user.id );
 
 	}
 
@@ -44,7 +46,10 @@ component {
 	*/
 	private void function deleteCollections( required struct user ) {
 
-		var collections = collectionModel.getByFilter( userID = user.id );
+		var collections = collectionModel.getByFilter(
+			userID = user.id,
+			withLock = "exclusive"
+		);
 
 		for ( var collection in collections ) {
 
@@ -60,7 +65,10 @@ component {
 	*/
 	private void function deletePoems( required struct user ) {
 
-		var poems = poemModel.getByFilter( userID = user.id );
+		var poems = poemModel.getByFilter(
+			userID = user.id,
+			withLock = "exclusive"
+		);
 
 		for ( var poem in poems ) {
 
@@ -76,7 +84,10 @@ component {
 	*/
 	private void function deleteSessions( required struct user ) {
 
-		var sessions = sessionModel.getByFilter( userID = user.id );
+		var sessions = sessionModel.getByFilter(
+			userID = user.id,
+			withLock = "exclusive"
+		);
 
 		for ( var entry in sessions ) {
 

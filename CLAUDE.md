@@ -385,14 +385,26 @@ Examples:
 // Parent cascade iterates:
 var revisions = revisionModel.getByFilter( poemID = poem.id );
 for ( var revision in revisions ) {
-	revisionCascade.deleteRevision( revision );
+	revisionCascade.delete( user, poem, revision );
 }
 
 // Child cascade deletes one:
-public void function deleteRevision( required struct revision ) {
+public void function delete( required struct revision ) {
 	revisionModel.deleteByFilter( id = revision.id );
 }
 ```
+
+**Transactions live in the service layer**: All `transaction {}` blocks belong in service components — never in models, gateways, or cascade components. This makes transaction boundaries predictable and discoverable. Cascade components and other helpers (e.g., `UserProvisioner`) are shared logic that runs inside a service-initiated transaction, not transaction owners themselves.
+
+**Row-level locking with `withLock`**: Gateways accept a `withLock` argument (`"exclusive"` → `FOR UPDATE`, `"readonly"` → `FOR SHARE`) on `getByFilter`. Models expose it on `get` and `getByFilter`. The default is no lock. Locks are only meaningful inside a `transaction {}` block.
+
+**Lock when the new value depends on current state**: Use `transaction` + `withLock = "exclusive"` when a write depends on a prior read — aggregate recalculations, conditional create-or-update logic, multi-step workflows where reads inform writes. Don't lock simple replacement writes (last-write-wins), cascade deletes, or single inserts.
+
+**Lock the aggregate root, not the dependent rows**: When serializing work on child entities (e.g., revisions under a poem), lock the parent row that always exists rather than the child rows that may not. The parent row acts as a mutex — every code path that touches those children must acquire the same lock.
+
+**Cascade components lock child rows before descending**: When a cascade iterates over child entities and calls a nested cascade, it reads the children with `withLock = "exclusive"` to prevent contention with other workflows that lock those same rows (e.g., `logShareViewing` locking a share row). The outermost transaction is owned by the service layer; the cascade just acquires child locks within it.
+
+**`maybe*` methods don't accept `withLock`**: `FOR UPDATE` on an empty result set locks nothing. If a `maybe` read is subordinate to a locked aggregate root, it's already serialized. If it's a top-level upsert, use unique constraints instead of row locking.
 
 **Use the `maybe` pattern for optional lookups**: When a query might return zero results, use `maybeGet*` methods that return `{ exists, value }` via `maybeArrayFirst()`. Never return empty structs `{}` as a "not found" sentinel.
 
