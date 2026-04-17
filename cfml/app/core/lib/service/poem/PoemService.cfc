@@ -2,6 +2,7 @@ component {
 
 	// Define properties for dependency-injection.
 	property name="collectionAccess" ioc:type="core.lib.service.collection.CollectionAccess";
+	property name="collectionModel" ioc:type="core.lib.model.collection.CollectionModel";
 	property name="logger" ioc:type="core.lib.util.Logger";
 	property name="poemAccess" ioc:type="core.lib.service.poem.PoemAccess";
 	property name="poemCascade" ioc:type="core.lib.service.poem.PoemCascade";
@@ -34,15 +35,43 @@ component {
 
 		testCollectionID( authContext, userID, collectionID );
 
-		var poemID = poemModel.create(
-			userID = user.id,
-			collectionID = collectionID,
-			name = name,
-			content = content,
-			createdAt = utcNow()
-		);
+		transaction {
 
-		saveRevision( poemID );
+			var userWithLock = userModel.get(
+				id = user.id,
+				withLock = "readonly"
+			);
+
+			if ( collectionID ) {
+
+				var collectionWithLock = collectionModel.get(
+					id = collectionID,
+					withLock = "readonly"
+				);
+
+			}
+
+			var poemID = poemModel.create(
+				userID = userWithLock.id,
+				collectionID = collectionID,
+				name = name,
+				content = content,
+				createdAt = utcNow()
+			);
+
+			// Snapshot the persisted poem as the initial revision. Since we created this
+			// poem inside a transaction, we don't have to lock the repeatable read - no
+			// other request can see this poem until it's been committed.
+			var poem = poemModel.get( poemID );
+
+			revisionModel.create(
+				poemID = poem.id,
+				name = poem.name,
+				content = poem.content,
+				createdAt = poem.updatedAt
+			);
+
+		} // End: transaction.
 
 		return poemID;
 
@@ -81,17 +110,8 @@ component {
 
 		}
 
-		// Cascading deletion is initiated by the service layer but is treated as a black
-		// box. Which means that we always execute it inside a transaction and we always
-		// obtain exclusive locks on the rows that we're passing out-of-scope. The
-		// transaction allows for atomic operations (which are very much needed in some
-		// places and completely overkill in other places); and the transaction-based
-		// locking allows for serialized access to rows that other workflows may be
-		// locking concurrently. All locking must be performed from the "parent down" in
-		// order to avoid deadlocks.
 		transaction {
 
-			// Re-fetch data with locks.
 			var userWithLock = userModel.get(
 				id = user.id,
 				withLock = "exclusive"
@@ -138,44 +158,54 @@ component {
 		var context = poemAccess.getContext( authContext, id, "canUpdate" );
 		var poem = context.poem;
 
-		testCollectionID( authContext, poem.userID, arguments?.collectionID );
+		if ( ! isNull( collectionID ) ) {
 
-		poemModel.update(
-			id = poem.id,
-			collectionID = arguments?.collectionID,
-			name = arguments?.name,
-			content = arguments?.content,
-			updatedAt = utcNow()
-		);
+			testCollectionID( authContext, poem.userID, collectionID );
 
-		saveRevision( poem.id );
+		}
 
-	}
-
-	// ---
-	// PRIVATE METHODS.
-	// ---
-
-	/**
-	* I save a revision for the given poem. If the most recent revision was updated within
-	* the windowing period, I update it in place. Otherwise, I create a new revision. The
-	* revision is snapshotted from the persisted poem state.
-	*/
-	private void function saveRevision( required numeric poemID ) {
-
-		var windowInSeconds = 120;
-
-		// This transaction uses an exclusive lock on the poem model in order to enforce
-		// serialized access to the poem-level revisions.
 		transaction {
 
-			var poem = poemModel.get(
-				id = poemID,
+			if ( ! isNull( collectionID ) ) {
+
+				var collectionWithLock = collectionModel.get(
+					id = collectionID,
+					withLock = "readonly"
+				);
+
+			}
+
+			var poemWithLock = poemModel.get(
+				id = poem.id,
 				withLock = "exclusive"
 			);
 
-			var cutoffAt = poem.updatedAt.add( "s", -windowInSeconds );
-			var maybeLastRevision = revisionModel.maybeGetMostRecentByPoemID( poemID );
+			poemModel.update(
+				id = poemWithLock.id,
+				collectionID = arguments?.collectionID,
+				name = arguments?.name,
+				content = arguments?.content,
+				updatedAt = utcNow()
+			);
+
+			// We only need to worry about a revision if the poem content has changed.
+			if (
+				( isNull( name ) || ! compare( name, poemWithLock.name ) ) &&
+				( isNull( content ) || ! compare( content, poemWithLock.content ) )
+				) {
+
+				return;
+
+			}
+
+			// We have to re-read the persisted poem for the revision snapshot; but the
+			// row-lock already exists, so we don't need to lock the row - we just need to
+			// make sure that we're reading the updated row cache so that our poem changes
+			// make it into the revision.
+			var updatedPoem = poemModel.get( poemWithLock.id );
+			var windowInSeconds = 120;
+			var cutoffAt = updatedPoem.updatedAt.add( "s", -windowInSeconds );
+			var maybeLastRevision = revisionModel.maybeGetMostRecentByPoemID( updatedPoem.id );
 
 			// If there's no previous revision, or the window has closed, create a new one.
 			if (
@@ -184,10 +214,10 @@ component {
 				) {
 
 				revisionModel.create(
-					poemID = poemID,
-					name = poem.name,
-					content = poem.content,
-					createdAt = poem.updatedAt
+					poemID = updatedPoem.id,
+					name = updatedPoem.name,
+					content = updatedPoem.content,
+					createdAt = updatedPoem.updatedAt
 				);
 
 			// Otherwise, update the existing revision within the window.
@@ -195,26 +225,29 @@ component {
 
 				revisionModel.update(
 					id = maybeLastRevision.value.id,
-					name = poem.name,
-					content = poem.content,
-					updatedAt = poem.updatedAt
+					name = updatedPoem.name,
+					content = updatedPoem.content,
+					updatedAt = updatedPoem.updatedAt
 				);
 
 			}
 
-		} // End: transaction and row-locks.
+		} // End: transaction.
 
 	}
 
+	// ---
+	// PRIVATE METHODS.
+	// ---
 
 	/**
 	* I test that the collection with the given ID exists and that it can be associated
-	* with the a poem owned by the given user.
+	* with the poem owned by the given user.
 	*/
 	private void function testCollectionID(
 		required struct authContext,
 		required numeric userID,
-		numeric collectionID = 0
+		required numeric collectionID
 		) {
 
 		if ( ! collectionID ) {
