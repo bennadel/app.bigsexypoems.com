@@ -104,7 +104,7 @@ component extends="spec.BaseTest" {
 
 
 	/**
-	* I test that deleting a share removes it.
+	* I test that deleting a share cascades to viewings.
 	*/
 	public void function testDelete() {
 
@@ -118,6 +118,8 @@ component extends="spec.BaseTest" {
 			isSnapshot = false
 		);
 
+		shareService.logShareViewing( shareID );
+
 		shareService.delete(
 			authContext = variables.authContext,
 			id = shareID
@@ -126,17 +128,20 @@ component extends="spec.BaseTest" {
 		var result = shareModel.maybeGet( shareID );
 		assertTrue( ! result.exists, "Expected share to be deleted." );
 
+		var viewings = viewingModel.getByFilter( poemID = poemID, shareID = shareID );
+		assertEqual( viewings.len(), 0, "Expected viewings to be cascade-deleted." );
+
 	}
 
 
 	/**
-	* I test that deleteForPoem removes all shares for a given poem.
+	* I test that deleteForPoem removes all shares and their viewings for a given poem.
 	*/
 	public void function testDeleteForPoem() {
 
 		var poemID = createPoem( "Delete All Shares Poem" );
 
-		shareService.create(
+		var shareID1 = shareService.create(
 			authContext = variables.authContext,
 			poemID = poemID,
 			name = "Share 1",
@@ -152,6 +157,8 @@ component extends="spec.BaseTest" {
 			isSnapshot = false
 		);
 
+		shareService.logShareViewing( shareID1 );
+
 		shareService.deleteForPoem(
 			authContext = variables.authContext,
 			poemID = poemID
@@ -159,6 +166,9 @@ component extends="spec.BaseTest" {
 
 		var remaining = shareModel.getByFilter( poemID = poemID );
 		assertEqual( remaining.len(), 0, "Expected all shares to be deleted." );
+
+		var viewings = viewingModel.getByFilter( poemID = poemID, shareID = shareID1 );
+		assertEqual( viewings.len(), 0, "Expected viewings to be cascade-deleted." );
 
 	}
 

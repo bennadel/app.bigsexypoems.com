@@ -1,6 +1,10 @@
 component extends="spec.BaseTest" {
 
 	// Define properties for dependency-injection.
+	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
+	property name="poemService" ioc:type="core.lib.service.poem.PoemService";
+	property name="sessionModel" ioc:type="core.lib.model.session.SessionModel";
+	property name="sessionService" ioc:type="core.lib.service.session.SessionService";
 	property name="userModel" ioc:type="core.lib.model.user.UserModel";
 	property name="userService" ioc:type="core.lib.service.user.UserService";
 
@@ -28,13 +32,26 @@ component extends="spec.BaseTest" {
 
 
 	/**
-	* I test that deleting a user removes the user record.
+	* I test that deleting a user cascades to poems and sessions.
 	*/
 	public void function testDelete() {
 
 		// Provision a dedicated auth context for deletion so we don't destroy the
 		// shared test user that the rest of the suite depends on.
 		var deleteAuthContext = provisionAuthContext();
+
+		// Create child entities to verify cascade.
+		var poemID = poemService.create(
+			authContext = deleteAuthContext,
+			userID = deleteAuthContext.user.id,
+			collectionID = 0,
+			name = "Doomed Poem #createUUID()#",
+			content = "Content."
+		);
+		var sessionID = sessionService.create(
+			userID = deleteAuthContext.user.id,
+			isAuthenticated = true
+		);
 
 		userService.delete(
 			authContext = deleteAuthContext,
@@ -49,6 +66,12 @@ component extends="spec.BaseTest" {
 			},
 			"App.Model.User.NotFound"
 		);
+
+		var poems = poemModel.getByFilter( userID = deleteAuthContext.user.id );
+		assertEqual( poems.len(), 0, "Expected poems to be cascade-deleted." );
+
+		var sessions = sessionModel.getByFilter( userID = deleteAuthContext.user.id );
+		assertEqual( sessions.len(), 0, "Expected sessions to be cascade-deleted." );
 
 	}
 

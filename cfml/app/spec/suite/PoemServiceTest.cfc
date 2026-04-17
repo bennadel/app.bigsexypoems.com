@@ -5,6 +5,9 @@ component extends="spec.BaseTest" {
 	property name="poemModel" ioc:type="core.lib.model.poem.PoemModel";
 	property name="poemService" ioc:type="core.lib.service.poem.PoemService";
 	property name="revisionModel" ioc:type="core.lib.model.poem.RevisionModel";
+	property name="shareModel" ioc:type="core.lib.model.poem.share.ShareModel";
+	property name="shareService" ioc:type="core.lib.service.poem.share.ShareService";
+	property name="viewingModel" ioc:type="core.lib.model.poem.share.ViewingModel";
 
 	// ---
 	// HAPPY PATH TESTS.
@@ -65,7 +68,7 @@ component extends="spec.BaseTest" {
 
 
 	/**
-	* I test that deleting a poem makes it unfindable.
+	* I test that deleting a poem cascades to revisions, shares, and viewings.
 	*/
 	public void function testDelete() {
 
@@ -77,13 +80,32 @@ component extends="spec.BaseTest" {
 			content = "Content."
 		);
 
+		// Create child entities to verify cascade.
+		var shareID = shareService.create(
+			authContext = variables.authContext,
+			poemID = poemID,
+			name = "Share",
+			noteMarkdown = "",
+			isSnapshot = false
+		);
+		shareService.logShareViewing( shareID );
+
 		poemService.delete(
 			authContext = variables.authContext,
 			id = poemID
 		);
 
 		var result = poemModel.maybeGet( poemID );
-		assertTrue( ! result.exists, "Expected poem to be deleted but it still exists." );
+		assertTrue( ! result.exists, "Expected poem to be deleted." );
+
+		var revisions = revisionModel.getByFilter( poemID = poemID );
+		assertEqual( revisions.len(), 0, "Expected revisions to be cascade-deleted." );
+
+		var shares = shareModel.getByFilter( poemID = poemID );
+		assertEqual( shares.len(), 0, "Expected shares to be cascade-deleted." );
+
+		var viewings = viewingModel.getByFilter( poemID = poemID, shareID = shareID );
+		assertEqual( viewings.len(), 0, "Expected viewings to be cascade-deleted." );
 
 	}
 
