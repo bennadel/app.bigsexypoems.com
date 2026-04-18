@@ -398,11 +398,19 @@ public void function delete( required struct revision ) {
 
 **Row-level locking with `withLock`**: Gateways accept a `withLock` argument (`"exclusive"` → `FOR UPDATE`, `"readonly"` → `FOR SHARE`) on `getByFilter`. Models expose it on `get` and `getByFilter`. The default is no lock. Locks are only meaningful inside a `transaction {}` block.
 
-**Lock when the new value depends on current state**: Use `transaction` + `withLock = "exclusive"` when a write depends on a prior read — aggregate recalculations, conditional create-or-update logic, multi-step workflows where reads inform writes. Don't lock simple replacement writes (last-write-wins), cascade deletes, or single inserts.
+**Two reasons to lock, two lock types**: (1) FK integrity — lock a referenced parent row `withLock = "readonly"` so it can't be deleted mid-operation; multiple writes proceed in parallel. (2) Serialize a read-modify-write cycle — lock the aggregate root `withLock = "exclusive"`. The same row can serve both purposes when the write is also state-dependent on the parent.
+
+**Lock FKs readonly on create/update**: When inserting or updating a row with foreign-key references, acquire a readonly lock on each referenced parent that could be concurrently deleted. Skip this when the write path already holds an exclusive lock on a row that the cascade delete also acquires (e.g., `PoemService.update`'s exclusive poem lock already participates in the user cascade delete's lock chain — no user lock needed there).
+
+**Lock aggregate roots exclusive for state-dependent writes**: Use `transaction` + `withLock = "exclusive"` when a write depends on a prior read — aggregate recalculations, conditional create-or-update logic, multi-step workflows where reads inform writes. Don't lock simple replacement writes (last-write-wins) or cascade delete children that are just being removed.
 
 **Lock the aggregate root, not the dependent rows**: When serializing work on child entities (e.g., revisions under a poem), lock the parent row that always exists rather than the child rows that may not. The parent row acts as a mutex — every code path that touches those children must acquire the same lock.
 
 **Cascade components lock child rows before descending**: When a cascade iterates over child entities and calls a nested cascade, it reads the children with `withLock = "exclusive"` to prevent contention with other workflows that lock those same rows (e.g., `logShareViewing` locking a share row). The outermost transaction is owned by the service layer; the cascade just acquires child locks within it.
+
+**Cascade component preconditions**: Every public cascade method starts with a "Caution: must be called inside a transaction with locked entities" docblock. This is a load-bearing invariant, not a pattern-reminder — the file can't see its caller, and a silent contract violation is possible without the comment.
+
+**`WithLock` variable naming convention**: Variables holding rows fetched with `withLock` are named with a `WithLock` suffix (`userWithLock`, `poemWithLock`). This acts as a lightweight type hint at call sites — `cascade.delete( userWithLock, poemWithLock )` visually signals the caller has honored the locking contract. Use plain names (`user`, `poem`) only for unlocked rows.
 
 **`maybe*` methods don't accept `withLock`**: `FOR UPDATE` on an empty result set locks nothing. If a `maybe` read is subordinate to a locked aggregate root, it's already serialized. If it's a top-level upsert, use unique constraints instead of row locking.
 

@@ -109,6 +109,18 @@ For example, the event `member.poem.view&poemID=123` traces through:
 
 Subsystem routers apply request guards before dispatching. For example, `member.cfm` calls `requestHelper.ensureXsrfToken()` (XSRF validation) and `requestHelper.ensureAuthenticatedContext()` (redirects to `auth.login` if unauthenticated). The `auth.cfm` router ensures the XSRF token but does not require authentication, since its routes handle login and logout.
 
+### Concurrency & Row Locking
+
+The application uses MySQL row-level locking to serialize conflicting operations. Three distinct patterns cover the cases:
+
+1. **FK readonly locks on writes:** When inserting or updating a row with foreign-key references, each referenced parent is locked `FOR SHARE` so it can't be deleted mid-operation. Multiple writes proceed in parallel; cascade deletes serialize against them.
+
+2. **Aggregate-root exclusive locks:** When a write depends on prior state (ex, revision windowing, viewing-count aggregates), the aggregate root is locked `FOR UPDATE` to serialize the read-modify-write cycle.
+
+3. **Parent-down exclusive locks on cascade delete:** Cascade deletes acquire exclusive locks from the root down through each child entity before descending, serializing destructive operations against the other two patterns.
+
+Transactions are owned exclusively by the service layer; cascade and helper components run inside service-initiated transactions. All lock acquisition goes parent &rarr; child to prevent deadlocks. Variables holding locked rows use a `WithLock` suffix (e.g., `userWithLock`) as a visual contract marker at call sites.
+
 ### Testing
 
 The test framework is a custom runner (`spec.TestRunner`) with no external dependencies. Tests are integration tests that run against the live development database.
