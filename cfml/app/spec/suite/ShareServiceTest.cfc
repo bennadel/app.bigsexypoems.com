@@ -266,7 +266,8 @@ component extends="spec.BaseTest" {
 
 
 	/**
-	* I test that logShareViewing creates a viewing record and updates the share metrics.
+	* I test that logShareViewing creates a viewing record per call and keeps the share's
+	* viewingCount aggregate in sync with the actual number of viewings.
 	*/
 	public void function testLogShareViewing() {
 
@@ -281,13 +282,15 @@ component extends="spec.BaseTest" {
 		);
 
 		shareService.logShareViewing( shareID );
+		shareService.logShareViewing( shareID );
+		shareService.logShareViewing( shareID );
 
 		var share = shareModel.get( shareID );
-		assertEqual( share.viewingCount, 1 );
+		assertEqual( share.viewingCount, 3, "Expected viewingCount to match the number of logged viewings." );
 		assertTrue( isDate( share.lastViewingAt ), "Expected lastViewingAt to be set." );
 
 		var viewings = viewingModel.getByFilter( poemID = poemID, shareID = shareID );
-		assertEqual( viewings.len(), 1, "Expected one viewing record." );
+		assertEqual( viewings.len(), 3, "Expected three viewing records." );
 
 	}
 

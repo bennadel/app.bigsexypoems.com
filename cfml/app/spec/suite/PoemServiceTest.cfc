@@ -14,7 +14,8 @@ component extends="spec.BaseTest" {
 	// ---
 
 	/**
-	* I test that creating a poem persists the data and creates a revision.
+	* I test that creating a poem persists the data and captures an initial revision
+	* that mirrors the poem's name and content.
 	*/
 	public void function testCreate() {
 
@@ -34,14 +35,18 @@ component extends="spec.BaseTest" {
 		assertEqual( poem.content, content );
 		assertEqual( poem.userID, variables.authContext.user.id );
 
+		// The initial revision is snapshotted from the persisted poem.
 		var revisions = revisionModel.getByFilter( poemID = poemID );
-		assertTrue( revisions.len(), "Expected at least one revision after poem creation." );
+		assertEqual( revisions.len(), 1, "Expected exactly one initial revision." );
+		assertEqual( revisions.first().name, name, "Expected initial revision name to match the poem." );
+		assertEqual( revisions.first().content, content, "Expected initial revision content to match the poem." );
 
 	}
 
 
 	/**
-	* I test that updating a poem persists the new name.
+	* I test that updating a poem persists the new values and updates the existing
+	* revision in place (rather than creating a new one) within the windowing period.
 	*/
 	public void function testUpdate() {
 
@@ -50,19 +55,29 @@ component extends="spec.BaseTest" {
 			userID = variables.authContext.user.id,
 			collectionID = 0,
 			name = "Before #createUUID()#",
-			content = "Content."
+			content = "Before content."
 		);
 
 		var newName = "After #createUUID()#";
+		var newContent = "After content.";
 
 		poemService.update(
 			authContext = variables.authContext,
 			id = poemID,
-			name = newName
+			name = newName,
+			content = newContent
 		);
 
 		var poem = poemModel.get( poemID );
 		assertEqual( poem.name, newName );
+		assertEqual( poem.content, newContent );
+
+		// Within the 120-second windowing period, the existing revision should be
+		// updated in place — no new revision is created.
+		var revisions = revisionModel.getByFilter( poemID = poemID );
+		assertEqual( revisions.len(), 1, "Expected revision to be updated in place within windowing period." );
+		assertEqual( revisions.first().name, newName, "Expected windowed revision to reflect the updated name." );
+		assertEqual( revisions.first().content, newContent, "Expected windowed revision to reflect the updated content." );
 
 	}
 
