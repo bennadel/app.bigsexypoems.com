@@ -27,24 +27,15 @@ component {
 		var poem = context.poem;
 		var revision = context.revision;
 
-		// Cascading deletion is initiated by the service layer but is treated as a black
-		// box. Which means that we always execute it inside a transaction and we always
-		// obtain exclusive locks on the rows that we're passing out-of-scope. The
-		// transaction allows for atomic operations (which are very much needed in some
-		// places and completely overkill in other places); and the transaction-based
-		// locking allows for serialized access to rows that other workflows may be
-		// locking concurrently. All locking must be performed from the "parent down" in
-		// order to avoid deadlocks.
 		transaction {
 
-			// Re-fetch data with locks.
 			var userWithLock = userModel.get(
 				id = user.id,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var poemWithLock = poemModel.get(
 				id = poem.id,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var revisionWithLock = revisionModel.get(
 				id = revision.id,
@@ -84,47 +75,49 @@ component {
 		) {
 
 		var context = revisionAccess.getContext( authContext, revisionID, "canMakeCurrent" );
+		var poem = context.poem;
 		var revision = context.revision;
 
-		// This transaction uses an exclusive lock on the poem model in order to enforce
-		// serialized access to the poem-level revisions (which is why we're re-fetching
-		// the poem even though we could get it directly from the context).
 		transaction {
 
-			var poem = poemModel.get(
-				id = context.poem.id,
+			var poemWithLock = poemModel.get(
+				id = poem.id,
 				withLock = "exclusive"
 			);
+			var revisionWithLock = revisionModel.get(
+				id = revision.id,
+				withLock = "readonly"
+			);
 
-			// Before overwriting the poem, snapshot the current live state so the user
-			// can revert back to it. Skip this if the most recent revision already
+			// Before overwriting the poem, snapshot the current live state so that the
+			// user can revert back to it. Skip this if the most recent revision already
 			// matches the live poem (no point creating a duplicate).
-			var maybeLastRevision = revisionModel.maybeGetMostRecentByPoemID( poem.id );
+			var maybeLastRevision = revisionModel.maybeGetMostRecentByPoemID( poemWithLock.id );
 
 			if (
 				! maybeLastRevision.exists ||
-				isRevisionStale( maybeLastRevision.value, poem )
+				isRevisionStale( maybeLastRevision.value, poemWithLock )
 				) {
 
 				revisionModel.create(
-					poemID = poem.id,
-					name = poem.name,
-					content = poem.content,
-					createdAt = poem.updatedAt
+					poemID = poemWithLock.id,
+					name = poemWithLock.name,
+					content = poemWithLock.content,
+					createdAt = poemWithLock.updatedAt
 				);
 
 			}
 
 			// Update the poem with the revision's content.
 			poemModel.update(
-				id = poem.id,
-				name = revision.name,
-				content = revision.content,
+				id = poemWithLock.id,
+				name = revisionWithLock.name,
+				content = revisionWithLock.content,
 				updatedAt = utcNow()
 			);
 
 			// Create a new revision to snapshot the restored state.
-			var restoredPoem = poemModel.get( poem.id );
+			var restoredPoem = poemModel.get( poemWithLock.id );
 
 			revisionModel.create(
 				poemID = restoredPoem.id,
@@ -133,7 +126,7 @@ component {
 				createdAt = restoredPoem.updatedAt
 			);
 
-		} // End: transaction and row-locks.
+		}
 
 	}
 

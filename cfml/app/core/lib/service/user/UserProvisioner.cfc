@@ -15,6 +15,10 @@ component {
 
 	/**
 	* I ensure the creation of a standalone user.
+	* 
+	* Caution: this method must be called within a transaction block. All withLock usage
+	* contained herein will be scoped to said transaction block and will create mutual
+	* exclusion with other row-locking workflows.
 	*/
 	public numeric function ensureUser(
 		required string name,
@@ -25,6 +29,9 @@ component {
 		name = userValidation.nameFrom( name );
 		email = userValidation.emailFrom( email );
 
+		// Note: the maybe* methods never provide any locking, since a non-existent row
+		// provides no hook for locking. Instead, this workflow relies on the uniqueness
+		// constraints at the database level to ensure "serialization" of access.
 		var maybeUser = userModel.maybeGetByFilter( email = email );
 
 		if ( maybeUser.exists ) {
@@ -41,19 +48,25 @@ component {
 
 		}
 
-		var maybeTimezone = timezoneModel.maybeGet( userID );
+		// Using an exclusive lock to serialize access to aggregate root while we check
+		// for a conditionally-existent child relationship.
+		var userWithLock = userModel.get(
+			id = userID,
+			withLock = "exclusive"
+		);
+		var maybeTimezone = timezoneModel.maybeGet( userWithLock.id );
 
 		if ( maybeTimezone.exists ) {
 
-			timezoneModel.update( userID, offsetInMinutes );
+			timezoneModel.update( userWithLock.id, offsetInMinutes );
 
 		} else {
 
-			timezoneModel.create( userID, offsetInMinutes );
+			timezoneModel.create( userWithLock.id, offsetInMinutes );
 
 		}
 
-		return userID;
+		return userWithLock.id;
 
 	}
 
@@ -61,6 +74,10 @@ component {
 	/**
 	* I ensure the creation of a full user account. Any existing standalone user will be
 	* upgraded to full account status.
+	* 
+	* Caution: this method must be called within a transaction block. All withLock usage
+	* contained herein will be scoped to said transaction block and will create mutual
+	* exclusion with other row-locking workflows.
 	*/
 	public numeric function ensureUserAccount(
 		required string email,
@@ -70,16 +87,21 @@ component {
 		var name = getNameFromEmail( email );
 		var userID = ensureUser( name, email, offsetInMinutes );
 
-		var user = userModel.get( userID );
-		var maybeAccount = accountModel.maybeGet( user.id );
+		// Using an exclusive lock to serialize access to aggregate root while we check
+		// for a conditionally-existent child relationship.
+		var userWithLock = userModel.get(
+			id = userID,
+			withLock = "exclusive"
+		);
+		var maybeAccount = accountModel.maybeGet( userWithLock.id );
 
 		if ( ! maybeAccount.exists ) {
 
-			accountModel.create( user.id, utcNow() );
+			accountModel.create( userWithLock.id, utcNow() );
 
 		}
 
-		return user.id;
+		return userWithLock.id;
 
 	}
 

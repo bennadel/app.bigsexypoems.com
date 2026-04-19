@@ -23,17 +23,8 @@ component {
 		var context = userAccess.getContext( authContext, id, "canDelete" );
 		var user = context.user;
 
-		// Cascading deletion is initiated by the service layer but is treated as a black
-		// box. Which means that we always execute it inside a transaction and we always
-		// obtain exclusive locks on the rows that we're passing out-of-scope. The
-		// transaction allows for atomic operations (which are very much needed in some
-		// places and completely overkill in other places); and the transaction-based
-		// locking allows for serialized access to rows that other workflows may be
-		// locking concurrently. All locking must be performed from the "parent down" in
-		// order to avoid deadlocks.
 		transaction {
 
-			// Re-fetch data with locks.
 			var userWithLock = userModel.get(
 				id = user.id,
 				withLock = "exclusive"

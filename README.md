@@ -117,9 +117,11 @@ The application uses MySQL row-level locking to serialize conflicting operations
 
 2. **Aggregate-root exclusive locks:** When a write depends on prior state (ex, revision windowing, viewing-count aggregates), the aggregate root is locked `FOR UPDATE` to serialize the read-modify-write cycle.
 
-3. **Parent-down exclusive locks on cascade delete:** Cascade deletes acquire exclusive locks from the root down through each child entity before descending, serializing destructive operations against the other two patterns.
+3. **Cascade deletes with mixed locking:** Cascade callers lock the entity being deleted *exclusive* and its ancestor entities *readonly* (ancestors need FK integrity only &mdash; the cascade doesn't mutate them). Dependent rows discovered during cascade iteration are locked exclusive *internally by the cascade* before being mutated or deleted. Only `UserService.delete` locks the user row exclusive, since it IS the entity being deleted; every other delete path (`PoemService.delete`, `ShareService.delete`, etc.) locks the user readonly.
 
-Transactions are owned exclusively by the service layer; cascade and helper components run inside service-initiated transactions. All lock acquisition goes parent &rarr; child to prevent deadlocks. Variables holding locked rows use a `WithLock` suffix (e.g., `userWithLock`) as a visual contract marker at call sites.
+The architectural rule that makes this mixed locking safe: **cascades don't mutate ancestors.** A cascade component handles delete semantics for its entity &mdash; deleting the row and unlinking FK references from surviving dependents. Context-dependent side-effects (user-level aggregate bumps, audit logs, etc.) belong in the service layer alongside the cascade invocation, where the caller knows whether ancestors are surviving the operation.
+
+Transactions are owned exclusively by the service layer; cascade and helper components run inside service-initiated transactions. All lock acquisition goes parent &rarr; child to prevent deadlocks. Variables holding locked rows use a `WithLock` suffix (e.g., `userWithLock`) as a visual contract marker at call sites &mdash; CFML has no type system to enforce the "must be locked" precondition, so the naming convention and cascade docblock comments serve as the contract.
 
 ### Testing
 

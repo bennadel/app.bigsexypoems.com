@@ -406,7 +406,11 @@ public void function delete( required struct revision ) {
 
 **Lock the aggregate root, not the dependent rows**: When serializing work on child entities (e.g., revisions under a poem), lock the parent row that always exists rather than the child rows that may not. The parent row acts as a mutex — every code path that touches those children must acquire the same lock.
 
+**Cascades don't mutate ancestors**: Cascade components handle the full delete semantics for their entity — deletion of the row and unlinking of FK references from surviving dependents. They do NOT mutate ancestor state (user-level aggregates, audit logs, etc.). Context-dependent side-effects correlated with the delete belong in the service layer alongside the cascade invocation, where the caller has full awareness of whether ancestors are surviving the operation.
+
 **Cascade components lock child rows before descending**: When a cascade iterates over child entities and calls a nested cascade, it reads the children with `withLock = "exclusive"` to prevent contention with other workflows that lock those same rows (e.g., `logShareViewing` locking a share row). The outermost transaction is owned by the service layer; the cascade just acquires child locks within it.
+
+**Cascade caller lock levels**: When calling into a cascade, lock each passed-in entity at the level the cascade will need for that specific entity. Ancestor entities that the cascade reads but doesn't mutate → **readonly** (FK integrity only). The entity being deleted → **exclusive** (required for the final DELETE statement, and starting exclusive avoids readonly-to-exclusive upgrade deadlocks). Dependent entities that the cascade discovers through iteration are locked exclusive *internally by the cascade*, not by the caller. Only `UserService.delete` locks the user exclusive — every other cascade caller (`PoemService.delete`, `ShareService.delete`, etc.) locks ancestors readonly.
 
 **Cascade component preconditions**: Every public cascade method starts with a "Caution: must be called inside a transaction with locked entities" docblock. This is a load-bearing invariant, not a pattern-reminder — the file can't see its caller, and a silent contract violation is possible without the comment.
 

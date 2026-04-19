@@ -81,11 +81,15 @@ component {
 		required numeric offsetInMinutes
 		) {
 
-		return userProvisioner.ensureUser(
-			name = name,
-			email = email,
-			offsetInMinutes = offsetInMinutes
-		);
+		transaction {
+
+			return userProvisioner.ensureUser(
+				name = name,
+				email = email,
+				offsetInMinutes = offsetInMinutes
+			);
+
+		}
 
 	}
 
@@ -233,10 +237,14 @@ component {
 			signature = signature
 		);
 
-		return userProvisioner.ensureUserAccount(
-			email = email,
-			offsetInMinutes = offsetInMinutes
-		);
+		transaction {
+
+			return userProvisioner.ensureUserAccount(
+				email = email,
+				offsetInMinutes = offsetInMinutes
+			);
+
+		}
 
 	}
 

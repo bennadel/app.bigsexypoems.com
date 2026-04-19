@@ -49,34 +49,43 @@ component {
 		var snapshotContent = "";
 		var createdAt = utcNow();
 
-		// Only capture snapshot if enabled.
-		if ( isSnapshot ) {
+		transaction {
 
-			snapshotName = poem.name;
-			snapshotContent = poem.content;
+			var poemWithLock = poemModel.get(
+				id = poem.id,
+				withLock = "readonly"
+			);
+
+			// Only capture snapshot if enabled.
+			if ( isSnapshot ) {
+
+				snapshotName = poemWithLock.name;
+				snapshotContent = poemWithLock.content;
+
+			}
+
+			if ( ! name.len() ) {
+
+				name = DEFAULT_SHARE_NAME;
+
+			}
+
+			var shareID = shareModel.create(
+				poemID = poemWithLock.id,
+				token = token,
+				name = name,
+				noteMarkdown = noteMarkdown,
+				noteHtml = noteHtml,
+				isSnapshot = isSnapshot,
+				snapshotName = snapshotName,
+				snapshotContent = snapshotContent,
+				viewingCount = 0,
+				lastViewingAt = "",
+				createdAt = createdAt,
+				updatedAt = createdAt
+			);
 
 		}
-
-		if ( ! name.len() ) {
-
-			name = DEFAULT_SHARE_NAME;
-
-		}
-
-		var shareID = shareModel.create(
-			poemID = poem.id,
-			token = token,
-			name = name,
-			noteMarkdown = noteMarkdown,
-			noteHtml = noteHtml,
-			isSnapshot = isSnapshot,
-			snapshotName = snapshotName,
-			snapshotContent = snapshotContent,
-			viewingCount = 0,
-			lastViewingAt = "",
-			createdAt = createdAt,
-			updatedAt = createdAt
-		);
 
 		return shareID;
 
@@ -96,24 +105,15 @@ component {
 		var poem = context.poem;
 		var share = context.share;
 
-		// Cascading deletion is initiated by the service layer but is treated as a black
-		// box. Which means that we always execute it inside a transaction and we always
-		// obtain exclusive locks on the rows that we're passing out-of-scope. The
-		// transaction allows for atomic operations (which are very much needed in some
-		// places and completely overkill in other places); and the transaction-based
-		// locking allows for serialized access to rows that other workflows may be
-		// locking concurrently. All locking must be performed from the "parent down" in
-		// order to avoid deadlocks.
 		transaction {
 
-			// Re-fetch data with locks.
 			var userWithLock = userModel.get(
 				id = user.id,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var poemWithLock = poemModel.get(
 				id = poem.id,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var shareWithLock = shareModel.get(
 				id = share.id,
@@ -139,24 +139,15 @@ component {
 		var user = context.user;
 		var poem = context.poem;
 
-		// Cascading deletion is initiated by the service layer but is treated as a black
-		// box. Which means that we always execute it inside a transaction and we always
-		// obtain exclusive locks on the rows that we're passing out-of-scope. The
-		// transaction allows for atomic operations (which are very much needed in some
-		// places and completely overkill in other places); and the transaction-based
-		// locking allows for serialized access to rows that other workflows may be
-		// locking concurrently. All locking must be performed from the "parent down" in
-		// order to avoid deadlocks.
 		transaction {
 
-			// Re-fetch data with locks.
 			var userWithLock = userModel.get(
 				id = user.id,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var poemWithLock = poemModel.get(
 				id = poem.id,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var sharesWithLock = shareModel.getByFilter(
 				poemID = poem.id,
@@ -231,18 +222,18 @@ component {
 		var ipCountry = requestMetadata.getIpCountry();
 		var createdAt = utcNow();
 
-		// This transaction uses an exclusive lock on the share model in order to enforce
-		// serialized access to the share-level view-count aggregate.
 		transaction {
 
-			var share = shareModel.get(
+			// This share model is using an exclusive lock in order to enforce serialized
+			// access to the view-count aggregate calculation.
+			var shareWithLock = shareModel.get(
 				id = id,
 				withLock = "exclusive"
 			);
 
 			viewingModel.create(
-				poemID = share.poemID,
-				shareID = share.id,
+				poemID = shareWithLock.poemID,
+				shareID = shareWithLock.id,
 				ipAddress = ipAddress,
 				ipCity = ipCity,
 				ipRegion = ipRegion,
@@ -252,17 +243,17 @@ component {
 
 			// Recalculate the viewing aggregate.
 			var viewingCount = viewingModel.getCountByFilter(
-				poemID = share.poemID,
-				shareID = share.id
+				poemID = shareWithLock.poemID,
+				shareID = shareWithLock.id
 			);
 
 			shareModel.update(
-				id = share.id,
+				id = shareWithLock.id,
 				viewingCount = viewingCount,
 				lastViewingAt = createdAt
 			);
 
-		} // End: transaction and row-locks.
+		}
 
 	}
 
@@ -303,12 +294,21 @@ component {
 		var poem = context.poem;
 		var updatedAt = utcNow();
 
-		shareModel.update(
-			id = share.id,
-			snapshotName = poem.name,
-			snapshotContent = poem.content,
-			updatedAt = updatedAt
-		);
+		transaction {
+
+			var poemWithLock = poemModel.get(
+				id = poem.id,
+				withLock = "readonly"
+			);
+
+			shareModel.update(
+				id = share.id,
+				snapshotName = poemWithLock.name,
+				snapshotContent = poemWithLock.content,
+				updatedAt = updatedAt
+			);
+
+		}
 
 	}
 
@@ -332,30 +332,39 @@ component {
 		var snapshotContent = "";
 		var updatedAt = utcNow();
 
-		// Only capture snapshot if enabled, otherwise the cached values will be cleared.
-		if ( isSnapshot ) {
+		transaction {
 
-			snapshotName = poem.name;
-			snapshotContent = poem.content;
+			var poemWithLock = poemModel.get(
+				id = poem.id,
+				withLock = "readonly"
+			);
+
+			// Only capture snapshot if enabled, otherwise the cached values will be cleared.
+			if ( isSnapshot ) {
+
+				snapshotName = poemWithLock.name;
+				snapshotContent = poemWithLock.content;
+
+			}
+
+			if ( ! name.len() ) {
+
+				name = DEFAULT_SHARE_NAME;
+
+			}
+
+			shareModel.update(
+				id = share.id,
+				name = name,
+				noteMarkdown = noteMarkdown,
+				noteHtml = noteHtml,
+				isSnapshot = isSnapshot,
+				snapshotName = snapshotName,
+				snapshotContent = snapshotContent,
+				updatedAt = updatedAt
+			);
 
 		}
-
-		if ( ! name.len() ) {
-
-			name = DEFAULT_SHARE_NAME;
-
-		}
-
-		shareModel.update(
-			id = share.id,
-			name = name,
-			noteMarkdown = noteMarkdown,
-			noteHtml = noteHtml,
-			isSnapshot = isSnapshot,
-			snapshotName = snapshotName,
-			snapshotContent = snapshotContent,
-			updatedAt = updatedAt
-		);
 
 	}
 

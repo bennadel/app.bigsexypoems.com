@@ -114,7 +114,7 @@ component {
 
 			var userWithLock = userModel.get(
 				id = user.id,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var poemWithLock = poemModel.get(
 				id = poem.id,

@@ -75,9 +75,15 @@ component hint = "I provide methods for accessing the session associated with th
 		}
 
 		transaction {
+
+			var userWithLock = userModel.get(
+				id = userID,
+				withLock = "readonly"
+			);
+
 			var sessionID = sessionModel.create(
 				token = sessionToken,
-				userID = userID,
+				userID = userWithLock.id,
 				isAuthenticated = isAuthenticated,
 				ipAddress = ipAddress,
 				ipCity = ipCity,
@@ -85,11 +91,13 @@ component hint = "I provide methods for accessing the session associated with th
 				ipCountry = ipCountry,
 				createdAt = utcNow()
 			);
+
 			presenceModel.create(
 				sessionID = sessionID,
 				requestCount = 1,
 				lastRequestAt = utcNow()
 			);
+
 		}
 
 		if ( ! requestMetadata.isTestRun() ) {
@@ -114,20 +122,11 @@ component hint = "I provide methods for accessing the session associated with th
 		var context = sessionAccess.getContextForParent( authContext, userID, "canDeleteAny" );
 		var user = context.user;
 
-		// Cascading deletion is initiated by the service layer but is treated as a black
-		// box. Which means that we always execute it inside a transaction and we always
-		// obtain exclusive locks on the rows that we're passing out-of-scope. The
-		// transaction allows for atomic operations (which are very much needed in some
-		// places and completely overkill in other places); and the transaction-based
-		// locking allows for serialized access to rows that other workflows may be
-		// locking concurrently. All locking must be performed from the "parent down" in
-		// order to avoid deadlocks.
 		transaction {
 
-			// Re-fetch data with locks.
 			var userWithLock = userModel.get(
 				id = user.id,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var sessionsWithLock = sessionModel.getByFilter(
 				userID = user.id,
@@ -163,20 +162,11 @@ component hint = "I provide methods for accessing the session associated with th
 		var user = context.user;
 		var userSession = context.userSession;
 
-		// Cascading deletion is initiated by the service layer but is treated as a black
-		// box. Which means that we always execute it inside a transaction and we always
-		// obtain exclusive locks on the rows that we're passing out-of-scope. The
-		// transaction allows for atomic operations (which are very much needed in some
-		// places and completely overkill in other places); and the transaction-based
-		// locking allows for serialized access to rows that other workflows may be
-		// locking concurrently. All locking must be performed from the "parent down" in
-		// order to avoid deadlocks.
 		transaction {
 
-			// Re-fetch data with locks.
 			var userWithLock = userModel.get(
 				id = user.id,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var sessionWithLock = sessionModel.get(
 				id = userSession.id,
@@ -281,20 +271,11 @@ component hint = "I provide methods for accessing the session associated with th
 
 		}
 
-		// Cascading deletion is initiated by the service layer but is treated as a black
-		// box. Which means that we always execute it inside a transaction and we always
-		// obtain exclusive locks on the rows that we're passing out-of-scope. The
-		// transaction allows for atomic operations (which are very much needed in some
-		// places and completely overkill in other places); and the transaction-based
-		// locking allows for serialized access to rows that other workflows may be
-		// locking concurrently. All locking must be performed from the "parent down" in
-		// order to avoid deadlocks.
 		transaction {
 
-			// Re-fetch data with locks.
 			var userWithLock = userModel.get(
 				id = maybeSession.value.userID,
-				withLock = "exclusive"
+				withLock = "readonly"
 			);
 			var sessionWithLock = sessionModel.get(
 				id = maybeSession.value.id,
