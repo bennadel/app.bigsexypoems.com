@@ -43,7 +43,7 @@ component {
 				name = name,
 				descriptionMarkdown = descriptionMarkdown,
 				descriptionHtml = descriptionHtml,
-				createdAt = utcNow()
+				createdAt = createdAt
 			);
 
 		}
@@ -125,13 +125,22 @@ component {
 
 		}
 
-		collectionModel.update(
-			id = collection.id,
-			name = arguments?.name,
-			descriptionMarkdown = arguments?.descriptionMarkdown,
-			descriptionHtml = local?.descriptionHtml,
-			updatedAt = utcNow()
-		);
+		transaction {
+
+			var collectionWithLock = collectionModel.get(
+				id = collection.id,
+				withLock = "exclusive"
+			);
+
+			collectionModel.update(
+				id = collectionWithLock.id,
+				name = arguments?.name,
+				descriptionMarkdown = arguments?.descriptionMarkdown,
+				descriptionHtml = local?.descriptionHtml,
+				updatedAt = utcNow()
+			);
+
+		}
 
 	}
 

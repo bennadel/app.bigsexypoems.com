@@ -189,6 +189,10 @@ component {
 			);
 
 			// We only need to worry about a revision if the poem content has changed.
+			// --
+			// Note: revision are tied to the content. As such, even if the collection ID
+			// was changed above, a revision will only ever be created if the content of
+			// the poem meaningfully changed.
 			if (
 				( isNull( name ) || ! compare( name, poemWithLock.name ) ) &&
 				( isNull( content ) || ! compare( content, poemWithLock.content ) )

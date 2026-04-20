@@ -31,6 +31,11 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 
 		}
 
+		// Caution: we're intentionally using a CFML lock for synchronized access (below)
+		// instead of an exclusive database row lock when accessing this model. If we were
+		// to use a database lock, we'd have to wrap BOTH the task mutation AND the task
+		// executor in the same transaction block which would pull any nested transactions
+		// up into the same transaction scope. This could have unexpected consequences.
 		var task = taskModel.get( taskID );
 		var timestamp = utcNow();
 

@@ -300,9 +300,13 @@ component {
 				id = poem.id,
 				withLock = "readonly"
 			);
+			var shareWithLock = shareModel.get(
+				id = share.id,
+				withLock = "exclusive"
+			);
 
 			shareModel.update(
-				id = share.id,
+				id = shareWithLock.id,
 				snapshotName = poemWithLock.name,
 				snapshotContent = poemWithLock.content,
 				updatedAt = updatedAt
@@ -338,6 +342,10 @@ component {
 				id = poem.id,
 				withLock = "readonly"
 			);
+			var shareWithLock = shareModel.get(
+				id = share.id,
+				withLock = "exclusive"
+			);
 
 			// Only capture snapshot if enabled, otherwise the cached values will be cleared.
 			if ( isSnapshot ) {
@@ -354,7 +362,7 @@ component {
 			}
 
 			shareModel.update(
-				id = share.id,
+				id = shareWithLock.id,
 				name = name,
 				noteMarkdown = noteMarkdown,
 				noteHtml = noteHtml,

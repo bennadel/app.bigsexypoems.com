@@ -89,6 +89,9 @@ component {
 
 		// Using an exclusive lock to serialize access to aggregate root while we check
 		// for a conditionally-existent child relationship.
+		// --
+		// Note: technically, the user record was already locked in ensureUser(); but, I'm
+		// repeating the read here to make for a more explicit contract.
 		var userWithLock = userModel.get(
 			id = userID,
 			withLock = "exclusive"

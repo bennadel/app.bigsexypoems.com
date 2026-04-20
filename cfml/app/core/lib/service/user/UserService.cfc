@@ -52,10 +52,19 @@ component {
 		// Idea: for updating email address, we'll want to go through an email validation
 		// workflow.
 
-		userModel.update(
-			id = user.id,
-			name = name
-		);
+		transaction {
+
+			var userWithLock = userModel.get(
+				id = user.id,
+				withLock = "exclusive"
+			);
+
+			userModel.update(
+				id = userWithLock.id,
+				name = name
+			);
+
+		}
 
 	}
 

@@ -117,6 +117,10 @@ component {
 
 	/**
 	* I update a model.
+	*
+	* Caution: this method should be called inside a transaction block in which the target
+	* row has obtained an exclusive lock. This ensures that the subsequent get() call used
+	* to fill-in null values will lead to a consistent read.
 	*/
 	public void function update(
 		required numeric id,

@@ -115,13 +115,17 @@ The application uses MySQL row-level locking to serialize conflicting operations
 
 1. **FK readonly locks on writes:** When inserting or updating a row with foreign-key references, each referenced parent is locked `FOR SHARE` so it can't be deleted mid-operation. Multiple writes proceed in parallel; cascade deletes serialize against them.
 
-2. **Aggregate-root exclusive locks:** When a write depends on prior state (ex, revision windowing, viewing-count aggregates), the aggregate root is locked `FOR UPDATE` to serialize the read-modify-write cycle.
+2. **Aggregate-root exclusive locks:** When a write depends on prior state (ex, revision windowing, viewing-count aggregates, user timezone/account), the aggregate root is locked `FOR UPDATE` to serialize the read-modify-write cycle.
 
 3. **Cascade deletes with mixed locking:** Cascade callers lock the entity being deleted *exclusive* and its ancestor entities *readonly* (ancestors need FK integrity only &mdash; the cascade doesn't mutate them). Dependent rows discovered during cascade iteration are locked exclusive *internally by the cascade* before being mutated or deleted. Only `UserService.delete` locks the user row exclusive, since it IS the entity being deleted; every other delete path (`PoemService.delete`, `ShareService.delete`, etc.) locks the user readonly.
 
 The architectural rule that makes this mixed locking safe: **cascades don't mutate ancestors.** A cascade component handles delete semantics for its entity &mdash; deleting the row and unlinking FK references from surviving dependents. Context-dependent side-effects (user-level aggregate bumps, audit logs, etc.) belong in the service layer alongside the cascade invocation, where the caller knows whether ancestors are surviving the operation.
 
 Transactions are owned exclusively by the service layer; cascade and helper components run inside service-initiated transactions. All lock acquisition goes parent &rarr; child to prevent deadlocks. Variables holding locked rows use a `WithLock` suffix (e.g., `userWithLock`) as a visual contract marker at call sites &mdash; CFML has no type system to enforce the "must be locked" precondition, so the naming convention and cascade docblock comments serve as the contract.
+
+Access controls are checked outside of any transaction or row locking control flow. This is intentional. The `*Access.cfc` components determine whether or not a given authenticated context _can_ take the given action. Once this has been determined, the operation proceeds with implicit trust; and the subsequent `transaction` block and row locking is used to ensure data integrity only, not permission.
+
+All `*Model.cfc` components re-read the given row within the `update()` method. This is done to fill-in any writable properties that aren't explicitly provided in the `update()` invocation in order to make the underlying SQL `UPDATE` statement less dynamic. This method assumes that the row is safe to read because it's been previously locked in the calling context and transaction.
 
 ### Testing
 
