@@ -59,8 +59,8 @@ component {
 		) {
 
 		return (
-			compare( revision.name, poem.name ) ||
-			compare( revision.content, poem.content )
+			isDifferent( revision.name, poem.name ) ||
+			isDifferent( revision.content, poem.content )
 		);
 
 	}

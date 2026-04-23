@@ -74,7 +74,7 @@ component hint = "I provide methods for generating and verifying one-time tokens
 
 		}
 
-		if ( compare( passcode, maybeResult.value.passcode ) ) {
+		if ( isDifferent( passcode, maybeResult.value.passcode ) ) {
 
 			return maybeNew();
 

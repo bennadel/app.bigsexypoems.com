@@ -56,7 +56,7 @@ component {
 
 		var expectedSignature = generateSignature( email, offsetInMinutes, redirectTo, token, salt );
 
-		if ( compare( signature, expectedSignature ) ) {
+		if ( isDifferent( signature, expectedSignature ) ) {
 
 			throw(
 				type = "App.Url.SignatureMismatch",

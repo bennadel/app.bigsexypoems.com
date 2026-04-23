@@ -28,7 +28,7 @@
 		request.isPost &&
 		// Since the request is being triggered by JavaScript events, I just want to cut
 		// down on any unnecessary database writes.
-		( compare( form.name, poem.name ) || compare( form.content, poem.content ) )
+		( isDifferent( form.name, poem.name ) || isDifferent( form.content, poem.content ) )
 		) {
 
 		try {

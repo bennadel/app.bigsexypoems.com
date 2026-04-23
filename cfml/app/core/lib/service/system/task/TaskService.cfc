@@ -22,7 +22,7 @@ component hint = "I provide workflow methods pertaining to scheduled tasks." {
 		required string password
 		) {
 
-		if ( compare( password, scheduledTasks.password ) ) {
+		if ( isDifferent( password, scheduledTasks.password ) ) {
 
 			throw(
 				type = "App.ScheduledTasks.IncorrectPassword",

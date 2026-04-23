@@ -40,7 +40,7 @@
 
 	// Todo: put all this logic somewhere better?
 
-	if ( compare( request.share.token, url.shareToken ) ) {
+	if ( isDifferent( request.share.token, url.shareToken ) ) {
 
 		shareValidation.throwNotFoundError();
 

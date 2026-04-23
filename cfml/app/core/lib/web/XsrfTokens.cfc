@@ -96,7 +96,7 @@ component hint = "I provide functionality around the XSRF cookies and request va
 
 		}
 
-		if ( compare( cookieValue, challengeValue ) ) {
+		if ( isDifferent( cookieValue, challengeValue ) ) {
 
 			throw(
 				type = "App.Xsrf.Mismatch",

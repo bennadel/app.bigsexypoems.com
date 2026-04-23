@@ -454,6 +454,34 @@
 
 
 	/**
+	* I determine if the two arguments are different using a case-sensitive comparison.
+	* This is just a semantic convenience wrapper for the underlying compare() method.
+	*/
+	private boolean function isDifferent(
+		required string a,
+		required string b
+		) {
+
+		return !! compare( a, b );
+
+	}
+
+
+	/**
+	* I determine if the two arguments are the same using a case-sensitive comparison.
+	* This is just a semantic convenience wrapper for the underlying compare() method.
+	*/
+	private boolean function isEqual(
+		required string a,
+		required string b
+		) {
+
+		return ! compare( a, b );
+
+	}
+
+
+	/**
 	* I determine if the given value is a Falsy (according to JavaScript rules).
 	*
 	* See JavaScript definition on the Mozilla Developer Network (MDN):

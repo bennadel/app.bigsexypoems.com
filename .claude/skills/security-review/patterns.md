@@ -248,7 +248,7 @@ param name="url.shareToken" type="string" default="";
 
 request.share = shareModel.get( val( url.shareID ) );
 
-if ( compare( request.share.token, url.shareToken ) ) {
+if ( isDifferent( request.share.token, url.shareToken ) ) {
     shareValidation.throwNotFoundError();
 }
 ```

@@ -38,7 +38,7 @@
 
 	// If the image version is a mismatch, redirect to the latest version. This allows us
 	// to avoid a 404 Not Found error from the user's perspective.
-	if ( compare( url.imageVersion, expectedImageVersion ) ) {
+	if ( isDifferent( url.imageVersion, expectedImageVersion ) ) {
 
 		router.goto({
 			event: router.getEvent(),

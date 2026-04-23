@@ -201,8 +201,8 @@ component {
 		}
 
 		return (
-			compare( share.snapshotName, poem.name ) ||
-			compare( share.snapshotContent, poem.content )
+			isDifferent( share.snapshotName, poem.name ) ||
+			isDifferent( share.snapshotContent, poem.content )
 		);
 
 	}

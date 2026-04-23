@@ -190,8 +190,8 @@ component {
 			// was changed above, a revision will only ever be created if the content of
 			// the poem meaningfully changed.
 			if (
-				! compare( name, poemWithLock.name ) &&
-				! compare( content, poemWithLock.content )
+				isEqual( name, poemWithLock.name ) &&
+				isEqual( content, poemWithLock.content )
 				) {
 
 				return;
