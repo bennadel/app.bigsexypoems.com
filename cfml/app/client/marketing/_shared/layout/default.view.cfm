@@ -145,8 +145,8 @@
 
 			<footer kv4r2p class="shell_footer footer">
 				<p>
-					Managed <a href="https://www.xbytecloud.com/coldfusion/hosting/coldfusion-cloud-hosting?source=bennadel.com" target="_blank">ColdFusion hosting</a> services provided by:
-					<a href="https://www.xbytecloud.com/?source=bennadel.com" target="_blank">xByte Cloud</a>.
+					Managed <a href="https://www.xbytecloud.com/coldfusion/hosting/coldfusion-cloud-hosting?source=bennadel.com" rel="sponsored" target="_blank">ColdFusion hosting</a> services provided by:
+					<a href="https://www.xbytecloud.com/?source=bennadel.com" rel="sponsored" target="_blank">xByte Cloud</a>.
 				</p>
 
 				<p>
