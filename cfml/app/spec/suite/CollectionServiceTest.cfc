@@ -188,7 +188,8 @@ component extends="spec.BaseTest" {
 				collectionService.update(
 					authContext = variables.authContext,
 					id = collectionID,
-					name = repeatString( "x", 100 )
+					name = repeatString( "x", 100 ),
+					descriptionMarkdown = ""
 				);
 
 			},
@@ -202,6 +203,7 @@ component extends="spec.BaseTest" {
 				collectionService.update(
 					authContext = variables.authContext,
 					id = collectionID,
+					name = "Valid #left( createUUID(), 8 )#",
 					descriptionMarkdown = repeatString( "x", 600 )
 				);
 
@@ -216,7 +218,8 @@ component extends="spec.BaseTest" {
 				collectionService.update(
 					authContext = variables.authContext,
 					id = collectionID,
-					name = "Test %2525 Encoded"
+					name = "Test %2525 Encoded",
+					descriptionMarkdown = ""
 				);
 
 			},
@@ -263,7 +266,8 @@ component extends="spec.BaseTest" {
 				collectionService.update(
 					authContext = variables.authContext,
 					id = collectionID,
-					name = "Hacked"
+					name = "Hacked",
+					descriptionMarkdown = ""
 				);
 
 			},

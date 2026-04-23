@@ -192,6 +192,7 @@ component extends="spec.BaseTest" {
 		poemService.update(
 			authContext = variables.authContext,
 			id = poemID,
+			collectionID = 0,
 			name = "Changed Name",
 			content = "Changed content."
 		);

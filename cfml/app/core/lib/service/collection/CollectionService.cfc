@@ -112,18 +112,13 @@ component {
 	public void function update(
 		required struct authContext,
 		required numeric id,
-		string name,
-		string descriptionMarkdown
+		required string name,
+		required string descriptionMarkdown
 		) {
 
 		var context = collectionAccess.getContext( authContext, id, "canUpdate" );
 		var collection = context.collection;
-
-		if ( ! isNull( descriptionMarkdown ) ) {
-
-			var descriptionHtml = parseDescriptionMarkdown( descriptionMarkdown );
-
-		}
+		var descriptionHtml = parseDescriptionMarkdown( descriptionMarkdown );
 
 		transaction {
 
@@ -134,9 +129,9 @@ component {
 
 			collectionModel.update(
 				id = collectionWithLock.id,
-				name = arguments?.name,
-				descriptionMarkdown = arguments?.descriptionMarkdown,
-				descriptionHtml = local?.descriptionHtml,
+				name = name,
+				descriptionMarkdown = descriptionMarkdown,
+				descriptionHtml = descriptionHtml,
 				updatedAt = utcNow()
 			);
 

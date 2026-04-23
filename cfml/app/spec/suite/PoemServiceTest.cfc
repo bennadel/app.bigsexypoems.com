@@ -64,6 +64,7 @@ component extends="spec.BaseTest" {
 		poemService.update(
 			authContext = variables.authContext,
 			id = poemID,
+			collectionID = 0,
 			name = newName,
 			content = newContent
 		);
@@ -252,7 +253,9 @@ component extends="spec.BaseTest" {
 				poemService.update(
 					authContext = variables.authContext,
 					id = poemID,
-					name = repeatString( "x", 300 )
+					collectionID = 0,
+					name = repeatString( "x", 300 ),
+					content = "Some content."
 				);
 
 			},
@@ -266,6 +269,8 @@ component extends="spec.BaseTest" {
 				poemService.update(
 					authContext = variables.authContext,
 					id = poemID,
+					collectionID = 0,
+					name = "Valid Name #createUUID()#",
 					content = repeatString( "x", 4000 )
 				);
 
@@ -280,6 +285,8 @@ component extends="spec.BaseTest" {
 				poemService.update(
 					authContext = variables.authContext,
 					id = poemID,
+					collectionID = 0,
+					name = "Valid Name #createUUID()#",
 					content = "Test %2525 Encoded"
 				);
 
@@ -294,7 +301,9 @@ component extends="spec.BaseTest" {
 				poemService.update(
 					authContext = variables.authContext,
 					id = poemID,
-					collectionID = otherCollectionID
+					collectionID = otherCollectionID,
+					name = "Valid Name #createUUID()#",
+					content = "Some content."
 				);
 
 			},
@@ -325,7 +334,9 @@ component extends="spec.BaseTest" {
 				poemService.update(
 					authContext = variables.authContext,
 					id = poemID,
-					name = "Hacked"
+					collectionID = 0,
+					name = "Hacked",
+					content = "Some content."
 				);
 
 			},

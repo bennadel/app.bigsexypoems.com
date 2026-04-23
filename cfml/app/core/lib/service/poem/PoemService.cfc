@@ -150,23 +150,19 @@ component {
 	public void function update(
 		required struct authContext,
 		required numeric id,
-		numeric collectionID,
-		string name,
-		string content
+		required numeric collectionID,
+		required string name,
+		required string content
 		) {
 
 		var context = poemAccess.getContext( authContext, id, "canUpdate" );
 		var poem = context.poem;
 
-		if ( ! isNull( collectionID ) ) {
-
-			testCollectionID( authContext, poem.userID, collectionID );
-
-		}
+		testCollectionID( authContext, poem.userID, collectionID );
 
 		transaction {
 
-			if ( ! isNull( collectionID ) ) {
+			if ( collectionID ) {
 
 				var collectionWithLock = collectionModel.get(
 					id = collectionID,
@@ -182,9 +178,9 @@ component {
 
 			poemModel.update(
 				id = poemWithLock.id,
-				collectionID = arguments?.collectionID,
-				name = arguments?.name,
-				content = arguments?.content,
+				collectionID = collectionID,
+				name = name,
+				content = content,
 				updatedAt = utcNow()
 			);
 
@@ -194,8 +190,8 @@ component {
 			// was changed above, a revision will only ever be created if the content of
 			// the poem meaningfully changed.
 			if (
-				( isNull( name ) || ! compare( name, poemWithLock.name ) ) &&
-				( isNull( content ) || ! compare( content, poemWithLock.content ) )
+				! compare( name, poemWithLock.name ) &&
+				! compare( content, poemWithLock.content )
 				) {
 
 				return;

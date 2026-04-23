@@ -36,6 +36,7 @@
 			poemService.update(
 				authContext = request.authContext,
 				id = poem.id,
+				collectionID = poem.collectionID,
 				name = form.name,
 				content = form.content
 			);
