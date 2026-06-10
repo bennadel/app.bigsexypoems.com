@@ -3,66 +3,76 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"clean": "npm run clean-parcel-cache  &&  npm run clean-dist",
-		"clean-parcel-cache": "rm -rf ./.parcel-cache/*",
-		"clean-dist": "rm -rf ./dist/*",
-		"watch": "parcel watch --no-hmr",
-		"build": "npm run clean && parcel build"
+		"clean": "npm run clean-cache  &&  npm run clean-dist",
+		"clean-cache": "rm -rf ./.parcel-cache/*",
+		"clean-dist": "rm -rf ./static/main/*",
+		"build": "npm run clean && parcel build",
+		"watch": "parcel watch --no-hmr"
 	},
 	"targets": {
 		"auth": {
 			"source": "./src/auth.html",
-			"distDir": "./dist/auth",
+			"distDir": "./static/main/auth",
 			"publicUrl": "/static/main/auth"
 		},
 		"dev": {
 			"source": "./src/dev.html",
-			"distDir": "./dist/dev",
+			"distDir": "./static/main/dev",
 			"publicUrl": "/static/main/dev"
 		},
 		"error": {
 			"source": "./src/error.html",
-			"distDir": "./dist/error",
+			"distDir": "./static/main/error",
 			"publicUrl": "/static/main/error"
 		},
 		"go": {
 			"source": "./src/go.html",
-			"distDir": "./dist/go",
+			"distDir": "./static/main/go",
 			"publicUrl": "/static/main/go"
 		},
 		"marketing": {
 			"source": "./src/marketing.html",
-			"distDir": "./dist/marketing",
+			"distDir": "./static/main/marketing",
 			"publicUrl": "/static/main/marketing"
 		},
 		"member": {
 			"source": "./src/member.html",
-			"distDir": "./dist/member",
+			"distDir": "./static/main/member",
 			"publicUrl": "/static/main/member"
 		},
 		"share.poem": {
 			"source": "./src/share/poem.html",
-			"distDir": "./dist/share/poem",
+			"distDir": "./static/main/share/poem",
 			"publicUrl": "/static/main/share/poem"
 		},
 		"system": {
 			"source": "./src/system.html",
-			"distDir": "./dist/system",
+			"distDir": "./static/main/system",
 			"publicUrl": "/static/main/system"
 		},
 		"vendor": {
 			"source": "./src/vendor.html",
-			"distDir": "./dist/vendor",
+			"distDir": "./static/main/vendor",
 			"publicUrl": "/static/main/vendor"
+		}
+	},
+	"parcel-reporter-prepare-cfml": {
+		"nonce": {
+			"expression": "#e4a( csp.nonce )#",
+			"targets": []
+		},
+		"authority": {
+			"expression": "#site.authority#",
+			"targets": []
 		}
 	},
 	"browserslist": "defaults",
 	"devDependencies": {
-		"@parcel/resolver-glob": "2.16.1",
-		"@parcel/transformer-less": "2.16.1",
+		"@parcel/resolver-glob": "2.16.4",
+		"@parcel/transformer-less": "2.16.4",
 		"alpinejs": "3.15.2",
 		"htmx.org": "2.0.8",
-		"parcel": "2.16.1",
-		"parcel-reporter-strip-html": "file:./plugins/parcel-reporter-strip-html"
+		"parcel": "2.16.4",
+		"parcel-reporter-prepare-cfml": "file:./plugins/parcel-reporter-prepare-cfml"
 	}
 }

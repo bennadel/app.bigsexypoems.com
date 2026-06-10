@@ -3,20 +3,21 @@
 ## Build & Development Commands
 
 ```bash
-# Client-side build (from cfml/app/build/main/)
-npm run build          # Clean and build with Parcel
-npm run watch          # Watch mode with live rebuild
+# App orchestration (from repository root) — cfml, mysql, mail
+docker compose up
 
-# Docker orchestration (from repository root)
-docker compose up                  # Start all services
-docker compose --profile dev up    # Start with client-dev watcher
-docker compose run --rm client sh  # Shell for npm package management
+# Client-side build — has its own compose (from cfml/app/build/main/)
+docker compose up app                # One-time build
+docker compose up dev                # Watch mode with live rebuild
+docker compose run --rm app sh       # Shell for npm package management
 
 # Re-initialize application
 # Visit: http://app.local.bigsexypoems.com/index.cfm?init=1
 ```
 
-**Important**: Never run `npm` directly on the host machine. All `npm` commands must be executed inside the Docker client container (e.g., `docker compose up client` for builds, `docker compose run --rm client sh` for package management).
+The client build lives in its own `cfml/app/build/main/docker-compose.yaml` (services `app` for one-time build, `dev` for watch) — separate from the root compose. The underlying npm scripts are `npm run build` and `npm run watch`.
+
+**Important**: Never run `npm` directly on the host machine. All `npm` commands must be executed inside the build container (e.g., `docker compose up app` for builds, `docker compose run --rm app sh` for package management), run from `cfml/app/build/main/`.
 
 ## Architecture
 

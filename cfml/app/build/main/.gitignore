@@ -1,3 +1,4 @@
 .parcel-cache
 client
-dist
+node_modules
+static

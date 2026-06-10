@@ -6,6 +6,6 @@
 	],
 	"reporters": [
 		"...",
-		"parcel-reporter-strip-html"
+		"parcel-reporter-prepare-cfml"
 	]
 }

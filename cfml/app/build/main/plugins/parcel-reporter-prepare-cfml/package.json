@@ -1,5 +1,5 @@
 {
-	"name": "parcel-reporter-strip-html",
+	"name": "parcel-reporter-prepare-cfml",
 	"version": "0.0.0",
 	"private": true,
 	"main": "index.mjs",

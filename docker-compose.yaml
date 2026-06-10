@@ -28,34 +28,6 @@ services:
       mail:
         condition: service_healthy
 
-  # Provides a light-weight build for the front-end files.
-  client:
-    image: "appbigsexypoems-cfml/main-build:dev"
-    pull_policy: "never"
-    build:
-      context: "./cfml/app/build/main/"
-      dockerfile: "Dockerfile"
-    command: [ "npm", "run", "build" ]
-    volumes:
-      - "./cfml/app/build/main:/app"
-      # Mount the ColdFusion app so that the build can access the JS/LESS files that we've
-      # collocated with the CFML views.
-      - "./cfml/app/client:/app/client"
-      # Save dist files into static CFML volume where they can be consumed by the app.
-      - "./cfml/app/wwwroot/static/main:/app/dist"
-      # Makes sure we don't overwrite the node_modules in the build container when we
-      # mount the /app directory above.
-      - "bigsexypoems_client_node_modules:/app/node_modules"
-    networks:
-      - app_network
-
-  # Provides a "watch" execution for the light-weight build above.
-  client-dev:
-    extends: "client"
-    profiles:
-      - "dev"
-    command: [ "npm", "run", "watch" ]
-
   # MySQL server.
   # http://app.local.bigsexypoems.com:3306/
   mysql:
@@ -96,7 +68,6 @@ services:
       test: "echo hello"
 
 volumes:
-  bigsexypoems_client_node_modules:
   bigsexypoems_mysql_data:
 
 networks:
