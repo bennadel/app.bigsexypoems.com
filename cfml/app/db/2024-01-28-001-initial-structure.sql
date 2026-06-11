@@ -27,7 +27,7 @@ CREATE TABLE `user_account` (
 
 CREATE TABLE `user_session` (
 	`id` bigint unsigned NOT NULL AUTO_INCREMENT,
-	`token` varchar(64) NOT NULL
+	`token` varchar(64) NOT NULL,
 	`userID` bigint unsigned NOT NULL,
 	`isAuthenticated` tinyint unsigned NOT NULL,
 	`ipAddress` varchar(45) NOT NULL,

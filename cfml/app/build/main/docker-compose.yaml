@@ -1,8 +1,10 @@
+name: "appbigsexypoems-build-main"
+
 services:
 
   app:
     build: "."
-    image: "app.bigsexypoems.com/build-main:latest"
+    image: "appbigsexypoems-build-main:local"
     pull_policy: "never"
     command: [ "npm", "run", "build" ]
     volumes:
@@ -15,7 +17,7 @@ services:
       # Save dist files into static CFML volume where they can be consumed by the app.
       - "../../wwwroot/static:/app/static"
       # Allow docker to manage the node modules.
-      - "app_node_modules:/app/node_modules"
+      - "node_modules:/app/node_modules"
 
   # Provides a "watch" execution for the light-weight build above.
   dev:
@@ -27,4 +29,4 @@ services:
 # Using docker volumes to manage node_modules ensures that we don't overwrite the
 # node_modules folder when we mount our source code. It also helps performance.
 volumes:
-  app_node_modules:
+  node_modules:

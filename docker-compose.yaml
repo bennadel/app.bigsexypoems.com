@@ -1,3 +1,5 @@
+name: "appbigsexypoems"
+
 services:
 
   # CFML server.
@@ -7,8 +9,6 @@ services:
   # - Url: http://app.local.bigsexypoems.com:8080/CFIDE/administrator/index.cfm
   # - Password: commandbox
   cfml:
-    image: "appbigsexypoems-cfml:dev"
-    pull_policy: "never"
     build:
       context: "./cfml/"
       dockerfile: "docker/Dockerfile"
@@ -18,8 +18,6 @@ services:
       - "8080:8080"
     volumes:
       - "./cfml/app:/app"
-    networks:
-      - app_network
     healthcheck:
       test: "echo hello"
     depends_on:
@@ -31,8 +29,6 @@ services:
   # MySQL server.
   # http://app.local.bigsexypoems.com:3306/
   mysql:
-    image: "appbigsexypoems-mysql:dev"
-    pull_policy: "never"
     build:
       context: "./mysql/docker/"
       dockerfile: "Dockerfile"
@@ -46,30 +42,20 @@ services:
       - "./cfml/app/db:/docker-entrypoint-initdb.d"
       # Allow docker to manage the data persistence folder (MySQL doesn't work when you
       # mount the data on the host machine).
-      - "bigsexypoems_mysql_data:/var/lib/mysql"
-    networks:
-      - app_network
+      - "mysql_data:/var/lib/mysql"
     healthcheck:
       test: "echo hello"
 
   # SMTP server.
   # http://app.local.bigsexypoems.com:8025/
   mail:
-    image: "appbigsexypoems-mail:dev"
-    pull_policy: "never"
     build:
       context: "./mail/docker/"
       dockerfile: "Dockerfile"
     ports:
       - "8025:8025"
-    networks:
-      - app_network
     healthcheck:
       test: "echo hello"
 
 volumes:
-  bigsexypoems_mysql_data:
-
-networks:
-  app_network:
-    name: appbigsexypoems_network
+  mysql_data:
