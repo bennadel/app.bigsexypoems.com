@@ -241,13 +241,6 @@ component hint = "I provide high-level HTTP access to the Datamuse API." {
 			searchParams = searchParams,
 			timeoutInSeconds = timeoutInSeconds
 		);
-
-		// Caution: we're not using .filter() here because there's a bug in ColdFusion
-		// that causes nested filters, starting with a root async-filter, to destroy
-		// access to closed-over variables. The Adobe tracker has this bug marked as
-		// "fixed". So it will hopefully be resolved in the next updater (7).
-		// --
-		// https://www.bennadel.com/blog/4831-adobe-coldfusion-bug-nested-array-iteration-breaks-closure-variables.htm
 		var wordResults = [];
 
 		for ( var result in results ) {

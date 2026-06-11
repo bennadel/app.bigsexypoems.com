@@ -80,20 +80,13 @@ component {
 		var suitePaths = discoverSuites( suiteFilter );
 		// When running the test suites, we are going to SHUFFLE the array to ensure that
 		// we don't accidentally have the order of the test suites depending on each other.
-		// --
-		// Note: parallel execution is NOT used because parallel iteration causes issues
-		// with closures farther down in the stack. I've already ran into this bug twice.
-		// It's marked as "fixed" in the Adobe tracker; so hopefully we can move to async
-		// iteration in the next updater (7).
-		// --
-		// https://www.bennadel.com/blog/4879-adobe-coldfusion-bug-nested-closures-with-parallel-array-iteration-destroys-arguments.htm
 		var suiteManifests = arrayShuffle( suitePaths ).map(
 			( suitePath ) => {
 
 				return runSuite( suitePath, testFilter );
 
 			},
-			false // Parallel iteration - disabled until Adobe fixes bug.
+			true // Parallel iteration.
 		);
 
 		var manifest = arrayFlatten( suiteManifests );
